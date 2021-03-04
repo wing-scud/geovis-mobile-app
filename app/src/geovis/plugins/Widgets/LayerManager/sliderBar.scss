@@ -1,0 +1,320 @@
+.sidebar {
+    position: fixed;
+    top: 0px;
+    left: 60px;
+    z-index: 50;
+    height: 100%;
+    width: 200px;
+    color: white;
+    background-color: #414141;
+    transform: translate3d(0, 0, 0);
+  }
+  
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: all 1s;
+  }
+  
+  .fade-enter,
+  .fade-leave-active {
+    opacity: 0;
+  }
+  
+  .box-card {
+    height: 100%;
+    width: 100%;
+    background-color: #414141;
+    overflow:auto;
+    color: white;border: 1px solid #414141;
+  }
+
+ ::-webkit-scrollbar-track-piece { //滚动条凹槽的颜色，还可以设置边框属性
+    background-color:#f8f8f8;
+ }
+ ::-webkit-scrollbar {//滚动条的宽度
+    width:9px;
+    height:9px;
+ }
+ ::-webkit-scrollbar-thumb {//滚动条的设置
+    background-color:#414141;
+    background-clip:padding-box;
+    min-height:28px;
+ }
+ ::-webkit-scrollbar-thumb:hover {
+    background-color:#414141;
+ }
+  
+  .imgStyle {
+    background: url("/public/images/data/LayerManager/img.jpg") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: -15px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .imgStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .mapStyle{
+    background: url("/public/images/data/LayerManager/map.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: 10px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .mapStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .terrainStyle{
+    background: url("/public/images/data/LayerManager/terrain.jpg") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: 10px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .terrainStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .placeStyle{
+    background: url("/public/images/data/LayerManager/place.jpg") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: 10px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .placeStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .countourStyle{
+    background: url("/public/images/data/LayerManager/contour.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: 10px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .countourStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .tile{
+    padding: 0px 20px 18px 20px;
+    border-bottom: 1px solid #EBEEF5;
+    box-sizing: border-box;
+    z-index:999
+  }
+  
+  .OSMBrightStyle{
+    background: url("/public/images/data/LayerManager/OSMBright.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: -12px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .OSMBrightStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .klokantech-basicStyle{
+     background: url("/public/images/data/LayerManager/klokantech-basic.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .klokantech-basicStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .PositronStyle{
+    background: url("/public/images/data/LayerManager/Positron.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .PositronStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .FiordColorStyle{
+     background: url("/public/images/data/LayerManager/dark.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 184px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .FiordColorStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .libertyStyle{
+    background: url("/public/images/data/ModelManager/liberty.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -10px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .libertyStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .berlinStyle{
+    background: url("/public/images/data/ModelManager/berlin.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .berlinStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .nabaStyle{
+    background: url("/public/images/data/ModelManager/naba.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .nabaStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .kailuoStyle{
+    background: url("/public/images/data/ModelManager/kailuo.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .kailuoStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .damashiStyle{
+    background: url("/public/images/data/ModelManager/damashi.jpg") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .damashiStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .sanStyle{
+    background: url("/public/images/data/ModelManager/san.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+  
+  .sanStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .singaporeStyle{
+    background: url("/public/images/data/ModelManager/singapore.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .singaporeStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+  
+  .hongkongStyle{
+    background: url("/public/images/data/ModelManager/hongkong.png") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .hongkongStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .melbourneStyle{
+    background: url("/public/images/data/ModelManager/1567479912.jpg") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .melbourneStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  .sydneyStyle{
+    background: url("/public/images/data/ModelManager/1567480448.jpg") 0% 0% /
+      100% 100% no-repeat;
+    width: 176px;
+    height: 60px;
+    margin: -0px 0px 15px -13px;
+    border-radius: 4px;
+    box-shadow: rgba(0, 0, 0, 0.247059) 0px 14px 45px, rgba(0, 0, 0, 0.219608) 0px 10px 18px!important;
+  }
+
+  .sydneyStyle:active{
+    border: 2px solid cornflowerblue;
+  }
+
+  

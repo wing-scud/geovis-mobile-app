@@ -1,0 +1,19 @@
+.base-icon {
+    color: $gv-text-color;
+    transition: all .25s;
+    &.hover{
+        cursor: pointer;
+    }
+    &.hover :hover{
+        color:$gv-active-text-color;
+        
+    }
+    &.active {
+      color:$gv-active-text-color;
+    }
+  }
+.iconfont{
+  vertical-align: -0.15em;
+  fill: currentColor;
+  overflow: hidden;
+}

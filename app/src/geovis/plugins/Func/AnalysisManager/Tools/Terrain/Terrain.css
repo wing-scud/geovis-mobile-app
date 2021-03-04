@@ -1,0 +1,18 @@
+
+#radioBtn{
+  width:100%;
+  padding:15px 10px;
+  font-size:18px;
+
+}
+#radioBtn label{
+margin-right:22px;
+}
+.denggao{
+  padding:5px 0;
+  text-align:left;
+  margin-bottom:10px;
+}
+.denggao span{
+  margin-right:10px;
+}

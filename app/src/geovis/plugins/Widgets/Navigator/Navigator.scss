@@ -1,0 +1,38 @@
+.panel-card{
+  background-color: #263238;
+  border: 1px solid #263238;
+  z-index:99
+}
+.panelBUttonStyle{
+  background-color: #263238;
+  border-color: #263238;
+}
+.panelBUttonStyle:hover{
+  background-color: #0097A7;
+  border-color: #0097A7;
+}
+.panelBUttonStyle:focus{
+  background-color: #0097A7;
+  border-color: #0097A7;
+}
+.panelStyle{
+  text-align:center;
+  width:25px;
+  height:25px;
+  margin-left:-5px;
+}
+.panelfooter{
+  position: absolute;
+  text-align:center;
+  width:60px;
+  height:50px;
+  margin-left:-2px;
+  bottom: 5px;
+  background-color: #263238;
+}
+
+.nav-button{
+  width:25px;
+  height:25px;
+  padding: 10px 20px;
+}

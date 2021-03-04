@@ -1,0 +1,65 @@
+{
+  "id": "2378873",
+  "name": "三维分析",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9960720",
+      "name": "iconfont图标_淹没分析",
+      "font_class": "iconfonttubiao_yanmeifenxi",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "18171227",
+      "name": "复制,重复,重叠",
+      "font_class": "copy-rect-full",
+      "unicode": "ea30",
+      "unicode_decimal": 59952
+    },
+    {
+      "icon_id": "14666054",
+      "name": "可视",
+      "font_class": "keshi",
+      "unicode": "e728",
+      "unicode_decimal": 59176
+    },
+    {
+      "icon_id": "1342604",
+      "name": "缓冲区分析",
+      "font_class": "icon-huanchong",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "8718268",
+      "name": "压平",
+      "font_class": "yaping",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "9960715",
+      "name": "iconfont图标_量测",
+      "font_class": "iconfonttubiao_liangce",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "14393604",
+      "name": "挖矿",
+      "font_class": "wakuang",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "19288151",
+      "name": "gis_地形",
+      "font_class": "gis_dixing",
+      "unicode": "e6ee",
+      "unicode_decimal": 59118
+    }
+  ]
+}

@@ -1,0 +1,219 @@
+{
+  "id": "2147014",
+  "name": "geovis-app",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7826086",
+      "name": "more_horiz",
+      "font_class": "baseline-more_horiz-px",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "7826087",
+      "name": "chevron_right",
+      "font_class": "baseline-chevron_right-px",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "7826088",
+      "name": "menu",
+      "font_class": "baseline-menu-px",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "7826089",
+      "name": "radio_button_unchecked",
+      "font_class": "baseline-radio_button_unchecked-px",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "7826090",
+      "name": "radio_button_checked",
+      "font_class": "baseline-radio_button_checked-px",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "7826091",
+      "name": "check_box_outline_blank",
+      "font_class": "baseline-check_box_outline_blank-px",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "7826092",
+      "name": "star_half",
+      "font_class": "baseline-star_half-px",
+      "unicode": "e627",
+      "unicode_decimal": 58919
+    },
+    {
+      "icon_id": "7826093",
+      "name": "star_border",
+      "font_class": "baseline-star_border-px",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "7826094",
+      "name": "expand_less",
+      "font_class": "baseline-expand_less-px",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "7826095",
+      "name": "check_box",
+      "font_class": "baseline-check_box-px",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    },
+    {
+      "icon_id": "7826096",
+      "name": "star",
+      "font_class": "baseline-star-px",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "7826097",
+      "name": "expand_more",
+      "font_class": "baseline-expand_more-px",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "7826098",
+      "name": "chevron_left",
+      "font_class": "baseline-chevron_left-px",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "7826368",
+      "name": "clear",
+      "font_class": "baseline-clear-px",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "7826369",
+      "name": "remove",
+      "font_class": "baseline-remove-px",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "7826370",
+      "name": "volume_up",
+      "font_class": "baseline-volume_up-px",
+      "unicode": "e630",
+      "unicode_decimal": 58928
+    },
+    {
+      "icon_id": "7826371",
+      "name": "add",
+      "font_class": "baseline-add-px",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "7826372",
+      "name": "check_circle_outline",
+      "font_class": "baseline-check_circle_outline-px",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "7826084",
+      "name": "check",
+      "font_class": "baseline-check-px",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "7826085",
+      "name": "close",
+      "font_class": "baseline-close-px",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "7826373",
+      "name": "delete_forever",
+      "font_class": "baseline-delete_forever-px",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "7826374",
+      "name": "check_circle",
+      "font_class": "baseline-check_circle-px",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "7826375",
+      "name": "help",
+      "font_class": "baseline-help-px",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "7826376",
+      "name": "home",
+      "font_class": "baseline-home-px",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "7826377",
+      "name": "sort",
+      "font_class": "baseline-sort-px",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "7826378",
+      "name": "help_outline",
+      "font_class": "baseline-help_outline-px",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "7826379",
+      "name": "description",
+      "font_class": "baseline-description-px",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "7826380",
+      "name": "search",
+      "font_class": "baseline-search-px",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "7826381",
+      "name": "delete",
+      "font_class": "baseline-delete-px",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "7826382",
+      "name": "delete_outline",
+      "font_class": "baseline-delete_outline-px",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    }
+  ]
+}

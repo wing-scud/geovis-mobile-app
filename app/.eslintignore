@@ -1,0 +1,6 @@
+src/plugin
+src/geovis/common/lib
+src/geovis/common/icons
+src/geovis/plugins/Func/VisManager
+src/geovis/plugins/Func/SatellitePlu
+src/geovis/plugins/topic/BIMViewer

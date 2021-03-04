@@ -1,0 +1,66 @@
+.building-label .label{
+
+}
+ .labels {
+    opacity: 0;
+    transition: opacity 500ms ease-out;
+}
+.labels .label .line {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    bottom: 0;
+    left: 15px;
+    border-left: 2px solid black;
+    -moz-transform: skew(-40deg);
+    -webkit-transform: skew(-40deg);
+    transform: skew(-40deg); 
+}
+
+.labels .label .tag {
+position: absolute;
+bottom: 30px;
+left: 28px;
+font-size: 11px;
+background-color: #000;
+color: #fff;
+padding: 4px 8px;
+font-family: 'Oswald', sans-serif;
+text-transform: uppercase;
+white-space: nowrap;
+cursor: pointer;
+transition: background-color 200ms ease-out; 
+}
+
+.labels .label.selected .tag {
+background-color: #e00606; 
+}
+.labels .label.selected .line {
+border-color: red;
+}
+
+.labels.over .label .tag {
+background-color: #640606; }
+
+.labels.over .label .line {
+border-color: #640606; }
+
+.labels.selected .label .tag {
+background-color: #e00606; }
+.labels.selected .label .line {
+border-color: red; }
+.labels.over .label.tag {
+background-color: #640606; }
+ .labels.over .label .line {
+border-color: #640606; }
+
+.labels.selected .label{
+    transform: scale(1.1);
+}
+.labels.over .label{
+    transform: scale(1.1);
+}
+
+.labels .label{
+    transition: all .2s ease-in-out;
+}

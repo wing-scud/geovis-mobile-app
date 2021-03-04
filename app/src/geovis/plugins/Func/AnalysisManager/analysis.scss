@@ -1,0 +1,120 @@
+.analysisManager{
+  right: 70px;
+  top: 50%;
+  transform: translateY(-80%);
+}
+ 
+ .head {
+    height: 30px;
+    width: 100%;
+    font-size: 20px;
+    user-select: none;
+    // border-bottom: 1px solid;
+    margin-bottom: 6px;
+  }
+  .pluginControl {
+    float: right;
+  }
+  .module {
+    width: 100%;
+    height: 80px;
+    padding: 5px 3px;
+    color: white;;
+  }
+  .toolsContainer {
+    display: flex;
+    flex-direction: row;
+    user-select: none;
+    cursor: pointer;
+  }
+  .title {
+    height: 20px;
+    width: 100%;
+  }
+  .tool {
+    width: 45px;
+    height: 50px;
+    margin: 10px 10px;
+    text-align: center;
+  }
+  .component {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 290px;
+    transform: translate(0,101%);
+    min-height: 100px;
+    max-height: 700px;
+    background-color:#282c34;
+    border: 1px solid #526f82;
+    padding: 15px 20px;
+    z-index: 100;
+    color: white;
+    overflow-y: auto;
+  }
+  .image {
+    width: 32px;
+    height: 32px;
+  }
+  .name {
+    height: 18px;
+    width: 48px;
+    margin-top: 3px;
+    font-size: 12px;
+    text-align: center;
+  }
+  .tool:hover {
+    color: #0086b3;
+  }
+  
+
+  
+  .buttonType {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin: 10px 0;
+  }
+  .buttonBasic {
+    height: 40px;
+    background-color: #313b44;
+  }
+  .interval {
+    margin: 5px 0;
+  }
+  
+  .results{
+    width:288px;
+    height:35px;
+    line-height:35px;
+    padding-left:20px;
+    border:1px solid rgb(91,102,114);
+    margin:10px 0;
+    /* background:rgb(33,33,33) */ 
+    overflow: hidden;
+ }
+ .results:hover,.results input:hover{
+     cursor: pointer;
+ }
+ .results input{
+     display:inline-block;
+     width:220px;
+     background:transparent;
+     color:white;
+     height:30px;
+     border:0;
+     outline:none;
+  }
+.close-btn {
+    float: right;
+    background:transparent;
+    width: 34px;
+    text-align:center;
+    cursor: pointer;
+    vertical-align: middle;
+   }
+   .el-slider{
+    padding: 0  0 !important;
+}
