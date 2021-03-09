@@ -1,0 +1,415 @@
+
+
+
+[
+    {
+        "id": "widget",
+        "name": "常用挂件",
+        "items":[
+            
+            {
+                "id":"BaseWidgets",
+                "type": "widget",
+                "icon": "app",
+                "name":"基础挂件",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"GeoVisPPT",
+                "type": "widget",
+                "icon": "app",
+                "name":"演播标题",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"TitleBar",
+                "type": "widget",
+                "icon": "title",
+                "name":"标题栏",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"Navigator",
+                "type": "widget",
+                "icon": "navigator",
+                "name":"功能导航",
+                "enabled":false,
+                "active":true,
+                "mutex": false
+            },{
+                "id":"ScaleBar",
+                "type": "widget",
+                "icon": "bilichi2",
+                "name":"比例尺",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"Timeline",
+                "type": "widget",
+                "icon": "timeline",
+                "name":"时间轴",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"FPS",
+                "type": "widget",
+                "icon": "rate",
+                "name":"渲染帧率",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },
+            
+            {
+                "id":"AerialView",
+                "type": "widget",
+                "icon": "aerial",
+                "name":"鸟瞰图",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            }
+        ]
+    }, {
+        "id": "tools",
+        "name": "工具",
+        "items":[
+            {
+                "id":"SearchArea",
+                "type": "tool",
+                "icon": "#icon-baseline-search-px",
+                "name":"地名检索",
+                "enabled":false,
+                "active":false,
+                "mutex": false,
+                "data":{
+                    "server": "https://nominatim.openstreetmap.org/"
+                }
+            },
+
+            {
+                "id":"FirstPersonView",
+                "type": "tool",
+                "icon": "#icon-iconfonttubiao_feihangyulan",
+                "name":"视角漫游",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },
+            {
+                "id":"SimpleMeasure",
+                "type": "tool",
+                "icon": "ruler",
+                "name":"量测工具",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },
+            {
+                "id":"SceneCapture",
+                "type": "tool",
+                "icon": "#icon-jietu",
+                "name":"场景截图",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },
+            {
+                "id":"AnalysisManager",
+                "type": "tool",
+                "icon": "#icon-iconfonttubiao_tongshifenxi",
+                "name":"三维分析",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"RoutePlan",
+                "type": "tool",
+                "icon": "navigation",
+                "name":"路径规划",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },
+            {
+                "id":"ToolBox",
+                "type": "tool",
+                "icon": "#icon-gongjuxiang",
+                "name":"常用工具",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },
+            {
+                "id":"ConvertTool",
+                "type": "tool",
+                "icon": "conversion",
+                "name":"转换工具",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },
+            {
+                "id":"StreetView",
+                "type": "tool",
+                "icon": "conversion",
+                "name":"街景漫游",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            }
+        ]
+    },
+    
+    {
+        "id": "func",
+        "name": "基础插件",
+        "items":[
+            {
+                "id":"LayerManager",
+                "type": "module",
+                "icon": "plugin-layermanager",
+                "name":"图层管理",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"SceneTree",
+                "type": "module",
+                "icon": "plugin-layermanager",
+                "name":"场景管理",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"Satellite",
+                "type": "module",
+                "icon": "plugin-satellite",
+                "name":"遥感数据",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"ViewRoaming",
+                "type": "module",
+                "icon": "viewRoam",
+                "name":"视角漫游",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"AnaManager",
+                "type": "module",
+                "icon": "plugin-ana",
+                "name":"分析插件",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"LayerSplit",
+                "type": "tool",
+                "icon": "layer",
+                "name":"图层对比",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"SceneEffects",
+                "type": "tool",
+                "icon": "effect",
+                "name":"场景特效",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"WeatherEffects",
+                "navType": "tool",
+                "icon": "weather",
+                "name":"天气特效",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"MBTS",
+                "type": "module",
+                "icon": "viewRoam",
+                "name":"目标态势",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"SatellitePlu",
+                "type": "module",
+                "icon": "satellite",
+                "name":"卫星插件",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"PlotManager",
+                "type": "module",
+                "icon": "#icon-iconfonttubiao_biaozhu",
+                "name":"标绘标注",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"VisManager",
+                "type": "module",
+                "icon": "#icon-iconfonttubiao_fenxi",
+                "name":"数据可视化",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"TargetNetwork",
+                "type": "module",
+                "icon": "#icon-moxing",
+                "name":"网络拓扑",
+                "enabled":false,
+                "active":false,
+                "mutex": true,
+                "data":{
+                    "server":"ws://localhost:8900"
+                }
+            },{
+                "id":"TargetCluster",
+                "type": "module",
+                "icon": "cluster",
+                "name":"目标聚类",
+                "enabled":false,
+                "active":false,
+                "mutex": true,
+                "data":{
+                    "server": "http://localhost:8900"
+                }
+            },{
+                "id":"TimeLayer",
+                "type": "tool",
+                "icon": "history-layer",
+                "name":"历史影像",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"Visualization",
+                "type": "module",
+                "icon": "visualPlugin",
+                "name":"可视化插件",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"BIMViewer",
+                "type": "module",
+                "icon": "plugin-building",
+                "name":"BIM模型",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"TiffVis",
+                "type": "module",
+                "icon": "#icon-moxing",
+                "name":"气象水文",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"TopicManager",
+                "type": "module",
+                "icon": "visualPlugin",
+                "name":"专题应用",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            }
+
+        ]
+    },{
+        "id": "debug-tool",
+        "name": "调试工具",
+        "items":[
+            {
+                "id":"LayerDebug",
+                "type": "widget",
+                "icon": "debug1",
+                "name":"图层调试",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"TerrainDebug",
+                "type": "widget",
+                "icon": "debug2",
+                "name":"地形调试",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            },{
+                "id":"ModelDebug",
+                "type": "widget",
+                "icon": "debug3",
+                "name":"模型调试",
+                "enabled":false,
+                "active":false,
+                "mutex": false
+            }
+        ]
+    },{
+        "id": "topics",
+        "name": "专题应用",
+        "items":[
+            {
+                "id":"ScenePlayer",
+                "type": "widget",
+                "icon": "video",
+                "name":"场景演播",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"FlightSimulator",
+                "type": "micro-app",
+                "icon": "app",
+                "name":"模拟飞行",
+                "entry": "http://192.168.191.3:8900",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"SatVis",
+                "type": "micro-app-module",
+                "icon": "app",
+                "name":"卫星仿真",
+                "entry": "http://192.168.191.3:8900",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"OceanTopic0",
+                "type": "iframe",
+                "icon": "app",
+                "name":"海洋灾害",
+                "entry": "http://localhost:9002/#Current",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            },{
+                "id":"OceanTopic1",
+                "type": "iframe",
+                "icon": "app",
+                "name":"气候变化",
+                "entry": "http://localhost:9002/#Climate",
+                "enabled":false,
+                "active":false,
+                "mutex": true
+            }
+        ]
+    }
+]

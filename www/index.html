@@ -1,1 +1,62 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="favicon.ico"><link rel="stylesheet" href="css/font-awesome.min.css"><title>geovis-app-vue</title><link href="static/css/app.00ca6597.css" rel="preload" as="style"><link href="static/js/app.94364c3d.js" rel="preload" as="script"><link href="static/js/chunk-vendors.fe246525.js" rel="preload" as="script"><link href="static/css/app.00ca6597.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but geovis-app-vue doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><script src="cordova.js"></script><script src="./static/geovis/GeoVis.js"></script><script src="./static/geovis/DrawHelper.js"></script><script src="./static/scene.js"></script><script src="./static/ppt.js"></script><script src="./static/topic.js"></script><script src="static/js/chunk-vendors.fe246525.js"></script><script src="static/js/app.94364c3d.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="icon" href="favicon.ico">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <title>geovis-app-vue</title>
+    <link href="css/chunk-2a15fa50.f8402103.css" rel="prefetch">
+    <link href="css/chunk-4688b69c.00284454.css" rel="prefetch">
+    <link href="css/chunk-d501ae28.054033cf.css" rel="prefetch">
+    <link href="js/chunk-2a15fa50.0e7c302c.js" rel="prefetch">
+    <link href="js/chunk-2d229b36.9f4b6bd4.js" rel="prefetch">
+    <link href="js/chunk-4688b69c.7995ae62.js" rel="prefetch">
+    <link href="js/chunk-d501ae28.5cc2c249.js" rel="prefetch">
+    <link href="css/app.f10509bd.css" rel="preload" as="style">
+    <link href="css/chunk-vendors.9b46d122.css" rel="preload" as="style">
+    <link href="js/app.3f361df3.js" rel="preload" as="script">
+    <link href="js/chunk-vendors.e3524cba.js" rel="preload" as="script">
+    <link href="css/chunk-vendors.9b46d122.css" rel="stylesheet">
+    <link href="css/app.f10509bd.css" rel="stylesheet">
+</head>
+
+<body><noscript><strong>We're sorry but geovis-app-vue doesn't work properly without JavaScript enabled. Please enable
+            it to continue.</strong></noscript>
+    <div id="app"></div>
+    <script>
+        window._fetch = fetch;
+        function fetchLocal(url) {
+            return new Promise(function (resolve, reject) {
+                var xhr = new XMLHttpRequest
+                xhr.onload = function () {
+                    resolve(new Response(xhr.responseText, { status: xhr.status }))
+                }
+                xhr.onerror = function () {
+                    reject(new TypeError('Local request failed'))
+                }
+                xhr.open('GET', url)
+                xhr.send(null)
+            })
+        }
+        window.fetch = function (url, ...params) {
+            if (url.search("http://" === 0)) {
+                _fetch(url,...params)
+            } else {
+                fetchLocal(url)
+            }
+        }
+    </script>
+    <script src="cordova.js"></script>
+    <script src="./static/geovis/GeoVis.js"></script>
+    <script src="./static/geovis/DrawHelper.js"></script>
+    <script src="./static/scene.js"></script>
+    <script src="./static/ppt.js"></script>
+    <script src="./static/topic.js"></script>
+    <script src="js/chunk-vendors.e3524cba.js"></script>
+    <script src="js/app.3f361df3.js"></script>
+</body>
+
+</html>

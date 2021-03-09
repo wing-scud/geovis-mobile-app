@@ -1,24 +1,3 @@
-# geovis-app-vue
-
-## Project setup
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+cordova plugin add cordova-plugin-geolocation
+cordova plugin add cordova-plugin-android-permissions
+cordova plugin add https://github.com/hewz/cordova-baidu-location --variable API_KEY="5BWhBiVwIbmvIUQTzBkOGLnrtoXoEy5H"

@@ -21,8 +21,7 @@ window.sceneData = {
     {
       id: "base-layer",
       parentId: 0,
-      // name: "基础底图",
-      name: "在线地图",
+      name: "基础底图",
       halfCheck: true,
       open: true,
       children: [
@@ -221,8 +220,7 @@ window.sceneData = {
     {
       id: "vector-layer",
       parentId: 0,
-      name: "离线地图",
-      // name: "电子地图",
+      name: "电子地图",
       open: false,
       children: [
         {

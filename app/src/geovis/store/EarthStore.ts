@@ -71,7 +71,6 @@ export class EarthStore {
       skyBox: true,
       mapProjection: new GeoVis.WebMercatorProjection,
       scene: {
-        
         scene3DOnly: false,
         orderIndependentTranslucency: false,
         contextOptions: {
@@ -137,8 +136,8 @@ export class EarthStore {
 
 
   handleResize = () => {
-    this.state.window.width = this.earth.scene.canvas.width;
-    this.state.window.height = this.earth.scene.canvas.height;
+    // this.state.window.width = this.earth.scene.canvas.width;
+    // this.state.window.height = this.earth.scene.canvas.height;
   };
 }
 

@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = {
   publicPath: "./",
   outputDir: "../www/",
-  assetsDir: "static",
+  // assetsDir: "static",
   css: {
     sourceMap: true,
     loaderOptions: {
@@ -17,6 +17,7 @@ module.exports = {
     config.module.rule("js").set("exclude", item => item.search("geovis/common") > -1);
   },
   configureWebpack: {
+    // entry: "./src/main.js",
     devtool: "source-map",
     devServer: {
       headers: { "Access-Control-Allow-Origin": "*" }

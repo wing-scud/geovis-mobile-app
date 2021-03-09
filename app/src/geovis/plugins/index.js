@@ -5,3 +5,5 @@
 // export * from "./TemplatePlugin";
 // export * from "./TemplateWidget";
 // export * from "./MicroApp";
+import "./Mobile-Widgets";
+import "./Mobile-Func";
