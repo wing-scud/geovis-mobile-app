@@ -1,16 +1,11 @@
-// this.position = { coords: { longitude: 120, latitude: 20, altitude: 2000, heading: 90 } };
+
 import { Toast } from "vant";
+// const cordovaTag = document.createElement("script");
+// const cordovaPath = "cordova.js";
+// console.log("ROUTE_BASE", cordovaPath);
+// cordovaTag.setAttribute("src", cordovaPath);
+// document.head.appendChild(cordovaTag);
 const onDeviceReady = function() {
-  const onSuccess = function(position) {
-    // instance.position = position;
-    Toast(position);
-    console.log(position)
-  };
-  function onError(error) {
-    Toast(error);
-    console.log(error)
-  }
-  const watchId = navigator.geolocation.getCurrentPosition(onSuccess, onError);
-  Toast(watchId);
+  console.log("onDeviceReady ");
 };
 document.addEventListener("deviceready", onDeviceReady, false);

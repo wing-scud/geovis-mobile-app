@@ -18,7 +18,30 @@
       Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
-  <!-- <script src="cordova.js"></script> -->
+  <script>
+    window._fetch = fetch;
+    function fetchLocal(url) {
+        return new Promise(function (resolve, reject) {
+            var xhr = new XMLHttpRequest
+            xhr.onload = function () {
+                resolve(new Response(xhr.responseText, { status: xhr.status }))
+            }
+            xhr.onerror = function () {
+                reject(new TypeError('Local request failed'))
+            }
+            xhr.open('GET', url)
+            xhr.send(null) 
+        })
+    }
+    window.fetch = function (url, ...params) {
+        if (url.search("http://") === 0) {
+            return _fetch(url,...params)
+        } else {
+            return fetchLocal(url)
+        }
+    }
+</script>
+  <script src="cordova.js"></script>
   <!-- <script type="text/javascript" src="css/iconfont.js"></script> -->
   <script src="./static/geovis/GeoVis.js"></script>
   <!-- <script src="./static/lib/photo-sphere-viewer.min.js"></script> -->

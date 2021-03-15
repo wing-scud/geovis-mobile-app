@@ -11,11 +11,11 @@ import "vant/lib/index.css";
 // Vue.use(ElementUI);
 
 import VueRouter from "vue-router";
-const cordovaTag = document.createElement('script');
-const cordovaPath = 'cordova.js';
-console.log('ROUTE_BASE', process.env.ROUTE_BASE, cordovaPath);
-cordovaTag.setAttribute('src', process.env.ROUTE_BASE + cordovaPath);
-document.head.appendChild(cordovaTag);
+// const cordovaTag = document.createElement("script");
+// const cordovaPath = "cordova.js";
+// console.log("ROUTE_BASE", process.env.ROUTE_BASE, cordovaPath);
+// cordovaTag.setAttribute("src", process.env.ROUTE_BASE + cordovaPath);
+// document.head.appendChild(cordovaTag);
 Vue.use(VueRouter);
 Vue.use(Vuex);
 Vue.use(Vant);

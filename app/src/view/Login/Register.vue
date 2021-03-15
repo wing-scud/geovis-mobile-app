@@ -48,7 +48,7 @@ export default Vue.extend({
   position: fixed;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   padding: 20px 10px;
 }
@@ -60,7 +60,7 @@ export default Vue.extend({
   line-height: 30px;
 }
 .form {
-  flex-grow: 1;
+  /* flex-grow: 1; */
 }
 .input-item {
   width: 100%;

@@ -29,14 +29,8 @@ declare module "vue/types/vue" {
     $earthStore: EarthStore;
   }
 }
-
-// Vue.component("Icon", Icon);
 Vue.config.productionTip = false;
-console.log("ts")
 new Vue({
   render: h => h(App),
   router
 }).$mount("#app");
-if (!window['cordova']) {
-  console.log('Not running in cordova.');
-}

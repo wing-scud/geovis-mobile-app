@@ -1,6 +1,6 @@
 
 import { Toast } from 'vant';
-class Store {
+class LocationWatch {
     private earth: any;
     private watchId: any;
     private _position: {};
@@ -34,14 +34,17 @@ class Store {
         //@ts-ignore
         if (position && position.coords) {             //@ts-ignore
             const coords = position.coords;
+            const heading = coords.heading ? GeoVis.Math.toRadians(coords.heading) : 0
             earth.camera.flyTo({
                 destination: GeoVis.Cartesian3.fromDegrees(coords.longitude, coords.latitude, coords.altitude),
                 orientation: {
-                    heading: GeoVis.Math.toRadians(coords.heading),
-                    pitch: 0,
+                    heading: heading,
+                    pitch: GeoVis.Math.toRadians(-90),
                     roll: 0
                 }
             })
+        }else{
+            Toast("位置获取失败")
         }
     }
     clearSelfLocationWatch() {
@@ -53,21 +56,20 @@ class Store {
     }
     watchSelfLocation() {
         const instance = this;
-        Toast('watch');
         // this.position={coords:{longitude:120,latitude:20,altitude:2000,heading:90}}
-        // const onDeviceReady = function () {
-        //     const onSuccess = function (position) {
-        //         instance.position = position;
-        //         Toast(position);
-        //     };
-        //     function onError(error) {
-        //         Toast(error);
-        //     }
-        //     const watchId = navigator.geolocation.getCurrentPosition(onSuccess, onError);
-        //     instance.watchId = watchId;
-        // }
-        // document.addEventListener("deviceready", onDeviceReady, false);
+        const onSuccess = function (position) {
+            instance.position = position;
+            console.log(position)
+            // Toast(position);
+        };
+        function onError(error) {
+            Toast(error);
+        }
+        const watchId = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
+        // const watchId = navigator.geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
+        instance.watchId = watchId;
     }
+
 }
 
-export default Store;
+export default LocationWatch;

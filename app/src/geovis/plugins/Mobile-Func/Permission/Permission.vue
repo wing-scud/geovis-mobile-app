@@ -10,7 +10,6 @@ export default Vue.extend({
     return {};
   },
   mounted() {
-    debugger;
     requestPermissions
       .then(function(status) {
         navigator.mediaDevices

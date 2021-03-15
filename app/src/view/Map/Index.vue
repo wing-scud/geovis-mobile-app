@@ -11,7 +11,7 @@
 </template>
 <script lang="ts">
 import { Toast } from 'vant';
-import Store from "./store";
+import LocationWatch from "./store";
 import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 export default Vue.extend({
@@ -30,7 +30,7 @@ export default Vue.extend({
   mounted() {
     const earth = earthStore.earth;
     //@ts-ignore
-    this._store = new Store(earth);
+    this._store = new LocationWatch(earth);
   },
   methods: {
     handleClick(name) {
