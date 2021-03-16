@@ -3,7 +3,6 @@ import Index from "../view/Map/Index.vue"
 import Login from "../view/Login/Login.vue";
 import Register from "../view/Login/Register.vue";
 import MapSetting from "../view/Map/MapSetting.vue";
-import SearchResult from "../view/Map/SearchResult.vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const routes = [
@@ -20,11 +19,6 @@ const routes = [
     path: "/mapsetting",
     component: MapSetting,
     name: "mapsetting"
-  },
-  {
-    path: "/searchResult",
-    component: SearchResult,
-    name: "searchResult"
   }
 ];
 

@@ -5,9 +5,14 @@
         <van-button size="small" type="default" class="search-button" plain @click="search">搜索</van-button>
       </template>
     </van-field>
-    <div class="history-panel" v-show="historyPanelState">
+    <div class="history-panel" v-if="historyPanelState">
       <van-cell-group>
         <van-cell :title="item.name" :label="item.descri" v-for="item in historyRecords" :key="item.name"></van-cell>
+      </van-cell-group>
+    </div>
+    <div class="search-result" v-if="searchResult">
+      <van-cell-group>
+        <van-cell :title="item.name" :label="item.descri" v-for="item in searchResult" :key="item.name"></van-cell>
       </van-cell-group>
     </div>
   </div>
@@ -23,6 +28,20 @@ export default Vue.extend({
       params: "",
       leftIcon: "search",
       historyPanelState: false,
+      searchResult: [
+        {
+          name: "空天院",
+          descri: "独墅湖大道158"
+        },
+        {
+          name: "空天院",
+          descri: "独墅湖大道158"
+        },
+        {
+          name: "空天院",
+          descri: "独墅湖大道158"
+        }
+      ],
       historyRecords: [
         {
           name: "空天院",
@@ -51,7 +70,9 @@ export default Vue.extend({
       this.historyPanelState = false;
       this.historyRecords = [];
     },
-    search() {}
+    search() {
+      this.historyPanelState = false;
+    }
   }
 });
 </script>
@@ -71,6 +92,12 @@ export default Vue.extend({
 }
 .search-button {
   color: rgb(34, 126, 247);
+}
+.search-result{
+  position: fixed;
+  bottom: 0;
+  left:0;
+  width: 100%;
 }
 </style>
 <style>

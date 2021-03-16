@@ -1,11 +1,9 @@
 <template>
   <div>
-    <div class="top-widget" v-if="!route"><SearchInput></SearchInput></div>
-    <div class="map-plugin-right"><Icon :icon="item.icon" length="35px" v-for="item in listFilter" :key="item['name']" :name="item['name']" circle @click="handleClick(item['name'])"></Icon></div>
+    <div class="map-plugin-right"><Icon :icon="item.icon" length="35px" v-for="item in listFunc" :key="item['name']" :name="item['name']" circle @click="handleClick(item['name'])"></Icon></div>
     <Earth></Earth>
     <div class="left-bottom-weather">阴天 12°</div>
     <van-popup v-model="popShow" position="right" :style="{ width: '60%', height: '100%' }" :close-on-popstate="true" @close="closePopup"><Layer></Layer></van-popup>
-    <Route v-if="route"></Route>
   </div>
 </template>
 <script lang="ts">
@@ -15,14 +13,9 @@ import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 export default Vue.extend({
   name: "Map",
+  props:['listFunc'],
   data() {
     return {
-      listFunc: [
-        { name: "消息", icon: "icon-xiaoxi " },
-        { name: "图层", icon: "icon-tuceng " },
-        { name: "锁定", icon: "icon-suoding " },
-        { name: "导航", icon: "icon-luxian " },
-      ],
       popShow: false,
       route: false,
     };
@@ -47,23 +40,13 @@ export default Vue.extend({
           lockSelf.locking = !lockSelf.locking;
           break;
         case "导航":
-          this.route = true;
+          this.$emit("changeComponent","Route")
           break;
         default:
           break;
       }
     },
     closePopup() {},
-  },
-  computed: {
-    listFilter() {
-      //@ts-ignore
-      let value = this.listFunc;
-      if (this.route) {
-        value=[   { name: "锁定", icon: "icon-suoding " }]
-      }
-      return value;
-    },
   },
 });
 </script>

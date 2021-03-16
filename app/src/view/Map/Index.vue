@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <keep-alive><Map/></keep-alive>
-    <Tabbar v-model="active" :list="list" @change="handleChange" :height="50"></Tabbar>
+    <keep-alive><Map :listFunc="listFilter" @changeComponent="change"/></keep-alive>
+    <component :is="component" @changeComponent="change"></component>
   </div>
 </template>
 <script lang="ts">
@@ -11,12 +11,18 @@ export default Vue.extend({
   data() {
     return {
       active: 0,
+      listFunc: [
+        { name: "消息", icon: "icon-xiaoxi " },
+        { name: "图层", icon: "icon-tuceng " },
+        { name: "锁定", icon: "icon-suoding " },
+        { name: "导航", icon: "icon-luxian " }
+      ],
       list: [
         { name: "地图", icon: "icon-ditu" },
         { name: "默认", icon: "icon-daohangmoren" },
         { name: "个人", icon: "icon-geren" }
       ],
-      component: "Map"
+      component: "MapIndex"
     };
   },
   methods: {
@@ -24,8 +30,19 @@ export default Vue.extend({
       const path = ["map", "default", "personal"];
       const routePath = "/" + path[this.active];
       this.$router.push(routePath);
-      // const components = ["Map", "mo-ren", "zhu-ye"];
-      // this.component = components[this.active];
+    },
+    change($event, value) {
+      this.component = value;
+    }
+  },
+  computed: {
+    listFilter() {
+      //@ts-ignore
+      let value = this.listFunc;
+      if (this.component === "Route") {
+        value = [{ name: "锁定", icon: "icon-suoding " }];
+      }
+      return value;
     }
   }
 });
