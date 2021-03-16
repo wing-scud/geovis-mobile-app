@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="top-widget">
+      <SearchInput></SearchInput>
+    </div>
     <div class="map-plugin-right">
       <Icon :icon="item.icon" length="25px" v-for="item in listFunc" :key="item['name']" :name="item['name']" circle @click="handleClick(item['name'])"></Icon>
     </div>
@@ -10,12 +13,14 @@
   </div>
 </template>
 <script lang="ts">
-import { Toast } from 'vant';
+/* eslint-disable no-undef */
+import { Toast } from "vant";
 import LocationWatch from "./store";
 import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 export default Vue.extend({
   name: "Map",
+  components: {},
   data() {
     return {
       listFunc: [
@@ -62,9 +67,9 @@ export default Vue.extend({
   position: fixed;
   width: 30px;
   height: 100%;
-  top: 0;
+  top: 50px;
   right: 10px;
-  z-index: 100;
+  z-index: 2;
   display: flex;
   flex-direction: column;
 }
@@ -76,5 +81,13 @@ export default Vue.extend({
   text-align: center;
   line-height: 30px;
   border-radius: 50%;
+}
+.top-widget {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  /* height: 45px; */
 }
 </style>

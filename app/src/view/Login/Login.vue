@@ -3,8 +3,8 @@
     <div class="app-name">geovis-app-mobile</div>
     <div class="main-part">
       <div class="login-fields">
-        <van-field v-model="account" label="账户" class="custom-input" />
-        <van-field v-model="password" type="password" label="密码" class="custom-input" />
+        <van-field v-model="account" label="账户" clearable class="custom-input" />
+        <van-field v-model="password" type="password" clearable label="密码" class="custom-input" />
         <div class="custom-login">
           <router-link to="/index">登录</router-link>
         </div>
@@ -34,7 +34,7 @@ export default Vue.extend({
 .login-page {
   width: 100%;
   height: 100%;
-  background-image: url("../../assets/images/bg2.jpeg");
+  background-image: url("../../assets/images/bg1.jpeg");
   position: fixed;
   display: flex;
   flex-direction: column;

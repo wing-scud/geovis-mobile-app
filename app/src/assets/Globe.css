@@ -15,7 +15,7 @@ color: white;
 .custom-input .van-cell__value{
     width:3.2em;
 }
-.van-field__control{
+.custom-input .van-field__control{
     color:white;
     font-size: 13px;
 }
