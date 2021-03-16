@@ -18,7 +18,7 @@ export default {
 
 <style>
 .full {
-  position: absolute !important;
+  position: fixed;
   left: 0;
   top: 0;
   width: 100%;

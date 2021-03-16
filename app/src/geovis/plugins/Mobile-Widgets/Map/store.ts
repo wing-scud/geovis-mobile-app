@@ -71,5 +71,4 @@ class LocationWatch {
     }
 
 }
-
 export default LocationWatch;

@@ -13,16 +13,27 @@ import { earthStore } from "../store";
 export default {
   name: "App",
   props: ["onReady"],
+  created(){
+    console.log("created ");
+  },
+  activated() {
+    console.log("activated ");
+  },
+  deactivated() {
+    console.log("deactivated ");
+  },
+  destroyed(){
+    console.log("destroyed ");
+  },
   mounted() {
     earthStore.init(this.$refs["earthContainer"]);
-    // this.$props.onReady();
   }
 };
 </script>
 
 <style>
 .full {
-  position: absolute !important;
+  position: fixed !important;
   left: 0;
   top: 0;
   width: 100%;

@@ -42,7 +42,7 @@ export default Vue.extend({
   },
   methods: {
     handleChange() {
-      // this.$emit("change", this.active);
+      this.$emit("change", this.active);
     }
   }
 });

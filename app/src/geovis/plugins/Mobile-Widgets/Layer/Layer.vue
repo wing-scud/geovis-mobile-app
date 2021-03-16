@@ -29,13 +29,14 @@
           </div>
         </div>
         <div class="head">其他</div>
+        <van-cell title="友邻位置" is-link />
+        <van-cell title="天气地图" is-link />
         <van-cell title="其他地图" is-link />
         <!-- <div class="map-item">其他地图</div> -->
       </van-checkbox-group>
     </div>
     <div class="foot">
-      <!-- <van-cell title="地图设置" is-link /> -->
-      <van-button url="/map/setting.html" color="#7232dd" plain block>地图设置</van-button>
+      <van-button :to="{ name: 'mapsetting' }" color="#7232dd" plain block>地图设置</van-button>
     </div>
   </div>
 </template>

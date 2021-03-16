@@ -1,14 +1,31 @@
 import Vue from "vue";
-import Home from "../view/Home.vue";
+import Index from "../view/Map/Index.vue"
 import Login from "../view/Login/Login.vue";
 import Register from "../view/Login/Register.vue";
+import MapSetting from "../view/Map/MapSetting.vue";
+import SearchResult from "../view/Map/SearchResult.vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const routes = [
   { path: "/", redirect: { path: "/login" } },
-  { path: "/index", component: Home, name: "home" },
+  {
+    path: "/index",
+    component: Index,
+    name: "index"
+  },
   { path: "/login", component: Login, name: "login" },
-  { path: "/register", component: Register, name: "register" }
+  { path: "/register", component: Register, name: "register" },
+
+  {
+    path: "/mapsetting",
+    component: MapSetting,
+    name: "mapsetting"
+  },
+  {
+    path: "/searchResult",
+    component: SearchResult,
+    name: "searchResult"
+  }
 ];
 
 const router = new VueRouter({ routes, mode: "hash" });

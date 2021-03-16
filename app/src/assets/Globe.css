@@ -6,8 +6,9 @@
  left: 0;
 }
 .content{
+    position: absolute;
     width: 100%;
-    height:calc(100% - 80px);
+    height:calc(100% - 50px);
 }
 .custom-input .van-field__label{
 color: white;
@@ -18,4 +19,9 @@ color: white;
 .custom-input .van-field__control{
     color:white;
     font-size: 13px;
+}
+.full-screen{
+    width:100%;
+    height: 100%;
+    position: fixed;
 }

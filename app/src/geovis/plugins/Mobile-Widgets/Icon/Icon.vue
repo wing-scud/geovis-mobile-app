@@ -15,7 +15,7 @@ export default Vue.extend({
     },
     size: {
       type: String,
-      default: "20px"
+      default: "25px"
     },
     length: {
       type: String,
