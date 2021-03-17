@@ -30,6 +30,7 @@ const routes = [
         name: "map",
         path: "map",
         component: Map,
+        redirect: "/map/search",
         children: [
           { path: "search", component: Search, name: "search" },
           { path: "pathQuery", component: PathQuery, name: "pathQuery" },
@@ -42,7 +43,10 @@ const routes = [
         component: Default,
         name: "default"
       }
-    ]
+    ],
+    meta: {
+      keepAlive: true
+    }
   },
   { path: "/login", component: Login, name: "login" },
   { path: "/register", component: Register, name: "register" },

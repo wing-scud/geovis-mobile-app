@@ -1,6 +1,6 @@
 <template>
   <div class="search-input">
-    <van-field v-model="params" :left-icon="leftIcon" size="" placeholder="输入内容" clearable @clear="hiddenHistoryPanel"  @click-input="displayHistory" @input="changeHistory">
+    <van-field v-model="params" :left-icon="leftIcon" size="" placeholder="输入内容" clearable @clear="hiddenHistoryPanel" @click-input="displayHistory" @input="changeHistory">
       <template #button>
         <van-button size="small" type="default" class="search-button" plain @click="search">搜索</van-button>
       </template>
@@ -51,32 +51,46 @@ export default Vue.extend({
     },
     getHistory() {},
     changeHistory() {
+      //正在搜索，请稍后
       _.debounce(this.getHistory, 500);
     },
     hiddenHistoryPanel() {
-      debugger
       this.historyPanelState = false;
       this.historyRecords = [];
     },
     search() {
       this.historyPanelState = false;
-      this.searchResult = [
-        {
-          name: "空天院4",
-          descri: "独墅湖大道158"
-        },
-        {
-          name: "空天院5",
-          descri: "独墅湖大道158"
-        },
-        {
-          name: "空天院6",
-          descri: "独墅湖大道158"
+      // https://nominatim.openstreetmap.org/search?<params>
+      const url = `https://nominatim.openstreetmap.org/search?q=${this.params}`;
+      fetch(url, {
+        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        mode: "cors",
+        headers: {
+          "user-agent": "Mozilla/4.0 MDN Example",
+          "content-type": "application/json"
         }
-      ];
+      })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        });
+      // this.searchResult = [
+      //   {
+      //     name: "空天院4",
+      //     descri: "独墅湖大道158"
+      //   },
+      //   {
+      //     name: "空天院5",
+      //     descri: "独墅湖大道158"
+      //   },
+      //   {
+      //     name: "空天院6",
+      //     descri: "独墅湖大道158"
+      //   }
+      // ];
     },
     chooseHistoryAddress(address) {
-      debugger
+      debugger;
       this.params = address;
       this.search();
     },
@@ -109,7 +123,7 @@ export default Vue.extend({
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index:4;
+  z-index: 4;
 }
 </style>
 <style>

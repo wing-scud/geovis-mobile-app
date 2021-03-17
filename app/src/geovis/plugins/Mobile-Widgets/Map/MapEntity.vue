@@ -53,10 +53,10 @@ export default Vue.extend({
 <style scoped>
 .map-plugin-right {
   position: absolute;
-  width: 30px;
-  height: 100%;
+  width: 40px;
+  /* height: 100%; */
   top: 150px;
-  right: 10px;
+  right: 5px;
   z-index: 2;
   display: flex;
   flex-direction: column;
@@ -79,8 +79,8 @@ export default Vue.extend({
   /* height: 45px; */
 }
 .left-bottom-weather {
-  position: absolute;
-  bottom: 0;
+  position: fixed;
+  bottom: 50px;
   left: 5px;
   width: 80px;
   z-index: 3;
