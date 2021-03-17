@@ -1,7 +1,9 @@
 
 import SceneManager from "./SceneManager/SceneManager";
+import mapboxgl from 'mapbox-gl';
 import * as utils from "../util";
-
+mapboxgl.accessToken =
+    "pk.eyJ1IjoiZmFpbnR6eiIsImEiOiJjazg4NTgwejkwNHMzM3BxYTRhcnB5amYyIn0.wjzAeek8dLS1U4H9Wx-J9A"
 function disableVueTrack(object){
   const keys = Object.keys(object);
   object["configurable"] = false;
@@ -28,19 +30,30 @@ function disableVueTrack(object){
 }
 
 export class EarthStore {
-  public state: { window: { width: number; height: number; }; pluginTree: any[]; pluginMap: {}; };
+  public state: { window: { width: number; height: number; }; pluginTree: any[]; mode: string; pluginMap: {}; };
   private _earth: GeoVis.Earth;
   private _drawHelper: DrawHelper;
   private _sceneManager: SceneManager;
+  _map: mapboxgl.Map;
   constructor() {
     this.state = {
       window: {
         width: 100,
         height: 100
       },
+      mode: "map", // globe  map
       pluginTree: [],
       pluginMap: {}
     };
+  }
+
+
+  get mode(){
+    return this.state.mode;
+  }
+
+  get map(){
+    return this._map;
   }
 
   get earth() {
@@ -65,8 +78,8 @@ export class EarthStore {
     return this._sceneManager;
   }
 
-  async init(ref) {
-    this._earth = window.earth = new GeoVis.Earth(ref, {
+  async init(earthRef,mapRef) {
+    this._earth = window.earth = new GeoVis.Earth(earthRef, {
       /*@ts-ignore */
       skyBox: true,
       mapProjection: new GeoVis.WebMercatorProjection,
@@ -88,7 +101,14 @@ export class EarthStore {
       automaticallyTrackDataSourceClocks: false,
       dataSources: null
     });
+    if(mapRef){
+      this._map = new mapboxgl.Map({
+        container: mapRef,
+        style: 'mapbox://styles/mapbox/streets-v9'
+      });
+    }
     this.earth.scene.postProcessStages.fxaa.enabled = true;
+
     GeoVis.Camera.MAX_PITCH = 0;
     this.earth = earth;
     disableVueTrack(this.earth);

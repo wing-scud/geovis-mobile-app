@@ -30,5 +30,7 @@
       "android"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "mapbox-gl": "^2.1.1"
+  }
 }

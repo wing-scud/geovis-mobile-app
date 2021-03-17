@@ -34,7 +34,7 @@
         })
     }
     window.fetch = function (url, ...params) {
-        if (url.search("http://") === 0) {
+        if (!url.search||url.search("http://") === 0) {
             return _fetch(url,...params)
         } else {
             return fetchLocal(url)
