@@ -6,7 +6,7 @@
         <van-field v-model="account" label="账户" clearable class="custom-input" />
         <van-field v-model="password" type="password" clearable label="密码" class="custom-input" />
         <div class="custom-login">
-          <router-link to="/index">登录</router-link>
+          <router-link to="/">登录</router-link>
         </div>
         <div class="login-item">
           <span class="forget-password">忘记密码？</span>

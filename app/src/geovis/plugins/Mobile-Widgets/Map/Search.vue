@@ -22,7 +22,7 @@ import Vue from "vue";
 // Load the full build.
 import _ from "lodash";
 export default Vue.extend({
-  name: "SearchInput",
+  name: "Search",
   data() {
     return {
       params: "",
@@ -88,18 +88,18 @@ export default Vue.extend({
 });
 </script>
 <style scoped>
-.search-input:first-child {
-  background-color: #7570703d;
-}
-.search-input .van-cell {
-  padding: 3px 12px;
-}
 .search-input {
   width: 96%;
   height: 100%;
   padding: 5px 2%;
   border-radius: 10px;
   background-color: white;
+}
+.search-input:first-child {
+  background-color: #7570703d;
+}
+.search-input .van-cell {
+  padding: 3px 12px;
 }
 .search-button {
   color: rgb(34, 126, 247);
@@ -109,6 +109,7 @@ export default Vue.extend({
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index:4;
 }
 </style>
 <style>

@@ -1,7 +1,7 @@
 <template>
   <div>
     <div ref="earthContainer" class="full" id="container">
-      <div id="slider"></div>
+      <!-- <div id="slider"></div> -->
     </div>
     <!-- <div id="threeContainer" style="z-index:0" class="full"></div> -->
   </div>
