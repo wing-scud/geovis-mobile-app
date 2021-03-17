@@ -1,8 +1,7 @@
 <template>
   <div>
-    <div ref="earthContainer" class="full" id="container">
-      <!-- <div id="slider"></div> -->
-    </div>
+    <div ref="earthContainer" class="full" id="earthContainer" />
+    <div ref="mapContainer" class="full" id="mapContainer" v-show="state.mode === 'map'" />
     <!-- <div id="threeContainer" style="z-index:0" class="full"></div> -->
   </div>
 </template>
@@ -13,7 +12,12 @@ import { earthStore } from "../store";
 export default {
   name: "App",
   props: ["onReady"],
-  created(){
+  data() {
+    return {
+      state: earthStore.state
+    };
+  },
+  created() {
     console.log("created ");
   },
   activated() {
@@ -22,11 +26,11 @@ export default {
   deactivated() {
     console.log("deactivated ");
   },
-  destroyed(){
+  destroyed() {
     console.log("destroyed ");
   },
   mounted() {
-    earthStore.init(this.$refs["earthContainer"]);
+    earthStore.init(this.$refs["earthContainer"], this.$refs["mapContainer"]);
   }
 };
 </script>
