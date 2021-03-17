@@ -1,10 +1,10 @@
 <template>
-  <div></div>
+  <div>默认</div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  name: "Address",
+  name: "Index",
   data() {
     return {};
   },

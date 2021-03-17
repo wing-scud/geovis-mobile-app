@@ -12,7 +12,7 @@ import LocationWatch from "./store";
 import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 export default Vue.extend({
-  name: "Map",
+  name: "MapEntity",
   props:['listFunc'],
   data() {
     return {
@@ -39,8 +39,8 @@ export default Vue.extend({
         case "锁定":
           lockSelf.locking = !lockSelf.locking;
           break;
-        case "导航":
-          this.$emit("changeComponent","Route")
+        case "路线查询":
+        this.$router.push({ name: "pathQuery" });
           break;
         default:
           break;
