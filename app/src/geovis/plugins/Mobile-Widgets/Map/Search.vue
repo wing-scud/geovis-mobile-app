@@ -12,7 +12,7 @@
     </div>
     <div class="search-result" v-if="searchResult">
       <van-cell-group>
-        <van-cell :title="item.name" :label="item.descri" v-for="item in searchResult" :key="item.name" @click="chooseSearchAddress(item.name)"></van-cell>
+        <van-cell :title="item.display_name" :label="item.descri" v-for="item in searchResult" :key="item.name" @click="chooseSearchAddress(item.name)"></van-cell>
       </van-cell-group>
     </div>
   </div>
@@ -58,39 +58,23 @@ export default Vue.extend({
       this.historyPanelState = false;
       this.historyRecords = [];
     },
-    search() {
+    async search() {
       this.historyPanelState = false;
-      // https://nominatim.openstreetmap.org/search?<params>
-      const url = `https://nominatim.openstreetmap.org/search?q=${this.params}`;
+      const url = `https://nominatim.openstreetmap.org/search?q=${this.params}&format=json&namedetails=[1]&&polygon_geojson=1&accept-language=zh-CN`;
+      console.log(url);
       fetch(url, {
-        method: "GET", // *GET, POST, PUT, DELETE, etc.
+        method: "GET",
         mode: "cors",
         headers: {
-          "user-agent": "Mozilla/4.0 MDN Example",
           "content-type": "application/json"
         }
       })
         .then(res => res.json())
         .then(data => {
-          console.log(data);
+          this.searchResult = data;
         });
-      // this.searchResult = [
-      //   {
-      //     name: "空天院4",
-      //     descri: "独墅湖大道158"
-      //   },
-      //   {
-      //     name: "空天院5",
-      //     descri: "独墅湖大道158"
-      //   },
-      //   {
-      //     name: "空天院6",
-      //     descri: "独墅湖大道158"
-      //   }
-      // ];
     },
     chooseHistoryAddress(address) {
-      debugger;
       this.params = address;
       this.search();
     },

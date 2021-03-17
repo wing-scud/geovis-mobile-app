@@ -16,7 +16,6 @@ const util = {
     return "in";
   },
   clear: function() {
-    debugger
     if (marker) {
       marker.removeFrom(earth.features);
       console.log("marker清除");

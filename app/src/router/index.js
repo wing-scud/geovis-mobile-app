@@ -6,7 +6,8 @@ import MapSetting from "../view/Map/MapSetting.vue";
 import Map from "../view/Map/Index.vue";
 import Default from "../view/Default/Index.vue";
 import Person from "../view/Person/Index.vue";
-import { PathQuery, Measure, Search } from "../geovis/plugins/Mobile-Widgets/index.js";
+import { PathQuery, Measure } from "../geovis/plugins/Mobile-Widgets/index.js";
+import SearchArea from "../geovis/plugins/Tool/SearchArea/SearchArea.vue"
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const routes = [
@@ -32,7 +33,7 @@ const routes = [
         component: Map,
         redirect: "/map/search",
         children: [
-          { path: "search", component: Search, name: "search" },
+          { path: "search", component: SearchArea, name: "search" },
           { path: "pathQuery", component: PathQuery, name: "pathQuery" },
           // { path: "pathNavigation", component: PathNavigation, name: "pathNavigation" },
           { path: "measure", component: Measure, name: "measure" }
