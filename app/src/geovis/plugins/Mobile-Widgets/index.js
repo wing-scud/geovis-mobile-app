@@ -7,4 +7,5 @@ Vue.component("SearchInput", () => import("./SearchInput/SearchInput.vue"));
 Vue.component("Map", () => import("./Map/Map.vue"));
 Vue.component("MapIndex", () => import("./Map/MapIndex.vue"));
 Vue.component("Route", () => import("./Map/Route.vue"));
+Vue.component("Address", () => import("./Address/Address.vue"));
 export {};

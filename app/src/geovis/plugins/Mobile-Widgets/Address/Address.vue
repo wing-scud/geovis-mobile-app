@@ -1,5 +1,5 @@
 <template>
-  <div></div>
+  <div>地址</div>
 </template>
 <script lang="ts">
 import Vue from "vue";

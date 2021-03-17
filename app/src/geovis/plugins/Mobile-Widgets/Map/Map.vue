@@ -40,7 +40,7 @@ export default Vue.extend({
           lockSelf.locking = !lockSelf.locking;
           break;
         case "导航":
-          this.$emit("changeComponent","Route")
+          this.$emit("changeComponent",{component:"Route",routeChange:true,tabbar:true})
           break;
         default:
           break;

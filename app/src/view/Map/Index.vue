@@ -1,7 +1,9 @@
 <template>
   <div class="home">
-    <keep-alive><Map :listFunc="listFilter" @changeComponent="change"/></keep-alive>
-    <component :is="component" @changeComponent="change"></component>
+    <keep-alive include="MapIndex">
+      <component :is="routeComponent" @changeRouteComponent="change"></component>
+    </keep-alive>
+    <Tabbar v-model="active" :list="list" @change="handleChange" :height="50" v-if="tabbar"></Tabbar>
   </div>
 </template>
 <script lang="ts">
@@ -11,38 +13,30 @@ export default Vue.extend({
   data() {
     return {
       active: 0,
-      listFunc: [
-        { name: "消息", icon: "icon-xiaoxi " },
-        { name: "图层", icon: "icon-tuceng " },
-        { name: "锁定", icon: "icon-suoding " },
-        { name: "导航", icon: "icon-luxian " }
-      ],
       list: [
         { name: "地图", icon: "icon-ditu" },
         { name: "默认", icon: "icon-daohangmoren" },
         { name: "个人", icon: "icon-geren" }
       ],
-      component: "MapIndex"
+      routeComponent: "MapIndex",
+      tabbar: true
     };
   },
   methods: {
     handleChange() {
-      const path = ["map", "default", "personal"];
-      const routePath = "/" + path[this.active];
-      this.$router.push(routePath);
+      const path = ["MapIndex", "default", "personal"];
+      const component = path[this.active];
+      this.routeComponent = component;
     },
+    /**
+     * value：{
+     * component:"",
+     * tabbar:true
+     * }
+     */
     change($event, value) {
-      this.component = value;
-    }
-  },
-  computed: {
-    listFilter() {
-      //@ts-ignore
-      let value = this.listFunc;
-      if (this.component === "Route") {
-        value = [{ name: "锁定", icon: "icon-suoding " }];
-      }
-      return value;
+      this.routeComponent = value.component;
+      this.tabbar = value.tabbar;
     }
   }
 });

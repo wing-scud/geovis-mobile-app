@@ -1,5 +1,5 @@
 import Vue from "vue";
-import Index from "../view/Map/Index.vue"
+import Index from "../view/Map/Index.vue";
 import Login from "../view/Login/Login.vue";
 import Register from "../view/Login/Register.vue";
 import MapSetting from "../view/Map/MapSetting.vue";
@@ -10,7 +10,10 @@ const routes = [
   {
     path: "/index",
     component: Index,
-    name: "index"
+    name: "index",
+    meta: {
+      keepAlive: true
+    }
   },
   { path: "/login", component: Login, name: "login" },
   { path: "/register", component: Register, name: "register" },
