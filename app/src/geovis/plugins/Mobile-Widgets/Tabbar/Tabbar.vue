@@ -23,7 +23,7 @@ export default Vue.extend({
       default: function() {
         return [
           { name: "主页", icon: "icon-zhuye" },
-          { name: "默认", icon: "icon-daohangmoren" },
+          { name: "应用", icon: "icon-daohangmoren" },
           { name: "个人", icon: "icon-geren" }
         ];
       }

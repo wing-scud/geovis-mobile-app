@@ -25,3 +25,8 @@ color: white;
     height: 100%;
     position: fixed;
 }
+.mapboxgl-control-container {
+    position: fixed;
+    top:0;
+    width:100%
+}

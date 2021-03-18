@@ -9,39 +9,46 @@
   <link rel="stylesheet" href="css/font-awesome.min.css">
   <!-- <link href="css/pickr.min.css" rel="stylesheet" />
   <link href="css/quill.snow.css" rel="stylesheet"/> -->
-  <title><%= htmlWebpackPlugin.options.title %></title>
+  <title>
+    <%= htmlWebpackPlugin.options.title %>
+  </title>
 </head>
 
 <body>
   <noscript>
     <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled.
-      Please enable it to continue.</strong>
+        Please enable it to continue.</strong>
   </noscript>
   <div id="app"></div>
   <script>
     window._fetch = fetch;
     function fetchLocal(url) {
-        return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest
-            xhr.onload = function () {
-                resolve(new Response(xhr.responseText, { status: xhr.status }))
-            }
-            xhr.onerror = function () {
-                reject(new TypeError('Local request failed'))
-            }
-            xhr.open('GET', url)
-            xhr.send(null) 
-        })
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest
+        xhr.onload = function () {
+          resolve(new Response(xhr.responseText, { status: xhr.status }))
+        }
+        xhr.onerror = function () {
+          reject(new TypeError('Local request failed'))
+        }
+        xhr.open('GET', url)
+        xhr.send(null)
+      })
     }
     window.fetch = function (url, ...params) {
-        if (url.search("http://") === 0 || url.search("https://") === 0) {
-            return _fetch(url,...params)
-        } else {
-            return fetchLocal(url)
-        }
+      if (!url.search || url.search("http://") === 0 || url.search("https://") === 0) {
+        return _fetch(url, ...params)
+      } else {
+        return fetchLocal(url)
+      }
     }
-</script>
+  </script>
   <script src="cordova.js"></script>
+  <script
+    src="./static/mapbox/mapbox-gl-directions.js"></script>
+  <link rel="stylesheet"
+    href="./static/mapbox/mapbox-gl-directions.css"
+    type="text/css">
   <!-- <script type="text/javascript" src="css/iconfont.js"></script> -->
   <script src="./static/geovis/GeoVis.js"></script>
   <!-- <script src="./static/lib/photo-sphere-viewer.min.js"></script> -->
@@ -81,4 +88,5 @@
   <script src="./static/topic.js"></script>
   <!-- built files will be auto injected -->
 </body>
+
 </html>

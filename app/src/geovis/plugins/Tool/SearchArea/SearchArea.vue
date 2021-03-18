@@ -139,7 +139,7 @@ export default {
     //  地名检索
     simpleQuery: async function(placeName) {
       //请求数据
-      const url = `https://nominatim.openstreetmap.org/search?q=${placeName}&format=json&namedetails=[1]&&polygon_geojson=1&accept-language=zh-CN&limit=4`;
+      const url = `https://nominatim.openstreetmap.org/search?q=${placeName}&format=json&namedetails=[1]&&polygon_geojson=1&accept-language=zh-Hans&limit=4`;
       // const url = `${this.url.default}/search.php?q=${placeName}&format=${this.queryFormat}&${this.queryDataType}=1`;
       const json = await util.getData(url); //请求polygon_geojson格式数据
       const prompts = [];

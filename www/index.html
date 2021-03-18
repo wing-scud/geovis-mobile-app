@@ -1,21 +1,21 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="favicon.ico"><link rel="stylesheet" href="css/font-awesome.min.css"><title>geovis-app-vue</title><link href="css/chunk-0d38e4e1.d7cdd93b.css" rel="prefetch"><link href="css/chunk-184c8890.46912bd5.css" rel="prefetch"><link href="css/chunk-1a89009d.ddddd6b6.css" rel="prefetch"><link href="css/chunk-1c21b1ca.390f1f28.css" rel="prefetch"><link href="js/chunk-0d38e4e1.adc86f7d.js" rel="prefetch"><link href="js/chunk-184c8890.1604dd85.js" rel="prefetch"><link href="js/chunk-1a89009d.7fc11709.js" rel="prefetch"><link href="js/chunk-1c21b1ca.e2ec598c.js" rel="prefetch"><link href="js/chunk-2d229b36.64a4bd18.js" rel="prefetch"><link href="css/app.936b28f8.css" rel="preload" as="style"><link href="css/chunk-vendors.9b46d122.css" rel="preload" as="style"><link href="js/app.827172f9.js" rel="preload" as="script"><link href="js/chunk-vendors.acb1b4aa.js" rel="preload" as="script"><link href="css/chunk-vendors.9b46d122.css" rel="stylesheet"><link href="css/app.936b28f8.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but geovis-app-vue doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><script>window._fetch = fetch;
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="icon" href="favicon.ico"><link rel="stylesheet" href="css/font-awesome.min.css"><title>geovis-app-vue</title><link href="css/chunk-1a89009d.ddddd6b6.css" rel="prefetch"><link href="css/chunk-6422536c.01f29cf1.css" rel="prefetch"><link href="css/chunk-84609bfe.d7cdd93b.css" rel="prefetch"><link href="css/chunk-8fa0b2e8.fbbeac71.css" rel="prefetch"><link href="css/chunk-bdc970a4.390f1f28.css" rel="prefetch"><link href="js/chunk-1a89009d.f73f3748.js" rel="prefetch"><link href="js/chunk-2d229b36.40f27697.js" rel="prefetch"><link href="js/chunk-6422536c.ad0a9aab.js" rel="prefetch"><link href="js/chunk-84609bfe.0943b771.js" rel="prefetch"><link href="js/chunk-8fa0b2e8.5db5f206.js" rel="prefetch"><link href="js/chunk-bdc970a4.21492128.js" rel="prefetch"><link href="css/app.ddabbf7a.css" rel="preload" as="style"><link href="css/chunk-vendors.9b46d122.css" rel="preload" as="style"><link href="js/app.dc3990f4.js" rel="preload" as="script"><link href="js/chunk-vendors.d1a5360b.js" rel="preload" as="script"><link href="css/chunk-vendors.9b46d122.css" rel="stylesheet"><link href="css/app.ddabbf7a.css" rel="stylesheet"></head><body><noscript><strong>We're sorry but geovis-app-vue doesn't work properly without JavaScript enabled. Please enable it to continue.</strong></noscript><div id="app"></div><script>window._fetch = fetch;
     function fetchLocal(url) {
-        return new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest
-            xhr.onload = function () {
-                resolve(new Response(xhr.responseText, { status: xhr.status }))
-            }
-            xhr.onerror = function () {
-                reject(new TypeError('Local request failed'))
-            }
-            xhr.open('GET', url)
-            xhr.send(null) 
-        })
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest
+        xhr.onload = function () {
+          resolve(new Response(xhr.responseText, { status: xhr.status }))
+        }
+        xhr.onerror = function () {
+          reject(new TypeError('Local request failed'))
+        }
+        xhr.open('GET', url)
+        xhr.send(null)
+      })
     }
     window.fetch = function (url, ...params) {
-        if (url.search("http://") === 0) {
-            return _fetch(url,...params)
-        } else {
-            return fetchLocal(url)
-        }
-    }</script><script src="cordova.js"></script><script src="./static/geovis/GeoVis.js"></script><script src="./static/geovis/DrawHelper.js"></script><script src="./static/scene.js"></script><script src="./static/ppt.js"></script><script src="./static/topic.js"></script><script src="js/chunk-vendors.acb1b4aa.js"></script><script src="js/app.827172f9.js"></script></body></html>
+      if (!url.search || url.search("http://") === 0 || url.search("https://") === 0) {
+        return _fetch(url, ...params)
+      } else {
+        return fetchLocal(url)
+      }
+    }</script><script src="cordova.js"></script><script src="./static/mapbox/mapbox-gl-directions.js"></script><link rel="stylesheet" href="./static/mapbox/mapbox-gl-directions.css" type="text/css"><script src="./static/geovis/GeoVis.js"></script><script src="./static/geovis/DrawHelper.js"></script><script src="./static/scene.js"></script><script src="./static/ppt.js"></script><script src="./static/topic.js"></script><script src="js/chunk-vendors.d1a5360b.js"></script><script src="js/app.dc3990f4.js"></script></body></html>

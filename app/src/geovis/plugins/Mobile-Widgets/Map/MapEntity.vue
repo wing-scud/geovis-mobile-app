@@ -4,6 +4,7 @@
     <Earth></Earth>
     <div class="left-bottom-weather">阴天 12°</div>
     <van-popup v-model="popShow" position="right" :style="{ width: '60%', height: '100%' }" :close-on-popstate="true" @close="closePopup"><Layer></Layer></van-popup>
+    <MobileBaseWidgets></MobileBaseWidgets>
   </div>
 </template>
 <script lang="ts">
@@ -13,17 +14,19 @@ import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 export default Vue.extend({
   name: "MapEntity",
-  props:['listFunc'],
+  props: ["listFunc"],
   data() {
     return {
       popShow: false,
       route: false,
+      state: earthStore.state,
     };
   },
   mounted() {
     const earth = earthStore.earth;
     //@ts-ignore
-    this.lockSelf = new LocationWatch(earth);
+    this.lockSelf = new LocationWatch();
+    // this.$set(earthStore.state,mode,this.mode)
   },
   methods: {
     handleClick(name) {
@@ -38,15 +41,34 @@ export default Vue.extend({
           break;
         case "锁定":
           lockSelf.locking = !lockSelf.locking;
+          //@ts-ignore
+          document.getElementsByClassName("icon-suoding")[0].style.color = lockSelf.locking ? "#0c87f1" : "#333";
           break;
         case "路线查询":
-        this.$router.push({ name: "pathQuery" });
+          if (this.$route.path === "/map/pathQuery" && this.state.mode === "map") {
+            this.$router.push({ name: "search" });
+          } else if (this.$route.path === "/map/pathQuery" && this.state.mode === "globe") {
+            this.state.mode = "map";
+          } else {
+            this.$router.push({ name: "pathQuery" });
+          }
           break;
         default:
           break;
       }
     },
     closePopup() {},
+  },
+  watch: {
+    "state.mode": function (value) {
+      //@ts-ignore
+      const lockSelf = this.lockSelf;
+      if (lockSelf.locking) {
+        lockSelf.locking = !lockSelf.locking;
+        //@ts-ignore
+        document.getElementsByClassName("icon-suoding")[0].style.color = lockSelf.locking ? "#0c87f1" : "#333";
+      }
+    },
   },
 });
 </script>
@@ -80,7 +102,7 @@ export default Vue.extend({
 }
 .left-bottom-weather {
   position: fixed;
-  bottom: 50px;
+  bottom: 70px;
   left: 5px;
   width: 80px;
   z-index: 3;

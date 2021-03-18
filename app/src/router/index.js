@@ -4,7 +4,7 @@ import Login from "../view/Login/Login.vue";
 import Register from "../view/Login/Register.vue";
 import MapSetting from "../view/Map/MapSetting.vue";
 import Map from "../view/Map/Index.vue";
-import Default from "../view/Default/Index.vue";
+import Application from "../view/Plugin/Index.vue";
 import Person from "../view/Person/Index.vue";
 import { PathQuery, Measure } from "../geovis/plugins/Mobile-Widgets/index.js";
 import SearchArea from "../geovis/plugins/Tool/SearchArea/SearchArea.vue"
@@ -40,8 +40,8 @@ const routes = [
         ]
       },
       {
-        path: "default",
-        component: Default,
+        path: "plugin",
+        component: Application,
         name: "default"
       }
     ],

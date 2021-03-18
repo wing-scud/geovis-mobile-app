@@ -1,7 +1,7 @@
 
 import { Toast } from 'vant';
+import { earthStore } from "@/geovis/store";
 class LocationWatch {
-    private earth: any;
     private watchId: any;
     private _position: {};
     private _locking: boolean;
@@ -25,41 +25,49 @@ class LocationWatch {
             this.flyTo(this._position)
         }
     }
-    constructor(earth: any) {
-        this.earth = earth;
+    constructor() {
         this._locking = false
     }
     flyTo(position) {
-        const earth = this.earth;
+        const modes = ["globe3", "globe2", "map"];
+        const index = modes.indexOf(earthStore.mode);
+        const mode = index < 2 ? "globe" : "map";
+        const earth = earthStore.earth;
+        const map = earthStore._map;
         //@ts-ignore
         if (position && position.coords) {             //@ts-ignore
             const coords = position.coords;
-            const heading = coords.heading ? GeoVis.Math.toRadians(coords.heading) : 0
-            earth.camera.flyTo({
-                destination: GeoVis.Cartesian3.fromDegrees(coords.longitude, coords.latitude, coords.altitude),
-                orientation: {
-                    heading: heading,
-                    pitch: GeoVis.Math.toRadians(-90),
-                    roll: 0
-                }
-            })
-        }else{
+            const heading = coords.heading ? GeoVis.Math.toRadians(coords.heading) : 0;
+            if (mode === "globe") {
+                earth.camera.flyTo({
+                    destination: GeoVis.Cartesian3.fromDegrees(coords.longitude, coords.latitude, coords.altitude),
+                    orientation: {
+                        heading: heading,
+                        pitch: GeoVis.Math.toRadians(-90),
+                        roll: 0
+                    }
+                })
+            } else {
+                map.setCenter([position.coords.longitude, position.coords.latitude]);
+                map.setZoom(16);
+            }
+
+        } else {
             Toast("位置获取失败")
         }
     }
     clearSelfLocationWatch() {
         if (this.watchId) {
-            Toast('close');
+            Toast('关闭定位');
             navigator.geolocation.clearWatch(this.watchId);
             this.watchId = undefined;
         }
     }
     watchSelfLocation() {
         const instance = this;
-        // this.position={coords:{longitude:120,latitude:20,altitude:2000,heading:90}}
         const onSuccess = function (position) {
             instance.position = position;
-            console.log(position)
+            Toast('开启    定位');
             // Toast(position);
         };
         function onError(error) {

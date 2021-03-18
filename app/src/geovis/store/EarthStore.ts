@@ -2,26 +2,27 @@
 import SceneManager from "./SceneManager/SceneManager";
 import mapboxgl from 'mapbox-gl';
 import * as utils from "../util";
+import MapboxLanguage from '@mapbox/mapbox-gl-language'
 mapboxgl.accessToken =
-    "pk.eyJ1IjoiZmFpbnR6eiIsImEiOiJjazg4NTgwejkwNHMzM3BxYTRhcnB5amYyIn0.wjzAeek8dLS1U4H9Wx-J9A"
-function disableVueTrack(object){
+  "pk.eyJ1IjoiZmFpbnR6eiIsImEiOiJjazg4NTgwejkwNHMzM3BxYTRhcnB5amYyIn0.wjzAeek8dLS1U4H9Wx-J9A"
+function disableVueTrack(object) {
   const keys = Object.keys(object);
   object["configurable"] = false;
-  keys.map(key=>{
+  keys.map(key => {
     const prop = object[key];
-    if(typeof prop === "object"){
+    if (typeof prop === "object") {
       prop["configurable"] = false
     }
   })
 
-  Object["_getOwnPropertyDescriptor"]  =Object.getOwnPropertyDescriptor;
-  Object.getOwnPropertyDescriptor = function(obj,key){
+  Object["_getOwnPropertyDescriptor"] = Object.getOwnPropertyDescriptor;
+  Object.getOwnPropertyDescriptor = function (obj, key) {
     const property = Object["_getOwnPropertyDescriptor"](obj, key);
-    try{
-      if(obj[key]&&obj[key].configurable===false){
+    try {
+      if (obj[key] && obj[key].configurable === false) {
         property.configurable = false;
       }
-    }catch(e){
+    } catch (e) {
       // debugger
     }
 
@@ -41,18 +42,16 @@ export class EarthStore {
         width: 100,
         height: 100
       },
-      mode: "map", // globe  map
+      mode: "map", // globe3 globe2  map 
       pluginTree: [],
       pluginMap: {}
     };
   }
-
-
-  get mode(){
+  get mode() {
     return this.state.mode;
   }
 
-  get map(){
+  get map() {
     return this._map;
   }
 
@@ -66,9 +65,9 @@ export class EarthStore {
 
   get drawHelper() {
     if (!this._drawHelper) {
-      this._drawHelper = new DrawHelper(this._earth,{
+      this._drawHelper = new DrawHelper(this._earth, {
         server: `http://${window["sceneData"].plotServer}:8001`,
-        wasm:`${window["sceneData"].plotServer}:8003`
+        wasm: `${window["sceneData"].plotServer}:8003`
       });
     }
     return this._drawHelper;
@@ -78,7 +77,7 @@ export class EarthStore {
     return this._sceneManager;
   }
 
-  async init(earthRef,mapRef) {
+  async init(earthRef, mapRef) {
     this._earth = window.earth = new GeoVis.Earth(earthRef, {
       /*@ts-ignore */
       skyBox: true,
@@ -101,14 +100,24 @@ export class EarthStore {
       automaticallyTrackDataSourceClocks: false,
       dataSources: null
     });
-    if(mapRef){
+    if (mapRef) {
       this._map = new mapboxgl.Map({
         container: mapRef,
-        style: 'mapbox://styles/mapbox/streets-v9'
+        attributionControl: false,
+        style: 'mapbox://styles/mapbox/streets-v9',
+        center: [120, 30],
       });
+      // 设置语言
+      const language = new MapboxLanguage({ defaultLanguage: "zh" });
+      this._map.addControl(language);
+      //@ts-ignore
+      // const controls= this._map._controls;
+      // controls.map((control)=>{
+      //   this._map.removeControl(control);
+      // })
+      // this._map.addControl(new mapboxgl.NavigationControl(),"top-right")
     }
     this.earth.scene.postProcessStages.fxaa.enabled = true;
-
     GeoVis.Camera.MAX_PITCH = 0;
     this.earth = earth;
     disableVueTrack(this.earth);
@@ -124,11 +133,11 @@ export class EarthStore {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
     //@ts-ignore
-    const timelineNode: HTMLElement= earth.container.querySelector(".cesium-timeline-main")
-    timelineNode&&(timelineNode.style.display = "none")
+    const timelineNode: HTMLElement = earth.container.querySelector(".cesium-timeline-main")
+    timelineNode && (timelineNode.style.display = "none")
   }
 
-  getPuginState = id =>{
+  getPuginState = id => {
     return this.state.pluginMap[id] || {};
   }
   /**
@@ -145,7 +154,7 @@ export class EarthStore {
     }
   };
 
-  enablePlugin  = (id,enabled) => {
+  enablePlugin = (id, enabled) => {
     const item = this.state.pluginMap[id] || {};
     if (enabled !== undefined) {
       item.enabled = !!enabled;
