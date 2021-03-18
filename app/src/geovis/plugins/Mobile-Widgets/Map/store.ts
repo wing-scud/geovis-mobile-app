@@ -77,6 +77,20 @@ class LocationWatch {
         // const watchId = navigator.geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
         instance.watchId = watchId;
     }
-
+    getCurrentPosition() {
+        const instance = this;
+        return new Promise((resolve, reject) => {
+            const onSuccess = function (position) {
+                // instance._position = position;
+                Toast('获取位置');
+                resolve(position)
+            };
+            function onError(error) {
+                Toast(error);
+                reject(error)
+            }
+            navigator.geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
+        })
+    }
 }
 export default LocationWatch;

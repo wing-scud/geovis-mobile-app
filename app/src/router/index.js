@@ -6,8 +6,8 @@ import MapSetting from "../view/Map/MapSetting.vue";
 import Map from "../view/Map/Index.vue";
 import Application from "../view/Plugin/Index.vue";
 import Person from "../view/Person/Index.vue";
-import { PathQuery, Measure } from "../geovis/plugins/Mobile-Widgets/index.js";
-import SearchArea from "../geovis/plugins/Tool/SearchArea/SearchArea.vue"
+import { PathQuery, Measure,SearchArea } from "../geovis/plugins/Mobile-Widgets/index.js";
+// import SearchArea from "../geovis/plugins/Tool/SearchArea/SearchArea.vue"
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const routes = [
@@ -40,9 +40,9 @@ const routes = [
         ]
       },
       {
-        path: "plugin",
+        path: "application",
         component: Application,
-        name: "default"
+        name: "application"
       }
     ],
     meta: {

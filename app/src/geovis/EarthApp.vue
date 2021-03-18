@@ -1,6 +1,8 @@
 <template>
   <div id="geovis-app">
+    <keep-alive include="Home">
     <router-view></router-view>
+  </keep-alive>
     <!-- <Earth /> -->
     <!-- <transition-group name="fade"> -->
     <!-- <div id="geo-drawplugin" />
@@ -26,8 +28,6 @@ import "./util";
 export default Vue.extend({
   name: "EarthApp",
   components: {
-    // PluginManager
-    // Navigation
   },
   data() {
     return {

@@ -18,11 +18,20 @@ export default Vue.extend({
     const addPathQuery = function() {
       const map = earthStore.map;
       const pathQuery = new MapboxDirections({
-        accessToken: mapboxgl.accessToken
+        accessToken: mapboxgl.accessToken,
+        // profile:{
+
+        // }
       });
       // document.getElementById('mapbox-path').appendChild(pathQuery.container)
       //@ts-ignore
       instance._control = pathQuery;
+      if (instance.$route.params) {
+        //导航
+        const params = instance.$route.params;
+        pathQuery.setOrigin(params.start );
+        pathQuery.setDestination( params.end);
+      }
       map.addControl(pathQuery, "top-left");
       // pathQuery.container=document.getElementById('mapbox-path')
       // const detailedPathSummary = document.getElementsByClassName('mapbox-directions-route-summary')[0];
@@ -43,6 +52,8 @@ export default Vue.extend({
   },
   beforeDestroy() {
     const map = earthStore.map;
+    //@ts-ignore
+    this._control.removeRoutes();
     //@ts-ignore
     map.removeControl(this._control);
   }

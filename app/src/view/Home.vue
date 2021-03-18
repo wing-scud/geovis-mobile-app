@@ -3,7 +3,7 @@
     <keep-alive include="Map">
       <router-view></router-view>
     </keep-alive>
-    <Tabbar v-model="active" :list="list" @change="handleChange" :height="50" v-if="tabbar"></Tabbar>
+    <Tabbar v-model="active" :list="list" @change="handleChange" :height="50"></Tabbar>
   </div>
 </template>
 <script lang="ts">
@@ -18,15 +18,13 @@ export default Vue.extend({
         { name: "应用", icon: "icon-daohangmoren" },
         { name: "个人", icon: "icon-geren" }
       ],
-      routeComponent: "MapIndex",
-      tabbar: true
     };
   },
   methods: {
     handleChange() {
-      const path = ["/", "/default", "/person"];
+      const path = ["/", "/application", "/person"];
       const componentPath = path[this.active];
-      this.$router.push(componentPath)
+      this.$router.push(componentPath);
     }
   }
 });

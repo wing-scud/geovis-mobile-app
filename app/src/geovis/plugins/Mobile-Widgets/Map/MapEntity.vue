@@ -47,7 +47,7 @@ export default Vue.extend({
         case "路线查询":
           if (this.$route.path === "/map/pathQuery" && this.state.mode === "map") {
             this.$router.push({ name: "search" });
-          } else if (this.$route.path === "/map/pathQuery" && this.state.mode === "globe") {
+          } else if (this.$route.path === "/map/pathQuery" && (this.state.mode === "globe2"||this.state.mode === "globe3")) {
             this.state.mode = "map";
           } else {
             this.$router.push({ name: "pathQuery" });

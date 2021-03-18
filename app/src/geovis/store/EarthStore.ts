@@ -42,7 +42,7 @@ export class EarthStore {
         width: 100,
         height: 100
       },
-      mode: "map", // globe3 globe2  map 
+      mode: "globe3", // globe3 globe2  map 
       pluginTree: [],
       pluginMap: {}
     };

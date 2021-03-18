@@ -23,6 +23,7 @@
 </template>
 <script>
 import { earthStore } from "@/geovis/store";
+import LocationWatch from "../Map/store";
 /* eslint-disable @typescript-eslint/camelcase */
 import util from "./util";
 export default {
@@ -212,7 +213,6 @@ export default {
       } else {
         util.polygonpointsToVector2(point.polygonpoints); //用于fromPoints(vector)
         const bd = this.fromPoints(point.polygonpoints); //得到BoudingRectangle
-
         const x = bd.width === 0 ? bd.x - 0.005 : bd.x;
         const y = bd.height === 0 ? bd.y - 0.005 : bd.y;
         const width = bd.width === 0 ? 0.01 : bd.width;
@@ -270,9 +270,12 @@ export default {
           };
         }
       });
-      const start = [];
-      const end = point.location;
-      this.$router.push({ name: "pathQuery", params: { start: start, end: end } });
+      const locationSelf = new LocationWatch();
+      locationSelf.getCurrentPosition().then(position => {
+        const start = [position.coords.longitude, position.coords.latitude];
+        const end = point.location;
+        this.$router.push({ name: "pathQuery", params: { start: start, end: end } });
+      });
     }
   }
 };
@@ -305,7 +308,7 @@ export default {
 }
 </style>
 <style>
-.search-input .van-icon {
+.search-input .van-field__left-icon {
   line-height: 35px;
 }
 .search-input .van-field__control {
