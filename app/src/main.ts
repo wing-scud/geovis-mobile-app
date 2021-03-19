@@ -2,6 +2,7 @@ import Vue from "vue";
 import App from "./App.vue";
 import Vant from "vant";
 import "vant/lib/index.css";
+import "mapbox-gl/src/css/mapbox-gl.css"
 import {earthStore, EarthStore} from "./geovis/store/index.js";
 import router from "./router/index.js"
 import "./cordova/cordova.js"

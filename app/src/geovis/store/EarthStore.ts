@@ -103,6 +103,7 @@ export class EarthStore {
     if (mapRef) {
       this._map = new mapboxgl.Map({
         container: mapRef,
+        trackResize:true,
         attributionControl: false,
         style: 'mapbox://styles/mapbox/streets-v9',
         center: [120, 30],
@@ -110,12 +111,8 @@ export class EarthStore {
       // 设置语言
       const language = new MapboxLanguage({ defaultLanguage: "zh" });
       this._map.addControl(language);
-      //@ts-ignore
-      // const controls= this._map._controls;
-      // controls.map((control)=>{
-      //   this._map.removeControl(control);
-      // })
-      // this._map.addControl(new mapboxgl.NavigationControl(),"top-right")
+      this._map.getCanvas().style.height="";
+      this._map.getCanvas().style.width="";
     }
     this.earth.scene.postProcessStages.fxaa.enabled = true;
     GeoVis.Camera.MAX_PITCH = 0;

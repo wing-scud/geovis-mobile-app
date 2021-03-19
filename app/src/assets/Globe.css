@@ -25,10 +25,11 @@ color: white;
     height: 100%;
     position: fixed;
 }
-.mapboxgl-control-container {
+.mapboxgl-canvas-container ,.mapboxgl-interactive, .mapboxgl-touch-drag-pan, .mapboxgl-touch-zoom-rotate {
     position: fixed;
     top:0;
-    width:100%
+    width:100%;
+    height: 100%;
 }
 .suggest-panel .van-icon{
 font-size: 20px;

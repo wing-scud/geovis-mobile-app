@@ -28,7 +28,7 @@ const routes = [
         component: Map,
         children: [
           { path: "search", component: SearchArea, name: "search" },
-          { path: "pathPlan", component: PathPlan, name: "PathPlan" },
+          { path: "pathPlan", component: PathPlan, name: "pathPlan" },
           { path: "measure", component: Measure, name: "measure" }
         ]
       },

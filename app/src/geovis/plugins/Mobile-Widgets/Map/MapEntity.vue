@@ -1,9 +1,9 @@
 <template>
   <div>
+    <Earth></Earth>
     <div class="map-plugin-right">
       <MIcon :icon="item.icon" length="35px" v-for="item in listFunc" :key="item['name']" :name="item['name']" circle @click="handleClick(item['name'])"> </MIcon>
     </div>
-    <Earth></Earth>
     <WeatherInfor></WeatherInfor>
     <van-popup v-model="popShow" position="right" :style="{ width: '60%', height: '100%' }" :close-on-popstate="true" @close="closePopup"><Layer></Layer></van-popup>
     <MobileBaseWidgets></MobileBaseWidgets>
