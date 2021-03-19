@@ -3,7 +3,7 @@
     <keep-alive include="Map">
       <router-view></router-view>
     </keep-alive>
-    <Tabbar v-model="active" :list="list" @change="handleChange" :height="50"></Tabbar>
+    <MTabbar v-model="active" :list="list" @change="handleChange" :height="50"></MTabbar>
   </div>
 </template>
 <script lang="ts">

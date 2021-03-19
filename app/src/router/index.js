@@ -6,21 +6,16 @@ import MapSetting from "../view/Map/MapSetting.vue";
 import Map from "../view/Map/Index.vue";
 import Application from "../view/Plugin/Index.vue";
 import Person from "../view/Person/Index.vue";
-import { PathQuery, Measure,SearchArea } from "../geovis/plugins/Mobile-Widgets/index.js";
-// import SearchArea from "../geovis/plugins/Tool/SearchArea/SearchArea.vue"
+import { PathPlan, Measure, SearchArea } from "../geovis/plugins/Mobile-Widgets/index.js";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const routes = [
-  // {
-  //   path: "/",
-  //   redirect: "/login"
-  // },
   {
     path: "/",
     // alias:"/",
     component: Home,
     name: "index",
-    redirect: "/map/search",
+    redirect: "/map",
     children: [
       {
         path: "person",
@@ -31,11 +26,9 @@ const routes = [
         name: "map",
         path: "map",
         component: Map,
-        redirect: "/map/search",
         children: [
           { path: "search", component: SearchArea, name: "search" },
-          { path: "pathQuery", component: PathQuery, name: "pathQuery" },
-          // { path: "pathNavigation", component: PathNavigation, name: "pathNavigation" },
+          { path: "pathPlan", component: PathPlan, name: "PathPlan" },
           { path: "measure", component: Measure, name: "measure" }
         ]
       },
@@ -82,9 +75,9 @@ const routes = [
 ];
 
 const router = new VueRouter({ routes, mode: "hash" });
-router.beforeEach((to, from, next) => {
-  const isAuthenticated = true;
-  if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
-  else next();
-});
+// router.beforeEach((to, from, next) => {
+//   const isAuthenticated = true;
+//   if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
+//   else next();
+// });
 export default router;

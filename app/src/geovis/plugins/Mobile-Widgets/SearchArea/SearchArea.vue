@@ -1,29 +1,34 @@
 <template>
   <div class="search-input">
-    <van-field v-model="inputValue" :left-icon="leftIcon" size="" placeholder="请输入地点" clearable @keyup.enter.native="submit" @input="fetchSuggestions">
+    <van-field v-model="inputValue" :left-icon="leftIcon" size="" placeholder="请输入地点" :error-message="inputErrorMessage" clearable @keyup.enter.native="submit" @input="getSuggestions">
       <template #button>
-        <van-button size="small" type="default" class="search-button" plain @click="submit">搜索</van-button>
+        <div class="search-group">
+          <van-checkbox v-model="coordinateCheckd" class="search-checkbox search-group-item">坐标反查</van-checkbox>
+          <van-button size="small" type="default" class="search-button search-group-item" plain @click="submit">搜索</van-button>
+        </div>
       </template>
     </van-field>
     <div class="suggest-panel" v-if="suggestions.length > 0">
       <van-cell-group>
-        <van-cell :title="item.value" v-for="item in suggestions" :key="item.id" @click="useSuggestion(item.id)">
-          <template v:slot="right-icon">
-            <van-icon name="share-o" @click="routeTo(item.id)" />
+        <van-cell v-for="item in suggestions" :key="item.id">
+          <template v:slot="title">
+            <span class="van-cell__title" @click="useSuggestion(item.id)">{{ item.value }}</span>
+          </template>
+          <template v:slot="right-icon" v-if="item.id !== 'none'">
+            <div class="search-group">
+              <van-icon name="star-o" class="star" :style="addressStarIconStyle(item.id)" @click="starAddress(item.id)" />
+              <van-icon name="share-o" class="share" @click="routeTo(item.id)" />
+            </div>
           </template>
         </van-cell>
       </van-cell-group>
     </div>
-    <!-- <div class="search-result" v-if="prompts">
-      <van-cell-group>
-        <van-cell :title="item.display_name" :label="item.descri" v-for="item in prompts" :key="item.name"></van-cell>
-      </van-cell-group>
-    </div> -->
   </div>
 </template>
 <script>
 import { earthStore } from "@/geovis/store";
-import LocationWatch from "../Map/store";
+import { mapLocation } from "../Location/Location.ts";
+import _ from "lodash";
 /* eslint-disable @typescript-eslint/camelcase */
 import util from "./util";
 export default {
@@ -54,14 +59,28 @@ export default {
       queryDataType: this.dataType,
       _polygon: undefined,
       _marker: undefined,
-      _point: undefined
+      _point: undefined,
+      coordinateCheckd: false,
+      inputErrorMessage: undefined,
+      staredAddress: []
+      // addressStarIconStyle: undefined
     };
   },
   destroyed() {
     util.clear();
   },
+  mounted() {
+    const debounceFetchSuggest = _.debounce(this.fetchSuggestions, 500);
+    this.debounceFetchSuggest = debounceFetchSuggest;
+  },
   methods: {
-    useSuggestion(id) {
+    starAddress(id) {
+      // this.addressStarIconStyle = { color: "red" };
+      const point = this.getPlaceFromId(id);
+      this.staredAddress.push(point);
+      // return point;
+    },
+    getPlaceFromId(id) {
       let point;
       this.prompts.map(place => {
         if (place.place_id === id) {
@@ -73,6 +92,10 @@ export default {
           };
         }
       });
+      return point;
+    },
+    useSuggestion(id) {
+      const point = this.getPlaceFromId(id);
       this.suggestions = [];
       if (!point) {
         //如果用户什么都没有输入
@@ -92,24 +115,34 @@ export default {
       document.getElementsByClassName("el-autocomplete-suggestion")[0].style.display = "none";
       util.clear();
     },
+    getSuggestions() {
+      this.debounceFetchSuggest();
+    },
     fetchSuggestions: async function() {
       const queryString = this.inputValue;
       let prompts, suggestions;
-      if (util.isLonlatString(queryString)) {
-        ({ prompts, suggestions } = await this.reverseQuery(queryString));
+      this.suggestions = [{ value: "请稍等", id: "none" }];
+      if (this.coordinateCheckd) {
+        if (util.isLonlatString(queryString)) {
+          this.inputErrorMessage = undefined;
+          ({ prompts, suggestions } = await this.reverseQuery(queryString));
+        } else {
+          this.inputErrorMessage = "输入格式错误";
+          suggestions = [];
+        }
       } else {
         ({ prompts, suggestions } = await this.simpleQuery(queryString));
       }
       this.suggestions = suggestions;
       this.prompts = prompts;
     },
-
     // 坐标检索(逆地理编码)
     reverseQuery: async function(queryString) {
       const [lon, lat] = queryString.split(",").map(val => parseFloat(val));
       const lonlatValid = Math.abs(lon) <= 180 && Math.abs(lat) <= 90;
       if (lonlatValid) {
-        const url = `${this.pluginInfo.data.server}/reverse.php?format=json&lat=${lat}&lon=${lon}`;
+        const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&namedetails=[1]&polygon_geojson=1&accept-language=zh-Hans&zoom=18`;
+        // const url = `${this.pluginInfo.data.server}/reverse.php?format=json&lat=${lat}&lon=${lon}`;
         const json = await util.getData(url); //请求polygon_geojson格式数据
         const resultLon = parseFloat(json.lon);
         const resultLat = parseFloat(json.lat);
@@ -144,7 +177,8 @@ export default {
     //  地名检索
     simpleQuery: async function(placeName) {
       //请求数据
-      const url = `https://nominatim.openstreetmap.org/search?q=${placeName}&format=json&namedetails=[1]&&polygon_geojson=1&accept-language=zh-Hans&limit=4`;
+      console.log("query");
+      const url = `https://nominatim.openstreetmap.org/search?q=${placeName}&format=json&namedetails=[1]&polygon_geojson=1&accept-language=zh-Hans&limit=4`;
       // const url = `${this.url.default}/search.php?q=${placeName}&format=${this.queryFormat}&${this.queryDataType}=1`;
       const json = await util.getData(url); //请求polygon_geojson格式数据
       const prompts = [];
@@ -172,6 +206,9 @@ export default {
         prompts.push(place);
         suggestions.push({ value: item.display_name, id: item.place_id });
       });
+      if (json.length === 0) {
+        suggestions.push({ value: "查询无结果", id: "none" });
+      }
       return { prompts, suggestions };
     },
 
@@ -259,23 +296,24 @@ export default {
     },
     searchRequest: async function(placeName) {},
     routeTo(id) {
-      let point;
-      this.prompts.map(place => {
-        if (place.place_id === id) {
-          point = {
-            location: place.location,
-            polygonpoints: place.polygonpoints,
-            name: place.value,
-            ...place
-          };
-        }
-      });
-      const locationSelf = new LocationWatch();
-      locationSelf.getCurrentPosition().then(position => {
+      const point = this.getPlaceFromId(id);
+      mapLocation.getCurrentPosition().then(position => {
         const start = [position.coords.longitude, position.coords.latitude];
         const end = point.location;
-        this.$router.push({ name: "pathQuery", params: { start: start, end: end } });
+        this.$router.push({ name: "pathPlan", params: { start: start, end: end } });
       });
+    }
+  },
+  computed: {
+    addressStarIconStyle: function() {
+      return function(id) {
+        const place = this.staredAddress.find(item => {
+          return item.place_id === id;
+        });
+        if (place) {
+          return { color: "red" };
+        }
+      };
     }
   }
 };
@@ -284,17 +322,19 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only 如果用element不能加scoped-->
 <style scoped>
 .search-input {
-  width: 96%;
-  height: 100%;
-  padding: 5px 2%;
+  width: 92%;
+  margin: 5px 2%;
   border-radius: 10px;
-  background-color: white;
+  background-color: #fff;
+  position: fixed;
+  z-index: 4;
+  padding: 2px 2%;
 }
 .search-input:first-child {
   background-color: #7570703d;
 }
 .search-input .van-cell {
-  padding: 3px 12px;
+  padding: 3px 2px 3px 12px;
 }
 .search-button {
   color: rgb(34, 126, 247);
@@ -306,6 +346,22 @@ export default {
   width: 100%;
   z-index: 4;
 }
+.search-group {
+  display: inline-flex;
+}
+.search-group-item {
+  margin: 0 3px;
+}
+.search-checkbox {
+  font-size: 12px;
+}
+.star {
+  margin-right: 5px;
+}
+.van-cell__value--alone {
+  display: inline-flex;
+  justify-content: space-between;
+}
 </style>
 <style>
 .search-input .van-field__left-icon {
@@ -313,5 +369,19 @@ export default {
 }
 .search-input .van-field__control {
   background-color: #f7f8fa;
+}
+.suggest-panel .van-cell__title {
+  -webkit-box-flex: unset !important;
+  -webkit-flex: unset !important;
+  flex: unset !important;
+}
+.van-cell__value--alone .van-cell__value {
+  -webkit-box-flex: unset !important;
+  -webkit-flex: unset !important;
+  flex: unset !important;
+  width: 50px;
+}
+.suggest-panel .van-cell {
+  justify-content: space-between;
 }
 </style>

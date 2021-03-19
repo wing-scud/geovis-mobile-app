@@ -1,5 +1,6 @@
 <template>
   <div id="widgets">
+    <div class="time-box">{{ formateTime }}</div>
     <div id="tools" :style="`bottom: ${mapBottom}px;`">
       <div class="tool-icon" @click="handleClick($event)" style="width: 33px; height: 33px; border-radius: 33px; position: relative; right: 2px">
         <img type="button" class="tool-img3" id="compass" src="./assets/指南针.png" :style="transform" />
@@ -31,12 +32,17 @@ export default {
       degree: 30,
       transform: "transform:rotate(0deg)",
       state: earthStore.state,
-      earthState: earthStore.state
+      earthState: earthStore.state,
+      formateTime: "",
+      timeInterval: undefined
     };
   },
   mounted() {
     this.initInfobox();
     this.initCompass();
+    this.timeInterval = setInterval(() => {
+      this.formateTime = this.formateDate(new Date());
+    }, 100);
   },
   computed: {
     mapBottom() {
@@ -55,6 +61,30 @@ export default {
     }
   },
   methods: {
+    formateDate(date) {
+      const year = date.getFullYear();
+      let month = date.getMonth()+1;
+      if (month < 10) {
+        month = "0" + month;
+      }
+      let days = date.getDate();
+      if (days < 10) {
+        days = "0" + days;
+      }
+      let hours = date.getHours();
+      if (hours < 10) {
+        hours = "0" + hours;
+      }
+      let minutes = date.getMinutes();
+      if (minutes < 10) {
+        minutes = "0" + minutes;
+      }
+      let seconds = date.getSeconds();
+      if (seconds < 10) {
+        seconds = "0" + seconds;
+      }
+      return `${year}-${month}-${days}  ${hours}:${minutes}:${seconds}`;
+    },
     handleClick(event) {
       const id = event.target.id;
       const earth = window.earth;
@@ -131,6 +161,8 @@ export default {
         this.transform = `transform:rotate(${degree}deg)`;
       });
     }
+  },beforeDestroy(){
+    clearInterval(this.timeInterval)
   }
 };
 </script>
@@ -190,5 +222,14 @@ export default {
   user-select: none;
   font-family: yahei;
   text-align: center;
+}
+.time-box {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  margin: 10px 0;
+  color: white;
+  font-size: 18px;
+  transform: translateX(-50%);
 }
 </style>

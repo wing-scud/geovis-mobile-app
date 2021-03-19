@@ -35,7 +35,7 @@ class LocationWatch {
         const earth = earthStore.earth;
         const map = earthStore._map;
         //@ts-ignore
-        if (position && position.coords) {             //@ts-ignore
+        if (position && position.coords) {
             const coords = position.coords;
             const heading = coords.heading ? GeoVis.Math.toRadians(coords.heading) : 0;
             if (mode === "globe") {
@@ -93,4 +93,7 @@ class LocationWatch {
         })
     }
 }
-export default LocationWatch;
+
+export const mapLocation = new LocationWatch();
+//@ts-ignore
+window["mapLocation"] = mapLocation

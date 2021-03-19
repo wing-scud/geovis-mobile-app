@@ -4,10 +4,10 @@
         "name": "控件",
         "items": [
             {
-                "id": "BottomTabbar",
+                "id": "BaseWidgets",
                 "type": "widget",
-                "icon": "tabbar",
-                "name": "底部标签",
+                "icon": "default",
+                "name": "地图导航",
                 "enabled": true,
                 "active": true,
                 "mutex": false
@@ -70,7 +70,7 @@
                 "mutex": false
             },
             {
-                "id": "RouteNavigation",
+                "id": "PathPlan",
                 "type": "tools",
                 "icon": "route",
                 "name": "路线导航",

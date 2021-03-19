@@ -2,7 +2,7 @@
   <div class="full-screen">
     <!-- mapsetting -->
     <div class="title">
-      地图设置
+      地图控件管理
     </div>
     <div class="setting">
       <van-cell-group>
@@ -12,11 +12,30 @@
         <van-cell title="指南针">
           <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
         ></van-cell>
-        <!-- 允许输入数字，调起带符号的纯数字键盘 -->
-        <van-field v-model="vectorAddress" label="矢量地图端口" />
-        <van-field v-model="weatherAddress" label="天气地图端口" />
-        <van-field v-model="friendAddress" label="友邻地图端口" />
-        <van-field v-model="divisionAddress" label="区划地图端口" />
+        <van-cell title="搜索">
+          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        ></van-cell>
+        <van-cell title="导航">
+          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        ></van-cell>
+        <van-cell title="天气小挂件">
+          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        ></van-cell>
+        <van-cell title="地图基础挂件">
+          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        ></van-cell>
+        <van-cell title="锁定位置">
+          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        ></van-cell>
+        <van-cell title="信息">
+          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        ></van-cell>
+        <van-cell title="全屏">
+          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        ></van-cell>
+        <van-cell title="时间">
+          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        ></van-cell>
       </van-cell-group>
     </div>
   </div>
@@ -27,10 +46,6 @@ export default Vue.extend({
   name: "MapSetting",
   data() {
     return {
-      vectorAddress: "192.168.16.20",
-      divisionAddress: "192.168.16.20",
-      weatherAddress: "192.168.16.20",
-      friendAddress: "192.168.16.20",
       zoom: false,
       compass: false
     };

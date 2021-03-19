@@ -26,11 +26,11 @@ export default Vue.extend({
       // document.getElementById('mapbox-path').appendChild(pathQuery.container)
       //@ts-ignore
       instance._control = pathQuery;
-      if (instance.$route.params) {
+      if (instance.$route.params&&instance.$route.params.start) {
         //导航
         const params = instance.$route.params;
         pathQuery.setOrigin(params.start );
-        pathQuery.setDestination( params.end);
+        pathQuery.setDestination(params.end);
       }
       map.addControl(pathQuery, "top-left");
       // pathQuery.container=document.getElementById('mapbox-path')
