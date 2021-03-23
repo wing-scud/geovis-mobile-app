@@ -6,6 +6,7 @@ import "mapbox-gl/src/css/mapbox-gl.css"
 import {earthStore, EarthStore} from "./geovis/store/index.js";
 import router from "./router/index.js"
 import "./cordova/cordova.js"
+import mobileStore from  "./store/index.js"
 /*
 ------------pc适配-------------------
 import "./assets/global.scss";
@@ -32,6 +33,7 @@ declare module "vue/types/vue" {
 }
 Vue.config.productionTip = false;
 new Vue({
+  store:mobileStore,
   render: h => h(App),
   router
 }).$mount("#app");

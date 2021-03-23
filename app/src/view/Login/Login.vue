@@ -10,7 +10,7 @@
         </div>
         <div class="login-item">
           <span class="forget-password">忘记密码？</span>
-          <span class="register-tooltip">没有账号，<router-link to="/register" class=" register">去注册</router-link></span>
+          <span class="register-tooltip">没有账号，<router-link to="/Register" class=" register">去注册</router-link></span>
         </div>
       </div>
     </div>

@@ -7302,11 +7302,10 @@
 
             var accessToken = this.options.accessToken ? this.options.accessToken : mapboxgl.accessToken;
             options.push('access_token=' + accessToken);
-            options.push('accept-language=' + 'zh-Hans');
+            options.push('language=' + 'zh');
             options.push('limit=' + '4');
             const url = this.api + encodeURIComponent(q.trim()) + '.json?' + options.join('&')
             //  const url =  this.api+`search?q=${q.trim()}&format=json&namedetails=[1]&&polygon_geojson=1&accept-language=zh-Hans&limit=4`
-            // https://nominatim.openstreetmap.org/search?q=%E5%8C%97%E4%BA%AC%E6%95%85%E5%AE%AB&format=json&namedetails=[1]&&polygon_geojson=1&accept-language=zh-Hans&limit=4
             this.request.abort();
             this.request.open('GET', url, true);
             this.request.onload = function () {

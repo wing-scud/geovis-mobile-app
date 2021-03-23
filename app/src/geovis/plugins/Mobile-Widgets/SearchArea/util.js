@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
-let marker,polygon;
-const lonlatReg = /^(-?\d+)(\.\d+)?,(-?\d+)(\.\d+)?$/   // 匹配 {float},{float} 格式字符串
+let marker, polygon;
+const lonlatReg = /^(-?\d+)(\.\d+)?,(-?\d+)(\.\d+)?$/; // 匹配 {float},{float} 格式字符串
 const util = {
   goHome: function() {
     earth.camera.flyHome();
@@ -21,11 +21,11 @@ const util = {
       console.log("marker清除");
       marker = 0;
     }
-     if (polygon) {
+    if (polygon) {
       polygon.removeFrom(earth.features);
       console.log("polygon清除");
       polygon = 0; //为了在用户点击home时不报错
-    } 
+    }
     // window.marker = 0;
     // window.polygon = 0; //为了在用户点击home时不报错
   },
@@ -38,7 +38,6 @@ const util = {
     return vectorPoints;
   },
   setLine: function(polygonpoints, styleObj) {
-    
     const fillColor = GeoVis.Color.fromCssString(styleObj.fillColor); //填充色
     const outlineColor = GeoVis.Color.fromCssString(styleObj.outlineColor); //边框色
     const lineStyle = {
@@ -71,8 +70,8 @@ const util = {
     const json = await res.json();
     return json;
   },
-  isLonlatString(str){
-    return lonlatReg.test(str)
+  isLonlatString(str) {
+    return lonlatReg.test(str);
   }
 };
 export default util;

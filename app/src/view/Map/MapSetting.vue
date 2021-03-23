@@ -1,65 +1,66 @@
 <template>
   <div class="full-screen">
-    <!-- mapsetting -->
-    <div class="title">
-      地图控件管理
-    </div>
+    <div class="title"><van-icon name="arrow-left" size="25" @click="goBack" /><span class="title-text">地图控件管理</span></div>
     <div class="setting">
       <van-cell-group>
-        <van-cell title="放大缩小">
-          <template v-slot:default> <van-switch v-model="zoom" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="指南针">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="搜索">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="导航">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="天气小挂件">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="地图基础挂件">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="锁定位置">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="信息">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="全屏">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
-        ></van-cell>
-        <van-cell title="时间">
-          <template v-slot:default> <van-switch v-model="compass" size="24px" /> </template
+        <van-cell v-for="item in mapPlugins" :title="item.name" :key="item.id">
+          <template v-slot:default> <van-switch size="24px" v-model="bindVModels[item.id]" @change="toggleMapPlugin(item.id)" /> </template
         ></van-cell>
       </van-cell-group>
     </div>
   </div>
 </template>
 <script lang="ts">
+import { earthStore } from "@/geovis/store";
 import Vue from "vue";
 export default Vue.extend({
   name: "MapSetting",
   data() {
     return {
-      zoom: false,
-      compass: false
+      state: earthStore.state,
+      bindVModels: {},
+      mapPlugins: []
     };
   },
-  methods: {}
+  watch: {
+    state: {
+      deep: true,
+      handler() {
+        const mapPlugins = [];
+        const pluginMap = this.state.pluginMap;
+        Object.keys(pluginMap).forEach(key => {
+          if (pluginMap[key].parent === "map") {
+            if (!this.bindVModels[key]) {
+              this.bindVModels[key] = pluginMap[key].enabled;
+            }
+            mapPlugins.push(pluginMap[key]);
+          }
+        });
+        this.mapPlugins = mapPlugins;
+      },
+      immediate: true
+    }
+  },
+  methods: {
+    toggleMapPlugin(id) {
+      const actived = this.bindVModels[id];
+      earthStore.enablePlugin(id, actived);
+    },
+    goBack() {
+      this.$router.go(-1);
+    }
+  }
 });
 </script>
 <style scoped>
 .title {
-  width: 96%;
-  padding: 5px 2%;
-  height: 30px;
   font-size: 20px;
-  line-height: 30px;
+  display: inline-flex;
+  align-items: center;
+  margin: 5px 5px;
+}
+.title-text{
+margin:0 5px;
 }
 .setting {
   font-size: 20px;

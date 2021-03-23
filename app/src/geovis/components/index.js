@@ -1,7 +1,7 @@
 import Vue from "vue";
 import Earth from "./Earth.vue";
 
-Vue.component("Earth", Earth);
+Vue.component("Earth", Earth);//同步引入 ，此组件作为子组件先引入
 Vue.component("MTabbar", () => import("./MTabbar/MTabbar.vue"));
 Vue.component("MIcon", () => import("./MIcon/MIcon.vue"));
 // --------------------PC Web导出----------------------------

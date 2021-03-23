@@ -172,7 +172,7 @@ export default {
   width: 30px;
   bottom: 50px;
   right: 10px;
-  z-index: 10;
+  z-index: 5;
 }
 .tool-icon {
   background: #263238 no-repeat center center;

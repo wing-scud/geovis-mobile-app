@@ -1,6 +1,8 @@
 <template>
   <div>
-    <keep-alive><MapEntity :listFunc="listFilter"></MapEntity></keep-alive>
+    <!-- <keep-alive> -->
+    <MapEntity></MapEntity>
+    <!-- </keep-alive> -->
     <router-view></router-view>
   </div>
 </template>
@@ -10,26 +12,11 @@ export default Vue.extend({
   name: "Map",
   data() {
     return {
-      component: "",
-      listFunc: [
-        { name: "消息", icon: "icon-xiaoxi " },
-        { name: "图层", icon: "icon-tuceng " },
-        { name: "锁定", icon: "icon-suoding " },
-        { name: "路线查询", icon: "icon-luxian " }
-      ]
+      component: ""
     };
   },
   methods: {},
-  computed: {
-    listFilter() {
-      //@ts-ignorem n
-      const value = this.listFunc;
-      // if (this.component === "Route") {
-      //   value = [{ name: "锁定", icon: "icon-suoding " }];
-      // }
-      return value;
-    }
-  }
+  computed: {}
 });
 </script>
 <style scoped>

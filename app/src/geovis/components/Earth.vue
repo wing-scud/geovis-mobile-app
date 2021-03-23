@@ -17,20 +17,10 @@ export default {
       state: earthStore.state
     };
   },
-  created() {
-    console.log("created ");
-  },
-  activated() {
-    console.log("activated ");
-  },
-  deactivated() {
-    console.log("deactivated ");
-  },
-  destroyed() {
-    console.log("destroyed ");
-  },
   mounted() {
+    this.state.pluginMap.b={active:false}
     earthStore.init(this.$refs["earthContainer"], this.$refs["mapContainer"]);
+    this.state.pluginMap.a={active:false}
   }
 };
 </script>

@@ -1,4 +1,5 @@
 import Vue from "vue";
+//修改为异步组件加载
 import Home from "../view/Home.vue";
 import Login from "../view/Login/Login.vue";
 import Register from "../view/Login/Register.vue";
@@ -12,7 +13,6 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    // alias:"/",
     component: Home,
     name: "index",
     redirect: "/map",
@@ -20,34 +20,37 @@ const routes = [
       {
         path: "person",
         component: Person,
-        name: "person"
+        name: "Person"
       },
       {
-        name: "map",
+        name: "Map",
         path: "map",
         component: Map,
         children: [
-          { path: "search", component: SearchArea, name: "search" },
-          { path: "pathPlan", component: PathPlan, name: "pathPlan" },
-          { path: "measure", component: Measure, name: "measure" }
-        ]
+          { path: " searchArea", component: SearchArea, name: "SearchArea" },
+          { path: "pathPlan", component: PathPlan, name: "PathPlan" },
+          { path: "measure", component: Measure, name: "Measure" }
+        ],
+        meta: {
+          keepAlive: true
+        }
       },
       {
         path: "application",
         component: Application,
-        name: "application"
+        name: "Application"
       }
     ],
     meta: {
       keepAlive: true
     }
   },
-  { path: "/login", component: Login, name: "login" },
-  { path: "/register", component: Register, name: "register" },
+  { path: "/login", component: Login, name: "Login" },
+  { path: "/register", component: Register, name: "Register" },
   {
-    path: "/mapsetting",
+    path: "/mapSetting",
     component: MapSetting,
-    name: "mapsetting"
+    name: "MapSetting"
   }
   // {
   //   path: "/measureManage",
@@ -75,9 +78,9 @@ const routes = [
 ];
 
 const router = new VueRouter({ routes, mode: "hash" });
-// router.beforeEach((to, from, next) => {
-//   const isAuthenticated = true;
-//   if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
-//   else next();
-// });
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = true;
+  if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
+  else next();
+});
 export default router;

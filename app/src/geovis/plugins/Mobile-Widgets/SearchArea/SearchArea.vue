@@ -12,7 +12,7 @@
       <van-cell-group>
         <van-cell v-for="item in suggestions" :key="item.id">
           <template v:slot="title">
-            <span class="van-cell__title" @click="useSuggestion(item.id)">{{ item.value }}</span>
+            <span class="van-cell__title" @click="useSuggestion(item.id)">{{ item.name }}</span>
           </template>
           <template v:slot="right-icon" v-if="item.id !== 'none'">
             <div class="search-group">
@@ -38,7 +38,6 @@ export default {
     url: {
       type: String,
       default: "https://nominatim.openstreetmap.org"
-      // default: "http://192.168.20.249:8086",
     },
     format: {
       type: String,
@@ -61,9 +60,7 @@ export default {
       _marker: undefined,
       _point: undefined,
       coordinateCheckd: false,
-      inputErrorMessage: undefined,
-      staredAddress: []
-      // addressStarIconStyle: undefined
+      inputErrorMessage: undefined
     };
   },
   destroyed() {
@@ -75,19 +72,22 @@ export default {
   },
   methods: {
     starAddress(id) {
-      // this.addressStarIconStyle = { color: "red" };
-      const point = this.getPlaceFromId(id);
-      this.staredAddress.push(point);
-      // return point;
+      const staredPlaceBool = this.$store.state.starPlaces.places.findIndex(place => place.id === id);
+      if (staredPlaceBool !== -1) {
+        this.$store.commit("starPlaces/deletePlace", id);
+      } else {
+        const place = this.getPlaceFromId(id);
+        this.$store.commit("starPlaces/addPlace", place);
+      }
     },
     getPlaceFromId(id) {
       let point;
       this.prompts.map(place => {
-        if (place.place_id === id) {
+        if (place.id === id) {
           point = {
             location: place.location,
             polygonpoints: place.polygonpoints,
-            name: place.value,
+            name: place.name,
             ...place
           };
         }
@@ -109,19 +109,13 @@ export default {
       //相机飞到目标点并划线描点
       this.flyTo(point, lineStyle);
     },
-    closeSearch() {
-      this.inputValue = "";
-      // document.getElementsByClassName("el-autocomplete-suggestion")[0].display = "none";
-      document.getElementsByClassName("el-autocomplete-suggestion")[0].style.display = "none";
-      util.clear();
-    },
     getSuggestions() {
       this.debounceFetchSuggest();
     },
     fetchSuggestions: async function() {
       const queryString = this.inputValue;
       let prompts, suggestions;
-      this.suggestions = [{ value: "请稍等", id: "none" }];
+      this.suggestions = [{ name: "请稍等", id: "none" }];
       if (this.coordinateCheckd) {
         if (util.isLonlatString(queryString)) {
           this.inputErrorMessage = undefined;
@@ -141,14 +135,14 @@ export default {
       const [lon, lat] = queryString.split(",").map(val => parseFloat(val));
       const lonlatValid = Math.abs(lon) <= 180 && Math.abs(lat) <= 90;
       if (lonlatValid) {
-        const url = `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&namedetails=[1]&polygon_geojson=1&accept-language=zh-Hans&zoom=18`;
+        const url = `${this.url}/reverse?lat=${lat}&lon=${lon}&format=json&namedetails=[1]&polygon_geojson=1&accept-language=zh-Hans&zoom=18`;
         // const url = `${this.pluginInfo.data.server}/reverse.php?format=json&lat=${lat}&lon=${lon}`;
         const json = await util.getData(url); //请求polygon_geojson格式数据
         const resultLon = parseFloat(json.lon);
         const resultLat = parseFloat(json.lat);
         const place = {
-          value: json.display_name,
-          place_id: json.place_id,
+          name: json.display_name,
+          id: json.place_id,
           location: [resultLon, resultLat],
           boundingbox: json.boundingbox
         };
@@ -156,20 +150,20 @@ export default {
           // case1 有返回结果
           return {
             prompts: [place],
-            suggestions: [{ value: json.display_name }]
+            suggestions: [{ name: json.display_name, id: json.place_id }]
           };
         } else {
           // case2 无返回结果
           return {
             prompts: [],
-            suggestions: [{ value: "无数据..." }]
+            suggestions: [{ name: "无数据...", id: "none" }]
           };
         }
       } else {
         // case3 坐标越界
         return {
           prompts: [],
-          suggestions: [{ value: "坐标越界..." }]
+          suggestions: [{ name: "坐标越界...", id: "none" }]
         };
       }
     },
@@ -178,15 +172,15 @@ export default {
     simpleQuery: async function(placeName) {
       //请求数据
       console.log("query");
-      const url = `https://nominatim.openstreetmap.org/search?q=${placeName}&format=json&namedetails=[1]&polygon_geojson=1&accept-language=zh-Hans&limit=4`;
+      const url = `${this.url}/search?q=${placeName}&format=json&namedetails=[1]&polygon_geojson=1&accept-language=zh-Hans&limit=4`;
       // const url = `${this.url.default}/search.php?q=${placeName}&format=${this.queryFormat}&${this.queryDataType}=1`;
       const json = await util.getData(url); //请求polygon_geojson格式数据
       const prompts = [];
       const suggestions = [];
       json.forEach((item, index) => {
         const place = {};
-        place.value = item.display_name;
-        place.place_id = item.place_id;
+        place.name = item.display_name;
+        place.id = item.place_id;
         place.location = [Number(item.lon), Number(item.lat)];
         if (item.geojson.type === "MultiPolygon") {
           place.polygonpoints = item.geojson.coordinates[0][0];
@@ -204,32 +198,17 @@ export default {
           console.log("其他" + item.display_name + item.geojson.type);
         }
         prompts.push(place);
-        suggestions.push({ value: item.display_name, id: item.place_id });
+        suggestions.push({ name: item.display_name, id: item.place_id });
       });
       if (json.length === 0) {
-        suggestions.push({ value: "查询无结果", id: "none" });
+        suggestions.push({ name: "查询无结果", id: "none" });
       }
       return { prompts, suggestions };
-    },
-
-    querySearch: async function(queryString, cb) {
-      document.getElementsByClassName("el-autocomplete-suggestion")[0].style.display = "";
-      this.prompts = []; //每次change之后把之前的仓库清空
-      cb([{ value: "请稍等..." }]);
-      //   console.log(this.queryUrl);
-      this.prompts = await this.searchRequest(queryString); //异步请求将数据放进仓库
-      if (this.prompts.length === 0) {
-        cb([{ value: "无数据..." }]);
-        return;
-      }
-      // console.log(this.prompts.length);
-      cb(this.prompts);
     },
     submit: function() {
       const val = this.inputValue;
       // util.clearPolygon(); //先清除边界和marker
       const point = this.getParam(); //获得用户输入的location和polygonpoints、name
-      // console.log(point.polygonpoints)
       if (!point) {
         //如果用户什么都没有输入
         console.log("请稍等");
@@ -273,7 +252,7 @@ export default {
           return {
             location: this.prompts[i].location,
             polygonpoints: this.prompts[i].polygonpoints,
-            name: this.prompts[i].value,
+            name: this.prompts[i].name,
             ...this.prompts[i]
           };
         }
@@ -300,15 +279,16 @@ export default {
       mapLocation.getCurrentPosition().then(position => {
         const start = [position.coords.longitude, position.coords.latitude];
         const end = point.location;
-        this.$router.push({ name: "pathPlan", params: { start: start, end: end } });
+        this.$router.push({ name: "PathPlan", params: { start: start, end: end } });
       });
     }
   },
   computed: {
     addressStarIconStyle: function() {
+      const places = this.$store.state.starPlaces.places;
       return function(id) {
-        const place = this.staredAddress.find(item => {
-          return item.place_id === id;
+        const place = places.find(item => {
+          return item.id === id;
         });
         if (place) {
           return { color: "red" };

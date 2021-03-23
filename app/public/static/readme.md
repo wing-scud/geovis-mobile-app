@@ -8,10 +8,10 @@
 
 ## 组成
     "id": "Navigator",      ---- 唯一名称
-    "type": "widget",       ---- 类型
+    "parent"："widget"      ---父级类型 ，视图所属目录
+    "type": "component",    ---- 类型 component/route
     "icon": "navigator",    ---- 图标    
     "name": "功能导航",      ---- 名称
-    "enabled": true,        ---- 状态
-    "active": true,         -----是否默认直接显示
-    "mutex": false          ---- 是否与其余同类型互斥
-    "path":                 -----路由路径  
+    "enabled": true,        ---- 是否开启是否显示组件图标
+    "active": true,         -----是否开启
+    "mutex": false          -----是否与其余同类型互斥

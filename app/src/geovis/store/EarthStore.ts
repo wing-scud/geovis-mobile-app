@@ -2,7 +2,8 @@
 import SceneManager from "./SceneManager/SceneManager";
 import mapboxgl from 'mapbox-gl';
 import * as utils from "../util";
-import MapboxLanguage from '@mapbox/mapbox-gl-language'
+import router from "../../router/index.js"
+import MapboxLanguage from '@mapbox/mapbox-gl-language';
 mapboxgl.accessToken =
   "pk.eyJ1IjoiZmFpbnR6eiIsImEiOiJjazg4NTgwejkwNHMzM3BxYTRhcnB5amYyIn0.wjzAeek8dLS1U4H9Wx-J9A"
 function disableVueTrack(object) {
@@ -103,7 +104,7 @@ export class EarthStore {
     if (mapRef) {
       this._map = new mapboxgl.Map({
         container: mapRef,
-        trackResize:true,
+        trackResize: true,
         attributionControl: false,
         style: 'mapbox://styles/mapbox/streets-v9',
         center: [120, 30],
@@ -111,8 +112,8 @@ export class EarthStore {
       // 设置语言
       const language = new MapboxLanguage({ defaultLanguage: "zh" });
       this._map.addControl(language);
-      this._map.getCanvas().style.height="";
-      this._map.getCanvas().style.width="";
+      this._map.getCanvas().style.height = "100%";
+      this._map.getCanvas().style.width = "";
     }
     this.earth.scene.postProcessStages.fxaa.enabled = true;
     GeoVis.Camera.MAX_PITCH = 0;
@@ -141,6 +142,7 @@ export class EarthStore {
    * 
    * @param {string} id
    * @param {boolean} active
+   * 开启/关闭控件,---使用控件
    */
   togglePlugin = (id, active) => {
     const item = this.state.pluginMap[id] || {};
@@ -150,7 +152,12 @@ export class EarthStore {
       item.active = !item.active;
     }
   };
-
+  /**
+   * 
+   * @param id 
+   * @param enabled
+   * 控制组件是否默认显示，显示组件图标等
+   */
   enablePlugin = (id, enabled) => {
     const item = this.state.pluginMap[id] || {};
     if (enabled !== undefined) {

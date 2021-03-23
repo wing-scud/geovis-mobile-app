@@ -1,45 +1,47 @@
 <template>
-  <div class="layer">
-    <div class="layer-data">
-      <van-checkbox-group v-model="checkedMap">
-        <div class="head">离线地图</div>
-        <div class="offline-map map-layer">
-          <div class="image-container" v-for="(item, index) in offlineImages" :key="item['id']" @click="toggleImageProvider(index, 'offline')">
-            <van-image fit="cover" src="static/data/Layer/gaode.png" class="image" />
-            <!-- <van-image fit="cover" :src="item['imgURL']" class="image" /> -->
-            <div class="image-name">
-              {{ item.name }}
-            </div>
-            <div class="check-box">
-              <van-checkbox :name="item['id']" ref="offlineCheckboxes"></van-checkbox>
-            </div>
-          </div>
-        </div>
-        <div class="head">在线地图</div>
-        <div class="online-map map-layer">
-          <div class="image-container" v-for="(item, index) in onlineImages" :key="item['id']" @click="toggleImageProvider(index, 'online')">
-            <van-image fit="cover" src="static/data/Layer/gaode.png" class="image" />
-            <!-- <van-image fit="cover" :src="item['imgURL']" class="image" /> -->
-            <div class="image-name">
-              {{ item.name }}
-            </div>
-            <div class="check-box">
-              <van-checkbox :name="item['id']" ref="onlineCheckboxes"></van-checkbox>
+  <van-popup v-model="popShow" transition-appear  position="right" :style="{ width: '60%', height: '100%' }" :close-on-popstate="true" @close="closePopup">
+    <div class="layer">
+      <div class="layer-data">
+        <van-checkbox-group v-model="checkedMap">
+          <div class="head">离线地图</div>
+          <div class="offline-map map-layer">
+            <div class="image-container" v-for="(item, index) in offlineImages" :key="item['id']" @click="toggleImageProvider(index, 'offline')">
+              <van-image fit="cover" src="static/data/Layer/gaode.png" class="image" />
+              <!-- <van-image fit="cover" :src="item['imgURL']" class="image" /> -->
+              <div class="image-name">
+                {{ item.name }}
+              </div>
+              <div class="check-box">
+                <van-checkbox :name="item['id']" ref="offlineCheckboxes"></van-checkbox>
+              </div>
             </div>
           </div>
-        </div>
-        <div class="head">其他</div>
-        <van-cell title="友邻位置" is-link />
-        <van-cell title="天气地图" is-link />
-        <van-cell title="下载管理" is-link />
-        <van-cell title="其他地图" is-link />
-        <!-- <div class="map-item">其他地图</div> -->
-      </van-checkbox-group>
+          <div class="head">在线地图</div>
+          <div class="online-map map-layer">
+            <div class="image-container" v-for="(item, index) in onlineImages" :key="item['id']" @click="toggleImageProvider(index, 'online')">
+              <van-image fit="cover" src="static/data/Layer/gaode.png" class="image" />
+              <!-- <van-image fit="cover" :src="item['imgURL']" class="image" /> -->
+              <div class="image-name">
+                {{ item.name }}
+              </div>
+              <div class="check-box">
+                <van-checkbox :name="item['id']" ref="onlineCheckboxes"></van-checkbox>
+              </div>
+            </div>
+          </div>
+          <div class="head">其他</div>
+          <van-cell title="友邻位置" is-link />
+          <van-cell title="天气地图" is-link />
+          <van-cell title="下载管理" is-link />
+          <van-cell title="其他地图" is-link />
+          <!-- <div class="map-item">其他地图</div> -->
+        </van-checkbox-group>
+      </div>
+      <div class="foot">
+        <van-button :to="{ name: 'MapSetting' }" color="#7232dd" plain block>地图控件管理</van-button>
+      </div>
     </div>
-    <div class="foot">
-      <van-button :to="{ name: 'mapsetting' }" color="#7232dd" plain block>地图控件管理</van-button>
-    </div>
-  </div>
+  </van-popup>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -50,7 +52,8 @@ export default Vue.extend({
     return {
       offlineImages: [],
       onlineImages: [],
-      checkedMap: []
+      checkedMap: [],
+      popShow: true
     };
   },
   mounted() {
@@ -61,6 +64,9 @@ export default Vue.extend({
     this.checkedMap = checkedMap;
   },
   methods: {
+    closePopup() {
+      earthStore.togglePlugin("Layer", false);
+    },
     toggleImageProvider(index, mode) {
       const layers = mode === "offline" ? this.offlineImages : this.onlineImages;
       const id = layers[index].id;
