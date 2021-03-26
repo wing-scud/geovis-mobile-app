@@ -1,18 +1,8 @@
 <template>
   <div id="geovis-app">
     <keep-alive include="Home">
-    <router-view></router-view>
-  </keep-alive>
-    <!-- <Earth /> -->
-    <!-- <transition-group name="fade"> -->
-    <!-- <div id="geo-drawplugin" />
-    <iframe class="frame" :src="app.entry" :key="'micro-app-' + app.id" v-for="(app, index) of frames" :earthStore="earthStore" :pluginInfo="{ ...app, index }"></iframe>
-    <component :key="'plugin-' + plugin.id" v-for="(plugin, index) of plugins" v-bind:is="plugin.id" :earthStore="earthStore" :pluginInfo="{ ...plugin, index }"></component>
-    <component :key="'widget-' + widget.id" v-for="(widget, index) of widgets" v-bind:is="widget.id" :earthStore="earthStore" :pluginInfo="{ ...widget, index }"></component> -->
-    <!-- </transition-group> -->
-    <!-- <gv-micro-app :key="'micro-app-' + app.id" v-for="(app, index) of apps" :earthStore="earthStore" :pluginInfo="{ ...app, index }"></gv-micro-app> -->
-    <!-- <> -->
-    <!-- <PluginManager /> -->
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -27,8 +17,7 @@ import "./components";
 import "./util";
 export default Vue.extend({
   name: "EarthApp",
-  components: {
-  },
+  components: {},
   data() {
     return {
       earthStore: earthStore,

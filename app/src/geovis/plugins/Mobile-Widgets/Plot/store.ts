@@ -8,9 +8,9 @@ const types = [
     name: "量测",
     icon: "icon-liangcei",
     options: [
-      { name: "三角", icon: "" },
-      { name: "距离", icon: "" },
-      { name: "面积", icon: "" }
+      // { name: "三角", icon: "" },
+      { name: "距离", icon: "icon-juli" },
+      { name: "面积", icon: "icon-mianji" }
     ]
   },
   {
@@ -18,40 +18,40 @@ const types = [
     name: "图文标",
     icon: "icon-tuwen",
     options: [
-      { name: "文字", icon: "" },
-      { name: "图片", icon: "" },
-      { name: "对话框", icon: "" },
-      { name: "旗帜", icon: "" }
+      { name: "文字", icon: "icon-wenzi" },
+      { name: "图片", icon: "icon-tupian" },
+      // { name: "对话框", icon: "" },
+      // { name: "旗帜", icon: "" }
     ]
   },
   {
     id: "line",
     name: "线标",
-    icon: "cion-line",
+    icon: "icon-xiantiao",
     options: [
-      { name: "空间", icon: "" },
-      { name: "投影", icon: "" },
-      { name: "地形", icon: "" }
+      { name: "空间", icon: "icon-kongjian" },
+      { name: "投影", icon: "icon-touying" },
+      { name: "地形", icon: "icon-dixing" }
     ]
   },
   {
     id: "polygon",
     name: "多边形",
-    icon: "",
+    icon: "icon-duobianxing",
     options: [
-      { name: "空间", icon: "" },
-      { name: "投影", icon: "" },
-      { name: "地形", icon: "" }
+      { name: "空间", icon: "icon-kongjian" },
+      { name: "投影", icon: "icon-touying" },
+      { name: "地形", icon: "icon-dixing" }
     ]
   },
   {
     id: "other",
     name: "其他",
-    icon: "icon-other",
+    icon: "icon-qita",
     options: [
-      { name: "圆", icon: "" },
-      { name: "墙", icon: "" },
-      { name: "矩形", icon: "" }
+      { name: "圆", icon: "icon-yuan" },
+      // { name: "墙", icon: "" },
+      { name: "矩形", icon: "icon-juxing" }
     ]
   }
 ]; function formateDate(date) {
@@ -224,7 +224,7 @@ class Plot {
         break;
       default: break;
     }
-    this._drawHelper.startDrawingPlot({
+    this._drawHelper.startDrawingPolyline({
       type:drawHelperType
     })
     type=type="线"

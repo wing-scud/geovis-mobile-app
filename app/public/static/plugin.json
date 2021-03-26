@@ -2,16 +2,18 @@
     {
         "id": "widget",
         "name": "控件",
-        "items": [      {
-            "id": "Layer",
-            "parent": "map",
-            "type": "component",
-            "icon": "icon-tucengguanli",
-            "name": "图层管理",
-            "enabled": true,
-            "active": false,
-            "mutex": true
-        },
+        "items": [
+            {
+                "id": "Layer",
+                "parent": "map",
+                "type": "component",
+                "icon": "icon-tucengguanli",
+                "name": "图层管理",
+                "enabled": true,
+                "active": false,
+                "componenIcon": true,
+                "mutex": false
+            },
             {
                 "id": "SearchArea",
                 "parent": "map",
@@ -20,8 +22,10 @@
                 "name": "搜索",
                 "enabled": true,
                 "active": false,
+                "componenIcon": true,
                 "mutex": true
-            }, {
+            },
+            {
                 "id": "PathPlan",
                 "parent": "map",
                 "type": "route",
@@ -29,6 +33,7 @@
                 "name": "路线查询",
                 "enabled": true,
                 "active": false,
+                "componenIcon": true,
                 "mutex": true
             },
             {
@@ -39,6 +44,7 @@
                 "name": "标绘",
                 "enabled": true,
                 "active": false,
+                "componenIcon": true,
                 "mutex": true
             },
             {
@@ -49,6 +55,7 @@
                 "name": "天气信息",
                 "enabled": true,
                 "active": true,
+                "componenIcon": false,
                 "mutex": false
             },
             {
@@ -59,7 +66,8 @@
                 "name": "锁定定位",
                 "enabled": true,
                 "active": false,
-                "mutex": true
+                "componenIcon": true,
+                "mutex": false
             },
             {
                 "id": "MobileBaseWidgets",
@@ -69,6 +77,7 @@
                 "name": "地图基础挂件",
                 "enabled": true,
                 "active": true,
+                "componenIcon": false,
                 "mutex": false
             }
         ]
@@ -76,16 +85,11 @@
     {
         "id": "tools",
         "name": "工具",
-        "items": [
-        
-        ]
+        "items": []
     },
     {
         "id": "function",
         "name": "功能",
-        "items": [
-            
-   
-        ]
+        "items": []
     }
 ]

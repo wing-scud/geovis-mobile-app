@@ -1,8 +1,8 @@
 <template>
   <div class="home">
-    <!-- <keep-alive include="Map"> -->
+    <keep-alive include="Map">
       <router-view></router-view>
-    <!-- </keep-alive> -->
+    </keep-alive>
     <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar"></MTabbar>
   </div>
 </template>

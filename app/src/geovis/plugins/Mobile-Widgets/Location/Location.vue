@@ -14,9 +14,12 @@ export default Vue.extend({
   },
   mounted() {
     //@ts-ignore
-    // const;
+    mapLocation.locking = true;
   },
   methods: {},
+  beforeDestroy() {
+    mapLocation.locking = false;
+  },
   watch: {
     "state.mode": function(value) {
       //@ts-ignore

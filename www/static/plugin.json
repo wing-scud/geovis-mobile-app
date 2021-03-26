@@ -2,30 +2,71 @@
     {
         "id": "widget",
         "name": "控件",
-        "items": [
+        "items": [      {
+            "id": "Layer",
+            "parent": "map",
+            "type": "component",
+            "icon": "icon-tucengguanli",
+            "name": "图层管理",
+            "enabled": true,
+            "active": false,
+            "mutex": true
+        },
             {
-                "id": "BottomTabbar",
-                "type": "widget",
-                "icon": "tabbar",
-                "name": "底部标签",
-                "enabled": true,
-                "active": true,
-                "mutex": false
-            },
-            {
-                "id": "Search",
-                "type": "widget",
-                "icon": "search",
+                "id": "SearchArea",
+                "parent": "map",
+                "type": "route",
+                "icon": "icon-sousuo",
                 "name": "搜索",
                 "enabled": true,
+                "active": false,
+                "mutex": true
+            }, {
+                "id": "PathPlan",
+                "parent": "map",
+                "type": "route",
+                "icon": "icon-luxianchaxun",
+                "name": "路线查询",
+                "enabled": true,
+                "active": false,
+                "mutex": true
+            },
+            {
+                "id": "Plot",
+                "parent": "map",
+                "type": "route",
+                "icon": "icon-biaohui",
+                "name": "标绘",
+                "enabled": true,
+                "active": false,
+                "mutex": true
+            },
+            {
+                "id": "WeatherInfor",
+                "parent": "map",
+                "type": "component",
+                "icon": "icon-tainqi",
+                "name": "天气信息",
+                "enabled": true,
                 "active": true,
                 "mutex": false
             },
             {
-                "id": "InformationCenter",
-                "type": "widget",
-                "icon": "information",
-                "name": "消息中心",
+                "id": "Location",
+                "parent": "map",
+                "type": "component",
+                "icon": "icon-suodingdingwei",
+                "name": "锁定定位",
+                "enabled": true,
+                "active": false,
+                "mutex": true
+            },
+            {
+                "id": "MobileBaseWidgets",
+                "parent": "map",
+                "type": "component",
+                "icon": "icon-jichuguajian",
+                "name": "地图基础挂件",
                 "enabled": true,
                 "active": true,
                 "mutex": false
@@ -36,48 +77,15 @@
         "id": "tools",
         "name": "工具",
         "items": [
-            {
-                "id": "LockSelf",
-                "type": "tools",
-                "icon": "lock",
-                "name": "锁定位置",
-                "enabled": true,
-                "active": true,
-                "mutex": false
-            }
+        
         ]
     },
     {
         "id": "function",
         "name": "功能",
         "items": [
-            {
-                "id": "LayerManager",
-                "type": "funtion",
-                "icon": "layer",
-                "name": "图层管理",
-                "enabled": true,
-                "active": true,
-                "mutex": false
-            },
-            {
-                "id": "Retrieval",
-                "type": "tools",
-                "icon": "Retrieval",
-                "name": "检索",
-                "enabled": true,
-                "active": true,
-                "mutex": false
-            },
-            {
-                "id": "RouteNavigation",
-                "type": "tools",
-                "icon": "route",
-                "name": "路线导航",
-                "enabled": true,
-                "active": true,
-                "mutex": false
-            }
+            
+   
         ]
     }
 ]

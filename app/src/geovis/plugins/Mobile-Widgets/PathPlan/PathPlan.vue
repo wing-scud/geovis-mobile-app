@@ -14,10 +14,11 @@ import { Toast } from "vant";
 const MapboxDirections = window["MapboxDirections"];
 import Vue from "vue";
 export default Vue.extend({
-  name: "PathQuery",
+  name: "PathPlan",
   data() {
     return {
-      panelBool: true
+      panelBool: true,
+      markers: []
     };
   },
   mounted() {
@@ -47,7 +48,7 @@ export default Vue.extend({
           //默认只有一个途径点
           const point = instance.$route.params.waypoints[0];
           const index = 0;
-          instance.addWayPointMarker(point)
+          instance.addWayPointMarker(point);
           pathQuery.addWaypoint(index, point);
         }
         //设置input输入框也为起始点
@@ -70,6 +71,9 @@ export default Vue.extend({
     map.removeControl(this._control);
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
+    earthStore.state.mode = "globe3";
+    earthStore.earth.scene.mode = GeoVis.SceneMode.SCENE3D;
+    this.markers.map(marker => marker.remove());
   },
   methods: {
     displauPanel() {
@@ -91,12 +95,12 @@ export default Vue.extend({
       });
     },
     addWayPointMarker(position) {
+      this.markers.map(marker => marker.remove());
       const index = this.getNextPoint();
       const map = earthStore.map;
       //@ts-ignore
       const control = this._control;
       const textContainer = document.createElement("div");
-
       //如果没有起始点，则设置为起始点
       textContainer.className = "pathQueryPoint";
       textContainer.innerText = `途径点${index}`;
@@ -108,6 +112,7 @@ export default Vue.extend({
       //@ts-ignore
       marker.setLngLat(position);
       marker.addTo(map);
+      this.markers.push(marker);
       control.addWaypoint(index, position);
       marker.on("drag", e => {
         const target = e.target;
@@ -157,7 +162,7 @@ export default Vue.extend({
       }
     },
     goBack() {
-      this.$router.go(-1);
+      this.$router.back();
     }
   }
 });

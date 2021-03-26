@@ -73,7 +73,7 @@ export default Vue.extend({
       searchValue: "",
       debounceSearch: undefined,
       filterRoutes: [],
-      filterPlaces: [],
+      filterPlaces: []
     };
   },
   mounted() {
@@ -85,10 +85,10 @@ export default Vue.extend({
     this.debounceSearch = debounceSearch;
   },
   computed: {
-    searchTab: function () {
+    searchTab: function() {
       //@ts-ignore
       return this.activeTab === "place" ? "地址" : "路线";
-    },
+    }
   },
   methods: {
     rough(name) {
@@ -103,7 +103,7 @@ export default Vue.extend({
       this.$store.commit("starRoutes/deleteRoute", id);
     },
     goBack() {
-      this.$router.go(-1);
+      this.$router.back();
     },
     onSearch() {
       this.debounceSearch();
@@ -114,14 +114,20 @@ export default Vue.extend({
       if (type === "place") {
         searchArray = this.places;
         this.filterPlaces = [];
+        searchArray.map(item => {
+          if (item.name.indexOf(this.searchValue) !== -1) this.filterPlaces.push(item);
+        });
       } else {
         searchArray = this.routes;
         this.filterRoutes = [];
+        searchArray.map(item => {
+          if (item.name.indexOf(this.searchValue) !== -1) this.filterRoutes.push(item);
+        });
       }
     },
     starRouteTo(index) {
       const route = this.filterRoutes[index];
-      const waypoints = route.waypoints.map((obj) => {
+      const waypoints = route.waypoints.map(obj => {
         return obj.geometry.coordinates;
       });
       this.$router.push({ name: "PathPlan", params: { origin: route.origin.geometry.coordinates, destination: route.destination.geometry.coordinates, waypoints: waypoints } });
@@ -130,7 +136,7 @@ export default Vue.extend({
       const place = this.filterPlaces[index];
       this.$router.push({
         name: "SearchArea",
-        params: place,
+        params: place
       });
     },
     showSearchInput(bool) {
@@ -141,8 +147,8 @@ export default Vue.extend({
         this.filterPlaces = this.places;
         this.filterRoutes = this.routes;
       }
-    },
-  },
+    }
+  }
 });
 </script>
 <style>

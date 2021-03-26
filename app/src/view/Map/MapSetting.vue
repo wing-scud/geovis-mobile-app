@@ -47,7 +47,7 @@ export default Vue.extend({
       earthStore.enablePlugin(id, actived);
     },
     goBack() {
-      this.$router.go(-1);
+      this.$router.back();
     }
   }
 });

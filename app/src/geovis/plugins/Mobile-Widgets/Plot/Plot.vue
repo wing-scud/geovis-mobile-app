@@ -18,7 +18,7 @@
     </div>
     <div class="property"></div>
     <div class="results-popup">
-      <MIcon icon="icon-luxianchaxun" length="35px" backgroundColor="white" circle @click="popShow = true"></MIcon>
+      <MIcon icon="icon-ziyuan" length="35px" backgroundColor="white" circle @click="popShow = true"></MIcon>
     </div>
     <van-popup v-model="popShow" transition-appear position="right" :style="{ width: '70%', height: '100%' }" :close-on-popstate="true" @close="closePopup">
       <table class="result-list">
@@ -83,7 +83,7 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.go(-1);
+      this.$router.back();
     },
     savePlot() {
       this.saveDialogShow = true;

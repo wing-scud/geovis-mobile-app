@@ -57,7 +57,7 @@ export default Vue.extend({
             if (pluginMap[key].active && pluginMap[key].type === "component") {
               pluginStateActived.push(pluginMap[key]);
             }
-            if(pluginMap[key].mutex){
+            if(pluginMap[key].componenIcon){
               pluginMapUnactived.push(pluginMap[key]);
             }
           }
@@ -85,7 +85,7 @@ export default Vue.extend({
       const pluginState = earthStore.getPuginState(id);
       if (pluginState.active) {
         if (pluginState.type === "route") {
-          this.$router.go(-1);
+          this.$router.back();
         }
         earthStore.togglePlugin(id, false);
       } else {
