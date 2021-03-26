@@ -1,25 +1,18 @@
 import Vue from "vue";
 //修改为异步组件加载
-import Home from "../view/Home.vue";
-import Login from "../view/Login/Login.vue";
-import Register from "../view/Login/Register.vue";
-import MapSetting from "../view/Map/MapSetting.vue";
 import Map from "../view/Map/Index.vue";
-import Application from "../view/Plugin/Index.vue";
-import Person from "../view/Person/Index.vue";
-import { PathPlan, Measure, SearchArea } from "../geovis/plugins/Mobile-Widgets/index.js";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 const routes = [
   {
     path: "/",
-    component: Home,
+    component: () => import("../view/Home.vue"),
     name: "index",
     redirect: "/map",
     children: [
       {
         path: "person",
-        component: Person,
+        component: () => import("../view/Person/Index.vue"),
         name: "Person"
       },
       {
@@ -27,9 +20,9 @@ const routes = [
         path: "map",
         component: Map,
         children: [
-          { path: " searchArea", component: SearchArea, name: "SearchArea" },
-          { path: "pathPlan", component: PathPlan, name: "PathPlan" },
-          { path: "measure", component: Measure, name: "Measure" }
+          { path: "searchArea", component: () => import("../geovis/plugins/Mobile-Widgets/SearchArea/SearchArea.vue"), name: "SearchArea" },
+          { path: "pathPlan", component: () => import("../geovis/plugins/Mobile-Widgets/PathPlan/PathPlan.vue"), name: "PathPlan" },
+          { path: "plot", component: () => import("../geovis/plugins/Mobile-Widgets/Plot/Plot.vue"), name: "Plot" }
         ],
         meta: {
           keepAlive: true
@@ -37,7 +30,7 @@ const routes = [
       },
       {
         path: "application",
-        component: Application,
+        component: () => import("../view/Plugin/Index.vue"),
         name: "Application"
       }
     ],
@@ -45,12 +38,16 @@ const routes = [
       keepAlive: true
     }
   },
-  { path: "/login", component: Login, name: "Login" },
-  { path: "/register", component: Register, name: "Register" },
+  { path: "/login", component: () => import("../view/Login/Login.vue"), name: "Login" },
+  { path: "/register", component: () => import("../view/Login/Register.vue"), name: "Register" },
   {
     path: "/mapSetting",
-    component: MapSetting,
+    component: () => import("../view/Map/MapSetting.vue"),
     name: "MapSetting"
+  },{
+    path: "/star",
+    component: () => import("../view/Star/Star.vue"),
+    name: "Star"
   }
   // {
   //   path: "/measureManage",

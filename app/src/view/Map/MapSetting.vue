@@ -1,6 +1,6 @@
 <template>
   <div class="full-screen">
-    <div class="title"><van-icon name="arrow-left" size="25" @click="goBack" /><span class="title-text">地图控件管理</span></div>
+    <van-nav-bar title="地图控件管理" left-text="返回"  left-arrow @click-left="goBack"  />
     <div class="setting">
       <van-cell-group>
         <van-cell v-for="item in mapPlugins" :title="item.name" :key="item.id">
@@ -53,15 +53,6 @@ export default Vue.extend({
 });
 </script>
 <style scoped>
-.title {
-  font-size: 20px;
-  display: inline-flex;
-  align-items: center;
-  margin: 5px 5px;
-}
-.title-text{
-margin:0 5px;
-}
 .setting {
   font-size: 20px;
 }

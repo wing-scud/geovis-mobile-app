@@ -69,6 +69,12 @@ export default {
   mounted() {
     const debounceFetchSuggest = _.debounce(this.fetchSuggestions, 500);
     this.debounceFetchSuggest = debounceFetchSuggest;
+    if (this.$route.params && (this.$route.params.name || this.$route.params.location)) {
+      //导航
+      const params = this.$route.params;
+      this.inputValue = params.name;
+      this.fetchSuggestions()
+    }
   },
   methods: {
     starAddress(id) {
@@ -77,6 +83,7 @@ export default {
         this.$store.commit("starPlaces/deletePlace", id);
       } else {
         const place = this.getPlaceFromId(id);
+        console.log(place);
         this.$store.commit("starPlaces/addPlace", place);
       }
     },
@@ -279,7 +286,7 @@ export default {
       mapLocation.getCurrentPosition().then(position => {
         const start = [position.coords.longitude, position.coords.latitude];
         const end = point.location;
-        this.$router.push({ name: "PathPlan", params: { start: start, end: end } });
+        this.$router.push({ name: "PathPlan", params: { origin: start, destination: end } });
       });
     }
   },

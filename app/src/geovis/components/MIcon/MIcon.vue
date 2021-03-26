@@ -1,5 +1,8 @@
 <template>
-  <div :class="[icon, 'iconfont', 'icon-container', actived ? 'actied' : 'unactived']" :style="styleComputed" @click="handleClick" :name="name"></div>
+  <div>
+    <div :class="[icon, 'iconfont', 'icon-container', actived ? 'actived' : 'unactived',customClass]" :style="styleComputed" @click="handleClick" :name="name"></div>
+    <span class="label" v-if="label !== ''" :style="{ color: labelColor }">{{ label }}</span>
+  </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -13,6 +16,14 @@ export default Vue.extend({
         return value.split("-")[0] === "icon";
       }
     },
+    customClass: {
+      type: String,
+      default: ""
+    },
+    backgroundColor: {
+      type: String,
+      default: "white"
+    },
     size: {
       type: String,
       default: "25px"
@@ -23,7 +34,7 @@ export default Vue.extend({
     },
     circle: {
       type: Boolean,
-      default: false
+      default: true
     },
     actived: {
       type: Boolean,
@@ -32,6 +43,14 @@ export default Vue.extend({
     name: {
       type: String,
       default: "icon"
+    },
+    label: {
+      type: String,
+      default: ""
+    },
+    labelColor:{
+      type: String,
+      default: "black"
     }
   },
   data() {
@@ -41,9 +60,9 @@ export default Vue.extend({
     styleComputed() {
       let borderRadius = "";
       if (this.circle) {
-        borderRadius = Math.floor(Number(this.length) / 2) + "px";
+        borderRadius = "50%";
       }
-      return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, lineHeight: this.length };
+      return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, lineHeight: this.length, backgroundColor: this.backgroundColor };
     }
   },
   methods: {
@@ -58,15 +77,20 @@ export default Vue.extend({
   width: 30px;
   height: 30px;
   background-color: white;
-  margin: 10px 0;
   text-align: center;
   line-height: 30px;
-  border-radius: 50%;
+  margin: 0 auto;
 }
 .unactived {
   color: #333333;
 }
 .actived {
   color: #0372f1e0;
+}
+.label {
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  display: inline-block;
 }
 </style>

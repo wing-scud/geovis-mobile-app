@@ -3,7 +3,7 @@
     <!-- <keep-alive include="Map"> -->
       <router-view></router-view>
     <!-- </keep-alive> -->
-    <MTabbar v-model="active" :list="list" @change="handleChange" :height="50"></MTabbar>
+    <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar"></MTabbar>
   </div>
 </template>
 <script lang="ts">
@@ -15,7 +15,7 @@ export default Vue.extend({
       active: 0,
       list: [
         { name: "地图", icon: "icon-ditu" },
-        { name: "应用", icon: "icon-daohangmoren" },
+        { name: "应用", icon: "icon-yingyong" },
         { name: "个人", icon: "icon-geren" }
       ],
     };
@@ -29,5 +29,3 @@ export default Vue.extend({
   }
 });
 </script>
-<style src="../assets/iconfont/iconfont.css"></style>
-<style src="../assets/Globe.css"></style>

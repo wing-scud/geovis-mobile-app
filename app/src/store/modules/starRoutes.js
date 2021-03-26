@@ -14,7 +14,7 @@ const mutations = {
     state.routes.push(path);
   },
   deleteRoute(state, id) {
-    const routeIndex = state.places.findIndex(path => path.id === id);
+    const routeIndex = state.routes.findIndex(path => path.id === id);
     state.routes.splice(routeIndex, 1);
   }
 };

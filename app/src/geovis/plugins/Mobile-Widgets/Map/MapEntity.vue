@@ -1,14 +1,16 @@
 <template>
   <div>
     <Earth></Earth>
-    <div class="map-plugin-right">
-      <MIcon :icon="item.icon" length="35px" v-for="item in pluginMapUnactivedRight" :key="item['id']" circle @click="handleClick(item['id'])"> </MIcon>
-    </div>
-    <div class="map-plugin-left">
-      <MIcon :icon="item.icon" length="35px" v-for="item in pluginMapUnactivedLeft" :key="item['id']" circle @click="handleClick(item['id'])"> </MIcon>
-    </div>
-    <template v-for="item in pluginState.pluginStateActived">
-      <component :is="item.id" :key="item.id"></component>
+    <template v-if="!state.onlyMap">
+      <div class="map-plugin-right">
+        <MIcon :icon="item.icon" customClass="icon-component" length="35px" :circle="true" v-for="item in pluginMapUnactivedRight" :key="item['id']" @click="handleClick(item['id'])"> </MIcon>
+      </div>
+      <div class="map-plugin-left">
+        <MIcon :icon="item.icon" length="35px" customClass="icon-component" :circle="true" v-for="item in pluginMapUnactivedLeft" :key="item['id']" @click="handleClick(item['id'])"> </MIcon>
+      </div>
+      <template v-for="item in pluginState.pluginStateActived">
+        <component :is="item.id" :key="item.id"></component>
+      </template>
     </template>
   </div>
 </template>
@@ -101,7 +103,6 @@ export default Vue.extend({
 .map-plugin-right {
   position: absolute;
   width: 40px;
-  /* height: 100%; */
   top: 150px;
   right: 5px;
   z-index: 2;
@@ -111,7 +112,6 @@ export default Vue.extend({
 .map-plugin-left {
   position: absolute;
   width: 40px;
-  /* height: 100%; */
   top: 150px;
   left: 5px;
   z-index: 2;
@@ -133,6 +133,5 @@ export default Vue.extend({
   left: 0;
   z-index: 3;
   width: 100%;
-  /* height: 45px; */
 }
 </style>

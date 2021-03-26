@@ -32,7 +32,7 @@ function disableVueTrack(object) {
 }
 
 export class EarthStore {
-  public state: { window: { width: number; height: number; }; pluginTree: any[]; mode: string; pluginMap: {}; };
+  public state: { window: { width: number; height: number; }; pluginTree: any[]; mode: string; pluginMap: {};onlyMap:boolean };
   private _earth: GeoVis.Earth;
   private _drawHelper: DrawHelper;
   private _sceneManager: SceneManager;
@@ -45,7 +45,8 @@ export class EarthStore {
       },
       mode: "globe3", // globe3 globe2  map 
       pluginTree: [],
-      pluginMap: {}
+      pluginMap: {},
+      onlyMap:false
     };
   }
   get mode() {
@@ -166,8 +167,22 @@ export class EarthStore {
       item.enabled = !item.enabled;
     }
   }
+  setMapFullScreen(bool){
+    const  mTabbar = document.getElementById('bottomTabbar');
+    if(mTabbar){
+      if(bool){
+        if(mTabbar.style.display!=="none"){
+          mTabbar.style.display="none";
+        }
+      }else{
+        if(mTabbar.style.display==="none"){
+          mTabbar.style.display="flex";
+        }
+      }
+    }
 
-
+    //handleResize();
+  }
   handleResize = () => {
     // this.state.window.width = this.earth.scene.canvas.width;
     // this.state.window.height = this.earth.scene.canvas.height;

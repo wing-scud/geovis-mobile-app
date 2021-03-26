@@ -54,3 +54,19 @@ font-size: 20px;
     pointer-events: none;
     background: transparent;
   }
+  .icon-component{
+    margin:10px 0  !important;
+  }
+.result-list .van-swipe-cell__wrapper{
+    flex:1;
+    display:flex;
+    flex-direction: row;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+.star .van-cell__value {
+    display: inline-flex;
+    justify-content: flex-end;
+  }
+  

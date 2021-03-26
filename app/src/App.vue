@@ -25,3 +25,5 @@ export default class extends Vue {}
   height: 100%;
 }
 </style>
+<style src="./assets/iconfont/iconfont.css"></style>
+<style src="./assets/Globe.css"></style>

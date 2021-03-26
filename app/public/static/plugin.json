@@ -32,16 +32,6 @@
                 "mutex": true
             },
             {
-                "id": "Measure",
-                "parent": "map",
-                "type": "route",
-                "icon": "icon-liangcei",
-                "name": "量测",
-                "enabled": true,
-                "active": false,
-                "mutex": true
-            },
-            {
                 "id": "Plot",
                 "parent": "map",
                 "type": "route",
@@ -69,7 +59,7 @@
                 "name": "锁定定位",
                 "enabled": true,
                 "active": false,
-                "mutex": false
+                "mutex": true
             },
             {
                 "id": "MobileBaseWidgets",

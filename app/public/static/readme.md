@@ -14,4 +14,4 @@
     "name": "功能导航",      ---- 名称
     "enabled": true,        ---- 是否开启是否显示组件图标
     "active": true,         -----是否开启
-    "mutex": false          -----是否与其余同类型互斥
+    "mutex": false          -----有没有组件图标
