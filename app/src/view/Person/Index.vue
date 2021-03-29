@@ -1,14 +1,82 @@
 <template>
-  <div>个人</div>
+  <div class="full">
+    <div class="person-nav">
+      <van-nav-bar title="我的" left-text="返回" right-text="消息" left-arrow @click-left="goBack" @click-right="enterMessage">
+        <template v-slot:right>
+          <van-badge :content="5" max="10">
+            <MIcon icon="icon-xiaoxi" size="20px" length="20px"></MIcon>
+          </van-badge>
+        </template>
+      </van-nav-bar>
+    </div>
+    <div class="user-infor" @click="enterPersonInfor">
+      <van-image width="40" height="40" :src="user.img" class="custom-user-img" round fill="fill" />
+      <div class="user-name">
+        {{ user.name }}
+      </div>
+      <van-icon name="arrow" class="custom-arrow" />
+    </div>
+    <div class="person-items">
+      <van-cell :title="item.title" is-link v-for="item in items" :key="item.title" @click="enterItem(item.title)">
+        <template v-slot:icon>
+          <MIcon :icon="item.icon" length="15px" size="15px" custom-class="custom-item-icon"> </MIcon>
+        </template>
+      </van-cell>
+    </div>
+  </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
+import { items } from "./store";
 export default Vue.extend({
   name: "Index",
   data() {
-    return {};
+    return {
+      items: items,
+      user: {
+        img: require("../../assets/images/bg1.jpeg"),
+        name: "小王"
+      }
+    };
   },
-  methods: {}
+  methods: {
+    enterMessage() {},
+    goBack() {
+      this.$router.back();
+    },
+    enterItem(name) {
+      this.$router.push({ name: name });
+    },
+    enterPersonInfor() {
+      this.$router.push({ name: "PersonInfor" });
+    }
+  }
 });
 </script>
-<style scoped></style>
+<style scoped>
+.person-nav {
+  /* margin-bottom: 10px; */
+}
+.user-infor {
+  display: inline-flex;
+  width: calc(100% - 30px);
+  padding: 10px 10px 10px 20px;
+  /* border-top: 1px solid #ebedf0; */
+  border-bottom: 1px solid #ebedf0;
+}
+.custom-user-img {
+  /* border-radius: 50%; */
+}
+.user-name {
+  flex-grow: 1;
+  padding-left: 20px;
+  line-height: 40px;
+  text-align: left;
+}
+.custom-arrow {
+  width: 30px;
+  height: 40px;
+  text-align: center;
+  line-height: 40px;
+}
+</style>

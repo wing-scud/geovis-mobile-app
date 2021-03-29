@@ -69,4 +69,19 @@ font-size: 20px;
     display: inline-flex;
     justify-content: flex-end;
   }
-  
+  .custom-item-icon{
+    line-height: 24px  !important;
+  }
+  .person-items .van-cell__title, .van-cell__value {
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    padding-left: 10px;
+}
+.person-items .van-cell{
+  /* border-top: 1px solid #ebedf0; */
+  border-bottom: 1px solid #ebedf0;
+}
+.person-infor-img .van-cell__right-icon{
+line-height: 40px;
+}

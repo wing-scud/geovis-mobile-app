@@ -14,6 +14,11 @@ const Login = () => import("../view/Login/Login.vue");
 const Register = () => import("../view/Login/Register.vue");
 const MapSetting = () => import("../view/Map/MapSetting.vue");
 const Star = () => import("../view/Star/Star.vue");
+
+const ServiceAddress = () => import("../view/Person/ServiceAddress.vue");
+const PersonInfor = () => import("../view/Person/PersonInfor.vue");
+const EditPersonInfor = () => import("../view/Person/EditPersonInfor.vue");
+const EditPassword = () => import("../view/Person/EditPassword.vue");
 const routes = [
   {
     path: "/",
@@ -60,6 +65,26 @@ const routes = [
     path: "/star",
     component: Star,
     name: "Star"
+  },
+  {
+    path: "/serviceAddress",
+    component: ServiceAddress,
+    name: "ServiceAddress"
+  },
+  {
+    path: "/personInfor",
+    component: PersonInfor,
+    name: "PersonInfor"
+  },
+  {
+    path: "/editPersonInfor",
+    component: EditPersonInfor,
+    name: "EditPersonInfor"
+  },
+  {
+    path: "/editPassword",
+    component: EditPassword,
+    name: "EditPassword"
   }
   /**
    * tab标签切换选择下载和下载完内容
