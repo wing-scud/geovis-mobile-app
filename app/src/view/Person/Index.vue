@@ -17,7 +17,7 @@
       <van-icon name="arrow" class="custom-arrow" />
     </div>
     <div class="person-items">
-      <van-cell :title="item.title" is-link v-for="item in items" :key="item.title" @click="enterItem(item.title)">
+      <van-cell :title="item.title" is-link v-for="item in items" :key="item.title" @click="enterItem(item.name)">
         <template v-slot:icon>
           <MIcon :icon="item.icon" length="15px" size="15px" custom-class="custom-item-icon"> </MIcon>
         </template>
@@ -27,12 +27,12 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { items } from "./store";
+import { indexItems } from "./store";
 export default Vue.extend({
   name: "Index",
   data() {
     return {
-      items: items,
+      items: indexItems,
       user: {
         img: require("../../assets/images/bg1.jpeg"),
         name: "小王"

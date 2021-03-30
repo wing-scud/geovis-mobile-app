@@ -30,6 +30,8 @@ export default Vue.extend({
       }
     };
   },
+  mounted() {
+  },
   methods: {
     chooseImg() {
       console.log("change img");
@@ -80,4 +82,11 @@ export default Vue.extend({
   }
 });
 </script>
-<style scoped></style>
+<style scoped>
+.person-infor {
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+</style>
