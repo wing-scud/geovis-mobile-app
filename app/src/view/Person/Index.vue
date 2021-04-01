@@ -34,10 +34,13 @@ export default Vue.extend({
     return {
       items: indexItems,
       user: {
-        img: require("../../assets/images/bg1.jpeg"),
-        name: "小王"
+        img: "",
+        name: ""
       }
     };
+  },
+  mounted(){
+    this.user = this.$store.state.user.user;
   },
   methods: {
     enterMessage() {},

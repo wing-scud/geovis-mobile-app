@@ -1,12 +1,14 @@
 import Vuex from "vuex";
-import Vue from "vue"
+import Vue from "vue";
 import starPlaces from "./modules/starPlaces.js";
 import starRoutes from "./modules/starRoutes.js";
-Vue.use(Vuex)
+import user from "./modules/user.ts";
+Vue.use(Vuex);
 const mobileStore = new Vuex.Store({
   modules: {
     starPlaces: starPlaces,
-    starRoutes: starRoutes
+    starRoutes: starRoutes,
+    user: user
   }
 });
 export default mobileStore;

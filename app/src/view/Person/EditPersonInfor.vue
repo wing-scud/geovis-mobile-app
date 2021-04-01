@@ -10,13 +10,14 @@
     </van-radio-group>
     <van-calendar title="出生时间" :poppable="false" :show-confirm="true" ref="date" :style="{ height: '500px' }" :min-date="minDate" v-if="type === 'birthday'" @confirm="onConfirmBirthday" />
     <div class="edit-password" v-if="type === 'password'">
-      <van-field v-model="oldPassword" type="password" label="原密码" />
+      <van-field v-model="user.password" type="password" label="原密码" />
       <van-field v-model="newPassword" type="password" label="新密码" />
       <van-field v-model="confirmPassword" :error-message="passwordError" type="password" label="确认新密码" @input="verifyPassword" />
     </div>
   </div>
 </template>
 <script lang="ts">
+//@ts-nocheck
 import Vue from "vue";
 import { areaList } from "./area";
 export default Vue.extend({
@@ -25,17 +26,9 @@ export default Vue.extend({
     return {
       name: "",
       type: "",
-      user: {
-        name: "xiaowang",
-        sex: true,
-        birthday: new Date(1999, 9, 1),
-        tel: 12345671212,
-        img: require("../../assets/images/bg1.jpeg"),
-        hometown: "110101"
-      },
+      user: {},
       areaList: areaList,
       minDate: new Date("1970-01-01 00:00:00"),
-      oldPassword: "",
       newPassword: "",
       confirmPassword: "",
       passwordError: "",
@@ -48,9 +41,6 @@ export default Vue.extend({
     this.type = params.type;
     //@ts-ignore
     this.user = params.user;
-    if (params.oldPassword) {
-      this.oldPassword = params.oldPassword;
-    }
     if (["birthday", "hometown"].indexOf(this.type) === -1) {
       this.confirmText = "确认";
     }
@@ -92,20 +82,23 @@ export default Vue.extend({
       const type = this.type;
       let name = "";
       if (type === "password") {
+        this.user.password = this.newPassword;
         name = "AccountAndSafe";
       } else {
         name = "PersonInfor";
       }
+      this.$store.commit("changeUser", this.user);
       this.$router.push({ name: name });
     },
     onConfirmBirthday(date) {
       this.user.birthday = date;
-      console.log("birthday", date);
+      this.confirm()
       this.$router.push({ name: "PersonInfor" });
     },
     onConfirmAddress(array) {
       this.user.birthday = array[2].code;
       this.$router.push({ name: "PersonInfor" });
+      this.confirm()
     }
   }
 });

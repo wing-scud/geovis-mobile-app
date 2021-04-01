@@ -8,8 +8,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-// import
-import PluginManager from "./components/PluginManager/index.vue";
 import "./plugins";
 import "./common/icons/iconfont";
 import { earthStore } from "./store";
@@ -24,54 +22,6 @@ export default Vue.extend({
       earthState: earthStore.state,
       currentMutexPlugin: ""
     };
-  },
-  computed: {
-    widgets() {
-      const list = [];
-      this.earthState.pluginTree.map(mainNode => {
-        mainNode.items.map(item => {
-          if (item.enabled && item.type === "widget") {
-            list.push(item);
-          }
-        });
-      });
-      return list;
-    },
-    plugins() {
-      const list = [];
-      this.earthState.pluginTree.map(mainNode => {
-        mainNode.items.map(item => {
-          if (item.enabled && item.active && (item.type === "module" || item.type === "tool")) {
-            list.push(item);
-          }
-        });
-      });
-      return list;
-    },
-    apps() {
-      const list = [];
-      this.earthState.pluginTree.map(mainNode => {
-        mainNode.items.map(item => {
-          if (item.enabled && item.type === "micro-app") {
-            list.push(item);
-          } else if (item.enabled && item.active && item.type === "micro-app-module") {
-            list.push(item);
-          }
-        });
-      });
-      return list;
-    },
-    frames() {
-      const list = [];
-      this.earthState.pluginTree.map(mainNode => {
-        mainNode.items.map(item => {
-          if (item.enabled && item.type === "iframe") {
-            list.push(item);
-          }
-        });
-      });
-      return list;
-    }
   },
   methods: {}
 });

@@ -3,14 +3,12 @@
     <div class="app-name">geovis-app-mobile</div>
     <div class="main-part">
       <div class="login-fields">
-        <van-field v-model="account" label="账户" clearable class="custom-input" />
+        <van-field v-model="name" label="账户名称" clearable class="custom-input" />
         <van-field v-model="password" type="password" clearable label="密码" class="custom-input" />
-        <div class="custom-login">
-          <router-link to="/">登录</router-link>
-        </div>
+        <div class="custom-login" @click="loginSubimit">登录</div>
         <div class="login-item">
           <span class="forget-password">忘记密码？</span>
-          <span class="register-tooltip">没有账号，<router-link to="/Register" class=" register">去注册</router-link></span>
+          <span class="register-tooltip">没有账号，<router-link to="/Register" class="register">去注册</router-link></span>
         </div>
       </div>
     </div>
@@ -18,16 +16,26 @@
   </div>
 </template>
 <script lang="ts">
+import { Toast } from "vant";
 import Vue from "vue";
 export default Vue.extend({
   name: "Login",
   data() {
     return {
-      account: "",
+      name: "",
       password: ""
     };
   },
-  methods: {}
+  methods: {
+    async loginSubimit() {
+      const result = await this.$store.dispatch("user/login", { name: this.name, password: this.password });
+      if (result) {
+        this.$router.push({ name: "Index" });
+      } else {
+        Toast("login error");
+      }
+    }
+  }
 });
 </script>
 <style scoped>
@@ -102,7 +110,7 @@ export default Vue.extend({
   /* text-align: center; */
   float: right;
 }
-.van-field__control{
-  color:white;
+.van-field__control {
+  color: white;
 }
 </style>

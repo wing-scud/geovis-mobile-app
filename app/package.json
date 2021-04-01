@@ -21,6 +21,7 @@
     "to-string-loader": "^1.1.6",
     "vant": "^2.12.7",
     "vue": "^2.6.11",
+    "vue-axios": "^3.2.4",
     "vue-class-component": "^7.2.6",
     "vue-multi-select": "^4.5.0",
     "vue-property-decorator": "^9.0.2",

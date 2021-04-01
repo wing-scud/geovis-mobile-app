@@ -1,6 +1,7 @@
 import Vue from "vue";
 //修改为异步组件加载
 import VueRouter from "vue-router";
+import mobileStore from "@/store/index.js";
 Vue.use(VueRouter);
 import { earthStore } from "../geovis/store/index.js";
 import Map from "../view/Map/Index.vue";
@@ -18,32 +19,21 @@ const ServiceAddress = () => import("../view/Setting/ServiceAddress.vue");
 const PersonInfor = () => import("../view/Person/PersonInfor.vue");
 const EditPersonInfor = () => import("../view/Person/EditPersonInfor.vue");
 const AccountAndSafe = () => import("../view/Person/AccountAndSafe.vue");
-
+const DownloadManager = () => import("../view/Download/Index.vue");
 const routes = [
   {
     path: "/",
     component: Home,
-    name: "index",
+    name: "Index",
     redirect: "/map",
     children: [
       {
         path: "person",
         component: Person,
         name: "Person",
-      }, {
-        path: "personInfor",
-        component: PersonInfor,
-        name: "PersonInfor"
-      },
-      {
-        path: "editPersonInfor",
-        component: EditPersonInfor,
-        name: "EditPersonInfor"
-      },{
-         path: "accountAndSafe",
-        component: AccountAndSafe,
-        name: "AccountAndSafe"
-        
+        meta: {
+          requireLogin: true
+        }
       },
       {
         name: "Map",
@@ -78,29 +68,67 @@ const routes = [
   {
     path: "/star",
     component: Star,
-    name: "Star"
+    name: "Star",
+    meta: {
+      requireLogin: true
+    }
   },
   {
     path: "/serviceAddress",
     component: ServiceAddress,
-    name: "ServiceAddress"
-  }
+    name: "ServiceAddress",
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: "editPersonInfor",
+    component: EditPersonInfor,
+    name: "EditPersonInfor",
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: "accountAndSafe",
+    component: AccountAndSafe,
+    name: "AccountAndSafe",
+    meta: {
+      requireLogin: true
+    }
+  },
+  {
+    path: "personInfor",
+    component: PersonInfor,
+    name: "PersonInfor",
+    meta: {
+      requireLogin: true
+    }
+  },
   /**
    * tab标签切换选择下载和下载完内容
    */
-  // {
-  //   path: "/downloadManager",
-  //   component: downloadManager,
-  //   name: "downloadManager"
-  // },
+  {
+    path: "/downloadManager",
+    component: DownloadManager,
+    name: "DownloadManager"
+  }
 ];
 
 const router = new VueRouter({ routes, mode: "hash" });
 router.beforeEach((to, from, next) => {
-  const isAuthenticated = true;
-  if (to.name !== "login" && !isAuthenticated) next({ name: "login" });
-  else next();
+  if (to.meta.requireLogin) {
+    console.log(mobileStore.state.user)
+    if (mobileStore.state.user.user) {
+      next();
+    } else {
+      next({ name: "Login" });
+    }
+  } else {
+    next();
+  }
 });
+//返回触发，不会再进行mounted ，需要手动传参（保存每次进入一个页面的所有参数，动态返回）
 let back = false;
 router.afterEach((to, from) => {
   const pluginMap = earthStore.state.pluginMap;
@@ -117,7 +145,7 @@ router.afterEach((to, from) => {
 });
 window.addEventListener(
   "popstate",
-  function (e) {
+  function(e) {
     console.info("返回触发");
     e.preventDefault();
     back = true;

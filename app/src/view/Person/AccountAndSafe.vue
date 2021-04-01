@@ -2,6 +2,8 @@
   <div class="full">
     <van-nav-bar title="账户与安全" left-arrow @click-left="goBack" />
     <van-cell :title="item.title" is-link @click="handleClick(item.name)" :key="item.name" v-for="item in items"> </van-cell>
+    <van-button @click="loginOut" block>退出登录</van-button>
+    <!-- <van-cell title="退出登录" is-link @click="loginOut"> </van-cell> -->
   </div>
 </template>
 <script lang="ts">
@@ -36,6 +38,10 @@ export default Vue.extend({
     },
     goBack() {
       this.$router.back();
+    },
+    loginOut() {
+      this.$store.dispatch("user/loginOut");
+      this.$router.push({ name: "Index" });
     }
   }
 });

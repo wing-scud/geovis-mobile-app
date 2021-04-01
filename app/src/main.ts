@@ -3,10 +3,11 @@ import App from "./App.vue";
 import Vant from "vant";
 import "vant/lib/index.css";
 import "mapbox-gl/src/css/mapbox-gl.css"
-import {earthStore, EarthStore} from "./geovis/store/index.js";
+import { earthStore, EarthStore } from "./geovis/store/index.js";
 import router from "./router/index.js"
-import "./cordova/cordova.js"
-import mobileStore from  "./store/index.js"
+import "./cordova/index.js"
+import mobileStore from "./store/index.js"
+
 /*
 ------------pc适配-------------------
 import "./assets/global.scss";
@@ -32,8 +33,20 @@ declare module "vue/types/vue" {
   }
 }
 Vue.config.productionTip = false;
+if (navigator.userAgent) {
+  if (navigator.userAgent.indexOf("Android") !== -1) {
+    window.localStorage.__proto__.remove=function(key){
+      window.localStorage.removeItem(key)
+    }
+    window['NativeStorage'] = window['localStorage']
+  }
+}
+//  const onDeviceReady=()=> {
+console.log('deviceready,init app');
 new Vue({
-  store:mobileStore,
+  store: mobileStore,
   render: h => h(App),
   router
 }).$mount("#app");
+// }
+// document.addEventListener('deviceready', onDeviceReady, false);

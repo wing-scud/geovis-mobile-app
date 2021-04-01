@@ -40,7 +40,8 @@ class LocationWatch {
             const heading = coords.heading ? GeoVis.Math.toRadians(coords.heading) : 0;
             if (mode === "globe") {
                 earth.camera.flyTo({
-                    destination: GeoVis.Cartesian3.fromDegrees(coords.longitude, coords.latitude, coords.altitude),
+                    //高度太低，会穿透地球
+                    destination: GeoVis.Cartesian3.fromDegrees(coords.longitude, coords.latitude, coords.altitude>200? coords.altitude:200),
                     orientation: {
                         heading: heading,
                         pitch: GeoVis.Math.toRadians(-90),

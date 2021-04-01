@@ -8,6 +8,7 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
+const NativeStorage = window["NativeStorage"];
 export default Vue.extend({
   name: "Home",
   data() {
@@ -20,6 +21,12 @@ export default Vue.extend({
         { name: "个人", icon: "icon-geren" }
       ]
     };
+  },
+  beforeCreate() {
+    const user = NativeStorage.getItem("user");
+    if (user) {
+      this.$store.commit("user/initUser", JSON.parse(user));
+    }
   },
   methods: {
     handleChange(active) {

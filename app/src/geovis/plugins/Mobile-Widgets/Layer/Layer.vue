@@ -32,7 +32,7 @@
           <div class="head">其他</div>
           <van-cell title="友邻位置" is-link />
           <van-cell title="天气地图" is-link />
-          <van-cell title="下载管理" is-link />
+          <van-cell title="下载管理" is-link to="/downloadManager"/>
           <van-cell title="其他地图" is-link />
           <van-cell title="收藏管理" is-link to="/star"/>
           <!-- <div class="map-item">其他地图</div> -->
