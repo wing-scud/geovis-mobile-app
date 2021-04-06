@@ -10,7 +10,7 @@
       </van-nav-bar>
     </div>
     <div class="user-infor" @click="enterPersonInfor">
-      <van-image width="40" height="40" :src="user.img" class="custom-user-img" round fill="fill" />
+      <van-image width="40" height="40" :src="user.headshot" class="custom-user-img" round fill="fill" />
       <div class="user-name">
         {{ user.name }}
       </div>
@@ -34,7 +34,7 @@ export default Vue.extend({
     return {
       items: indexItems,
       user: {
-        img: "",
+        headshot: "",
         name: ""
       }
     };

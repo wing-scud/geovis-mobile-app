@@ -3,7 +3,7 @@
     <van-nav-bar title="个人信息" left-arrow @click-left="goBack" />
     <van-cell title="头像" is-link class="person-infor-img" @click="chooseImg">
       <template v-slot:default>
-        <van-image width="40" height="40" :src="user.img" class="custom-user-img" fill="fill" />
+        <van-image width="40" height="40" :src="user.headshot" class="custom-user-img" fill="fill" />
       </template>
     </van-cell>
     <van-cell title="用户名" :value="user.name" is-link @click="changeUserInfor('name')"> </van-cell>

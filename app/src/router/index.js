@@ -118,7 +118,6 @@ const routes = [
 const router = new VueRouter({ routes, mode: "hash" });
 router.beforeEach((to, from, next) => {
   if (to.meta.requireLogin) {
-    console.log(mobileStore.state.user)
     if (mobileStore.state.user.user) {
       next();
     } else {
@@ -131,6 +130,9 @@ router.beforeEach((to, from, next) => {
 //返回触发，不会再进行mounted ，需要手动传参（保存每次进入一个页面的所有参数，动态返回）
 let back = false;
 router.afterEach((to, from) => {
+  if (to.name === from.name) {
+    return;
+  }
   const pluginMap = earthStore.state.pluginMap;
   if (back) {
     if (pluginMap[from.name]) {

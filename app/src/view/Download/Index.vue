@@ -87,6 +87,7 @@ export default Vue.extend({
     };
   },
   mounted() {
+    // Response.body 属性 下载进度
     const navBar = document.getElementsByClassName("van-nav-bar")[0];
     const tabTitle = document.getElementsByClassName("van-tabs__wrap")[0];
     const topTitleHeight = navBar.clientHeight + tabTitle.clientHeight;

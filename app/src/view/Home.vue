@@ -15,10 +15,10 @@ export default Vue.extend({
     return {
       active: 0,
       list: [
-        { name: "地图", icon: "icon-ditu" },
-        { name: "新闻", icon: "icon-yingyong" },
-        { name: "应用", icon: "icon-yingyong" },
-        { name: "个人", icon: "icon-geren" }
+        { title: "地图", icon: "icon-ditu", name: "Map" },
+        { title: "新闻", icon: "icon-yingyong", name: "News" },
+        { title: "应用", icon: "icon-yingyong", name: "Application" },
+        { title: "个人", icon: "icon-geren", name: "Person" }
       ]
     };
   },
@@ -29,10 +29,11 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleChange(active) {
-      const path = ["/", "/application", "/application", "/person"];
-      const componentPath = path[active];
-      this.$router.push(componentPath);
+    handleChange() {}
+  },
+  watch: {
+    active() {
+      console.log("MTabbar ", this.active);
     }
   }
 });

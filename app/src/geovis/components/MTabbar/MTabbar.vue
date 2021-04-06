@@ -1,7 +1,7 @@
 <template>
-  <van-tabbar v-model="active" class="bottom-tabbar" @change="handleChange" :fixed="true" active-color="#0372f1e0" :style="{ height: height+'px' }">
-    <van-tabbar-item v-for="item in list" :key="item['name']">
-      <span class="tabbar-name">{{ item["name"] }} </span>
+  <van-tabbar v-model="activeItem" class="bottom-tabbar" @change="handleChange" :fixed="true" active-color="#0372f1e0" :style="{ height: height + 'px' }" replace>
+    <van-tabbar-item push :to="{ name: item.name }" v-for="item in list" :key="item['title']">
+      <span class="tabbar-name">{{ item["title"] }} </span>
       <template #icon>
         <div :class="[item['icon'], 'iconfont']"></div>
       </template>
@@ -22,9 +22,9 @@ export default Vue.extend({
       type: Array,
       default: function() {
         return [
-          { name: "主页", icon: "icon-zhuye" },
-          { name: "应用", icon: "icon-daohangmoren" },
-          { name: "个人", icon: "icon-geren" }
+          { title: "主页", icon: "icon-zhuye", name: "Home" },
+          { title: "应用", icon: "icon-daohangmoren", name: "Application" },
+          { title: "个人", icon: "icon-geren", name: "Person" }
         ];
       }
     },
@@ -38,11 +38,26 @@ export default Vue.extend({
     }
   },
   data() {
-    return {};
+    return {
+      activeItem: 0,
+      router: undefined
+    };
+  },
+  mounted() {
+    // const names = this.list.map(item => {
+    //   return item.name;
+    // });
+    // this.activeItem = this.active;
+    // this.$router.afterEach((to, from) => {
+    //   if (names.includes(to.name)) {
+    //     const index = names.indexOf(to.name);
+    //     this.activeItem = index;
+    //   }
+    // });
   },
   methods: {
     handleChange() {
-      this.$emit("change", this.active);
+      this.$emit("change", this.activeItem);
     }
   }
 });
