@@ -3,10 +3,10 @@
     <Earth></Earth>
     <template v-if="!state.onlyMap">
       <div class="map-plugin-right">
-        <MIcon :icon="item.icon" customClass="icon-component" length="35px" :circle="true" v-for="item in pluginMapUnactivedRight" :key="item['id']" @click="handleClick(item['id'])"> </MIcon>
+        <MIcon :icon="item.icon" customClass="icon-component"  size="24px" length="32px"  :circle="true" v-for="item in pluginMapUnactivedRight" :key="item['id']" @click="handleClick(item['id'])"> </MIcon>
       </div>
       <div class="map-plugin-left">
-        <MIcon :icon="item.icon" length="35px" customClass="icon-component" :circle="true" v-for="item in pluginMapUnactivedLeft" :key="item['id']" @click="handleClick(item['id'])"> </MIcon>
+        <MIcon :icon="item.icon"  size="24px" length="32px"  customClass="icon-component" :circle="true" v-for="item in pluginMapUnactivedLeft" :key="item['id']" @click="handleClick(item['id'])"> </MIcon>
       </div>
       <template v-for="item in pluginState.pluginStateActived">
         <component :is="item.id" :key="item.id"></component>

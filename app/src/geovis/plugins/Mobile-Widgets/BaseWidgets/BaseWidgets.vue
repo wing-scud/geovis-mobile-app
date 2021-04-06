@@ -171,7 +171,7 @@ export default {
   position: fixed;
   width: 30px;
   bottom: 50px;
-  right: 10px;
+  right: 5px;
   z-index: 5;
 }
 .tool-icon {
@@ -193,7 +193,7 @@ export default {
 #infobox {
   position: fixed;
   color: #fff;
-  font-size: 16px;
+  font-size: 12px;
   font-family: cursive;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -229,7 +229,7 @@ export default {
   left: 50%;
   margin: 10px 0;
   color: white;
-  font-size: 18px;
+  font-size: 15px;
   transform: translateX(-50%);
 }
 </style>

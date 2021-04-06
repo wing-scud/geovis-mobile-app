@@ -1,0 +1,194 @@
+.gv-resizer {
+  /* background-color: #29e; */
+  color: white;
+  font-size: 20px;
+  font-family: sans-serif;
+  border-radius: 8px;
+  /* padding: 20px; */
+  /* margin: 30px 20px; */
+  touch-action: none;
+  width: 200px;
+  height: 44px;
+  /* This makes things *much* easier */
+  box-sizing: border-box;
+}
+.gv-dragble{
+  cursor: move;
+}
+
+ul{
+  padding-inline-start: 00px;
+}
+
+.gv-marker-menu{
+  position: absolute;
+  top: -85px;
+  width: 270px;
+  height: 80px;
+  padding-inline-start: 0;
+}
+
+.gv-marker-input{
+  width: 100%;
+  height: 100%;
+  resize: none;
+  border: 0;
+  overflow: hidden;
+  user-select: none;
+    outline: none;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+
+}
+
+.gv-marker-image{
+  width: 100%;
+  height: 100%;
+}
+
+[class*=" geoqicon-"],[class^=gv-icon-] {
+  speak: none;
+  font-style: normal;
+  font-weight: 400;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale
+}
+
+
+
+.menu {
+position: absolute;
+z-index: 10000;
+box-shadow: 1px 1px 3px #555
+}
+
+.menu label {
+vertical-align: middle;
+float: left;
+margin-left: 15px;
+font-size: 14px
+}
+
+
+
+.menu li {
+  list-style-type: none;
+  float: left;
+  text-align: center;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  color: #2093ef;
+  background-color: #fff
+  }
+
+  .firstLine li {
+    list-style-type: none;
+    float: left;
+    text-align: center;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    }
+.firstLine li.active,.firstLine li:hover {
+color: #fff;
+background-color: #2093ef;
+cursor: pointer
+}
+
+
+
+/* weight italic color bgcolor left center right remove */
+
+/* 未hover */
+.firstLine li[data-name=weight] > img {
+  background-color: red;
+  background-image: url("../img/editor/字体加粗.png");
+  mix-blend-mode: lighten;
+  width: 25px;
+  height: 25px;
+  mix-blend-mode: color-burn;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+
+.firstLine li[data-name=weight] > i {
+  background-color: red;
+  background-image: url("../img/editor/字体加粗.png");
+  mix-blend-mode: lighten;
+  width: 25px;
+  height: 25px;
+  mix-blend-mode: color-burn;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+.secondLine{
+  width: 240px;
+}
+.secondLine > li{
+  width: 60px;
+}
+
+
+
+
+
+ .gv-anchor {
+  position: absolute;
+  display: none;
+  z-index: 10;
+  width: 10px;
+  height: 10px;
+  background-color: #4ee1f4;
+  border: 1px solid #fff
+}
+
+.gv-resizeble .gv-marker-input{
+  border: 1px dashed #eee;
+}
+
+.gv-resizeble .gv-anchor{
+  display: block;
+}
+
+
+
+.gv-resizer.active > .anchor {
+  display: block;
+}
+
+.control .anchor-box {
+  position: absolute;
+  width: 200px;
+  height: 40px;
+  top: 6px;
+  left: 6px;
+  padding: 0;
+  color: #fff;
+  background-color: transparent;
+  border: 1px solid transparent;
+  line-height: 1.5
+}
+
+textarea.active .control {
+  border: 1px dashed #828282
+}
+
+.gv-resizeble > .gv-marker-delete-horver{
+  display: block!important;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  min-width: 160px;
+  top: 0;
+  user-select: none;
+  vertical-align: middle;
+  line-height: 10;
+  position: absolute;
+}

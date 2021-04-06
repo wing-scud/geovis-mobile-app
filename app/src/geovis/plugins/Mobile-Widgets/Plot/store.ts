@@ -15,7 +15,7 @@ const types = [
   },
   {
     id: "tuwen",
-    name: "图文标",
+    name: "图文",
     icon: "icon-tuwen",
     options: [
       { name: "文字", icon: "icon-wenzi" },
@@ -109,7 +109,13 @@ class Plot {
   public set primitives(value: any) {
     this._primitives = value;
   }
-
+  private _drawingMarker: Function;
+  public get drawingMarker(): Function {
+    return this._drawingMarker;
+  }
+  public set drawingMarker(value: Function) {
+    this._drawingMarker = value;
+  }
   constructor() {
     this._drawHelper = drawHelper;
     this._drawResults = [];
@@ -150,7 +156,7 @@ class Plot {
         break;
       default: break;
     }
-    drawHelper.startDrawingMarker(
+    this.drawingMarker = drawHelper.startDrawingMarker(
       {
         type: drawHelperType,
         ...markOptions,
@@ -167,15 +173,15 @@ class Plot {
     let resultFilter = ""
     switch (type) {
       case "三角":
-        this.triangleMeasure();
+        this.drawingMarker = this.triangleMeasure();
         resultFilter = "角度"
         break;
       case "距离":
-        this.distanceMeasure();
+        this.drawingMarker = this.distanceMeasure();
         resultFilter = "距离"
         break;
       case "面积":
-        this.areaMeasure();
+        this.drawingMarker = this.areaMeasure();
         resultFilter = "面积"
         break;
       default:
@@ -201,9 +207,9 @@ class Plot {
         break;
       default: break;
     }
-    type=type="多边形"
+    type = type = "多边形"
     polygonOptions = Object.assign(type, polygonOptions, options)
-    this._drawHelper.startDrawingPolygon(polygonOptions)
+    this.drawingMarker = this._drawHelper.startDrawingPolygon(polygonOptions)
     this.addPlotResults(type)
   }
   startDrawLine(type) {
@@ -224,10 +230,10 @@ class Plot {
         break;
       default: break;
     }
-    this._drawHelper.startDrawingPolyline({
-      type:drawHelperType
+    this.drawingMarker = this._drawHelper.startDrawingPolyline({
+      type: drawHelperType
     })
-    type=type="线"
+    type = type = "线"
     this.addPlotResults(type)
   }
   startDrawOther(type) {
@@ -238,19 +244,19 @@ class Plot {
     switch (type) {
       case '圆':
         drawHelperType = DrawHelper.Types.CIRCLE;
-        this._drawHelper.startDrawingCircle({
+        this.drawingMarker = this._drawHelper.startDrawingCircle({
           type: drawHelperType
         })
         break;
       case '墙':
         drawHelperType = DrawHelper.Types.WALL
-        this._drawHelper.startDrawingWall({
+        this.drawingMarker = this._drawHelper.startDrawingWall({
           type: drawHelperType
         })
         break;
       case '矩形':
         drawHelperType = DrawHelper.Types.RECTANGLE
-        this._drawHelper.startDrawingRect({
+        this.drawingMarker = this._drawHelper.startDrawingRect({
           type: drawHelperType
         })
         break;
@@ -258,13 +264,27 @@ class Plot {
     }
     this.addPlotResults(type)
   }
+  finishDrawing() {
+    if (this.drawingMarker) {
+      this.drawingMarker();
+    }
+  }
+  deleteResult(index) {
+    this._drawResults.splice(index, 1);
+    this._primitives[index].deleted();
+    this._primitives.splice(index, 1);
+  }
+  removeAll(){
+    this._drawHelper.removeAll()
+  }
   private addPlotResults(type) {
     const instance = this;
     this._drawHelper.once("created", function (e) {
       const id = e.entity.id;
       const time = formateDate(new Date())
-      instance._drawResults.push({ value: "无", type: type, time: time });
+      instance._drawResults.push({ value: time, type: type, time: time });
       instance._primitives.push(e.entity);
+      instance.drawingMarker = undefined
     });
   }
   private triangleMeasure() {
@@ -274,31 +294,25 @@ class Plot {
       width: 3,
       pickTileset: true
     };
-    this._drawHelper.startDrawingAngle(angleOptions);
+    return this._drawHelper.startDrawingAngle(angleOptions);
   }
   private distanceMeasure() {
     const polyOptions = {
       color: GeoVis.Color.WHITE.withAlpha(0.5),
       width: 3
     };
-    this._drawHelper.startDrawingPolyline({
+    return this._drawHelper.startDrawingPolyline({
       type: Types.PROJ_POLYLINE,
       computed: true,
       ...polyOptions
     });
-  }
-  deleteResult(index){
-    this._drawResults.splice(index, 1);
-    debugger
-    this._primitives[index].deleted();
-    this._primitives.splice(index, 1);
   }
   private areaMeasure() {
     const polyOptions = {
       color: GeoVis.Color.WHITE.withAlpha(0.5),
       width: 3
     };
-    this._drawHelper.startDrawingPolygon({
+    return this._drawHelper.startDrawingPolygon({
       type: Types.PROJ_POLYGON,
       computed: true,
       ...polyOptions
@@ -308,7 +322,7 @@ class Plot {
     const instance = this;
     this._drawHelper.once("created", function (e) {
       const id = e.entity.id;
-      const arrayTag = instance._drawHelper._measureTool.tags.get(id);
+      const arrayTag = instance._drawHelper.measure.tags.get(id);
       let result;
       if (resultFilter === "角度") {
         result = arrayTag[1].text;
@@ -318,6 +332,7 @@ class Plot {
       const time = formateDate(new Date())
       instance._drawResults.push({ value: result, type: operator, time: time });
       instance._primitives.push(e.entity);
+      instance.drawingMarker = undefined
     });
   }
   destory() {

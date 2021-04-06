@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div :class="[icon, 'iconfont', 'icon-container', actived ? 'actived' : 'unactived',customClass]" :style="styleComputed" @click="handleClick" :name="name"></div>
+  <div >
+    <div :class="[icon, 'iconfont', 'icon-container', actived ? 'actived' : 'unactived', customClass]" :style="styleComputed" @click="handleClick" :name="name"></div>
     <span class="label" v-if="label !== ''" :style="{ color: labelColor }">{{ label }}</span>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default Vue.extend({
     },
     circle: {
       type: Boolean,
-      default: true
+      default: false
     },
     actived: {
       type: Boolean,
@@ -48,7 +48,7 @@ export default Vue.extend({
       type: String,
       default: ""
     },
-    labelColor:{
+    labelColor: {
       type: String,
       default: "black"
     }
@@ -63,7 +63,10 @@ export default Vue.extend({
         borderRadius = "50%";
       }
       return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, lineHeight: this.length, backgroundColor: this.backgroundColor };
-    }
+    },
+    // containerStyle() {
+    //   // return { backgroundColor: this.backgroundColor };
+    // }
   },
   methods: {
     handleClick(key) {

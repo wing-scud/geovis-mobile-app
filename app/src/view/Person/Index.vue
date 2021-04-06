@@ -57,18 +57,12 @@ export default Vue.extend({
 });
 </script>
 <style scoped>
-.person-nav {
-  /* margin-bottom: 10px; */
-}
 .user-infor {
   display: inline-flex;
   width: calc(100% - 30px);
   padding: 10px 10px 10px 20px;
   /* border-top: 1px solid #ebedf0; */
   border-bottom: 1px solid #ebedf0;
-}
-.custom-user-img {
-  /* border-radius: 50%; */
 }
 .user-name {
   flex-grow: 1;

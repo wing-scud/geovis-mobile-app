@@ -5,18 +5,25 @@
         <div class="editor-item"><van-icon name="arrow-left" size="35px" @click="goBack" /></div>
         <div class="editor-type">
           <div class="editor-item" v-for="item in types" :key="item.id">
-            <MIcon :icon="item.icon" :actived="componentName === item.id" labelColor="white" length="35px" backgroundColor="white" :label="item.name" circle @click="changeComponent(item.id)"></MIcon>
+            <MIcon :icon="item.icon" :actived="componentName === item.id"  size="24px" length="32px" backgroundColor="white" circle @click="changeComponent(item.id)"></MIcon>
           </div>
         </div>
         <div class="editor-item"><van-icon name="success" size="30px" @click="savePlot" /></div>
       </div>
       <div class="editor-options">
         <div class="editor--options-item" v-for="item in typeOptions" :key="item.id">
-          <MIcon :icon="item.icon" :actived="option === item.name" length="35px" labelColor="white" backgroundColor="white" circle :label="item.name" @click="startDraw(item.name)"></MIcon>
+          <MIcon :icon="item.icon" :actived="option === item.name" size="24px" length="32px"  labelColor="white" backgroundColor="white" circle :label="item.name" @click="startDraw(item.name)"></MIcon>
         </div>
       </div>
     </div>
-    <div class="property"></div>
+    <div class="property">
+      <!-- 属性 结束 撤销 重绘 -->
+      <MIcon icon="icon-chexiao" size="24px" length="32px"  backgroundColor="transparent" @click="operatorHandler('backout')"> </MIcon>
+      <MIcon icon="icon-bianji" size="24px" length="32px"  backgroundColor="translucent" @click="operatorHandler('edit')"> </MIcon>
+      <!-- <MIcon icon="icon-default" length="45px" size="45px" backgroundColor="transparent" circle> </MIcon> -->
+      <MIcon icon="icon-qingchu"  size="24px" length="32px"  backgroundColor="transparent" @click="operatorHandler('redraw')"> </MIcon>
+      <MIcon icon="icon-jieshu"  size="24px" length="32px" backgroundColor="transparent" @click="operatorHandler('stop')"> </MIcon>
+    </div>
     <div class="results-popup">
       <MIcon icon="icon-ziyuan" length="35px" backgroundColor="white" circle @click="popShow = true"></MIcon>
     </div>
@@ -25,16 +32,16 @@
         <tr class="flex-result">
           <th class="operator">类型</th>
           <th class="result">结果</th>
-          <th class="result">时间</th>
+          <!-- <th class="result">时间</th> -->
         </tr>
         <van-swipe-cell v-for="(item, index) in results" :key="index">
           <tr class="flex-result">
             <td class="operator">{{ item.type }}</td>
             <td class="result">{{ item.value }}</td>
-            <td class="time">{{ item.time }}</td>
+            <!-- <td class="time">{{ item.time }}</td> -->
           </tr>
           <template #right>
-            <van-button square type="danger" text="删除" @click="deletePlotEntity(index)"/>
+            <van-button square type="danger" text="删除" @click="deletePlotEntity(index)" />
             <van-button square type="primary" text="编辑" />
           </template>
         </van-swipe-cell>
@@ -60,7 +67,7 @@ export default {
       popShow: false,
       results: plot.drawResults,
       saveDialogShow: false,
-      sceneName:""
+      sceneName: "",
     };
   },
   mounted() {
@@ -71,6 +78,10 @@ export default {
       this.totalOptions[item.id] = item.options;
     });
     this.componentName = "liangcei";
+    // this.results = [
+    //   { type: "liangcei", value: "zongchang 10000", time: "1999-03-01" },
+    //   { type: "liangcei", value: "zongchang 10000", time: "1999-03-01" },
+    // ];
   },
   beforeDestroy() {
     earthStore.setMapFullScreen(false);
@@ -91,9 +102,11 @@ export default {
     startDraw(option) {
       this.option = option;
       const type = option;
+
       switch (this.componentName) {
         case "liangcei":
           plot.startMeasure(option);
+          console.log("🚀 ~ file: Plot.vue ~ line 105 ~ startDraw ~ plot", plot);
           break;
         case "tuwen":
           plot.startDrawMarker(type);
@@ -113,8 +126,8 @@ export default {
       this.componentName = name;
     },
     closePopup() {},
-    deletePlotEntity(index){
-      plot.deleteResult(index)
+    deletePlotEntity(index) {
+      plot.deleteResult(index);
     },
     handclick(type) {
       switch (type) {
@@ -128,6 +141,23 @@ export default {
           this.areaMeasure();
           break;
         default:
+          break;
+      }
+    },
+    operatorHandler(type) {
+      switch (type) {
+        case "edit":
+          //进入属性编辑或全局样式配置
+          break;
+        case "stop":
+          plot.finishDrawing();
+          break;
+        case "backout":
+          // 撤销上一步操作
+          break;
+        case "redraw":
+          //清除当前场景内所有的实体
+          plot.removeAll();
           break;
       }
     },
@@ -145,7 +175,13 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   width: 100%;
+  align-items: center;
+  background-color: white;
+  height: 35px;
 }
 .results-popup {
   position: fixed;
@@ -155,7 +191,6 @@ export default {
 .editor-types {
   background-color: #1989fa;
   display: inline-flex;
-  padding: 5px 5px;
   flex-flow: row nowrap;
   justify-content: space-between;
   align-items: center;
@@ -166,13 +201,13 @@ export default {
   align-items: center;
   /* width: 50px; */
   height: 55px;
-  margin: 0 5px;
+  /* margin: 0 5px; */
 }
 .editor-type {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
-  justify-content: flex-start;
+  justify-content: space-around;
 }
 
 .result-list {
@@ -184,18 +219,20 @@ export default {
   flex-direction: row;
   flex-wrap: nowrap;
   justify-content: space-between;
-  align-items: center;
   text-align: center;
   margin: 5px 0;
   width: 100%;
+  border-bottom: 1px solid #bbbbb9;
 }
 
 .operator {
   flex-grow: 1;
-  /* width: 100px; */
 }
 .result {
   flex-grow: 3;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .time {
   flex-grow: 2;
