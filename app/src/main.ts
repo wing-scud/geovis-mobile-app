@@ -41,12 +41,9 @@ if (navigator.userAgent) {
     window['NativeStorage'] = window['localStorage']
   }
 }
-//  const onDeviceReady=()=> {
 console.log('deviceready,init app');
 new Vue({
   store: mobileStore,
   render: h => h(App),
   router
 }).$mount("#app");
-// }
-// document.addEventListener('deviceready', onDeviceReady, false);
