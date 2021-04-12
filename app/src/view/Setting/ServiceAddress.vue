@@ -41,6 +41,7 @@ export default Vue.extend({
       this.$router.backward(-1);
     },
     confirm() {
+      this.$router.push({ name: "Person" });
     }
   }
 });

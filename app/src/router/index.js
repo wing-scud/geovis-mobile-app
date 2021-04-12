@@ -146,7 +146,7 @@ router.backward = function(step) {
     back = true;
     const pastRoute = router.routerHistory[length - 2];
     router.routerHistory.pop();
-    router.push(pastRoute)
+    router.push(pastRoute);
   }
 };
 router.afterEach((to, from) => {
@@ -169,9 +169,17 @@ router.afterEach((to, from) => {
 window.addEventListener(
   "popstate",
   function(e) {
-    console.info("浏览器回退触发",e);
+    console.info("浏览器回退触发", e);
     e.preventDefault();
     // back = true;
+  },
+  false
+);
+document.addEventListener(
+  "backbutton",
+  e => {
+    router.backward(-1);
+    console.log("回退按钮", e);
   },
   false
 );

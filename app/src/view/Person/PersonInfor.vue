@@ -67,7 +67,7 @@ export default Vue.extend({
       return hometown;
     },
     goBack() {
-      this.$router.backward(-1);
+      this.$router.push({name:"Person"});
     },
   },
 });

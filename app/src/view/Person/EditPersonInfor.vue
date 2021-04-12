@@ -1,7 +1,7 @@
 <template>
   <div class="full">
     <van-nav-bar :title="name" left-text="返回" left-arrow :right-text="confirmText" @click-left="goBack" @click-right="confirm"></van-nav-bar>
-    <van-field v-model="user.tel" type="tel" label="手机号" ref="tel" v-if="type === 'tel'" />
+    <van-field v-model="user.tel" type="tel" label="手机号" ref="tel" autofocus :error-message="errorMessage" @input="validatorTel" v-if="type === 'tel'" />
     <van-field v-model="user.name" label="用户名" border ref="name" v-if="type === 'name'" />
     <van-area title="地区" :area-list="areaList" :value="user.hometown" @confirm="onConfirmAddress" v-if="type === 'hometown'" />
     <van-radio-group v-model="user.sex" direction="horizontal" class="custom-sexbox" v-if="type === 'sex'">
@@ -12,7 +12,7 @@
     <div class="edit-password" v-if="type === 'password'">
       <van-field v-model="user.password" type="password" label="原密码" />
       <van-field v-model="newPassword" type="password" label="新密码" />
-      <van-field v-model="confirmPassword" :error-message="passwordError" type="password" label="确认新密码" @input="verifyPassword" />
+      <van-field v-model="confirmPassword" :error-message="errorMessage" type="password" label="确认新密码" @input="verifyPassword" />
     </div>
   </div>
 </template>
@@ -31,8 +31,8 @@ export default Vue.extend({
       minDate: new Date(1900, 1, 1),
       newPassword: "",
       cobeforenfirmPassword: "",
-      passwordError: "",
-      confirmText: ""
+      confirmText: "",
+      errorMessage: ""
     };
   },
   beforeMount() {
@@ -70,15 +70,14 @@ export default Vue.extend({
     verifyPassword() {
       if (this.confirmPassword.length === this.newPassword.length) {
         if (this.confirmPassword !== this.newPassword) {
-          this.passwordError = "请保持二次输入密码一致";
+          this.errorMessage = "请保持二次输入密码一致";
         } else {
-          this.passwordError = "";
+          this.errorMessage = "";
         }
       }
     },
     goBack() {
       this.$router.backward(-1);
-      // this.$router.replace({ name: "PersonInfor" });
     },
     confirm() {
       const type = this.type;
@@ -89,8 +88,13 @@ export default Vue.extend({
       } else {
         name = "PersonInfor";
       }
-      this.$store.commit("user/changeUser", this.user);
-      this.$router.push({ name: name });
+      this.$store.dispatch("user/changeUser", this.user).then(res => {
+        if (res.status) {
+          this.$router.push({ name: name });
+        } else {
+          this.errorMessage = res.error;
+        }
+      });
     },
     onConfirmBirthday(date) {
       this.user.birthday = this.formateDate(date);
@@ -114,6 +118,9 @@ export default Vue.extend({
     onConfirmAddress(array) {
       this.user.hometown = array[2].code;
       this.confirm();
+    },
+    validatorTel() {
+      this.errorMessage = /^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/.test(this.user.tel) ? "" : "手机号格式错误";
     }
   }
 });

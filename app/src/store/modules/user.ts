@@ -1,5 +1,5 @@
 
-import User from "../../server/table/User";
+import User,{validUser} from "../../server/table/User";
 // import { connectDB, createTabel, addRow, customSql, readRow, removeRow, updateRow, closeDB } from "../../server/db.js";
 const state = () => ({
   user: undefined
@@ -25,6 +25,18 @@ const actions = {
   },
   loginOut({context,commit}){
     commit("deleteUser");
+  },
+  changeUser({context,commit},user){
+    return new Promise((resolve,reject)=>{
+      //验证user 是否正确
+      const res=validUser(user)
+     if(res.status){
+       commit('changeUser',user);
+       resolve({status:true})
+     }else{
+      resolve({status:false,error:res.error})
+     }
+    })
   }
 };
 

@@ -30,6 +30,27 @@ class User {
         this.hometown = hometown;
     }
 }
+function  validUser(user) {
+    let error;
+    let status=1;
+    //@ts-ignore
+    if(user.name ==""){
+        status=0;
+        error= "用户名不能为空"
+    }
+        //@ts-ignore
+    if(![0,1].includes(user.sex)){
+        status=0;
+        error= "性别格式错误"
+    }
+        //@ts-ignore
+    if(!/^(13[0-9]|14[5|7]|15[0|1|2|3|4|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/.test(user.tel)){
+        status=0;
+        error= "手机号格式错误"
+    }
+    return {status,error}
+}
+export {validUser}
 export default User;
 
 
