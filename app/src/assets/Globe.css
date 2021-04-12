@@ -85,3 +85,14 @@ font-size: 20px;
 .person-infor-img .van-cell__right-icon{
 line-height: 40px;
 }
+.search-input .van-checkbox__icon--round .van-icon {
+  border-radius: 100%;
+  font-size: 15px;
+}
+.search-input .van-checkbox__label{
+  margin: 0 0 ;
+}
+.search-input  .van-icon-search
+{
+  line-height: 30px;
+}

@@ -3,7 +3,7 @@
     <van-field v-model="inputValue" :left-icon="leftIcon" size="" placeholder="请输入地点" :error-message="inputErrorMessage" clearable @keyup.enter.native="submit" @input="getSuggestions">
       <template #button>
         <div class="search-group">
-          <van-checkbox v-model="coordinateCheckd" class="search-checkbox search-group-item">坐标反查</van-checkbox>
+          <van-checkbox v-model="coordinateCheckd" class="search-checkbox search-group-item">反查</van-checkbox>
           <van-button size="small" type="default" class="search-button search-group-item" plain @click="submit">搜索</van-button>
         </div>
       </template>
@@ -321,7 +321,7 @@ export default {
   background-color: #7570703d;
 }
 .search-input .van-cell {
-  padding: 3px 2px 3px 12px;
+  padding: 3px 2px 3px 2px;
 }
 .search-button {
   color: rgb(34, 126, 247);
@@ -337,7 +337,7 @@ export default {
   display: inline-flex;
 }
 .search-group-item {
-  margin: 0 3px;
+  margin: 0 1px;
 }
 .search-checkbox {
   font-size: 12px;

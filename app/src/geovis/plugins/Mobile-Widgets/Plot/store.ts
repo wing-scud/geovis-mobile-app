@@ -1,7 +1,7 @@
 import { earthStore } from "@/geovis/store";
 const drawHelper = earthStore.drawHelper;
 const Types = DrawHelper.Types;
-
+/* 添加常用图标库选择，添加marker，多边形、线改为一种，不需要三个 */
 const types = [
   {
     id: "liangcei",
@@ -239,7 +239,6 @@ class Plot {
   startDrawOther(type) {
     let drawHelperType;
     // let defaultOptions={
-
     // }
     switch (type) {
       case '圆':
@@ -274,7 +273,18 @@ class Plot {
     this._primitives[index].deleted();
     this._primitives.splice(index, 1);
   }
-  removeAll(){
+  save(name) {
+    const json = this._drawHelper.serialize();
+    const data = JSON.stringify(json);
+    /* 写入手机 */
+
+  }
+  load(path) {
+    //
+    const string = "";
+    this._drawHelper.unserialize(JSON.parse(string));
+  }
+  removeAll() {
     this._drawHelper.removeAll()
   }
   private addPlotResults(type) {
@@ -323,14 +333,36 @@ class Plot {
     this._drawHelper.once("created", function (e) {
       const id = e.entity.id;
       const arrayTag = instance._drawHelper.measure.tags.get(id);
+      let value;
+      let unit;
       let result;
       if (resultFilter === "角度") {
         result = arrayTag[1].text;
       } else {
         result = arrayTag[arrayTag.length - 1].text;
+        /* 距离、面积结果简化 */
+        const num = Number(result.replace(/[^0-9.]/ig, ""));
+        if (result.includes('平方米')) {
+          if (num > 1000000) {
+            value = Math.floor(num / 1000000)
+            unit = "平方千米"
+          } else {
+            value = num
+            unit = "平方米"
+          }
+        } else {
+          if (num > 1000) {
+            value = Math.floor(num / 1000)
+            unit = "千米"
+          } else {
+            value = num
+            unit = "米"
+          }
+
+        }
       }
       const time = formateDate(new Date())
-      instance._drawResults.push({ value: result, type: operator, time: time });
+      instance._drawResults.push({ value: value, unit: unit, type: operator, time: time });
       instance._primitives.push(e.entity);
       instance.drawingMarker = undefined
     });

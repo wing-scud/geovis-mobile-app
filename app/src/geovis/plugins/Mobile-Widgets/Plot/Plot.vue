@@ -5,24 +5,24 @@
         <div class="editor-item"><van-icon name="arrow-left" size="35px" @click="goBack" /></div>
         <div class="editor-type">
           <div class="editor-item" v-for="item in types" :key="item.id">
-            <MIcon :icon="item.icon" :actived="componentName === item.id"  size="24px" length="32px" backgroundColor="white" circle @click="changeComponent(item.id)"></MIcon>
+            <MIcon :icon="item.icon" :actived="componentName === item.id" size="24px" length="32px" backgroundColor="white" circle @click="changeComponent(item.id)"></MIcon>
           </div>
         </div>
-        <div class="editor-item"><van-icon name="success" size="30px" @click="savePlot" /></div>
+        <div class="editor-item"><van-icon name="success" size="30px" @click="openSaveDialog" /></div>
       </div>
       <div class="editor-options">
         <div class="editor--options-item" v-for="item in typeOptions" :key="item.id">
-          <MIcon :icon="item.icon" :actived="option === item.name" size="24px" length="32px"  labelColor="white" backgroundColor="white" circle :label="item.name" @click="startDraw(item.name)"></MIcon>
+          <MIcon :icon="item.icon" :actived="option === item.name" size="24px" length="32px" labelColor="white" backgroundColor="white" circle :label="item.name" @click="startDraw(item.name)"></MIcon>
         </div>
       </div>
     </div>
     <div class="property">
       <!-- 属性 结束 撤销 重绘 -->
-      <MIcon icon="icon-chexiao" size="24px" length="32px"  backgroundColor="transparent" @click="operatorHandler('backout')"> </MIcon>
-      <MIcon icon="icon-bianji" size="24px" length="32px"  backgroundColor="translucent" @click="operatorHandler('edit')"> </MIcon>
+      <MIcon icon="icon-chexiao" size="24px" length="32px" backgroundColor="transparent" @click="operatorHandler('backout')"> </MIcon>
+      <MIcon icon="icon-bianji" size="24px" length="32px" backgroundColor="translucent" @click="operatorHandler('edit')"> </MIcon>
       <!-- <MIcon icon="icon-default" length="45px" size="45px" backgroundColor="transparent" circle> </MIcon> -->
-      <MIcon icon="icon-qingchu"  size="24px" length="32px"  backgroundColor="transparent" @click="operatorHandler('redraw')"> </MIcon>
-      <MIcon icon="icon-jieshu"  size="24px" length="32px" backgroundColor="transparent" @click="operatorHandler('stop')"> </MIcon>
+      <MIcon icon="icon-qingchu" size="24px" length="32px" backgroundColor="transparent" @click="operatorHandler('redraw')"> </MIcon>
+      <MIcon icon="icon-jieshu" size="24px" length="32px" backgroundColor="transparent" @click="operatorHandler('stop')"> </MIcon>
     </div>
     <div class="results-popup">
       <MIcon icon="icon-ziyuan" length="35px" backgroundColor="white" circle @click="popShow = true"></MIcon>
@@ -37,7 +37,14 @@
         <van-swipe-cell v-for="(item, index) in results" :key="index">
           <tr class="flex-result">
             <td class="operator">{{ item.type }}</td>
-            <td class="result">{{ item.value }}</td>
+            <!-- sup元素会导致 行高显示不正常-->
+            <td class="result" :style="{ lineHeight: item.unit && item.unit.includes('平方') ? '40px' : '' }">
+              {{ item.value }}
+              <template v-if="item.unit">
+                <span v-text="formatUnit(item.unit)"> </span>
+                <sup v-if="item.unit.includes('平方')">2</sup>
+              </template>
+            </td>
             <!-- <td class="time">{{ item.time }}</td> -->
           </tr>
           <template #right>
@@ -47,7 +54,7 @@
         </van-swipe-cell>
       </table>
     </van-popup>
-    <van-dialog v-model="saveDialogShow" title="保存场景" show-cancel-button> <van-field v-model="sceneName" label="名称" placeholder="请输入名称" /> </van-dialog>
+    <van-dialog v-model="saveDialogShow" title="保存场景" show-cancel-button @confirm="confirmSavePlot"> <van-field v-model="sceneName" label="名称" placeholder="请输入名称" /> </van-dialog>
   </div>
 </template>
 <script>
@@ -67,46 +74,47 @@ export default {
       popShow: false,
       results: plot.drawResults,
       saveDialogShow: false,
-      sceneName: "",
+      sceneName: ""
     };
   },
   mounted() {
+    /**
+     *  初始化
+     * 根据路由传来的保存的场景路径，反序列化场景
+     */
     const earth = earthStore.earth;
     earthStore.setMapFullScreen(true);
     earthStore.state.onlyMap = true;
-    types.forEach((item) => {
+    types.forEach(item => {
       this.totalOptions[item.id] = item.options;
     });
     this.componentName = "liangcei";
-    // this.results = [
-    //   { type: "liangcei", value: "zongchang 10000", time: "1999-03-01" },
-    //   { type: "liangcei", value: "zongchang 10000", time: "1999-03-01" },
-    // ];
   },
   beforeDestroy() {
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
   },
   watch: {
-    componentName: function () {
+    componentName: function() {
       this.typeOptions = this.totalOptions[this.componentName];
-    },
+    }
   },
   methods: {
     goBack() {
       this.$router.back();
     },
-    savePlot() {
+    openSaveDialog() {
       this.saveDialogShow = true;
+    },
+    confirmSavePlot(){
+      plot.save(this.sceneName);
     },
     startDraw(option) {
       this.option = option;
       const type = option;
-
       switch (this.componentName) {
         case "liangcei":
           plot.startMeasure(option);
-          console.log("🚀 ~ file: Plot.vue ~ line 105 ~ startDraw ~ plot", plot);
           break;
         case "tuwen":
           plot.startDrawMarker(type);
@@ -161,7 +169,10 @@ export default {
           break;
       }
     },
-  },
+    formatUnit(unit) {
+      return unit.includes("千米") ? "km" : "m";
+    }
+  }
 };
 </script>
 <style scoped>
@@ -189,7 +200,7 @@ export default {
   right: 0;
 }
 .editor-types {
-  background-color: #1989fa;
+  background-color: #3faef7c9;
   display: inline-flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -200,7 +211,7 @@ export default {
   display: flex;
   align-items: center;
   /* width: 50px; */
-  height: 55px;
+  height: 45px;
   /* margin: 0 5px; */
 }
 .editor-type {
@@ -214,6 +225,9 @@ export default {
   padding: 5px 5px;
   width: 100%;
 }
+.measure-value {
+  line-height: 40px;
+}
 .flex-result {
   display: flex;
   flex-direction: row;
@@ -226,12 +240,13 @@ export default {
 }
 
 .operator {
-  flex-grow: 1;
+  width: 80px;
+  /* flex-grow: 1; */
 }
 .result {
-  flex-grow: 3;
+  flex-grow: 1;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   overflow: hidden;
 }
 .time {

@@ -20,12 +20,13 @@ const PersonInfor = () => import("../view/Person/PersonInfor.vue");
 const EditPersonInfor = () => import("../view/Person/EditPersonInfor.vue");
 const AccountAndSafe = () => import("../view/Person/AccountAndSafe.vue");
 const DownloadManager = () => import("../view/Download/Index.vue");
+const CameraTest = () => import("../view/Camera/index.vue");
 const routes = [
   {
     path: "/",
     component: Home,
     name: "Index",
-    redirect: "/map",
+    redirect: "/camera",
     children: [
       {
         path: "person",
@@ -112,6 +113,10 @@ const routes = [
     path: "/downloadManager",
     component: DownloadManager,
     name: "DownloadManager"
+  },  {
+    path: "/camera",
+    component: CameraTest,
+    name: "CameraTest"
   }
 ];
 
