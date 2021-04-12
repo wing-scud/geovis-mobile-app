@@ -85,7 +85,7 @@ export default Vue.extend({
       const pluginState = earthStore.getPuginState(id);
       if (pluginState.active) {
         if (pluginState.type === "route") {
-          this.$router.back();
+          this.$router.backward(-1);
         }
         earthStore.togglePlugin(id, false);
       } else {

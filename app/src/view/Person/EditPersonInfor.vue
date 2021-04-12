@@ -5,8 +5,8 @@
     <van-field v-model="user.name" label="用户名" border ref="name" v-if="type === 'name'" />
     <van-area title="地区" :area-list="areaList" :value="user.hometown" @confirm="onConfirmAddress" v-if="type === 'hometown'" />
     <van-radio-group v-model="user.sex" direction="horizontal" class="custom-sexbox" v-if="type === 'sex'">
-      <van-radio :name="true">男</van-radio>
-      <van-radio :name="false"> 女</van-radio>
+      <van-radio :name="1">男</van-radio>
+      <van-radio :name="0"> 女</van-radio>
     </van-radio-group>
     <van-calendar title="出生时间" :poppable="false" :show-confirm="true" ref="date" :style="{ height: '500px' }" :min-date="minDate" v-if="type === 'birthday'" @confirm="onConfirmBirthday" />
     <div class="edit-password" v-if="type === 'password'">
@@ -28,14 +28,14 @@ export default Vue.extend({
       type: "",
       user: {},
       areaList: areaList,
-      minDate: new Date("1970-01-01 00:00:00"),
+      minDate: new Date(1900, 1, 1),
       newPassword: "",
-      confirmPassword: "",
+      cobeforenfirmPassword: "",
       passwordError: "",
       confirmText: ""
     };
   },
-  mounted() {
+  beforeMount() {
     const params = this.$route.params;
     this.name = params.title;
     this.type = params.type;
@@ -47,8 +47,9 @@ export default Vue.extend({
   },
   updated() {
     if (this.type === "birthday") {
+      const date = new Date(this.user.birthday);
       //@ts-ignore
-      this.$refs.date.reset(this.user.birthday);
+      this.$refs.date.reset(date);
       //@ts-ignore
       //   this.$refs.date.scrollToDate(this.user.birthday);
     } else if (this.type === "name" || this.type === "tel") {
@@ -76,7 +77,8 @@ export default Vue.extend({
       }
     },
     goBack() {
-      this.$router.back();
+      this.$router.backward(-1);
+      // this.$router.replace({ name: "PersonInfor" });
     },
     confirm() {
       const type = this.type;
@@ -87,18 +89,31 @@ export default Vue.extend({
       } else {
         name = "PersonInfor";
       }
-      this.$store.commit("changeUser", this.user);
+      this.$store.commit("user/changeUser", this.user);
       this.$router.push({ name: name });
     },
     onConfirmBirthday(date) {
-      this.user.birthday = date;
-      this.confirm()
-      this.$router.push({ name: "PersonInfor" });
+      this.user.birthday = this.formateDate(date);
+      this.confirm();
+    },
+    formateDate(date) {
+      let fmt = "yyyy-MM-dd";
+      const o = {
+        "M+": date.getMonth() + 1, //月份
+        "d+": date.getDate(), //日
+        "h+": date.getHours(), //小时
+        "m+": date.getMinutes(), //分
+        "s+": date.getSeconds(), //秒
+        "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+        S: date.getMilliseconds() //毫秒
+      };
+      if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+      for (const k in o) if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
+      return fmt;
     },
     onConfirmAddress(array) {
-      this.user.birthday = array[2].code;
-      this.$router.push({ name: "PersonInfor" });
-      this.confirm()
+      this.user.hometown = array[2].code;
+      this.confirm();
     }
   }
 });

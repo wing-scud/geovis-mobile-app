@@ -39,13 +39,14 @@ export default Vue.extend({
       }
     };
   },
-  mounted(){
+  mounted() {
     this.user = this.$store.state.user.user;
   },
   methods: {
     enterMessage() {},
     goBack() {
-      this.$router.back();
+      //@ts-ignore
+      this.$router.backward(-1)
     },
     enterItem(name) {
       this.$router.push({ name: name });

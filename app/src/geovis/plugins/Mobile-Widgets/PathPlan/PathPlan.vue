@@ -162,7 +162,8 @@ export default Vue.extend({
       }
     },
     goBack() {
-      this.$router.back();
+            //@ts-ignore
+      this.$router.backward(-1);
     }
   }
 });

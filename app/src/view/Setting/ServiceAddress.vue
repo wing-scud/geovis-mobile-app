@@ -37,7 +37,8 @@ export default Vue.extend({
   mounted() {},
   methods: {
     goBack() {
-      this.$router.back();
+      //@ts-ignore
+      this.$router.backward(-1);
     },
     confirm() {
     }

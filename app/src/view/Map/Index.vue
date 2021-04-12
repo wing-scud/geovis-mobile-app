@@ -1,8 +1,6 @@
 <template>
   <div>
-    <!-- <keep-alive> -->
     <MapEntity></MapEntity>
-    <!-- </keep-alive> -->
     <router-view></router-view>
   </div>
 </template>

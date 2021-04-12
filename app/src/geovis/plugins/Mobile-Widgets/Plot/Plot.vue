@@ -101,7 +101,8 @@ export default {
   },
   methods: {
     goBack() {
-      this.$router.back();
+            //@ts-ignore
+      this.$router.backward(-1);
     },
     openSaveDialog() {
       this.saveDialogShow = true;

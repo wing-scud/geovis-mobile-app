@@ -8,7 +8,7 @@
     </van-cell>
     <van-cell title="用户名" :value="user.name" is-link @click="changeUserInfor('name')"> </van-cell>
     <van-cell title="性别" :value="user.sex ? '男' : '女'" is-link @click="changeUserInfor('sex')"> </van-cell>
-    <van-cell title="出生日期" :value="formateDate(user.birthday)" is-link @click="changeUserInfor('birthday')"> </van-cell>
+    <van-cell title="出生日期" :value="user.birthday" is-link @click="changeUserInfor('birthday')"> </van-cell>
     <van-cell title="手机号" :value="user.tel" is-link @click="changeUserInfor('tel')"> </van-cell>
     <van-cell title="地区" :value="formateAddress(user.hometown)" is-link @click="changeUserInfor('hometown')"> </van-cell>
   </div>
@@ -25,12 +25,17 @@ export default Vue.extend({
       user: {},
     };
   },
-  mounted() {
+  // 需要再挂载节点时，就渲染数据
+  beforeMount() {
     this.user = this.$store.state.user.user;
   },
   methods: {
     chooseImg() {
-      console.log("change img");
+      const cameraPlugin = window.cordovaPlugin["camera"];
+      cameraPlugin.openFilePicker().then((imageUrl) => {
+        console.log(imageUrl);
+        this.user.headshot = imageUrl;
+      });
     },
     changeUserInfor(type) {
       const names = ["用户名", "性别", "出生日期", "手机号", "地区"];
@@ -46,36 +51,23 @@ export default Vue.extend({
         },
       });
     },
-    formateDate(date) {
-      if (date) {
-        let fmt = "yyyy-MM-dd";
-        const o = {
-          "M+": date.getMonth() + 1, //月份
-          "d+": date.getDate(), //日
-          "h+": date.getHours(), //小时
-          "m+": date.getMinutes(), //分
-          "s+": date.getSeconds(), //秒
-          "q+": Math.floor((date.getMonth() + 3) / 3), //季度
-          S: date.getMilliseconds(), //毫秒
-        };
-        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
-        for (const k in o) if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, RegExp.$1.length == 1 ? o[k] : ("00" + o[k]).substr(("" + o[k]).length));
-        return fmt;
-      }
-    },
     formateAddress(postalCode) {
-      if (areaList.county_list[postalCode]) {
-        return areaList.county_list[postalCode];
-      }
-      if (areaList.province_list[postalCode]) {
-        return areaList.province_list[postalCode];
-      }
-      if (areaList.city_list[postalCode]) {
-        return areaList.city_list[postalCode];
-      }
+      let hometown = "";
+      //match province
+      const provinceSlice = postalCode.substr(0, 2);
+      const provinceCode = provinceSlice + "0000";
+      hometown += areaList.province_list[provinceCode];
+      // match city
+      const citySlice = postalCode.substr(2, 2);
+      const cityCode = provinceSlice + citySlice + "00";
+      hometown += areaList.city_list[cityCode];
+      //match county
+      const countyCode = postalCode;
+      hometown += areaList.county_list[countyCode];
+      return hometown;
     },
     goBack() {
-      this.$router.back();
+      this.$router.backward(-1);
     },
   },
 });

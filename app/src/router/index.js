@@ -26,7 +26,7 @@ const routes = [
     path: "/",
     component: Home,
     name: "Index",
-    redirect: "/camera",
+    redirect: "/map",
     children: [
       {
         path: "person",
@@ -113,7 +113,8 @@ const routes = [
     path: "/downloadManager",
     component: DownloadManager,
     name: "DownloadManager"
-  },  {
+  },
+  {
     path: "/camera",
     component: CameraTest,
     name: "CameraTest"
@@ -121,41 +122,56 @@ const routes = [
 ];
 
 const router = new VueRouter({ routes, mode: "hash" });
-router.beforeEach((to, from, next) => {
-  if (to.meta.requireLogin) {
-    if (mobileStore.state.user.user) {
-      next();
-    } else {
-      next({ name: "Login" });
-    }
-  } else {
-    next();
-  }
-});
-//返回触发，不会再进行mounted ，需要手动传参（保存每次进入一个页面的所有参数，动态返回）
+/* 路由前进回退机制 */
 let back = false;
+router.routerHistory = [];
+router.beforeResolve((to, from, next) => {
+  //链判断操作符
+  let nextPath = to;
+  if (to.meta?.requireLogin) {
+    if (mobileStore.state.user.user) {
+      // nextPath = to;
+    } else {
+      nextPath = { name: "Login" };
+    }
+  }
+  back ? "" : router.routerHistory.push(to);
+  next(nextPath === to ? undefined : nextPath);
+});
+router.backward = function(step) {
+  const length = router.routerHistory.length;
+  if (length <= step) {
+    return;
+  } else {
+    back = true;
+    const pastRoute = router.routerHistory[length - 2];
+    router.routerHistory.pop();
+    router.push(pastRoute)
+  }
+};
 router.afterEach((to, from) => {
+  console.log("afterEach");
   if (to.name === from.name) {
     return;
   }
-  const pluginMap = earthStore.state.pluginMap;
-  if (back) {
-    if (pluginMap[from.name]) {
-      //如果没有触发关闭状态，主动关闭
-      if (pluginMap[from.name].active) {
-        pluginMap[from.name].active = false;
-        console.log(`主动关闭${from.name}`);
-      }
-    }
-    back = false;
-  }
+  back = false;
+  // const pluginMap = earthStore.state.pluginMap;
+  // if (back) {
+  //   if (pluginMap[from.name]) {
+  //     //如果没有触发关闭状态，主动关闭
+  //     if (pluginMap[from.name].active) {
+  //       pluginMap[from.name].active = false;
+  //       console.log(`主动关闭${from.name}`);
+  //     }
+  //   }
+  // }
 });
 window.addEventListener(
   "popstate",
   function(e) {
-    console.info("返回触发");
+    console.info("浏览器回退触发",e);
     e.preventDefault();
-    back = true;
+    // back = true;
   },
   false
 );

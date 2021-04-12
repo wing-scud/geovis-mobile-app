@@ -37,7 +37,8 @@ export default Vue.extend({
       this.$router.push({ name: name, params: params });
     },
     goBack() {
-      this.$router.back();
+            //@ts-ignore
+      this.$router.backward(-1);
     },
     loginOut() {
       this.$store.dispatch("user/loginOut");

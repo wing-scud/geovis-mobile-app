@@ -14,7 +14,7 @@ class User {
 
     hometown: string;
 
-    birthday: Date;
+    birthday: string;
 
     tel: string;
 
@@ -26,7 +26,7 @@ class User {
         this.headshot = headshot;
         this.sex = sex;
         this.tel = tel;
-        this.birthday = new Date(birthday)
+        this.birthday = birthday
         this.hometown = hometown;
     }
 }

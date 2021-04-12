@@ -95,7 +95,8 @@ export default Vue.extend({
   },
   methods: {
     goBack() {
-      this.$router.back();
+            //@ts-ignore
+      this.$router.backward(-1);
     },
     onLoad() {
       // 异步更新数据

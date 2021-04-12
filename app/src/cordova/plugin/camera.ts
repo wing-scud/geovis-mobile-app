@@ -74,7 +74,7 @@ class Store {
             }, options);
         })
     }
-    openFilePicker(selection) {
+    openFilePicker(selection?) {
         //@ts-ignore
         const srcType = Camera.PictureSourceType.SAVEDPHOTOALBUM;
         const options = this.setOptions(srcType);

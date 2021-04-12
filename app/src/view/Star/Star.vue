@@ -103,7 +103,8 @@ export default Vue.extend({
       this.$store.commit("starRoutes/deleteRoute", id);
     },
     goBack() {
-      this.$router.back();
+      //@ts-ignore
+      this.$router.backward(-1);
     },
     onSearch() {
       this.debounceSearch();
