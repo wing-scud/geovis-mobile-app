@@ -5,6 +5,14 @@ class LocationWatch {
     private watchId: any;
     private _position: {};
     private _locking: boolean;
+    private _geolocation: any;
+    public get geolocation(): any {
+        return this._geolocation;
+    }
+    public set geolocation(value: any) {
+        this._geolocation = value;
+    }
+
     public get locking(): boolean {
         return this._locking;
     }
@@ -26,7 +34,10 @@ class LocationWatch {
         }
     }
     constructor() {
-        this._locking = false
+        document.addEventListener('deviceReady', () => {
+            this._geolocation = navigator['geolocation'];
+        })
+        this._locking = false;
     }
     flyTo(position) {
         const modes = ["globe3", "globe2", "map"];
@@ -41,7 +52,7 @@ class LocationWatch {
             if (mode === "globe") {
                 earth.camera.flyTo({
                     //高度太低，会穿透地球
-                    destination: GeoVis.Cartesian3.fromDegrees(coords.longitude, coords.latitude, coords.altitude>200? coords.altitude:200),
+                    destination: GeoVis.Cartesian3.fromDegrees(coords.longitude, coords.latitude, coords.altitude > 200 ? coords.altitude : 200),
                     orientation: {
                         heading: heading,
                         pitch: GeoVis.Math.toRadians(-90),
@@ -60,7 +71,7 @@ class LocationWatch {
     clearSelfLocationWatch() {
         if (this.watchId) {
             Toast('关闭定位');
-            navigator.geolocation.clearWatch(this.watchId);
+            this._geolocation.clearWatch(this.watchId);
             this.watchId = undefined;
         }
     }
@@ -74,15 +85,15 @@ class LocationWatch {
         function onError(error) {
             Toast(error);
         }
-        const watchId = navigator.geolocation.watchPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
-        // const watchId = navigator.geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
+        const watchId = this._geolocation.watchPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
+        // const watchId = this._geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
         instance.watchId = watchId;
     }
     getCurrentPosition() {
         const instance = this;
         return new Promise((resolve, reject) => {
             const onSuccess = function (position) {
-                // instance._position = position;
+                instance._position = position;
                 Toast('获取位置');
                 resolve(position)
             };
@@ -90,11 +101,9 @@ class LocationWatch {
                 Toast(error);
                 reject(error)
             }
-            navigator.geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
+            this._geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
         })
     }
 }
 
 export const mapLocation = new LocationWatch();
-//@ts-ignore
-window["mapLocation"] = mapLocation

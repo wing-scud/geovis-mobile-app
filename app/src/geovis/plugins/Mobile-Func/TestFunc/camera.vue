@@ -6,7 +6,7 @@
     <van-button @click="displayPhoto">
       显示图片
     </van-button>
-    <image id="photo" class="testPhoto"></image>
+    <image id="photo" class="testPhoto" :src="imageUrl"></image>
   </div>
 </template>
 <script lang="ts">

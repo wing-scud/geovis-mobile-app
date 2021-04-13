@@ -11,6 +11,9 @@ import EarthApp from "./geovis/EarthApp.vue";
   name: "App",
   components: {
     EarthApp
+  },
+  mounted() {
+
   }
 })
 export default class extends Vue {}

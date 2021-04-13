@@ -20,13 +20,14 @@ const PersonInfor = () => import("../view/Person/PersonInfor.vue");
 const EditPersonInfor = () => import("../view/Person/EditPersonInfor.vue");
 const AccountAndSafe = () => import("../view/Person/AccountAndSafe.vue");
 const DownloadManager = () => import("../view/Download/Index.vue");
-const CameraTest = () => import("../view/Camera/index.vue");
+const Test = () => import("../view/Test/index.vue");
 const routes = [
   {
     path: "/",
     component: Home,
     name: "Index",
-    redirect: "/map",
+    // redirect: "/map",
+    redirect: "/test",
     children: [
       {
         path: "person",
@@ -115,9 +116,9 @@ const routes = [
     name: "DownloadManager"
   },
   {
-    path: "/camera",
-    component: CameraTest,
-    name: "CameraTest"
+    path: "/test",
+    component: Test,
+    name: "Test"
   }
 ];
 
@@ -138,7 +139,7 @@ router.beforeResolve((to, from, next) => {
   back ? "" : router.routerHistory.push(to);
   next(nextPath === to ? undefined : nextPath);
 });
-router.backward = function(step) {
+router.backward = function (step) {
   const length = router.routerHistory.length;
   if (length <= step) {
     return;
@@ -168,7 +169,7 @@ router.afterEach((to, from) => {
 });
 window.addEventListener(
   "popstate",
-  function(e) {
+  function (e) {
     console.info("浏览器回退触发", e);
     e.preventDefault();
     // back = true;

@@ -27,7 +27,6 @@
 </template>
 <script>
 import { earthStore } from "@/geovis/store";
-import { mapLocation } from "../Location/Location.ts";
 import _ from "lodash";
 /* eslint-disable @typescript-eslint/camelcase */
 import util from "./util";
@@ -283,6 +282,8 @@ export default {
     searchRequest: async function(placeName) {},
     routeTo(id) {
       const point = this.getPlaceFromId(id);
+          //@ts-ignore
+    const mapLocation =window.cordovaPlugin.mapLocation;
       mapLocation.getCurrentPosition().then(position => {
         const start = [position.coords.longitude, position.coords.latitude];
         const end = point.location;

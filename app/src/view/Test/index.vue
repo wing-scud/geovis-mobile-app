@@ -1,10 +1,11 @@
 <template>
-  <div></div>
+  <!-- <CameraPlugin> </CameraPlugin> -->
+  <FilePlugin></FilePlugin>
 </template>
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  name: "File",
+  name: "Test",
   data() {
     return {};
   },
