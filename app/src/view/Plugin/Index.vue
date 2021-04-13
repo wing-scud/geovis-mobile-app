@@ -1,5 +1,7 @@
 <template>
-  <div>插件应用管理与快捷入口</div>
+  <div class="full">
+    
+  </div>
 </template>
 <script lang="ts">
 import Vue from "vue";

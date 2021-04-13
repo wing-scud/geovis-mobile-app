@@ -24,26 +24,26 @@ const types = [
       // { name: "旗帜", icon: "" }
     ]
   },
-  {
-    id: "line",
-    name: "线标",
-    icon: "icon-xiantiao",
-    options: [
-      { name: "空间", icon: "icon-kongjian" },
-      { name: "投影", icon: "icon-touying" },
-      { name: "地形", icon: "icon-dixing" }
-    ]
-  },
-  {
-    id: "polygon",
-    name: "多边形",
-    icon: "icon-duobianxing",
-    options: [
-      { name: "空间", icon: "icon-kongjian" },
-      { name: "投影", icon: "icon-touying" },
-      { name: "地形", icon: "icon-dixing" }
-    ]
-  },
+  // {
+  //   id: "line",
+  //   name: "线标",
+  //   icon: "icon-xiantiao",
+  //   options: [
+  //     { name: "空间", icon: "icon-kongjian" },
+  //     { name: "投影", icon: "icon-touying" },
+  //     { name: "地形", icon: "icon-dixing" }
+  //   ]
+  // },
+  // {
+  //   id: "polygon",
+  //   name: "多边形",
+  //   icon: "icon-duobianxing",
+  //   options: [
+  //     { name: "空间", icon: "icon-kongjian" },
+  //     { name: "投影", icon: "icon-touying" },
+  //     { name: "地形", icon: "icon-dixing" }
+  //   ]
+  // },
   {
     id: "other",
     name: "其他",
@@ -51,7 +51,8 @@ const types = [
     options: [
       { name: "圆", icon: "icon-yuan" },
       // { name: "墙", icon: "" },
-      { name: "矩形", icon: "icon-juxing" }
+      { name: "矩形", icon: "icon-juxing" },
+      { name: "线", icon: "icon-xiantiao" }, { name: "多边形", icon: "icon-duobianxing" }
     ]
   }
 ]; function formateDate(date) {
@@ -210,7 +211,7 @@ class Plot {
     type = type = "多边形"
     polygonOptions = Object.assign(type, polygonOptions, options)
     this.drawingMarker = this._drawHelper.startDrawingPolygon(polygonOptions)
-    this.addPlotResults(type)
+    // this.addPlotResults(type)
   }
   startDrawLine(type) {
     // startDrawingPlot()
@@ -234,7 +235,7 @@ class Plot {
       type: drawHelperType
     })
     type = type = "线"
-    this.addPlotResults(type)
+    // this.addPlotResults(type)
   }
   startDrawOther(type) {
     let drawHelperType;
@@ -259,6 +260,12 @@ class Plot {
           type: drawHelperType
         })
         break;
+      case '线':
+        this.startDrawLine('投影')
+        break;
+      case '多边形':
+        this.startDrawPolygon('投影')
+        break;
       default: break;
     }
     this.addPlotResults(type)
@@ -269,8 +276,20 @@ class Plot {
     }
   }
   deleteResult(index) {
+    const entity = this._primitives[index]
     this._drawResults.splice(index, 1);
-    this._primitives[index].deleted();
+    //measure
+    if (this._drawHelper.measure.tags.get(entity.id)) {
+      const labels = this._drawHelper.measure.tags.get(entity.id);
+      labels.map(label => label.removeFrom(this.drawHelper.features));
+    }
+    // marker
+    if ([Types.IMAGE_MARKER, Types.TEXT_MARKER].includes(entity.type)) {
+      entity.removeFrom(this._drawHelper.features);
+    }
+    //other
+    this._drawHelper.primitives.remove(entity)
+    // this._primitives[index].deleted();
     this._primitives.splice(index, 1);
   }
   save(name) {

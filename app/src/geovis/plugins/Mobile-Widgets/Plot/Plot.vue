@@ -74,7 +74,7 @@ export default {
       popShow: false,
       results: plot.drawResults,
       saveDialogShow: false,
-      sceneName: ""
+      sceneName: "",
     };
   },
   mounted() {
@@ -85,7 +85,7 @@ export default {
     const earth = earthStore.earth;
     earthStore.setMapFullScreen(true);
     earthStore.state.onlyMap = true;
-    types.forEach(item => {
+    types.forEach((item) => {
       this.totalOptions[item.id] = item.options;
     });
     this.componentName = "liangcei";
@@ -95,19 +95,19 @@ export default {
     earthStore.state.onlyMap = false;
   },
   watch: {
-    componentName: function() {
+    componentName: function () {
       this.typeOptions = this.totalOptions[this.componentName];
-    }
+    },
   },
   methods: {
     goBack() {
-            //@ts-ignore
+      //@ts-ignore
       this.$router.backward(-1);
     },
     openSaveDialog() {
       this.saveDialogShow = true;
     },
-    confirmSavePlot(){
+    confirmSavePlot() {
       plot.save(this.sceneName);
     },
     startDraw(option) {
@@ -172,8 +172,8 @@ export default {
     },
     formatUnit(unit) {
       return unit.includes("千米") ? "km" : "m";
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>
@@ -213,13 +213,13 @@ export default {
   align-items: center;
   /* width: 50px; */
   height: 45px;
-  /* margin: 0 5px; */
+  padding: 0 5px;
 }
 .editor-type {
   display: flex;
   flex-direction: row;
   flex-grow: 1;
-  justify-content: space-around;
+  justify-content: flex-start;
 }
 
 .result-list {
