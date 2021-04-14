@@ -2,10 +2,10 @@
 <widget id="com.iecas.geovis" version="1.0.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
     <name>GeoVis</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        三维地球手持端通信应用
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="1205586003@qq.com" href="http://cordova.io">
+       IECAS
     </author>
     <content src="index.html" />
     <access origin="*" />
@@ -31,8 +31,15 @@
             <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
         </config-file>
         <edit-config file="app/src/main/AndroidManifest.xml" mode="merge" target="/manifest/application">
+            <!-- 再次允许明文通信 -->
             <application android:usesCleartextTraffic="true" />
         </edit-config>
+        <icon src="res/screen/android/logo.png" density="ldpi" />
+        <icon src="res/screen/android/logo.png" density="mdpi" />
+        <icon src="res/screen/android/logo.png" density="hdpi" />
+        <icon src="res/screen/android/logo.png" density="xhdpi" />
+        <icon src="res/screen/android/logo.png" density="xxhdpi" />
+        <icon src="res/screen/android/logo.png" density="xxxhdpi" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
