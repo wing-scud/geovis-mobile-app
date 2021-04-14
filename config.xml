@@ -34,12 +34,12 @@
             <!-- 再次允许明文通信 -->
             <application android:usesCleartextTraffic="true" />
         </edit-config>
+        <!-- 图标 -->
         <icon src="res/screen/android/logo.png" density="ldpi" />
-        <icon src="res/screen/android/logo.png" density="mdpi" />
-        <icon src="res/screen/android/logo.png" density="hdpi" />
-        <icon src="res/screen/android/logo.png" density="xhdpi" />
-        <icon src="res/screen/android/logo.png" density="xxhdpi" />
-        <icon src="res/screen/android/logo.png" density="xxxhdpi" />
+        <!-- 淡入淡出时间ms-->
+        <preference name="FadeSplashScreenDuration" value="750" />
+        <!-- 单图启动画面 -->
+        <splash src="res/screen/android/bg2.jpeg" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
