@@ -130,3 +130,9 @@ line-height: 40px;
 {
   line-height: 30px;
 }
+.plugin-grid .van-grid-item__content{
+  padding: 10px 5px 
+}
+.custom-plugin-icon:active{
+  background-color: #f2f3f5;
+}

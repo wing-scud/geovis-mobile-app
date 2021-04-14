@@ -1,11 +1,12 @@
 <template>
-  <div class="mapbox-path-control">
-    <van-button plain type="info" @click="goBack">返回</van-button>
-    <van-button plain type="info" @click="displauPanel">路线面板{{ panelBool ? "关" : "开" }}</van-button>
-    <van-button plain type="info" @click="addWayPoints">添加途径点</van-button>
-    <!-- <van-button plain type="info">添加规避区域</van-button> -->
-    <van-button plain type="info" @click="savePath">保存</van-button>
-  </div>
+  <van-row class="mapbox-path-control" gutter="20">
+    <van-col span="6"><van-button plain hairline class="pathplan-button" type="primary" @click="goBack"> 返回</van-button></van-col>
+    <van-col span="6"
+      ><van-button plain hairline class="pathplan-button" type="primary" @click="displauPanel"> 面板{{ panelBool ? "关" : "开" }}</van-button></van-col
+    >
+    <van-col span="6"><van-button plain hairline class="pathplan-button" type="primary" @click="addWayPoints"> 途径点</van-button></van-col>
+    <van-col span="6"><van-button plain hairline class="pathplan-button" type="primary" @click="savePath">保存</van-button></van-col>
+  </van-row>
 </template>
 <script lang="ts">
 import { earthStore } from "@/geovis/store";
@@ -162,7 +163,7 @@ export default Vue.extend({
       }
     },
     goBack() {
-            //@ts-ignore
+      //@ts-ignore
       this.$router.backward(-1);
     }
   }
@@ -174,10 +175,13 @@ export default Vue.extend({
   bottom: 0px;
   width: 100%;
   left: 0;
-  margin: 0 5px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
   z-index: 6;
+}
+.pathplan-button {
+  width: 100%;
+  height: 40px;
+}
+.pathplan-plugin .van-button--normal {
+  padding: 0 0;
 }
 </style>

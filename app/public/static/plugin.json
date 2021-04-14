@@ -5,7 +5,7 @@
         "items": [
             {
                 "id": "Layer",
-                "parent": "map",
+                "parent": "Map",
                 "type": "component",
                 "icon": "icon-tucengguanli",
                 "name": "图层管理",
@@ -16,7 +16,7 @@
             },
             {
                 "id": "SearchArea",
-                "parent": "map",
+                "parent": "Map",
                 "type": "route",
                 "icon": "icon-sousuo",
                 "name": "搜索",
@@ -27,7 +27,7 @@
             },
             {
                 "id": "PathPlan",
-                "parent": "map",
+                "parent": "Map",
                 "type": "route",
                 "icon": "icon-luxianchaxun",
                 "name": "路线查询",
@@ -38,7 +38,7 @@
             },
             {
                 "id": "Plot",
-                "parent": "map",
+                "parent": "Map",
                 "type": "route",
                 "icon": "icon-biaohui",
                 "name": "标绘",
@@ -49,7 +49,7 @@
             },
             {
                 "id": "WeatherInfor",
-                "parent": "map",
+                "parent": "Map",
                 "type": "component",
                 "icon": "icon-tainqi",
                 "name": "天气信息",
@@ -60,7 +60,7 @@
             },
             {
                 "id": "Location",
-                "parent": "map",
+                "parent": "Map",
                 "type": "component",
                 "icon": "icon-suodingdingwei",
                 "name": "锁定定位",
@@ -71,10 +71,10 @@
             },
             {
                 "id": "MobileBaseWidgets",
-                "parent": "map",
+                "parent": "Map",
                 "type": "component",
                 "icon": "icon-jichuguajian",
-                "name": "地图基础挂件",
+                "name": "地图挂件",
                 "enabled": true,
                 "active": true,
                 "componenIcon": false,
@@ -85,7 +85,30 @@
     {
         "id": "tools",
         "name": "工具",
-        "items": []
+        "items": [
+            {
+                "id": "ConvertTool",
+                "parent": "Index",
+                "type": "route",
+                "icon": "icon-jichuguajian",
+                "name": "坐标转换",
+                "enabled": true,
+                "active": false,
+                "componenIcon": false,
+                "mutex": false
+            },
+            {
+                "id": "BufferAnalytics",
+                "parent": "Map",
+                "type": "route",
+                "icon": "icon-jichuguajian",
+                "name": "缓冲区分析",
+                "enabled": true,
+                "active": false,
+                "componenIcon": false,
+                "mutex": false
+            }
+        ]
     },
     {
         "id": "function",

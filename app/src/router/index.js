@@ -10,6 +10,7 @@ const Person = () => import("../view/Person/Index.vue");
 const SearchArea = () => import("../geovis/plugins/Mobile-Widgets/SearchArea/SearchArea.vue");
 const PathPlan = () => import("../geovis/plugins/Mobile-Widgets/PathPlan/PathPlan.vue");
 const Plot = () => import("../geovis/plugins/Mobile-Widgets/Plot/Plot.vue");
+const BufferAnalytics = () => import("../geovis/plugins/Mobile-Widgets/Tool/BufferAnalytics.vue");
 const Application = () => import("../view/Plugin/Index.vue");
 const Login = () => import("../view/Login/Login.vue");
 const Register = () => import("../view/Login/Register.vue");
@@ -26,8 +27,8 @@ const routes = [
     path: "/",
     component: Home,
     name: "Index",
-    // redirect: "/map",
-    redirect: "/test",
+    redirect: "/map",
+    // redirect: "/test",
     children: [
       {
         path: "person",
@@ -44,7 +45,8 @@ const routes = [
         children: [
           { path: "searchArea", component: SearchArea, name: "SearchArea" },
           { path: "pathPlan", component: PathPlan, name: "PathPlan" },
-          { path: "plot", component: Plot, name: "Plot" }
+          { path: "plot", component: Plot, name: "Plot" },
+          { path: "bufferAnalytics", component: BufferAnalytics, name: "BufferAnalytics" }
         ],
         meta: {
           keepAlive: true
@@ -139,7 +141,7 @@ router.beforeResolve((to, from, next) => {
   back ? "" : router.routerHistory.push(to);
   next(nextPath === to ? undefined : nextPath);
 });
-router.backward = function (step) {
+router.backward = function(step) {
   const length = router.routerHistory.length;
   if (length <= step) {
     return;
@@ -169,7 +171,7 @@ router.afterEach((to, from) => {
 });
 window.addEventListener(
   "popstate",
-  function (e) {
+  function(e) {
     console.info("浏览器回退触发", e);
     e.preventDefault();
     // back = true;

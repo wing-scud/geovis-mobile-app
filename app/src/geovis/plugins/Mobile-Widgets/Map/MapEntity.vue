@@ -53,7 +53,7 @@ export default Vue.extend({
         const pluginStateActived = [];
         const pluginMap = this.state.pluginMap;
         Object.keys(pluginMap).forEach((key) => {
-          if (pluginMap[key].enabled && pluginMap[key].parent === "map") {
+          if (pluginMap[key].enabled && pluginMap[key].parent === "Map") {
             if (pluginMap[key].active && pluginMap[key].type === "component") {
               pluginStateActived.push(pluginMap[key]);
             }

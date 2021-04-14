@@ -30,7 +30,7 @@
             </div>
           </div>
           <div class="head">其他</div>
-          <van-cell title="友邻位置" is-link />
+          <!-- <van-cell title="友邻位置" is-link /> -->
           <van-cell title="天气地图" is-link />
           <van-cell title="下载管理" is-link to="/downloadManager"/>
           <van-cell title="其他地图" is-link />
@@ -39,7 +39,7 @@
         </van-checkbox-group>
       </div>
       <div class="foot">
-        <van-button :to="{ name: 'MapSetting' }" color="#7232dd" plain block>地图控件管理</van-button>
+        <van-button :to="{ name: 'MapSetting' }" color="#7232dd" class="block-button" plain block>地图控件管理</van-button>
       </div>
     </div>
   </van-popup>
@@ -157,6 +157,10 @@ export default Vue.extend({
 }
 .foot {
   width: 100%;
-  height: 45px;
+  height: 35px;
+}
+.block-button
+{
+  height: 100%;
 }
 </style>
