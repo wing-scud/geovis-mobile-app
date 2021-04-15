@@ -16,7 +16,10 @@ const Login = () => import("../view/Login/Login.vue");
 const Register = () => import("../view/Login/Register.vue");
 const MapSetting = () => import("../view/Map/MapSetting.vue");
 const Star = () => import("../view/Star/Star.vue");
-const ServiceAddress = () => import("../view/Setting/ServiceAddress.vue");
+const ServiceAddress = () => import("../view/System/ServiceAddress.vue");
+const About = () => import("../view/System/About.vue");
+const Feedback = () => import("../view/System/Feedback.vue");
+const Universal = () => import("../view/System/Universal.vue");
 const PersonInfor = () => import("../view/Person/PersonInfor.vue");
 const EditPersonInfor = () => import("../view/Person/EditPersonInfor.vue");
 const AccountAndSafe = () => import("../view/Person/AccountAndSafe.vue");
@@ -121,6 +124,18 @@ const routes = [
     path: "/test",
     component: Test,
     name: "Test"
+  }, {
+    path: "/about",
+    component: About,
+    name: "About"
+  }, {
+    path: "/feedback",
+    component: Feedback,
+    name: "Feedback"
+  }, {
+    path: "/universal",
+    component: Universal,
+    name: "Universal"
   }
 ];
 
@@ -141,7 +156,7 @@ router.beforeResolve((to, from, next) => {
   back ? "" : router.routerHistory.push(to);
   next(nextPath === to ? undefined : nextPath);
 });
-router.backward = function(step) {
+router.backward = function (step) {
   const length = router.routerHistory.length;
   if (length <= step) {
     return;
@@ -171,7 +186,7 @@ router.afterEach((to, from) => {
 });
 window.addEventListener(
   "popstate",
-  function(e) {
+  function (e) {
     console.info("浏览器回退触发", e);
     e.preventDefault();
     // back = true;

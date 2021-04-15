@@ -1,5 +1,5 @@
 <template>
-  <van-tabbar v-model="activeItem" class="bottom-tabbar" @change="handleChange" :fixed="true" active-color="#0372f1e0" :style="{ height: height + 'px' }" replace>
+  <van-tabbar v-model="activeItem" class="bottom-tabbar" @change="handleChange" :fixed="true" route active-color="#0372f1e0" :style="{ height: height + 'px' }" replace>
     <van-tabbar-item push :to="{ name: item.name }" v-for="item in list" :key="item['title']">
       <span class="tabbar-name">{{ item["title"] }} </span>
       <template #icon>

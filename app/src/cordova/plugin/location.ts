@@ -105,5 +105,5 @@ class LocationWatch {
         })
     }
 }
-
-export const mapLocation = new LocationWatch();
+const mapLocation = new LocationWatch();
+export default mapLocation;

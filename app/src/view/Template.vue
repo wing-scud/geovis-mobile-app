@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div class="full">
+    <van-nav-bar title="关于" left-text="返回" left-arrow @click-left="goBack" />
+  </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
@@ -8,7 +10,10 @@ export default Vue.extend({
   data() {
     return {};
   },
-  methods: {}
+  methods: {    goBack() {
+      //@ts-ignore
+      this.$router.backward(-1);
+    },}
 });
 </script>
 <style scoped></style>

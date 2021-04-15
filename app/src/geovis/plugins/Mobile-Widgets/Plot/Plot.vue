@@ -91,6 +91,7 @@ export default {
     this.componentName = "liangcei";
   },
   beforeDestroy() {
+    earthStore.drawHelper.removeAll()
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
   },
@@ -172,8 +173,8 @@ export default {
     },
     formatUnit(unit) {
       return unit.includes("千米") ? "km" : "m";
-    },
-  },
+    }
+  }
 };
 </script>
 <style scoped>
