@@ -72,7 +72,7 @@ export default {
       //导航
       const params = this.$route.params;
       this.inputValue = params.name;
-      this.fetchSuggestions()
+      this.fetchSuggestions();
     }
   },
   methods: {
@@ -282,8 +282,8 @@ export default {
     searchRequest: async function(placeName) {},
     routeTo(id) {
       const point = this.getPlaceFromId(id);
-          //@ts-ignore
-    const mapLocation =window.cordovaPlugin.mapLocation;
+      //@ts-ignore
+      const mapLocation = window.cordovaPlugin.mapLocation;
       mapLocation.getCurrentPosition().then(position => {
         const start = [position.coords.longitude, position.coords.latitude];
         const end = point.location;

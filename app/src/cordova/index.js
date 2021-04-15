@@ -1,7 +1,8 @@
 import camera from "./plugin/camera";
 import mapLocation from "./plugin/location";
 import file from "./plugin/file";
-import "./plugin/screenOrientation.js";
+import "./plugin/screenOrientation.ts";
+import "./plugin/keyboard.ts";
 import "./lifecycles.js";
 window.cordovaPlugin = {};
 window.cordovaPlugin.camera = camera;

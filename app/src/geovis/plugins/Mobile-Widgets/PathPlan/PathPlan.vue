@@ -45,7 +45,7 @@ export default Vue.extend({
         const params = instance.$route.params;
         pathQuery.setOrigin(params.origin);
         pathQuery.setDestination(params.destination);
-        if (instance.$route.params.waypoints.length > 0) {
+        if (instance.$route.params.waypoints?.length > 0) {
           //默认只有一个途径点
           const point = instance.$route.params.waypoints[0];
           const index = 0;

@@ -15,11 +15,9 @@
 # 运行
 ## 运行
 1. cordova platform add android
-cordova install
-3. 添加 cordova 插件
-4. cd app => npm install => npm run build
-5. 打开新终端
-6. cordova run android
+2. cd app => npm install => npm run build
+3. 打开新终端
+4. cordova run android
    
 ## 打包,签名
 密钥库口令同name.keystore口令:aircas

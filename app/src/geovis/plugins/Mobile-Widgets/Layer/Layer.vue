@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model="popShow" transition-appear  position="right" :style="{ width: '70%', height: '100%' }" :close-on-popstate="true" @close="closePopup">
+  <van-popup v-model="popShow" transition-appear  position="right" :style="{ width: '200px', height: '100%' }" :close-on-popstate="true" @close="closePopup">
     <div class="layer">
       <div class="layer-data">
         <van-checkbox-group v-model="checkedMap">
