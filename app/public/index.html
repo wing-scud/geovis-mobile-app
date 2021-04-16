@@ -8,10 +8,10 @@
   <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: ms-appdata: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"> -->
   <link rel="icon" href="<%= BASE_URL %>favicon.ico">
   <link rel="stylesheet" href="css/font-awesome.min.css">
-  <link href="static/css/pickr.min.css" rel="stylesheet" />
   <link href="static/css/DrawWorker.css" rel="stylesheet" />
-  <link href="static/css/marker.css" rel="stylesheet" />
-  <link href="static/css/pickr.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="./static/mapbox/mapbox-gl-directions.css" type="text/css">
+  <link href="static/css/drawhelper/marker.css" rel="stylesheet" />
+  <link href="static/css/drawhelper/pickr.min.css" rel="stylesheet" />
   <title>
     <%= htmlWebpackPlugin.options.title %>
   </title>
@@ -49,11 +49,10 @@
   <script src="cordova.js"></script>
   <script src="./static/geovis/turf.min.js"></script>
   <script src="./static/mapbox/mapbox-gl-directions.js"></script>
-  <link rel="stylesheet" href="./static/mapbox/mapbox-gl-directions.css" type="text/css">
   <script type="text/javascript" src="./static/css/drawhelper/iconfont.js"></script>
   <script src="./static/geovis/GeoVis.js"></script>
-  <!-- <script src="./static/geovis/DrawHelperSimple.js"></script> -->
-      <script src="./static/geovis/DrawHelper.js"></script>
+  <script src="./static/geovis/DrawHelperSimple.js"></script>
+      <!-- <script src="./static/geovis/DrawHelper.js"></script> -->
   <script src="./static/scene.js"></script>
   <!-- <script src="./static/ppt.js"></script>
   <script src="./static/topic.js"></script> -->

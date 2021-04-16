@@ -3,7 +3,7 @@
     <div class="module" v-for="array in pluginTree" :key="array.id">
       <div class="plugin-title">{{ array.name }}</div>
       <van-grid class="plugin-grid" :column-num="4" square clickable>
-        <van-grid-item v-for="plugin in array.items" :key="plugin.id" @click="handleClick(plugin)">
+        <van-grid-item v-for="plugin in filterPlugins(array.items)" :key="plugin.id" @click="handleClick(plugin)">
           <template v-slot:icon>
             <MIcon :icon="plugin.icon" size="24px" length="30px"></MIcon>
           </template>
@@ -38,6 +38,9 @@ export default Vue.extend({
     }
   },
   methods: {
+    filterPlugins(items) {
+      return items.filter(item => item.componentIcon);
+    },
     handleClick(plugin) {
       if (plugin.type === "route") {
         this.$router.push({ name: plugin.id });

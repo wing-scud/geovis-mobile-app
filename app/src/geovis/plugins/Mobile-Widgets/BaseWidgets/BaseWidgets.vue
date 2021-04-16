@@ -224,8 +224,8 @@ export default {
   text-align: center;
 }
 .time-box {
-  position: fixed;
-  top: 0;
+  position: absolute;
+  top: 32px;
   left: 50%;
   margin: 10px 0;
   color: white;

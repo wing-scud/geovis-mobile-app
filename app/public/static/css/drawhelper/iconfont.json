@@ -1,0 +1,212 @@
+{
+  "id": "921055",
+  "name": "标注系统",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1713968",
+      "name": "62-全部边框",
+      "font_class": "-quanbubiankuang",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "2407259",
+      "name": "下拉",
+      "font_class": "tubiao-",
+      "unicode": "e654",
+      "unicode_decimal": 58964
+    },
+    {
+      "icon_id": "11328495",
+      "name": "边框颜色",
+      "font_class": "biankuangyanse",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "593514",
+      "name": "圆",
+      "font_class": "weibiaoti38",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "36107",
+      "name": "面积",
+      "font_class": "mianji",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "1166331",
+      "name": "测量距离",
+      "font_class": "chizi",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "1200199",
+      "name": "文字",
+      "font_class": "wenzi1",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "1804654",
+      "name": "三角尺",
+      "font_class": "sanjiaochi",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "5485666",
+      "name": "图片",
+      "font_class": "tupian1",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "5609243",
+      "name": "箭头",
+      "font_class": "icon-test",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "2278053",
+      "name": "居中",
+      "font_class": "juzhong",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "4553726",
+      "name": "居中",
+      "font_class": "juzhong1",
+      "unicode": "e7db",
+      "unicode_decimal": 59355
+    },
+    {
+      "icon_id": "4166170",
+      "name": "图片",
+      "font_class": "tupian",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "2678570",
+      "name": "保存",
+      "font_class": "baocun",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "6270931",
+      "name": "截图",
+      "font_class": "jietu",
+      "unicode": "e795",
+      "unicode_decimal": 59285
+    },
+    {
+      "icon_id": "166648",
+      "name": "文字",
+      "font_class": "wenzi",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "1163633",
+      "name": "线路",
+      "font_class": "xianlu",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "3217841",
+      "name": "图片",
+      "font_class": "icon-",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "6266248",
+      "name": "矩形",
+      "font_class": "juxing",
+      "unicode": "e790",
+      "unicode_decimal": 59280
+    },
+    {
+      "icon_id": "436210",
+      "name": "check",
+      "font_class": "check",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "6077372",
+      "name": "左对齐",
+      "font_class": "left-alignment",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "2404405",
+      "name": "字体颜色",
+      "font_class": "zitiyanse",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "6052579",
+      "name": "背景",
+      "font_class": "background",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "6057503",
+      "name": "删除",
+      "font_class": "delete",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "6076832",
+      "name": "字体加粗",
+      "font_class": "font-weight",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "6076864",
+      "name": "斜体",
+      "font_class": "Italic",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "6077145",
+      "name": "下划线",
+      "font_class": "Underline",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "6077307",
+      "name": "居中",
+      "font_class": "Middle",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "6077341",
+      "name": "右对齐",
+      "font_class": "Right-alignment",
+      "unicode": "e62a",
+      "unicode_decimal": 58922
+    }
+  ]
+}

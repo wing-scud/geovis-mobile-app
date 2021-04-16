@@ -113,8 +113,8 @@ export class EarthStore {
       // 设置语言
       const language = new MapboxLanguage({ defaultLanguage: "zh" });
       this._map.addControl(language);
-      this._map.getCanvas().style.height = "100%";
-      this._map.getCanvas().style.width = "";
+      // this._map.getCanvas().style.height = "100%";
+      // this._map.getCanvas().style.width = "";
     }
     this.earth.scene.postProcessStages.fxaa.enabled = true;
     GeoVis.Camera.MAX_PITCH = 0;

@@ -11,7 +11,7 @@
                 "name": "图层管理",
                 "enabled": true,
                 "active": false,
-                "componenIcon": true,
+                "componentIcon": true,
                 "mutex": false
             },
             {
@@ -22,7 +22,7 @@
                 "name": "搜索",
                 "enabled": true,
                 "active": false,
-                "componenIcon": true,
+                "componentIcon": true,
                 "mutex": true
             },
             {
@@ -33,7 +33,7 @@
                 "name": "路线查询",
                 "enabled": true,
                 "active": false,
-                "componenIcon": true,
+                "componentIcon": true,
                 "mutex": true
             },
             {
@@ -44,7 +44,7 @@
                 "name": "标绘",
                 "enabled": true,
                 "active": false,
-                "componenIcon": true,
+                "componentIcon": true,
                 "mutex": true
             },
             {
@@ -52,10 +52,10 @@
                 "parent": "Map",
                 "type": "component",
                 "icon": "icon-tainqi",
-                "name": "天气信息",
+                "name": "天气简要",
                 "enabled": true,
                 "active": true,
-                "componenIcon": false,
+                "componentIcon": false,
                 "mutex": false
             },
             {
@@ -63,10 +63,10 @@
                 "parent": "Map",
                 "type": "component",
                 "icon": "icon-suodingdingwei",
-                "name": "锁定定位",
+                "name": "定位",
                 "enabled": true,
                 "active": false,
-                "componenIcon": true,
+                "componentIcon": true,
                 "mutex": false
             },
             {
@@ -74,10 +74,43 @@
                 "parent": "Map",
                 "type": "component",
                 "icon": "icon-jichuguajian",
-                "name": "地图挂件",
+                "name": "基础挂件",
                 "enabled": true,
                 "active": true,
-                "componenIcon": false,
+                "componentIcon": false,
+                "mutex": false
+            },
+            {
+                "id": "InforCollection",
+                "parent": "Map",
+                "type": "route",
+                "icon": "icon-xinxicaiji",
+                "name": "信息采集",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
+                "mutex": false
+            },
+            {
+                "id": "SitiationShare",
+                "parent": "Map",
+                "type": "route",
+                "icon": "icon-taishigongxiang",
+                "name": "态势共享",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
+                "mutex": false
+            },
+            {
+                "id": "LiveWeather",
+                "parent": "Map",
+                "type": "route",
+                "icon": "icon-shikuangqixiang",
+                "name": "实况气象",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
                 "mutex": false
             }
         ]
@@ -94,7 +127,7 @@
                 "name": "坐标转换",
                 "enabled": true,
                 "active": false,
-                "componenIcon": false,
+                "componentIcon": true,
                 "mutex": false
             },
             {
@@ -102,10 +135,21 @@
                 "parent": "Map",
                 "type": "route",
                 "icon": "icon-jichuguajian",
-                "name": "缓冲区分析",
+                "name": "缓冲区",
                 "enabled": true,
                 "active": false,
-                "componenIcon": false,
+                "componentIcon": true,
+                "mutex": false
+            },
+            {
+                "id": "Compass",
+                "parent": "Map",
+                "type": "component",
+                "icon": "icon-zhinanzheng",
+                "name": "指南针",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
                 "mutex": false
             }
         ]
@@ -113,6 +157,48 @@
     {
         "id": "function",
         "name": "功能",
-        "items": []
+        "items": [
+            {
+                "id": "News",
+                "parent": "Index",
+                "type": "route",
+                "icon": "icon-yaowen",
+                "name": "要闻",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
+                "mutex": false
+            }, {
+                "id": "FeatureWeather",
+                "parent": "Index",
+                "type": "route",
+                "icon": "icon-tianqiyubao",
+                "name": "天气预报",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
+                "mutex": false
+            }, {
+                "id": "Communication",
+                "parent": "Index",
+                "type": "route",
+                "icon": "icon-tongxing",
+                "name": "通信",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
+                "mutex": false
+            }, {
+                "id": "Infor",
+                "parent": "Index",
+                "type": "route",
+                "icon": "icon-xiaoxi",
+                "name": "消息",
+                "enabled": true,
+                "active": false,
+                "componentIcon": false,
+                "mutex": false
+            }
+        ]
     }
 ]

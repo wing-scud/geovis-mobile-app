@@ -1,0 +1,337 @@
+﻿textarea::-webkit-input-placeholder{
+        color:white;
+      }
+      textarea::-moz-placeholder{   /* Mozilla Firefox 19+ */
+        color:white;
+      }
+      textarea:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+        color:white;
+      }
+      textarea:-ms-input-placeholder{  /* Internet Explorer 10-11 */ 
+        color:white;
+      }
+      
+      
+      .wordsEdit{
+        position:absolute;
+        width:97%;
+        height:50%;
+        left:3%;
+        background-color:red;
+        color:gold!important;
+        overflow:hidden;
+        resize:none;
+        outline:none;
+        border:1px solid #e1dede;
+      }
+      
+       
+      
+      [class*=" geoqicon-"],[class^=geo-icon-] {
+        speak: none;
+        font-style: normal;
+        font-weight: 400;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale
+      }
+      
+      .geo-resizer { 
+        /* background-color: #29e; */
+        /* padding: 20px; */
+        /* margin: 30px 20px; */
+        color: white;
+        font-size: 20px;
+        font-family: sans-serif;
+        border-radius: 8px;
+        touch-action: none;
+        width: 200px;
+        height: 44px;
+        /* This makes things *much* easier */
+        box-sizing: border-box;
+      }
+      .geo-resizer.active > .anchor {
+        display: block;
+      }
+      .geo-resizer-rotate{
+        position:relative;
+        color: white;
+        font-size: 20px;
+        font-family: sans-serif;
+        border-radius: 8px;
+        /* padding: 20px; */
+        /* margin: 30px 20px; */
+        touch-action: none;
+        width: 200px;
+        height: 44px;
+        /* This makes things *much* easier */
+        box-sizing: border-box;
+      }
+      
+      .geo-dragble{
+        cursor: move;
+      }
+       
+      .geo-marker-image{
+        width: 100%;
+        height: 100%;
+      }
+      .geo-marker-menu{
+        position: absolute;
+        top: -115px;
+        width: 270px;
+        height: 80px;
+        padding-inline-start: 0;
+      }
+       
+      .geo-marker-input{
+        width: 100%;
+        height: 100%;
+        resize: none;
+        border: 0;
+        overflow: hidden;
+        user-select: none;
+          outline: none;
+          -webkit-box-shadow: none;
+          -moz-box-shadow: none;
+          box-shadow: none;
+       }
+      
+      
+      .geo-menu {
+      position: absolute;
+      z-index: 10000;
+      box-shadow: 1px 1px 3px #555;
+      -webkit-margin-before: 0em;
+        -webkit-margin-after: 0em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 0px;
+      
+      }
+      
+      .geo-menu label {
+      vertical-align: middle;
+      float: left;
+      margin-left: 15px;
+      font-size: 14px
+      }
+      
+      .geo-menu li {
+        list-style-type: none;
+      /*   float: left; */
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        color: #2093ef;
+        background-color: #fff
+        }
+      .geo-menu ul {
+        display: flex;
+        -webkit-margin-after: 0em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 0px;
+      }
+      
+      .geo-menu-firstLine li {
+        list-style-type: none;
+        float: left;
+        text-align: center;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        }
+      .geo-menu-firstLine li.active,.geo-menu-firstLine li:hover {
+      color: #fff;
+      background-color: #2093ef;
+      cursor: pointer
+      }
+      
+      
+      /* weight italic color bgcolor left center right remove */
+      
+      /* 未hover */
+      .geo-menu-firstLine li[data-name=weight] > img {
+        background-color: red;
+        background-image: url("../img/editor/字体加粗.png");
+        mix-blend-mode: lighten;
+        width: 25px;
+        height: 25px;
+        mix-blend-mode: color-burn;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+      
+      
+      .geo-menu-firstLine li[data-name=weight] > i {
+        background-color: red;
+        background-image: url("../img/editor/字体加粗.png");
+        mix-blend-mode: lighten;
+        width: 25px;
+        height: 25px;
+        mix-blend-mode: color-burn;
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+      }
+      
+      .geo-menu-secondLine{
+        width: 240px;
+      }
+      .geo-menu-secondLine > li{
+        width: 30px;
+      }
+      
+      .geo-anchor {
+        position: absolute;
+        display: none;
+       /*  z-index: 10; */
+        width: 10px;
+        height: 10px;
+        background-color: #4ee1f4;
+        border: 1px solid #fff
+      }
+      .geo-resizeble .geo-anchor{
+        display: block;
+      }
+      
+      .geo-resizeble .geo-marker-input{
+        border: 1px dashed #eee;
+      }
+      
+      .geo-resizeble .geo-word-rotate{
+        opacity: 1;
+        cursor: pointer;
+      }
+      .geo-resizeble > .geo-marker-delete-horver{
+        display: block!important;
+        text-align: center;
+        width: 100%;
+        height: 100%;
+        min-width: 160px;
+        top: 0;
+        user-select: none;
+        vertical-align: middle;
+        line-height: 10;
+        position: absolute;
+      }
+      .geo-icon-menu {
+        position: absolute;
+        z-index: 10000;
+        display: block;
+        list-style-type: disc;
+        -webkit-margin-before: 0em;
+        -webkit-margin-after: 0em;
+        -webkit-margin-start: 0px;
+        -webkit-margin-end: 0px;
+        -webkit-padding-start: 0px;
+        }
+        
+      .geo-icon-menu label {
+      vertical-align: middle;
+      float: left;
+      margin-left: 15px;
+      font-size: 14px
+      }
+      
+      .geo-icon-menu li {
+        list-style-type: none;
+        float: left;
+        text-align: center;
+        line-height: 30px;
+        color: #2093ef;
+        background-color: #fff
+      }
+        
+      .geo-icon{
+        position: absolute;
+        top: -85px;
+        width: 60px;
+        height: 60px;
+        padding-inline-start: 0;
+      }
+      
+      
+      /* 
+          这里是marker的样式 */
+          .geo-custom-popup-wrap {
+            transform: rotate(0deg) translate(29px, -29px);
+          }
+      
+    .geo-marker-line {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 45px;
+            height: 2px;
+            transform: rotate(-45deg) translate(5px, -15px);
+            background-color: rgb(24, 229, 255);
+    }
+
+    .geo-custom-popup-content {
+            background-color: rgba(1, 25, 35, 0.5);
+            font-family: arial;
+            height: auto;
+            overflow: hidden;
+            /* padding: 5px; */
+            -moz-box-shadow: 0 0 5px #888;
+            -webkit-box-shadow: 0 0 5px #888;
+            /* box-shadow: 0 0 20px rgba(51, 225, 241, 0.7), inset 0 0 20px rgb(0, 229, 255), 0 0 0 #000; */
+            /* -webkit-border-radius: 4px;
+            -moz-border-radius: 4px;
+            border-radius: 4px; */
+            border: 1px solid rgb(24, 185, 255);
+            /* box-shadow: 0 0 5px rgb(51, 239, 255), inset 0 0 5px rgb(0, 229, 255), 0 2px 0 #000; */
+            color: white;
+            font-size: 15px;
+            -webkit-animation: glow 800ms ease-out infinite alternate;
+    }
+
+    .geo-custom {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            white-space: nowrap;
+      /*       pointer-events: none; */
+          }
+
+          .geo-custom-text {
+            list-style-type: none;
+            padding: 0px 10px;
+            height: auto;
+            white-space: normal;
+            word-break: break-all;
+            width: 100px;
+            /* 
+            font-size: 20px;
+            font-family: sans-serif;
+            color: rgb(255, 255, 255);
+            font-style: oblique;
+            font-weight: bold; */
+            /* background-color: white; */
+            /* text-shadow: 5px 5px 5px; */
+          }
+      
+          
+        .icon {
+          width: 1em;
+          height: 1em;
+          vertical-align: -0.15em;
+          fill: currentColor;
+          overflow: hidden;
+        }
+        .tool {
+            margin-top: 10px;
+        }
+      
+        .toolbar {
+          position: absolute;
+          top: 80px;
+          left: 10px;
+          background: rgba(100, 100, 100, 0.85);
+          padding: 10px;
+          color: #cccccc;
+        }

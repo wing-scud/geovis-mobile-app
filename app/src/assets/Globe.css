@@ -32,13 +32,6 @@
  fill: currentColor;
  overflow: hidden;
 }
-.home{
- width:100%;
- height: 100%;
- position: fixed;
- top: 0;
- left: 0;
-}
 .content{
     position: absolute;
     width: 100%;
@@ -135,4 +128,11 @@ line-height: 40px;
 }
 .custom-plugin-icon:active{
   background-color: #f2f3f5;
+}
+.extend-parent{
+  width:100%;
+  height:100%;
+}
+.van-tabbar--fixed{
+  position:unset !important;
 }

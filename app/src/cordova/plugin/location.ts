@@ -79,7 +79,7 @@ class LocationWatch {
         const instance = this;
         const onSuccess = function (position) {
             instance.position = position;
-            Toast('开启    定位');
+            Toast('开启定位');
             // Toast(position);
         };
         function onError(error) {

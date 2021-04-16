@@ -7507,11 +7507,13 @@
 	    _this.bodyClick = function (e) {
 	      e = e || window.event;
 	      var target = e.target || e.srcElement;
+
 	      if (!_this.element.contains(target) && !isColorPicker(target)) {
 	        _this.disableEdit();
 	        _this.disableResize();
 	      } else if (_this.element.contains(target)) {
 	        _this.enableResize();
+	        _this.enableEdit();
 	      }
 	    };
 
@@ -7565,7 +7567,7 @@
 	    if (options.name) _this.name = options.name;
 	    _this.createAnchors();
 	    document.body.addEventListener("click", _this.bodyClick);
-	    document.body.addEventListener("dblclick", _this.bodydbClick);
+	    // document.body.addEventListener("dblclick", this.bodydbClick);
 	    // document.body.onclick.addEventListener(this.bodyClick);
 	    return _this;
 	  }
@@ -7781,7 +7783,6 @@
 
 	    inertia: false
 	  }).on("resizemove", function (event) {
-
 	    var target = event.target;
 
 	    var x = parseFloat(target.getAttribute("data-x")) || 0;
@@ -15784,43 +15785,22 @@
 
 	    var _this = _possibleConstructorReturn(this, (ImageMarker.__proto__ || Object.getPrototypeOf(ImageMarker)).call(this, pos, options));
 
-	    _this.loadImage = function (e) {
-	      if (_this.imageUrl) {
-	        if (!_this.imageEle) {
-	          _this.imageEle = createImage();
-	          _this.deleteHover = createDeleteHover();
-	          _this.element.removeChild(_this.textEle);
-	          _this.element.appendChild(_this.imageEle);
-	          _this.element.appendChild(_this.deleteHover);
-	        }
-	        _this.imageEle.src = _this.imageUrl;
-	        return;
+	    _this.loadImage = function (imgUrl) {
+	      if (!_this.imageEle) {
+	        _this.imageEle = createImage();
+	        // this.deleteHover = createDeleteHover();
+	        _this.element.removeChild(_this.textEle);
+	        _this.element.appendChild(_this.imageEle);
+	        _this.element.appendChild(_this.deleteHover);
 	      }
-	      if (_this.uploadEle.files.length === 0) return;
+	      _this.imageEle.src = imgUrl;
+	      _this.imageEle.onload = function (e) {
+	        var originWidth = _this.imageEle.naturalWidth > 400 ? 400 : _this.imageEle.naturalWidth;
+	        var originHeight = originWidth * _this.imageEle.naturalHeight / _this.imageEle.naturalWidth;
 
-	      // var reads = new FileReader();
-	      // var f = this.uploadEle.files[0];
-	      // reads.readAsDataURL(f);
-	      _this.uploadFile(_this.uploadEle.files[0]).then(function (filename) {
-	        var imageUrl = window.PLOT_SERVER_URL + "/upload/image/" + filename;
-
-	        if (!_this.imageEle) {
-	          _this.imageUrl = imageUrl;
-	          _this.imageEle = createImage();
-	          _this.deleteHover = createDeleteHover();
-	          _this.element.removeChild(_this.textEle);
-	          _this.element.appendChild(_this.imageEle);
-	          _this.element.appendChild(_this.deleteHover);
-	        }
-	        _this.imageEle.src = imageUrl;
-	        _this.imageEle.onload = function (e) {
-	          var originWidth = _this.imageEle.naturalWidth > 400 ? 400 : _this.imageEle.naturalWidth;
-	          var originHeight = originWidth * _this.imageEle.naturalHeight / _this.imageEle.naturalWidth;
-
-	          _this._element.style.width = originWidth + "px";
-	          _this._element.style.height = originHeight + "px";
-	        };
-	      });
+	        _this._element.style.width = originWidth + "px";
+	        _this._element.style.height = originHeight + "px";
+	      };
 	      // this.uploadEle.files[0];
 	    };
 
@@ -15832,6 +15812,9 @@
 	        _this.disableResize();
 	      } else {
 	        _this.enableResize();
+	        _this.drawHelper.fire("selected", {
+	          entity: _this
+	        });
 	      }
 	    };
 
@@ -15878,35 +15861,20 @@
 	    if (options.width) _this.width = options.width;
 	    if (options.height) _this.height = options.height;
 	    if (options.name) _this.name = options.name;
-	    _this.uploadEle = createFileInput();
-	    _this.uploadEle.addEventListener("change", _this.loadImage);
+	    // this.uploadEle = createFileInput();
+	    // this.uploadEle.addEventListener("change", this.loadImage);
 	    _this.imageEle = undefined;
 	    _this.createAnchors();
 	    _this.type = _Types2.default.IMAGE_MARKER;
 	    _this._element.ondblclick = _this.eledbClick;
 	    document.body.addEventListener("click", _this.bodyClick);
-	    document.body.addEventListener("dblclick", _this.bodydbClick);
+	    // document.body.addEventListener("dblclick", this.bodydbClick);
 	    if (options.imageUrl) _this.loadImage();
 	    // document.body.onclick.addEventListener(this.bodyClick);
 	    return _this;
 	  }
 
 	  _createClass(ImageMarker, [{
-	    key: "uploadFile",
-	    value: function uploadFile(file) {
-	      // const formdata = new FormData();
-	      // formdata.append("file",)
-	      // return url;
-	      var formdata = new FormData();
-	      formdata.append("image", event.target.files[0]);
-	      return fetch(window.PLOT_SERVER_URL + "/upload/image", {
-	        method: "POST",
-	        body: formdata
-	      }).then(function (res) {
-	        return res.text();
-	      });
-	    }
-	  }, {
 	    key: "createAnchors",
 	    value: function createAnchors() {
 	      this.element.appendChild(createAnchor({ left: "-5px", top: "-5px" }));
@@ -15977,6 +15945,62 @@
 	    set: function set(val) {
 	      this._element.style.height = val;
 	    }
+
+	    // uploadFile(file) {
+	    //   // const formdata = new FormData();
+	    //   // formdata.append("file",)
+	    //   // return url;
+	    //   const formdata = new FormData();
+	    //   formdata.append("image", event.target.files[0]);
+	    //   return fetch(window.PLOT_SERVER_URL + "/upload/image", {
+	    //     method: "POST",
+	    //     body: formdata
+	    //   }).then(res => res.text());
+	    // }
+
+	    // loadImage = e => {
+	    //   if (this.imageUrl) {
+	    //     if (!this.imageEle) {
+	    //       this.imageEle = createImage();
+	    //       this.deleteHover = createDeleteHover();
+	    //       this.element.removeChild(this.textEle);
+	    //       this.element.appendChild(this.imageEle);
+	    //       this.element.appendChild(this.deleteHover);
+	    //     }
+	    //     this.imageEle.src = this.imageUrl;
+	    //     return;
+	    //   }
+	    //   if (this.uploadEle.files.length === 0) return;
+
+	    //   // var reads = new FileReader();
+	    //   // var f = this.uploadEle.files[0];
+	    //   // reads.readAsDataURL(f);
+	    //   this.uploadFile(this.uploadEle.files[0]).then(filename => {
+	    //     const imageUrl = window.PLOT_SERVER_URL + "/upload/image/" + filename;
+
+	    //     if (!this.imageEle) {
+	    //       this.imageUrl = imageUrl;
+	    //       this.imageEle = createImage();
+	    //       this.deleteHover = createDeleteHover();
+	    //       this.element.removeChild(this.textEle);
+	    //       this.element.appendChild(this.imageEle);
+	    //       this.element.appendChild(this.deleteHover);
+	    //     }
+	    //     this.imageEle.src = imageUrl;
+	    //     this.imageEle.onload = e => {
+	    //       const originWidth =
+	    //         this.imageEle.naturalWidth > 400 ? 400 : this.imageEle.naturalWidth;
+	    //       const originHeight =
+	    //         (originWidth * this.imageEle.naturalHeight) /
+	    //         this.imageEle.naturalWidth;
+
+	    //       this._element.style.width = originWidth + "px";
+	    //       this._element.style.height = originHeight + "px";
+	    //     };
+	    //   });
+	    //   // this.uploadEle.files[0];
+	    // };
+
 	  }]);
 
 	  return ImageMarker;
@@ -26478,7 +26502,7 @@
 	  var scene = this._scene;
 	  var earth = this._earth;
 	  var primitives = this._primitives;
-	  var tooltip = this._tooltip;
+	  // var tooltip = this._tooltip;
 
 	  var minPoints = isPolygon ? 3 : 2;
 	  var maxPoints = options.maxPoints || Infinity;
@@ -26489,7 +26513,7 @@
 	    earth.off("doubleClick", onDoubleClick);
 	    primitives.remove(poly);
 	    points.remove();
-	    tooltip.setVisible(false);
+	    // tooltip.setVisible(false);
 	  });
 
 	  var poly;
@@ -26525,6 +26549,7 @@
 	      var delta = currentTime - lastTime;
 	      lastTime = currentTime;
 	      var cartesian = getposition(scene, event);
+
 	      if (cartesian && delta > 300) {
 	        if (options.type === _Types2.default.CLASSIFY_POLYGON) {
 	          var height = (0, _util.cartesianToLonlat)(cartesian)[2];
@@ -26559,7 +26584,7 @@
 	    };
 	    if (position && position !== null) {
 	      if (positions.length === 0) {
-	        tooltip.showAt(windowPos, "<p>点击创建第一个点</p>");
+	        // tooltip.showAt(windowPos, "<p>点击创建第一个点</p>");
 	      } else {
 	        var cartesian = getposition(scene, event);
 	        if (cartesian) {
@@ -26572,7 +26597,11 @@
 	          // update marker
 	          points.getPoint(positions.length - 1).position = cartesian;
 	          // show tooltip
-	          tooltip.showAt(windowPos, "<p>点击创建新的点</p>" + (positions.length > minPoints ? "<p>双击结束</p>" : ""));
+	          // tooltip.showAt(
+	          //   windowPos,
+	          //   "<p>点击创建新的点</p>" +
+	          //     (positions.length > minPoints ? "<p>双击结束</p>" : "")
+	          // );
 	          if (positions.length >= minPoints) {
 	            _self.fire("changed", {
 	              entity: poly,

@@ -23,8 +23,8 @@
 密钥库口令同name.keystore口令:aircas
 1. cordova build --release android 获取未签名版apk
 2. keytool -genkeypair -alias name.keystore -keyalg RSA -validity 4000 -keystore name.keystore 添加名称
-3. 将apk名称改为name_unsigned,并和name.keystore置于同级目录下
-4. jarsigner -verbose -keystore name.keystore -signedjar name.apk name_unsigned.apk name.keystore 获取签名后apk
+<!-- 3. 将apk名称改为name_unsigned,并和name.keystore置于同级目录下 -->
+4. jarsigner -verbose -keystore name.keystore -signedjar name.apk app-release-unsigned.apk name.keystore 获取签名后apk
    
    tips:
    +. png打包报错 在platforms\android\app\build.gradle 下 234行添加 aaptOptions.cruncherEnabled = false   (换行)aaptOptions.useNewCruncher = false

@@ -64,9 +64,6 @@ export default Vue.extend({
 </script>
 <style scoped>
 .bottom-tabbar {
-  position: fixed;
-  left: 0;
-  bottom: 0;
   width: 100%;
   height: 80px;
 }
