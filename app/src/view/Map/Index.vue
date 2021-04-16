@@ -18,11 +18,4 @@ export default Vue.extend({
 });
 </script>
 <style scoped>
-.top-widget {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  width: 100%;
-}
 </style>

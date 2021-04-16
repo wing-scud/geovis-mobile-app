@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div ref="earthContainer" class="full" id="earthContainer" />
-    <div ref="mapContainer" class="full" id="mapContainer" v-show="state.mode === 'map'" />
+    <div ref="earthContainer" class="fullScreen" id="earthContainer" />
+    <div ref="mapContainer" class="fullScreen" id="mapContainer" v-show="state.mode === 'map'" />
     <!-- <div id="threeContainer" style="z-index:0" class="full"></div> -->
   </div>
 </template>
@@ -26,8 +26,8 @@ export default {
 </script>
 
 <style>
-.full {
-  position: fixed !important;
+.fullScreen {
+  position: absolute !important;
   left: 0;
   top: 0;
   width: 100%;

@@ -1,6 +1,6 @@
 <template>
   <div class="search-input">
-    <van-field v-model="inputValue" :left-icon="leftIcon" size="" placeholder="请输入地点" :error-message="inputErrorMessage" clearable @keyup.enter.native="submit" @input="getSuggestions">
+    <van-field v-model="inputValue" left-icon="search" size="" placeholder="请输入地点" :error-message="inputErrorMessage" clearable @keyup.enter.native="submit" @input="getSuggestions">
       <template #button>
         <div class="search-group">
           <van-checkbox v-model="coordinateCheckd" class="search-checkbox search-group-item">反查</van-checkbox>
@@ -49,7 +49,6 @@ export default {
   },
   data() {
     return {
-      leftIcon: "search",
       prompts: [], //用作存储后台数据的仓库，使得本组件的每个方法都能取
       inputValue: "",
       suggestions: [],
@@ -310,11 +309,13 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only 如果用element不能加scoped-->
 <style scoped>
 .search-input {
+  position: absolute;
+  top:0;
+  left:0;
   width: 92%;
   margin: 5px 2%;
   border-radius: 10px;
   background-color: #fff;
-  position: fixed;
   z-index: 4;
   padding: 2px 2%;
 }

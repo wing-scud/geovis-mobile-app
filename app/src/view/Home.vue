@@ -1,6 +1,5 @@
 <template>
   <div class="home">
-    <div class="main-title"><van-icon name="arrow-down" class="custon-arrow-title" />小组</div>
     <div class="main-part">
       <keep-alive include="Map">
         <router-view></router-view>
@@ -10,13 +9,14 @@
   </div>
 </template>
 <script lang="ts">
+import { earthStore } from "@/geovis/store";
 import Vue from "vue";
 const NativeStorage = window["NativeStorage"];
 export default Vue.extend({
   name: "Home",
   data() {
     return {
-      active: 0,
+      active:0,
       list: [
         { title: "地图", icon: "icon-ditu", name: "Map" },
         { title: "新闻", icon: "icon-yingyong", name: "News" },
@@ -25,6 +25,8 @@ export default Vue.extend({
       ]
     };
   },
+  mounted() {
+  },
   beforeCreate() {
     const user = NativeStorage.getItem("user");
     if (user) {
@@ -32,7 +34,7 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleChange() {}
+    handleChange(){}
   },
   watch: {
     active() {
@@ -50,18 +52,6 @@ export default Vue.extend({
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-.main-title {
-  width: 100%;
-  height: 32px;
-  font-size: 16px;
-  text-align: center;
-  color: #000;
-  background-color: #f7f3f3;
-  line-height: 32px;
-}
-.custon-arrow-title {
-  font-size: 8px;
 }
 .main-part {
   flex-grow: 1;
