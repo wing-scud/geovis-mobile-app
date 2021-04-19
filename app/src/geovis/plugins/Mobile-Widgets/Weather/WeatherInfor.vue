@@ -13,8 +13,8 @@ export default Vue.extend({
 </script>
 <style scoped>
 .left-bottom-weather {
-  position: fixed;
-  bottom: 50px;
+  position: absolute;
+  bottom: 0;
   left: 5px;
   width: 80px;
   z-index: 3;

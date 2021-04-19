@@ -5,7 +5,7 @@
         <router-view></router-view>
       </keep-alive>
     </div>
-    <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar"></MTabbar>
+    <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar" v-if="!state.fullScreen"></MTabbar>
   </div>
 </template>
 <script lang="ts">
@@ -17,9 +17,10 @@ export default Vue.extend({
   data() {
     return {
       active:0,
+      state:earthStore.state,
       list: [
         { title: "地图", icon: "icon-ditu", name: "Map" },
-        { title: "新闻", icon: "icon-yingyong", name: "News" },
+        { title: "通讯", icon: "icon-tongxun", name: "ChatIndex" },
         { title: "应用", icon: "icon-yingyong", name: "Application" },
         { title: "个人", icon: "icon-geren", name: "Person" }
       ]

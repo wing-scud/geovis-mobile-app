@@ -1,31 +1,26 @@
 <template>
-  <div class="map-module">
-    <div class="group-title">
-      <GroupTitle></GroupTitle>
-    </div>
-    <div class="content">
-      <Earth></Earth>
-      <template v-if="!state.onlyMap">
-        <div class="map-plugin-left">
-          <template v-for="item in pluginMapUnactivedLeft">
-            <MIcon :icon="item.icon" size="24px" length="32px" customClass="icon-component" :circle="true" :key="item['id']" :id="item['id']" @click="handleClick(item['id'])"> </MIcon>
+  <div>
+    <Earth></Earth>
+    <template v-if="!state.onlyMap">
+      <div class="map-plugin-left">
+        <template v-for="item in pluginMapUnactivedLeft">
+          <MIcon :icon="item.icon" size="24px" length="32px" customClass="icon-component" :circle="true" :key="item['id']" :id="item['id']" @click="handleClick(item['id'])"> </MIcon>
+        </template>
+        <van-popover v-model="moreItemsState" placement="right" lazy-render>
+          <van-grid square clickable :border="false" column-num="3" style="width: 200px">
+            <van-grid-item v-for="item in moreItems" :key="item.id" :text="item.name" class="grid-margin" @click="handleClick(item['id'])">
+              <template v-slot:icon>
+                <MIcon :icon="item.icon" size="24px" length="32px" :circle="true"> </MIcon>
+              </template>
+            </van-grid-item>
+          </van-grid>
+          <template #reference>
+            <MIcon icon="icon-gengduo" size="24px" length="32px" customClass="icon-component" :circle="true" @click="displayMore"> </MIcon>
           </template>
-          <van-popover v-model="moreItemsState" placement="right" lazy-render>
-            <van-grid square clickable :border="false" column-num="3" style="width: 200px">
-              <van-grid-item v-for="item in moreItems" :key="item.id" :text="item.name" class="grid-margin" @click="handleClick(item['id'])">
-                <template v-slot:icon>
-                  <MIcon :icon="item.icon" size="24px" length="32px" :circle="true"> </MIcon>
-                </template>
-              </van-grid-item>
-            </van-grid>
-            <template #reference>
-              <MIcon icon="icon-more" size="24px" length="32px" customClass="icon-component" :circle="true" @click="displayMore"> </MIcon>
-            </template>
-          </van-popover>
-        </div>
-        <component v-for="item in pluginState.pluginStateActived" :is="item.id" :key="item.id"></component>
-      </template>
-    </div>
+        </van-popover>
+      </div>
+      <component v-for="item in pluginState.pluginStateActived" :is="item.id" :key="item.id"></component>
+    </template>
   </div>
 </template>
 <script lang="ts">
@@ -39,7 +34,7 @@ export default Vue.extend({
     return {
       state: earthStore.state,
       moreItemsState: false,
-      pluginState: { pluginMapUnactived: [], pluginStateActived: [] }
+      pluginState: { pluginMapUnactived: [], pluginStateActived: [] },
     };
   },
   created() {},
@@ -66,7 +61,7 @@ export default Vue.extend({
         const pluginMapUnactived = [];
         const pluginStateActived = [];
         const pluginMap = this.state.pluginMap;
-        Object.keys(pluginMap).forEach(key => {
+        Object.keys(pluginMap).forEach((key) => {
           if (pluginMap[key].enabled && pluginMap[key].parent === "Map") {
             if (pluginMap[key].active && pluginMap[key].type === "component") {
               pluginStateActived.push(pluginMap[key]);
@@ -79,11 +74,11 @@ export default Vue.extend({
         console.log("change");
         this.pluginState = { pluginMapUnactived, pluginStateActived };
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   computed: {
-    pluginMapUnactivedLeft: function() {
+    pluginMapUnactivedLeft: function () {
       const array = [];
       const length = this.pluginState.pluginMapUnactived.length;
       if (length <= 4) {
@@ -93,7 +88,7 @@ export default Vue.extend({
       }
       return array;
     },
-    moreItems: function() {
+    moreItems: function () {
       const length = this.pluginState.pluginMapUnactived.length;
       if (length > 4) {
         return this.pluginState.pluginMapUnactived.slice(3, length);
@@ -108,7 +103,7 @@ export default Vue.extend({
         ele = document.getElementById("more");
       }
       return ele;
-    }
+    },
   },
   methods: {
     handleClick(id) {
@@ -129,8 +124,8 @@ export default Vue.extend({
     },
     displayMore() {
       this.moreItemsState = !this.moreItemsState;
-    }
-  }
+    },
+  },
 });
 </script>
 <style scoped>

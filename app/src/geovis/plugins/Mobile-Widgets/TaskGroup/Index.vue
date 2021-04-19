@@ -12,7 +12,7 @@
 import { earthStore } from "@/geovis/store";
 import Vue from "vue";
 export default Vue.extend({
-  name: "GroupTitle",
+  name: "TaskGroup",
   data() {
     return { arrowDirection: "arrow", popoverGroup: false, groups: [], currentGroup: "小组一" };
   },
@@ -50,5 +50,6 @@ export default Vue.extend({
 }
 .custon-arrow-title {
   font-size: 12px;
+  margin-right:10px
 }
 </style>

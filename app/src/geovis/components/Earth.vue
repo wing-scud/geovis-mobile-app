@@ -21,6 +21,9 @@ export default {
     this.state.pluginMap.b={active:false}
     earthStore.init(this.$refs["earthContainer"], this.$refs["mapContainer"]);
     this.state.pluginMap.a={active:false}
+  },
+  beforeDestoryed(){
+    console.log('earth destory')
   }
 };
 </script>
