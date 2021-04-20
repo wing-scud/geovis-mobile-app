@@ -28,7 +28,7 @@ export default {
   data() {
     return {
       pluginMap: earthStore.state.pluginMap,
-      lonlanheight: "",
+      lonlanheight: `经度:110.00,纬度:30.00`,
       degree: 30,
       transform: "transform:rotate(0deg)",
       state: earthStore.state,
@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     mapBottom() {
-      return this.earthState.pluginMap["Timeline"]?.enabled ? 94 : 50;
+      return this.earthState.pluginMap["Timeline"]?.enabled ? 44 : 0;
     },
     scene: function() {
       const texts = ["3D球", "2D球", "2D图"];
@@ -63,7 +63,7 @@ export default {
   methods: {
     formateDate(date) {
       const year = date.getFullYear();
-      let month = date.getMonth()+1;
+      let month = date.getMonth() + 1;
       if (month < 10) {
         month = "0" + month;
       }
@@ -161,16 +161,17 @@ export default {
         this.transform = `transform:rotate(${degree}deg)`;
       });
     }
-  },beforeDestroy(){
-    clearInterval(this.timeInterval)
+  },
+  beforeDestroy() {
+    clearInterval(this.timeInterval);
   }
 };
 </script>
 <style scoped>
 #tools {
-  position: fixed;
+  position: absolute;
   width: 30px;
-  bottom: 50px;
+  bottom: 0;
   right: 5px;
   z-index: 5;
 }
@@ -191,7 +192,9 @@ export default {
   vertical-align: middle;
 }
 #infobox {
-  position: fixed;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   color: #fff;
   font-size: 12px;
   font-family: cursive;
@@ -225,7 +228,7 @@ export default {
 }
 .time-box {
   position: absolute;
-  top: 32px;
+  top: 0;
   left: 50%;
   margin: 10px 0;
   color: white;

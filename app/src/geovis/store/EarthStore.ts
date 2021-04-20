@@ -32,7 +32,7 @@ function disableVueTrack(object) {
 }
 
 export class EarthStore {
-  public state: { window: { width: number; height: number; }; pluginTree: any[]; mode: string; pluginMap: {};onlyMap:boolean };
+  public state: { window: { width: number; height: number; }; pluginTree: any[]; mode: string; pluginMap: {}; onlyMap: boolean, fullScreen: boolean };
   private _earth: GeoVis.Earth;
   private _drawHelper: DrawHelper;
   private _sceneManager: SceneManager;
@@ -46,13 +46,13 @@ export class EarthStore {
       mode: "globe3", // globe3 globe2  map 
       pluginTree: [],
       pluginMap: {},
-      onlyMap:false
+      onlyMap: false,
+      fullScreen: false,
     };
   }
   get mode() {
     return this.state.mode;
   }
-
   get map() {
     return this._map;
   }
@@ -129,7 +129,7 @@ export class EarthStore {
 
     this._sceneManager = new SceneManager(earth);
 
-    window.addEventListener("resize", this.handleResize);
+    // window.addEventListener("resize", this.handleResize);
     this.handleResize();
     //@ts-ignore
     const timelineNode: HTMLElement = earth.container.querySelector(".cesium-timeline-main")
@@ -167,25 +167,16 @@ export class EarthStore {
       item.enabled = !item.enabled;
     }
   }
-  setMapFullScreen(bool){
-    const  mTabbar = document.getElementById('bottomTabbar');
-    if(mTabbar){
-      if(bool){
-        if(mTabbar.style.display!=="none"){
-          mTabbar.style.display="none";
-        }
-      }else{
-        if(mTabbar.style.display==="none"){
-          mTabbar.style.display="flex";
-        }
-      }
-    }
-
-    //handleResize();
+  setMapFullScreen(bool) {
+    this.state.fullScreen = bool
   }
   handleResize = () => {
-    // this.state.window.width = this.earth.scene.canvas.width;
-    // this.state.window.height = this.earth.scene.canvas.height;
+    //@ts-ignore
+    const observer = new ResizeObserver(()=>{
+      this._map.resize()
+    });
+    const ele = document.getElementById('mapContainer')
+    observer.observe(ele)
   };
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="full">
     <div class="person-nav">
-      <van-nav-bar title="我的" left-text="返回" right-text="消息" left-arrow @click-left="goBack" @click-right="enterMessage">
+      <van-nav-bar title="我的" right-text="消息"  @click-right="enterMessage">
         <template v-slot:right>
           <van-badge :content="5" max="10">
             <MIcon icon="icon-xiaoxi" size="20px" length="20px"></MIcon>

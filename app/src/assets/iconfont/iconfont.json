@@ -6,6 +6,69 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1309818",
+      "name": "转换",
+      "font_class": "zuobiaozhuanhuan",
+      "unicode": "e626",
+      "unicode_decimal": 58918
+    },
+    {
+      "icon_id": "1370251",
+      "name": "地图-缓冲区分析",
+      "font_class": "huanchongqu",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "749947",
+      "name": "天气",
+      "font_class": "tianqiyubao",
+      "unicode": "e631",
+      "unicode_decimal": 58929
+    },
+    {
+      "icon_id": "1727383",
+      "name": "35新闻、资讯-线性",
+      "font_class": "yaowen",
+      "unicode": "e8a7",
+      "unicode_decimal": 59559
+    },
+    {
+      "icon_id": "5738080",
+      "name": "通信-18",
+      "font_class": "tongxun",
+      "unicode": "ec87",
+      "unicode_decimal": 60551
+    },
+    {
+      "icon_id": "7703538",
+      "name": "气象监测",
+      "font_class": "shikuangqixiang",
+      "unicode": "e6a3",
+      "unicode_decimal": 59043
+    },
+    {
+      "icon_id": "8833682",
+      "name": "学生信息采集",
+      "font_class": "xinxicaiji",
+      "unicode": "e679",
+      "unicode_decimal": 59001
+    },
+    {
+      "icon_id": "14095381",
+      "name": "态势感知",
+      "font_class": "taishigongxiang",
+      "unicode": "e7a1",
+      "unicode_decimal": 59297
+    },
+    {
+      "icon_id": "14560680",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
       "icon_id": "3879270",
       "name": "安全",
       "font_class": "anquan",
@@ -274,7 +337,7 @@
     {
       "icon_id": "5734849",
       "name": "地图导航-26",
-      "font_class": "jichuguajian",
+      "font_class": "zhinanzhen",
       "unicode": "e67b",
       "unicode_decimal": 59003
     },

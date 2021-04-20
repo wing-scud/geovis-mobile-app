@@ -1,5 +1,7 @@
 <template>
   <div class="full">
+    <van-nav-bar title="应用">
+   </van-nav-bar>
     <div class="module" v-for="array in pluginTree" :key="array.id">
       <div class="plugin-title">{{ array.name }}</div>
       <van-grid class="plugin-grid" :column-num="4" square clickable>

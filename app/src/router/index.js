@@ -24,6 +24,7 @@ const PersonInfor = () => import("../view/Person/PersonInfor.vue");
 const EditPersonInfor = () => import("../view/Person/EditPersonInfor.vue");
 const AccountAndSafe = () => import("../view/Person/AccountAndSafe.vue");
 const DownloadManager = () => import("../view/Download/Index.vue");
+const ChatIndex = () => import("../view/Chat/Index.vue");
 const Test = () => import("../view/Test/index.vue");
 const routes = [
   {
@@ -136,6 +137,10 @@ const routes = [
     path: "/universal",
     component: Universal,
     name: "Universal"
+  }, {
+    path: "/chatIndex",
+    component: ChatIndex,
+    name: "ChatIndex"
   }
 ];
 

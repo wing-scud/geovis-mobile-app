@@ -15,7 +15,7 @@
             </van-grid-item>
           </van-grid>
           <template #reference>
-            <MIcon icon="icon-more" size="24px" length="32px" customClass="icon-component" :circle="true" @click="displayMore"> </MIcon>
+            <MIcon icon="icon-gengduo" size="24px" length="32px" customClass="icon-component" :circle="true" @click="displayMore"> </MIcon>
           </template>
         </van-popover>
       </div>
@@ -119,7 +119,7 @@ export default Vue.extend({
         }
         earthStore.togglePlugin(id, true);
       }
-      this.moreItemsState=false;
+      this.moreItemsState = false;
       console.log(pluginState.name, pluginState.active);
     },
     displayMore() {
@@ -129,6 +129,24 @@ export default Vue.extend({
 });
 </script>
 <style scoped>
+.map-module {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.group-title {
+  width: 100%;
+  height: 32px;
+}
+.content {
+  width: 100%;
+  flex-grow: 1;
+  position: relative;
+}
 .map-plugin-right {
   position: absolute;
   width: 40px;

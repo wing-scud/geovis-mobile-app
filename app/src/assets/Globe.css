@@ -58,9 +58,7 @@ color: white;
     width:100%;
     height: 100%;
 }
-.suggest-panel .van-icon{
-font-size: 20px;
-}
+
 .mapboxgl-ctrl-top-left{
     width:100%
 }
@@ -84,45 +82,6 @@ font-size: 20px;
   .icon-component{
     margin:10px 0  !important;
   }
-.result-list .van-swipe-cell__wrapper{
-    flex:1;
-    display:flex;
-    flex-direction: row;
-    height: 50px;
-    text-align: center;
-    line-height: 50px;
-}
-.star .van-cell__value {
-    display: inline-flex;
-    justify-content: flex-end;
-  }
-  .custom-item-icon{
-    line-height: 24px  !important;
-  }
-  .person-items .van-cell__title, .van-cell__value {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
-    padding-left: 10px;
-}
-.person-items .van-cell{
-  /* border-top: 1px solid #ebedf0; */
-  border-bottom: 1px solid #ebedf0;
-}
-.person-infor-img .van-cell__right-icon{
-line-height: 40px;
-}
-.search-input .van-checkbox__icon--round .van-icon {
-  border-radius: 100%;
-  font-size: 15px;
-}
-.search-input .van-checkbox__label{
-  margin: 0 0 ;
-}
-.search-input  .van-icon-search
-{
-  line-height: 30px;
-}
 .plugin-grid .van-grid-item__content{
   padding: 10px 5px 
 }
