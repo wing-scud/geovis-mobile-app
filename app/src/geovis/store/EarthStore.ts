@@ -129,7 +129,7 @@ export class EarthStore {
 
     this._sceneManager = new SceneManager(earth);
 
-    window.addEventListener("resize", this.handleResize);
+    // window.addEventListener("resize", this.handleResize);
     this.handleResize();
     //@ts-ignore
     const timelineNode: HTMLElement = earth.container.querySelector(".cesium-timeline-main")
@@ -171,8 +171,12 @@ export class EarthStore {
     this.state.fullScreen = bool
   }
   handleResize = () => {
-    // this.state.window.width = this.earth.scene.canvas.width;
-    // this.state.window.height = this.earth.scene.canvas.height;
+    //@ts-ignore
+    const observer = new ResizeObserver(()=>{
+      this._map.resize()
+    });
+    const ele = document.getElementById('mapContainer')
+    observer.observe(ele)
   };
 }
 
