@@ -10,7 +10,21 @@
         <van-tab title="步行" name="foot"> </van-tab>
       </van-tabs>
     </div>
-    <div class="route-overview" v-if="plans.length>0">
+    <div class="route-extra">
+      <van-popover v-model="moreState" placement="right" lazy-render>
+        <van-grid square clickable :border="false" column-num="2" style="width: 135px">
+          <van-grid-item v-for="item in moreItems" :key="item.id" :text="item.name" class="grid-margin" @click="handleClick(item['id'])">
+            <template v-slot:icon>
+              <MIcon :icon="item.icon" size="24px" length="32px" :circle="true"> </MIcon>
+            </template>
+          </van-grid-item>
+        </van-grid>
+        <template #reference>
+          <MIcon icon="icon-gengduo" size="24px" length="32px" :circle="true" @click="displayMore"> </MIcon>
+        </template>
+      </van-popover>
+    </div>
+    <div class="route-overview" v-if="plans.length > 0">
       <div class="flex-box">
         <div class="overview-program" v-for="(i, index) in overviewPlans" :key="index">
           <span class="little-name">方案{{ index + 1 }} <br /></span>
@@ -35,7 +49,7 @@ import { mapGetters } from "vuex";
 import convertRoute from "./util";
 import { mode, textFormat, parseMetersToKm, parseSecondsToMinutes } from "./util";
 import { earthStore } from "@/geovis/store";
-
+import mapboxManager from "./store";
 export default {
   name: "PathPlan",
   components: {
@@ -44,13 +58,18 @@ export default {
   data() {
     return {
       startPointStr: "",
-      startPoint:undefined,
+      startPoint: undefined,
       endPointStr: "",
       endPoint: undefined,
       plans: [],
       choosePlanIndex: 0,
       transportation: "car",
       geojsonRoutes: [],
+      moreState: false,
+      moreItems: [
+        { id: "approachPoint", name: "途径点", icon: "icon-gengduo" },
+        { id: "avoidArea", name: "规避区域", icon: "icon-gengduo" },
+      ],
     };
   },
   mounted() {
@@ -59,6 +78,11 @@ export default {
     earthStore.state.onlyMap = true;
   },
   beforeDestroy() {
+    const map = earthStore.map;
+    earthStore.setMapFullScreen(false);
+    earthStore.state.onlyMap = false;
+    earthStore.state.mode = "globe3";
+    earthStore.earth.scene.mode = GeoVis.SceneMode.SCENE3D;
     this.clearAll();
   },
   computed: {
@@ -75,16 +99,28 @@ export default {
     },
   },
   methods: {
+    handleClick(id) {
+      switch (id) {
+        case "approachPoint":
+          break;
+        case "avoidArea":
+          break;
+        default:
+          break;
+      }
+    },
+    displayMore() {
+      this.moreState = !this.moreState;
+    },
     changeTransportation() {
       this.searchLujing();
     },
     getAddress(address, type) {
-      console.log(address);
-      type === 1 ? (this.startPoint = address) : (this.endPoint = address);
+            type === 1 ? ((this.startPoint = address), mapboxManager.addImageMarker("start", "./static/images/start.png", address.location)) : ((this.endPoint = address), mapboxManager.addImageMarker("end",  "./static/images/end.png", address.location));
     },
     async searchLujing() {
-      if(!this.startPoint || !this.endPoint){
-        return ;
+      if (!this.startPoint || !this.endPoint) {
+        return;
       }
       this.clearAll();
       if (this.startPoint && this.endPoint) {
@@ -107,8 +143,6 @@ export default {
             return this.analysisJson(data);
           });
         const paths = this.plans;
-        this.over = false;
-        console.log("paths", paths);
         let color;
         /* 绘制路线 --每条路线不同颜色，激活路线颜色深点 */
         for (let i = 0; i < paths.length; i++) {
@@ -119,22 +153,9 @@ export default {
       this.choosePlan(0);
     },
     addGeoJsonRoute(index, color) {
-      const map = earthStore.map;
       const id = "route" + index;
-      const route = map.addSource(id, this.geojsonRoutes[index]);
-      map.addLayer({
-        id: id,
-        type: "line",
-        source: id,
-        layout: {
-          "line-join": "round",
-          "line-cap": "round",
-        },
-        paint: {
-          "line-color": color,
-          "line-width": 8,
-        },
-      });
+      const source = this.geojsonRoutes[index];
+      mapboxManager.addGeojsonLine(source, id, color);
     },
     analysisJson(json) {
       var routes = [];
@@ -148,16 +169,9 @@ export default {
       return routes;
     },
     setCenter(index) {
-      const map = earthStore.map;
       var center = turf.center(this.geojsonRoutes[index].data);
       const coor = turf.getCoord(center);
-      console.log(coor);
-      map.flyTo({
-        center: coor,
-        zoom: 9,
-        speed: 1.2,
-        curve: 1,
-      });
+      mapboxManager.flyTo(coor);
     },
     /*路线的选择有两种方式，一种图上点击，一种文字点击，二者互相联系 */
     choosePlan(index) {
@@ -166,41 +180,11 @@ export default {
       /*选中路线颜色加深 */
     },
     clearAll() {
-      this.startPoint=undefined;
-      this.endPoint=undefined;
-      //fly to home 
-      // removeSource 
-    },
-    pickPoint(n) {},
-    getPoint(e) {
-      fetch("https://nominatim.openstreetmap.org" + `/reverse.php?format=json&lat=${e.lonlat[1]}&lon=${e.lonlat[0]}&zoom=8`) //Config.DMIP
-        .then((res) => res.json())
-        .then((json) => {
-          if (json.error) {
-            console.error(json.error);
-            this.$error(json.error);
-          } else {
-            if (!this.lujingLocation) {
-              this.startPoint = e.lonlat.slice();
-              this.startPointStr = json.display_name;
-              this.addStartPoint();
-            } else {
-              this.endPoint = e.lonlat.slice();
-              this.endPointStr = json.display_name;
-              this.addEndPoint();
-            }
-            this.pickPoint(-1);
-          }
-        });
-    },
-    addStartPoint() {
-      this.billboards = this.billboards || [];
-      this.billboards.push(this.addBillboard([Number(this.startPoint[0]), Number(this.startPoint[1]), 0], require("./start.png"), "start"));
-      this.startBillboard = 1;
-    },
-    addEndPoint() {
-      this.billboards = this.billboards || [];
-      this.billboards.push(this.addBillboard([Number(this.endPoint[0]), Number(this.endPoint[1]), 0], require("./end.png"), "end"));
+      this.startPoint = undefined;
+      this.endPoint = undefined;
+      mapboxManager.clearAll();
+      //fly to home
+      // removeSource
     },
     JsonOutLj() {
       let text = JSON.stringify(this.plans);
@@ -256,12 +240,12 @@ export default {
   justify-content: space-between;
   font-size: 14px;
 }
-.route-extra{
-  position :absolute;
-  top:50%;
-  left:0;
+.route-extra {
+  position: absolute;
+  top: 50%;
+  left: 0;
 }
-.route-to{
+.route-to {
   font-size: 14px;
 }
 .little-name {
@@ -271,6 +255,9 @@ export default {
   flex: 3;
 }
 .custom-route-button {
+  height: 32px;
+}
+.route-input .van-tabs--line .van-tabs__wrap {
   height: 32px;
 }
 </style>
