@@ -1,10 +1,10 @@
 <template>
   <div class="pathes">
     <div class="route-overview flex-box">
-      <div class="overview-program" v-for="(i, index) in overviewPlans" :key="index" @click="choosePlan(index)">
+      <div :class="['overview-program', choosedIndex === index ? 'actived-plan' : 'unactived-plan']" v-for="(item, index) in overviewPlans" :key="index" @click="choosePlan(index)">
         <span class="little-name">方案{{ index + 1 }} <br /></span>
-        {{ i.time }}分钟 <br />
-        {{ i.distance }}千米
+        {{ item.time }}分钟 <br />
+        {{ item.distance }}千米
       </div>
     </div>
     <div class="route-detail" v-if="mode === 'detail'" :style="{ height: computedHeight }">
@@ -12,18 +12,19 @@
         <span :class="item.icon" class="leaflet-routing-icon"> </span>
         <div class="text">{{ item.text }}</div>
         <div class="distance">
-          {{ formatDistance(plans[choosedIndex].instructions[index].distance) }}
+          {{ detailRouteDistance[index] }}
+          <!-- {{ formatDistance(plans[choosedIndex].instructions[index].distance) }} -->
         </div>
       </div>
     </div>
     <van-row class="route-to" type="flex" align="center" justify="space-between">
       <van-col span="6" @click="displayRouteDetails"><van-icon name="description"></van-icon>{{ mode === "overview" ? "路线详情" : "显示地图" }}</van-col>
-      <van-col span="8" offset="2"> <van-button class="custom-route-button" type="info">模拟导航</van-button></van-col>
-      <van-col span="8"> <van-button class="custom-route-button" type="info">真实导航</van-button></van-col>
+      <van-col span="8" offset="2"> <van-button class="custom-route-button" type="info" @click="simulateNav">模拟导航</van-button></van-col>
+      <van-col span="8"> <van-button class="custom-route-button" type="info"  @click="liveNav">真实导航</van-button></van-col>
     </van-row>
   </div>
 </template>
-  <script lang="ts">
+<script lang="ts">
 import Vue from "vue";
 import { textFormat, parseMetersToKm, parseSecondsToMinutes } from "./util";
 export default Vue.extend({
@@ -35,19 +36,21 @@ export default Vue.extend({
         return [];
       },
     },
+    index: {
+      type: Number,
+      default: 0,
+    },
   },
   data() {
     return {
       choosedIndex: 0,
       routeDetailsState: false, //路线详情面板状态
-      routeDetail: [],
       detailRouteText: [],
+      detailRouteDistance: [],
       mode: "overview",
     };
   },
-  mounted() {
-    this.getText();
-  },
+  mounted() {},
   computed: {
     overviewPlans() {
       return this.plans.map((plan) => {
@@ -62,8 +65,24 @@ export default Vue.extend({
       });
     },
     computedHeight() {
-      return window.innerHeight - 92 + "px";
+      return window.innerHeight - 101 + "px";
     },
+  },
+  /**watch 分先后顺序，先书写的先执行 */
+  watch: {
+    index: {
+      handler() {
+        this.choosedIndex = this.index;
+      },
+      immediate: true,
+    },
+    plans: {
+      deep: true,
+      handler() {
+        this.getDetail();
+      },
+      immediate: true,
+    }
   },
   methods: {
     goBack() {
@@ -71,13 +90,15 @@ export default Vue.extend({
       this.$router.backward(-1);
     },
     formatDistance(value) {
-      let distance = "";
-      if (value / 1000 <= 0) {
-        distance = parseInt(value) + "米";
-      } else {
-        distance = Math.ceil(value / 1000) + "千米";
+      if (value) {
+        let distance = "";
+        if (value / 1000 <= 0) {
+          distance = parseInt(value) + "米";
+        } else {
+          distance = Math.ceil(value / 1000) + "千米";
+        }
+        return distance;
       }
-      return distance;
     },
     formatText(instruction) {
       let item = {
@@ -85,24 +106,32 @@ export default Vue.extend({
         icon: "",
       };
       item = textFormat(instruction);
-      console.log("原生item", item);
       return item;
     },
     choosePlan(index) {
-      this.choosedIndex = index;
-      this.$emit("choosePlan", index);
-      this.getText();
+      if (index !== this.choosedIndex) {
+        this.choosedIndex = index;
+        this.getDetail();
+        this.$emit("choosePlan", index);
+      }
     },
-    getText() {
+    getDetail() {
       const index = this.choosedIndex;
       const plan = this.plans[index];
       for (let j = 0; j < plan.instructions.length; j++) {
         this.detailRouteText.push(this.formatText(plan.instructions[j]));
+        this.detailRouteDistance.push(this.formatDistance(plan.instructions[j]?.distance));
       }
     },
     displayRouteDetails() {
       this.mode = this.mode === "overview" ? "detail" : "overview";
     },
+    simulateNav(){
+
+    },
+    liveNav(){
+
+    }
   },
 });
 </script>
@@ -111,19 +140,17 @@ export default Vue.extend({
   width: 100%;
   background-color: white;
 }
+
 .route-detail {
   width: 100%;
+  padding: 5px 0;
+  border-top: 1px solid #8080805e;
+  border-bottom: 1px solid #8080805e;
   overflow-y: auto;
   overflow-x: none;
 }
 .route-overview {
-  /* position: absolute; */
-  /* bottom: 0; */
-  /* left: 0; */
-  /* z-index: 4; */
   width: 100%;
-  border-bottom: gray 1px solid;
-  /* background-color: white; */
 }
 .flex-box {
   display: flex;
@@ -139,7 +166,12 @@ export default Vue.extend({
 }
 .route-to {
   font-size: 14px;
-  border-top: gray 1px solid;
+}
+.actived-plan {
+  color: blue;
+}
+.unactived-plan {
+  color: black;
 }
 .little-name {
   font-size: 12px;

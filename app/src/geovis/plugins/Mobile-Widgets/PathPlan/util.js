@@ -754,4 +754,4 @@ function parseSecondsToMinutes(seconds) {
     return (seconds / 60).toFixed(1)
 }
 export default convertRoute;
-export { mode, textFormat, parseMetersToKm, parseSecondsToMinutes };
+export {mode, textFormat, parseMetersToKm, parseSecondsToMinutes };
