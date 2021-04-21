@@ -62,9 +62,6 @@ const routes = [
         name: "Application"
       }
     ],
-    meta: {
-      keepAlive: true
-    }
   },
   { path: "/login", component: Login, name: "Login" },
   { path: "/register", component: Register, name: "Register" },
