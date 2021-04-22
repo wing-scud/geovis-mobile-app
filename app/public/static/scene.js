@@ -36,7 +36,7 @@ window.sceneData = {
             projection: "EPSG:900913",
             imgURL: "./data/LayerManager/img.jpg",
             // layerURL: "http://192.168.13.32/tiles/googleimg/{z}/{x}/{y}.png",
-            layerURL: `http://www.geovisweb.cn/proxy/http://www.google.com/maps/vt?lyrs=s@709&gl=cn&x={x}&y={y}&z={z}`,
+            layerURL: `http://www.geovisweb.cn/proxy/http://www.google.co.jp/maps/vt?lyrs=s@709&gl=cn&x={x}&y={y}&z={z}`,
             content: ""
             // 可选参数， bounding
           }
@@ -49,7 +49,7 @@ window.sceneData = {
             type: "raster",
             projection: "EPSG:900913",
             imgURL: "./data/LayerManager/img.jpg",
-            layerURL: "http://www.geovisweb.cn/proxy/http://http://mt2.google.com/vt/x={x}&y={y}&z={z}",
+            layerURL: "http://www.geovisweb.cn/proxy/http://http://mt2.google.co.jp/vt/x={x}&y={y}&z={z}",
             minLevel: 3,
             content: ""
             // 可选参数， bounding
