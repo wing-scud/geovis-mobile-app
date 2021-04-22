@@ -4,6 +4,10 @@
       <keep-alive include="Map">
         <router-view></router-view>
       </keep-alive>
+      <!-- <keep-alive >
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+      <router-view v-if="!$route.meta.keepAlive"></router-view> -->
     </div>
     <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar" v-if="!state.fullScreen"></MTabbar>
   </div>

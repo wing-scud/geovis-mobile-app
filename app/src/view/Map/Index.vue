@@ -4,7 +4,7 @@
       <TaskGroup></TaskGroup>
     </div>
     <div class="content">
-      <MapEntity></MapEntity>
+        <MapEntity></MapEntity>
       <router-view></router-view>
     </div>
   </div>

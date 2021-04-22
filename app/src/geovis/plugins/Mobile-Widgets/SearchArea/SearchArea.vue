@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="search">
-      <SearchInput v-model="inputValue" :route="false" @checked="checkedConvert" @choosed="choosedAddress"></SearchInput>
+      <SearchInput v-model="inputValue" leftIcon="search" :route="false" @checked="checkedConvert" @choosed="choosedAddress"></SearchInput>
     </div>
-    <BriefAddress v-if="showAddressDetail" :address="addressDetail"> </BriefAddress>
+    <BriefAddress v-if="showAddressDetail"  leftIcon="search" :address="addressDetail"> </BriefAddress>
   </div>
 </template>
 <script>

@@ -3,13 +3,14 @@
     <div class="search-input">
       <van-field
         v-model="inputValue"
-        :left-icon="config.icon"
+        :left-icon="leftIcon"
         :right-icon="rightIcon"
         :label="config.label"
         size=""
         placeholder="请输入地点"
         :error-message="inputErrorMessage"
         @click-right-icon="clickRightIcon"
+        @click-left-icon="clickLeftIcon"
         clearable
         @keyup.enter.native="getSuggestions"
         @input="getSuggestions"
@@ -75,6 +76,10 @@ export default {
       type: String,
       default: "",
     },
+    leftIcon:{
+      type: String,
+      default: "",
+    }
   },
   data() {
     return {
@@ -139,7 +144,7 @@ export default {
         outlineColor: "#00acc1",
       };
       //相机飞到目标点并划线描点
-      this.flyTo(point, lineStyle);
+      // this.flyTo(point, lineStyle);
       this.inputValue = point.name;
       this.$emit("input", this.inputValue);
       this.$emit("choosed", point);
@@ -255,7 +260,7 @@ export default {
         outlineColor: "#00acc1",
       };
       //相机飞到目标点并划线描点
-      this.flyTo(point, lineStyle);
+      // this.flyTo(point, lineStyle);
       this.suggestions = [];
     },
     flyTo: function (point, lineStyle) {
@@ -323,13 +328,15 @@ export default {
     clickRightIcon() {
       this.$emit("clickRightIcon");
     },
+    clickLeftIcon() {
+      this.$emit("clickLeftIcon");
+    },
   },
   computed: {
     config: function () {
       let configItems;
       if (this.route) {
         configItems = {
-          icon: "",
           label: this.label,
           button: false,
           star: false,
@@ -338,7 +345,6 @@ export default {
         };
       } else {
         configItems = {
-          icon: "search",
           label: "",
           button: true,
           star: true,
