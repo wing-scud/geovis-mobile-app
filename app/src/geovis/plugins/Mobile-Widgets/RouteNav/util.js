@@ -753,5 +753,24 @@ return (meters/1000).toFixed(1)
 function parseSecondsToMinutes(seconds) {
     return (seconds / 60).toFixed(1)
 }
+function formatDistance(value) {
+    if (value) {
+      let distance = "";
+      if (value / 1000 <= 0) {
+        distance = parseInt(value) + "米";
+      } else {
+        distance = Math.ceil(value / 1000) + "千米";
+      }
+      return distance;
+    }
+  }
+  function formatText(instruction) {
+    let item = {
+      text: "",
+      icon: "",
+    };
+    item = textFormat(instruction);
+    return item;
+  }
 export default convertRoute;
-export {mode, textFormat, parseMetersToKm, parseSecondsToMinutes };
+export {mode, textFormat, parseMetersToKm, parseSecondsToMinutes,formatDistance ,formatText};

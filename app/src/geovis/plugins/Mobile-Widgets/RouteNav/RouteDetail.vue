@@ -26,8 +26,8 @@
 </template>
 <script lang="ts">
 import Vue from "vue";
-import { textFormat, parseMetersToKm, parseSecondsToMinutes } from "./util";
-import state from "./store";
+import { textFormat, parseMetersToKm, parseSecondsToMinutes,formatDistance,formatText } from "./util";
+import state, { event } from "./store";
 export default Vue.extend({
   name: "RouteDetail",
   data() {
@@ -46,8 +46,8 @@ export default Vue.extend({
   /**watch 分先后顺序，先书写的先执行 */
   watch: {
     routesChange: {
-      immediate:true,
-      deep:true,
+      immediate: true,
+      deep: true,
       handler() {
         this.overviewPlans = [];
         this.routes.forEach((route, id) => {
@@ -73,30 +73,11 @@ export default Vue.extend({
   },
   computed: {
     computedHeight() {
-      return window.innerHeight - (60 + 32 + 5 + 2+8) + "px";
+      return window.innerHeight - (60 + 32 + 5 + 2 + 8) + "px";
     },
   },
 
   methods: {
-    formatDistance(value) {
-      if (value) {
-        let distance = "";
-        if (value / 1000 <= 0) {
-          distance = parseInt(value) + "米";
-        } else {
-          distance = Math.ceil(value / 1000) + "千米";
-        }
-        return distance;
-      }
-    },
-    formatText(instruction) {
-      let item = {
-        text: "",
-        icon: "",
-      };
-      item = textFormat(instruction);
-      return item;
-    },
     choosePlan(id) {
       if (id !== this.choosedId.id) {
         this.choosedId.id = id;
@@ -107,14 +88,15 @@ export default Vue.extend({
       this.reset();
       const id = this.choosedId.id;
       const route = this.routes.get(id);
+      console.log(route)
       if (route) {
         const plan = route.plan;
         //@ts-ignore
         for (let j = 0; j < plan.instructions.length; j++) {
           //@ts-ignore
-          this.texts.push(this.formatText(plan.instructions[j]));
+          this.texts.push(formatText(plan.instructions[j]));
           //@ts-ignore
-          this.distances.push(this.formatDistance(plan.instructions[j]?.distance));
+          this.distances.push(formatDistance(plan.instructions[j]?.distance));
         }
       }
     },
@@ -122,9 +104,11 @@ export default Vue.extend({
       this.mode = this.mode === "overview" ? "detail" : "overview";
     },
     simulateNav() {
-      
+      event.$emit('change',true,"simulate")
     },
-    liveNav() {},
+    liveNav() {
+      event.$emit('change',true,"live")
+    },
     reset() {
       this.texts = [];
       this.distances = [];
@@ -148,7 +132,7 @@ export default Vue.extend({
 }
 .route-overview {
   width: 100%;
-  padding: 4px 0
+  padding: 4px 0;
 }
 .flex-box {
   display: flex;

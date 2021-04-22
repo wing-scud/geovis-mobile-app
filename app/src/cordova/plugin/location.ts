@@ -2,9 +2,6 @@
 import { Toast } from 'vant';
 import { earthStore } from "@/geovis/store";
 class LocationWatch {
-    private watchId: any;
-    private _position: {};
-    private _locking: boolean;
     private _geolocation: any;
     public get geolocation(): any {
         return this._geolocation;
@@ -12,88 +9,29 @@ class LocationWatch {
     public set geolocation(value: any) {
         this._geolocation = value;
     }
-
-    public get locking(): boolean {
-        return this._locking;
-    }
-    public set locking(value: boolean) {
-        this._locking = value;
-        if (value) {
-            this.watchSelfLocation()
-        } else {
-            this.clearSelfLocationWatch()
-        }
-    }
-    public get position(): {} {
-        return this._position;
-    }
-    public set position(value: {}) {
-        this._position = value;
-        if (this._locking) {
-            this.flyTo(this._position)
-        }
-    }
     constructor() {
-        document.addEventListener('deviceReady', () => {
-            this._geolocation = navigator['geolocation'];
-        })
-        this._locking = false;
+        // document.addEventListener('deviceReady', () => {
+        this._geolocation = navigator['geolocation'];
+        // })
     }
-    flyTo(position) {
-        const modes = ["globe3", "globe2", "map"];
-        const index = modes.indexOf(earthStore.mode);
-        const mode = index < 2 ? "globe" : "map";
-        const earth = earthStore.earth;
-        const map = earthStore._map;
-        //@ts-ignore
-        if (position && position.coords) {
-            const coords = position.coords;
-            const heading = coords.heading ? GeoVis.Math.toRadians(coords.heading) : 0;
-            if (mode === "globe") {
-                earth.camera.flyTo({
-                    //高度太低，会穿透地球
-                    destination: GeoVis.Cartesian3.fromDegrees(coords.longitude, coords.latitude, coords.altitude > 200 ? coords.altitude : 200),
-                    orientation: {
-                        heading: heading,
-                        pitch: GeoVis.Math.toRadians(-90),
-                        roll: 0
-                    }
-                })
-            } else {
-                map.setCenter([position.coords.longitude, position.coords.latitude]);
-                map.setZoom(16);
-            }
-
-        } else {
-            Toast("位置获取失败")
-        }
+    clearWatchLocation(watchId) {
+        this._geolocation.clearWatch(watchId);
     }
-    clearSelfLocationWatch() {
-        if (this.watchId) {
-            Toast('关闭定位');
-            this._geolocation.clearWatch(this.watchId);
-            this.watchId = undefined;
-        }
-    }
-    watchSelfLocation() {
-        const instance = this;
+    watchLocation(callback?) {
         const onSuccess = function (position) {
-            instance.position = position;
-            Toast('开启定位');
-            // Toast(position);
+            console.log(position);
+            callback(position)
+            Toast('持续定位');
         };
         function onError(error) {
             Toast(error);
         }
         const watchId = this._geolocation.watchPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
-        // const watchId = this._geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
-        instance.watchId = watchId;
+        return watchId
     }
     getCurrentPosition() {
-        const instance = this;
         return new Promise((resolve, reject) => {
             const onSuccess = function (position) {
-                instance._position = position;
                 Toast('获取位置');
                 resolve(position)
             };
@@ -103,6 +41,53 @@ class LocationWatch {
             }
             this._geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
         })
+    }
+    testWatchPosition(callback?) {
+        const lnglats = [[116.395204, 39.917402], [116.395204, 39.917402],
+        [116.395204, 39.917402], [116.395204, 39.917402], [116.395204, 39.917402],
+        [116.395376, 39.913848], [116.396726, 39.913772]
+            , [116.396213, 39.92208]
+            , [116.385451, 39.921683], [116.385451, 39.921683], [116.385451, 39.921683], [116.385451, 39.921683]
+            , [116.383155, 39.920895], [116.383155, 39.920895], [116.383155, 39.920895], [116.383155, 39.920895]
+            , [116.371116, 39.921145]
+            , [116.371044, 39.922753], [116.371044, 39.922753], [116.371044, 39.922753], [116.371044, 39.922753]
+            , [116.350768, 39.922358]
+            , [116.350048, 39.925205]
+            , [116.349322, 39.940679], [116.349322, 39.940679], [116.349322, 39.940679], [116.349322, 39.940679]
+            , [116.350059, 39.942784]
+            , [116.350146, 39.947685], [116.350146, 39.947685], [116.350146, 39.947685], [116.350146, 39.947685]
+            , [116.349134, 39.951833]
+            , [116.348442, 39.966967]
+            , [116.349796, 39.966786]
+            , [116.315175, 39.965858]
+            , [116.311109, 39.976171], [116.311109, 39.976171], [116.311109, 39.976171], [116.311109, 39.976171]
+            , [116.309828, 39.990832]
+            , [116.306388, 39.990665]
+            , [116.306009, 39.99178]
+            , [116.303934, 39.991758]]
+        let heading = GeoVis.Math.toRadians(90);
+        let index = 0;
+        const interval = setInterval(() => {
+            if (index > lnglats.length - 1) {
+                index = 0
+            }
+            heading -= Math.PI / lnglats.length;
+            const lnglat = lnglats[index];
+            const position = {
+                coords: {
+                    longitude: lnglat[0],
+                    latitude: lnglat[1],
+                    altitude: 2000,
+                    heading: heading
+                }
+            }
+            //@ts-ignore
+            if (lnglat[0] !== this.position.coords.longitude && lnglat[1] !== this.position.coords.latitude) {
+                callback(position);
+            }
+            index++;
+        }, 1500)
+        return interval
     }
 }
 const mapLocation = new LocationWatch();

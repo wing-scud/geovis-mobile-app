@@ -13,6 +13,12 @@ class MapboxManager {
         marker: any;
     };
     private _markers: Map<string, any>;
+    public get markers(): Map<string, any> {
+        return this._markers;
+    }
+    public set markers(value: Map<string, any>) {
+        this._markers = value;
+    }
     constructor() {
         const map = earthStore.map;
         this._map = map;
@@ -23,11 +29,11 @@ class MapboxManager {
         this._markers = new Map();
         this._routeLines = new Map();
     }
-    flyTo(center) {
+    flyTo(center, zoom?, speed?) {
         this._map.flyTo({
             center: center,
-            zoom: 10,
-            speed: 1.2,
+            zoom: zoom ?? 10,
+            speed: speed ?? 1.2,
             curve: 1,
         })
     }
@@ -104,6 +110,24 @@ class MapboxManager {
             this._markers.delete(id)
         }
     }
+    setCamera(lnglat) {
+        const camera = this._map.getFreeCameraOptions();
+        // set the position and altitude of the camera
+        camera.position = mapboxgl.MercatorCoordinate.fromLngLat(
+            {
+                lng: lnglat[0],
+                lat: lnglat[1]
+            },
+            100
+        );
+        // tell the camera to look at a point along the route
+        camera.lookAtPoint({
+            lng: lnglat[0],
+            lat: lnglat[1]
+        });
+        // camera.setPitchBearing(45,0)
+        this._map.setFreeCameraOptions(camera);
+    }
     clearAll() {
         this._routeLines.forEach((value, id) => {
             this.removeLine(id);
@@ -113,7 +137,7 @@ class MapboxManager {
         })
     }
     listenerLine(id) {
-        state.choosedId.id= id
+        state.choosedId.id = id
     }
     listenerMarker(e, id) {
         this.events.marker = { lngLat: e.lngLat, id }

@@ -1,3 +1,4 @@
+import Vue from "vue"
 class State {
     point: {
         start: {
@@ -13,17 +14,17 @@ class State {
             point: string
         }>,
     };
-    routesChange:{
-        state:boolean
+    routesChange: {
+        state: boolean
     };//watch 无法监听Map变化
     transportation: string;
     routes: Map<string, {
-        geojson:any //geojson数据格式
-        plan:[],//原始路线数组
-        texts:[]//转义化的路线文字
+        geojson: any //geojson数据格式
+        plan: [],//原始路线数组
+        texts: []//转义化的路线文字
     }>;
     choosedId: {
-        id:string
+        id: string
     };
     constructor() {
         this.point = {
@@ -39,14 +40,15 @@ class State {
         };
         this.routes = new Map();
         this.choosedId = {
-            id:"路线1"
+            id: "路线1"
         };
         this.transportation = "driving";
-        this.routesChange ={
-            state:false
+        this.routesChange = {
+            state: false
         };
     }
 }
-
+const event = new Vue();
 const state = new State();
 export default state;
+export { event }
