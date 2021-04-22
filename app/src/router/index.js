@@ -8,7 +8,7 @@ import Map from "../view/Map/Index.vue";
 const Home = () => import("../view/Home.vue");
 const Person = () => import("../view/Person/Index.vue");
 const SearchArea = () => import("../geovis/plugins/Mobile-Widgets/SearchArea/SearchArea.vue");
-const PathPlan = () => import("../geovis/plugins/Mobile-Widgets/PathPlan/PathPlan.vue");
+const RouteNav = () => import("../geovis/plugins/Mobile-Widgets/RouteNav/Index.vue");
 const Plot = () => import("../geovis/plugins/Mobile-Widgets/Plot/Plot.vue");
 const BufferAnalytics = () => import("../geovis/plugins/Mobile-Widgets/Tool/BufferAnalytics.vue");
 const Application = () => import("../view/Plugin/Index.vue");
@@ -48,7 +48,7 @@ const routes = [
         component: Map,
         children: [
           { path: "searchArea", component: SearchArea, name: "SearchArea" },
-          { path: "pathPlan", component: PathPlan, name: "PathPlan" },
+          { path: "routeNav", component: RouteNav, name: "RouteNav" },
           { path: "plot", component: Plot, name: "Plot" },
           { path: "bufferAnalytics", component: BufferAnalytics, name: "BufferAnalytics" }
         ],

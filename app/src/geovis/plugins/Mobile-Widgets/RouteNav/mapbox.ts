@@ -1,5 +1,6 @@
 import { earthStore } from "@/geovis/store";
 import mapboxgl from "mapbox-gl";
+import state from "./store"
 class MapboxManager {
     private _map: any;
     private _routeLines: Map<string, {
@@ -112,7 +113,7 @@ class MapboxManager {
         })
     }
     listenerLine(id) {
-        this.events.line = id
+        state.choosedId.id= id
     }
     listenerMarker(e, id) {
         this.events.marker = { lngLat: e.lngLat, id }

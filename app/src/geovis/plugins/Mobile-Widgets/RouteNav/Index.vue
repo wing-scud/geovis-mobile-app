@@ -1,17 +1,16 @@
 <template>
   <div>
-    <div class="route-input">
-      <SearchInput v-model="startPointStr" @choosed="getAddress($event, 1)" label="起点" route> </SearchInput
-      ><template v-for="(obj, index) in passingPoints">
-        <SearchInput v-model="obj.name" @choosed="getAddress($event, 3, index)" @clickRightIcon="displayPassingPointSearch(false, index)" label="途径" route rightIcon="close" :key="index"> </SearchInput>
-      </template>
-      <SearchInput v-model="endPointStr" @choosed="getAddress($event, 2)" @clickRightIcon="searchLujing" label="终点" route rightIcon="share-o"> </SearchInput>
-      <van-tabs v-model="transportation" @click="changeTransportation">
-        <!-- driving -->
-        <van-tab title="驾车" name="driving"> </van-tab>
-        <van-tab title="自行车" name="bike"> </van-tab>
-        <van-tab title="步行" name="foot"> </van-tab>
-      </van-tabs>
+    <div class="route-top">
+      <div class="route-title">
+        <van-nav-bar title="导航" left-text="返回" left-arrow @click-left="goBack" />
+        <div class="route-input">
+          <SearchInput v-model="start.input" @choosed="getAddress($event, 1)" label="起点" route> </SearchInput
+          ><template v-for="(point, index) in passingPoints">
+            <SearchInput v-model="point.input" @choosed="getAddress($event, 3, index)" @clickRightIcon="displayPassingPointSearch(false, index)" label="途径" route rightIcon="close" :key="index"> </SearchInput>
+          </template>
+          <SearchInput v-model="end.input" @choosed="getAddress($event, 2)" @clickRightIcon="searchLujing" label="终点" route rightIcon="share-o"> </SearchInput>
+        </div>
+      </div>
     </div>
     <div class="route-extra">
       <van-popover v-model="moreState" placement="right" lazy-render>
@@ -27,8 +26,17 @@
         </template>
       </van-popover>
     </div>
-    <div class="route-path" v-if="plans.length > 0">
-      <RouteDetail :plans="plans" :index="choosedPlanIndex" @choosePlan="choosePlan" @choosePath="1"></RouteDetail>
+    <div class="route-path">
+      
+      <van-tabs v-model="transportation" @click="changeTransportation">
+        <!-- driving -->
+        <van-tab title="驾车" name="driving"> </van-tab>
+        <van-tab title="自行车" name="bike"> </van-tab>
+        <van-tab title="步行" name="foot"> </van-tab>
+      </van-tabs>
+      <template v-if="size > 0">
+        <RouteDetail></RouteDetail>
+    </template>
     </div>
   </div>
 </template>
@@ -40,62 +48,66 @@ import _ from "lodash";
 import SearchInput from "../SearchArea/SearchInput.vue";
 import convertRoute from "./util";
 import { earthStore } from "@/geovis/store";
-import mapboxManager from "./store";
+import mapboxManager from "./mapbox";
 import RouteDetail from "./RouteDetail";
+import state from "./store.ts";
+import Vue from "vue";
 const activedLineColor = "rgba(60,60,230,0.87)";
 const unActivedLineColor = "rgba(86,86,86,1)";
 export default {
-  name: "PathPlan",
+  name: "RouteNav",
   components: {
     SearchInput,
     RouteDetail,
   },
   data() {
     return {
-      startPointStr: "", //start input value
-      startPoint: undefined, // start value
-      endPointStr: "",
-      endPoint: undefined,
-      plans: [], //请求路线后,处理得到的路线数据
-      choosedPlanIndex: 0, //选择的路线索引
-      transportation: "driving", //交通方式
-      geojsonRoutes: [], //路线转为geojson
+      start: state.point.start,
+      end: state.point.end,
+      choosedId: state.choosedId, //选择的路线索引
+      transportation: state.transportation, //交通方式
+      routes: state.routes,
+      passingPoints: state.point.passings, //途径点集合
+      events: mapboxManager.events,
       moreState: false, //导航选项状态
-      passingPoints: [], //途径点集合
       moreItems: [
         { id: "approachPoint", name: "途径点", icon: "icon-gengduo" },
         { id: "avoidArea", name: "规避区域", icon: "icon-gengduo" },
       ],
-      lines: [], //路线id array
-      events: mapboxManager.events,
       debounceChoosePlan: undefined,
+      routesChange: state.routesChange,
+      size: 0,
     };
   },
   mounted() {
+    // 针对覆盖图层点击，会连续调用watch
     earthStore.state.mode = "map";
     earthStore.setMapFullScreen(true);
     earthStore.state.onlyMap = true;
-    // 针对覆盖图层点击，会连续调用watch
     this.debounceChoosePlan = _.debounce(this.choosePlan, 500);
+    this.searchLujing.call(this);
   },
   beforeDestroy() {
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
     earthStore.state.mode = "globe3";
     earthStore.earth.scene.mode = GeoVis.SceneMode.SCENE3D;
-    this.clearMapboxObjects();
+    // this.clearMapboxObjects();
   },
+  /**
+   * 在变更 (不是替换) 对象或数组时，旧值将与新值相同
+   * 因为它们的引用指向同一个对象/数组。
+   * Vue 不会保留变更之前值的副本。
+   * 下面假设监听event，即出现状况
+   */
   watch: {
-    "events.line": {
+    "routesChange.state"() {
+      this.size = this.routes.size;
+    },
+    choosedId: {
       deep: true,
       handler(val) {
-        //change route
-        const index = this.lines.indexOf(val);
-        console.log("click", index);
-        if (index !== this.choosedPlanIndex) {
-          this.choosedPlanIndex = index;
-          this.debounceChoosePlan(index);
-        }
+        this.debounceChoosePlan(val.id);
       },
     },
     /**
@@ -103,26 +115,18 @@ export default {
      * 添加，封装一个mapbox的全局控制，
      * 不添加，只在pathPlan添加mapbox做处理
      */
-    "events.marker": {
-      handler(val) {
-        // id , lngLat
-        //通过id去改变
-        if (val.id === "start") {
-        } else if (val.id === "end") {
-        } else {
-        }
-      },
-    },
   },
-  computed: {},
-
   methods: {
+    goBack() {
+      //@ts-ignore
+      this.$router.backward(-1);
+    },
     addPassingPoint() {},
     displayPassingPointSearch(bool, index) {
       if (bool) {
         this.passingPoints.push({
-          name: "",
-          point: {},
+          input: "",
+          point: undefined,
         });
       } else {
         mapboxManager.removeImageMarker("passing" + (index + 1));
@@ -151,12 +155,12 @@ export default {
       switch (type) {
         case 1:
           mapboxManager.removeImageMarker("start");
-          this.startPoint = address;
+          this.start.point = address;
           mapboxManager.addImageMarker("start", "./static/images/qidian.png", address.location);
           break;
         case 2:
           mapboxManager.removeImageMarker("end");
-          this.endPoint = address;
+          this.end.point = address;
           mapboxManager.addImageMarker("end", "./static/images/zhongdian.png", address.location);
           break;
         case 3:
@@ -167,53 +171,60 @@ export default {
       }
     },
     async searchLujing() {
-      this.choosedPlanIndex = 0;
+      this.choosedId.id = "路线1";
       this.clearMapboxLines();
-      if (!this.startPoint || !this.endPoint) {
+      this.routes.clear();
+      if (!this.start.point || !this.end.point) {
         return;
       }
-      if (this.startPoint && this.endPoint) {
-        let start = this.startPoint.location[0] + "," + this.startPoint.location[1];
-        let end = this.endPoint.location[0] + "," + this.endPoint.location[1];
-        console.log(this.transportation);
-        let passingPointsCoords = "";
-        this.passingPoints.map((obj) => {
+      let start = this.start.point.location[0] + "," + this.start.point.location[1];
+      let end = this.end.point.location[0] + "," + this.end.point.location[1];
+      let passingPointsCoords = "";
+      this.passingPoints.map((obj) => {
+        if (obj.point) {
           passingPointsCoords += ";" + obj.point.location[0] + "," + obj.point.location[1];
-        });
-        console.log(passingPointsCoords);
-        const url = "http://router.project-osrm.org" + "/route/v1/" + this.transportation + "/" + start + passingPointsCoords + ";" + end + "?alternatives=3&steps=true&geometries=geojson"; //Config.LJIP
-        this.plans = await fetch(url)
-          .then((res) => res.json())
-          .then((data) => {
-            this.geojsonRoutes = data.routes.map((route) => {
-              return {
-                type: "geojson",
-                data: {
-                  type: "Feature",
-                  properties: {},
-                  geometry: route.geometry,
-                },
-              };
-            });
-            return this.analysisJson(data);
-          });
-        let color;
-        const ids = this.plans.map((plan, index) => {
-          return "route" + (index + 1);
-        });
-        this.lines = ids;
-        const orders = this.orderArray(ids, this.choosedPlanIndex);
-        /* 绘制路线 --每条路线不同颜色，激活路线颜色深点 */
-        for (let i = 0; i < orders.length; i++) {
-          const id = orders[i];
-          const choosed = this.choosedPlanIndex === ids.indexOf(id);
-          const source = this.geojsonRoutes[ids.indexOf(id)];
-          color = choosed ? activedLineColor : unActivedLineColor;
-          console.log(id, this.lines[i - 1]);
-          mapboxManager.addGeojsonLine(source, id, color, this.lines[i - 1]);
         }
-        this.setCenter(0);
+      });
+      console.log(passingPointsCoords);
+      const url = "http://router.project-osrm.org" + "/route/v1/" + this.transportation + "/" + start + passingPointsCoords + ";" + end + "?alternatives=3&steps=true&geometries=geojson"; //Config.LJIP
+      let geojsonRoutes;
+      const plans = await fetch(url)
+        .then((res) => res.json())
+        .then((data) => {
+          geojsonRoutes = data.routes.map((route) => {
+            return {
+              type: "geojson",
+              data: {
+                type: "Feature",
+                properties: {},
+                geometry: route.geometry,
+              },
+            };
+          });
+          return this.analysisJson(data);
+        });
+      let color;
+      const ids = plans.map((plan, index) => {
+        const id = "路线" + (index + 1);
+        this.routes.set(id, {
+          geojson: geojsonRoutes[index],
+          plan: plan,
+          text: [],
+        });
+        return id;
+      });
+      const orders = this.orderArray(ids, this.choosedId.id);
+      /* 绘制路线 --每条路线不同颜色，激活路线颜色深点 */
+      for (let i = 0; i < orders.length; i++) {
+        const id = orders[i];
+        const choosed = this.choosedId.id === id;
+        const source = this.routes.get(id).geojson;
+        color = choosed ? activedLineColor : unActivedLineColor;
+        mapboxManager.addGeojsonLine(source, id, color, orders[i - 1]);
       }
+      this.setCenter(this.choosedId.id);
+      this.routesChange.state = !this.routesChange.state;
+      this.$forceUpdate();
     },
     analysisJson(json) {
       let routes = [];
@@ -229,34 +240,34 @@ export default {
     /**
      * index 表示路线索引
      */
-    setCenter(index) {
-      const center = turf.center(this.geojsonRoutes[index].data);
+    setCenter(id) {
+      const geojson = this.routes.get(id).geojson.data;
+      const center = turf.center(geojson);
       const coor = turf.getCoord(center);
       mapboxManager.flyTo(coor);
     },
     /* 绘制路线 --每条路线不同颜色，激活路线颜色深点,并保证激活路线图层位于最上面 */
-    choosePlan(index) {
-      this.choosedPlanIndex = index;
-      this.setCenter(index);
+    choosePlan(id) {
+      this.setCenter(id);
       let color;
-      const orders = this.orderArray(this.lines, this.choosedPlanIndex);
+      const orders = this.orderArray(Array.from(this.routes.keys()), id);
       for (let i = 0; i < orders.length; i++) {
-        const choosed = this.choosedPlanIndex === this.lines.indexOf(orders[i]);
+        const choosed = this.choosedId.id === orders[i];
         color = choosed ? activedLineColor : unActivedLineColor;
-        const id = orders[i];
-        mapboxManager.setGeojsonLineColor(id, color, orders[i - 1]);
+        mapboxManager.setGeojsonLineColor(orders[i], color, orders[i - 1]);
       }
     },
     /**
      * 保证当前激活方案在最顶层，不被其他图层遮挡
      */
-    orderArray(array, index) {
+    orderArray(array, id) {
+      const index = array.indexOf(id);
       const newArray = array.slice(0, index).concat(array.slice(index + 1, array.length));
       newArray.push(array[index]);
       return newArray;
     },
     clearMapboxLines() {
-      this.lines.map((id) => {
+      this.routes.forEach((route, id) => {
         mapboxManager.removeLine(id);
       });
     },
@@ -282,7 +293,7 @@ export default {
 </script>
 
 <style>
-.route-input {
+.route-top {
   position: absolute;
   top: 0;
   left: 0;
