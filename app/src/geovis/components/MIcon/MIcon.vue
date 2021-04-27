@@ -11,47 +11,47 @@ export default Vue.extend({
   props: {
     icon: {
       type: String,
-      validator: function(value) {
+      validator: function (value) {
         // 这个值必须匹配下列字符串中的一个
         return value.split("-")[0] === "icon";
-      }
+      },
     },
     customClass: {
       type: String,
-      default: ""
+      default: "",
     },
     backgroundColor: {
       type: String,
-      default: "white"
+      default: "white",
     },
     size: {
       type: String,
-      default: "25px"
+      default: "25px",
     },
     length: {
       type: String,
-      default: "30px"
+      default: "30px",
     },
     circle: {
       type: Boolean,
-      default: false
+      default: false,
     },
     actived: {
       type: Boolean,
-      default: false
+      default: false,
     },
     name: {
       type: String,
-      default: "icon"
+      default: "icon",
     },
     label: {
       type: String,
-      default: ""
+      default: "",
     },
     labelColor: {
       type: String,
-      default: "black"
-    }
+      default: "black",
+    },
   },
   data() {
     return {};
@@ -64,25 +64,23 @@ export default Vue.extend({
       }
       return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, lineHeight: this.length, backgroundColor: this.backgroundColor };
     },
-    // containerStyle() {
-    //   // return { backgroundColor: this.backgroundColor };
-    // }
   },
   methods: {
     handleClick(key) {
       this.$emit("click");
-    }
-  }
+    },
+  },
 });
 </script>
 <style scoped>
 .icon-container {
+  display: inline-block;
   width: 30px;
   height: 30px;
   background-color: white;
   text-align: center;
   line-height: 30px;
-  margin: 0 auto;
+  margin: 0 5px 0 5px;
 }
 .unactived {
   color: #333333;

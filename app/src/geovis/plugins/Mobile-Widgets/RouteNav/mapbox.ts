@@ -1,6 +1,7 @@
 import { earthStore } from "@/geovis/store";
 import mapboxgl from "mapbox-gl";
 import state from "./store"
+const turf =window['turf']
 class MapboxManager {
     private _map: any;
     private _routeLines: Map<string, {
@@ -102,6 +103,42 @@ class MapboxManager {
         const listener = (e) => { this.listenerMarker.call(this, e, id) }
         marker.on('dragend', listener)
         this._markers.set(id, marker)
+    }
+    followRoute(route, marker) {
+        const plan = route.plan;
+        const geojson = route.geojson.data;
+        const time = plan.summary.totalTime;
+        const seconds = time * 60;
+        const count = 0;
+        // const animate = function () {
+        //     const start = geojson.geometry.coordinates[
+        //         count >= seconds ? count - 1 : seconds
+        //     ];
+        //     var end =
+        //         geojson.geometry.coordinates[
+        //         count >= seconds ? count : count + 1
+        //         ];
+        //     if (!start || !end) return;
+        //     marker.serLngLat([start,end])
+
+        //     // Calculate the bearing to ensure the icon is rotated to match the route arc
+        //     // The bearing is calculated between the current point and the next point, except
+        //     // at the end of the arc, which uses the previous point and the current point
+        //     point.features[0].properties.bearing = turf.bearing(
+        //         turf.point(start),
+        //         turf.point(end)
+        //     );
+
+        //     // Update the source with this new data
+        //     map.getSource('point').setData(point);
+
+        //     // Request the next frame of animation as long as the end has not been reached
+        //     if (counter < steps) {
+        //         requestAnimationFrame(animate);
+        //     }
+
+        //     counter = counter + 1;
+        // }
     }
     removeImageMarker(id) {
         const marker = this._markers.get(id);

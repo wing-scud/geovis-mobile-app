@@ -6,7 +6,7 @@
 </template>
   <script lang="ts">
 import Vue from "vue";
-import { event } from "./store";
+import state,{ event } from "./store";
 import mapboxManager from "./mapbox";
 import { earthStore } from "@/geovis/store";
 import mapLocation from "@/cordova/plugin/location";
