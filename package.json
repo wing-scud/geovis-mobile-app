@@ -50,6 +50,7 @@
     ]
   },
   "dependencies": {
+    "@mapbox/mapbox-gl-language": "^0.10.1",
     "fs": "0.0.1-security",
     "mapbox-gl": "^2.1.1"
   }

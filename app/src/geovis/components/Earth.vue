@@ -35,9 +35,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+
 .fullScreen {
-  position: absolute !important;
+  position: fixed !important;
   left: 0;
   top: 0;
   width: 100%;
