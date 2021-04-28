@@ -10,11 +10,18 @@
       <router-view v-if="!$route.meta.keepAlive"></router-view> -->
     </div>
     <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar" v-if="!state.fullScreen"></MTabbar>
+    <!-- <van-tabbar v-model="active"  :height="50" id="bottomTabbar" v-if="!state.fullScreen">
+      <van-tabbar-item :icon="item.icon" v-for="(item,index0) in list" :key="index0" @change="handleChange">{{item.title}}</van-tabbar-item>
+    </van-tabbar> -->
   </div>
 </template>
 <script lang="ts">
 import { earthStore } from "@/geovis/store";
 import Vue from "vue";
+import { Tabbar, TabbarItem } from 'vant';
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
+
 const NativeStorage = window["NativeStorage"];
 export default Vue.extend({
   name: "Home",
@@ -48,7 +55,7 @@ export default Vue.extend({
   }
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .home {
   position: fixed;
   top: 0;
@@ -63,4 +70,9 @@ export default Vue.extend({
   width: 100%;
   position: relative;
 }
+.bottom-tabbar{
+  background:$navbar-background;
+   box-shadow: $box-top-shadow;
+}
+ 
 </style>
