@@ -25,6 +25,7 @@
   </div>
 </template>
 <script lang="ts">
+// @ts-nocheck
 import Vue from "vue";
 import { textFormat, parseMetersToKm, parseSecondsToMinutes } from "./util";
 export default Vue.extend({
