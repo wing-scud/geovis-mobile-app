@@ -322,7 +322,7 @@ export default {
       mapLocation.getCurrentPosition().then((position) => {
         const start = [position.coords.longitude, position.coords.latitude];
         const end = point.location;
-        this.$router.push({ name: "PathPlan", params: { origin: start, destination: end } });
+        this.$router.push({ name: "RouteNav", params: { origin: start, destination: end } });
       });
     },
     clickRightIcon() {

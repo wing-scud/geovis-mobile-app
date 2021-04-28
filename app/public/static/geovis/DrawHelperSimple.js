@@ -44,7 +44,7 @@
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(105);
+	module.exports = __webpack_require__(106);
 
 
 /***/ }),
@@ -7484,7 +7484,7 @@
 	function createtextEle() {
 	  var ele = document.createElement("textarea");
 	  ele.className = "geo-marker-input";
-	  ele.placeholder = "双击此处编辑文本";
+	  ele.placeholder = "点击此处编辑文本";
 	  return ele;
 	}
 
@@ -7513,15 +7513,9 @@
 	        _this.disableResize();
 	      } else if (_this.element.contains(target)) {
 	        _this.enableResize();
-	        _this.enableEdit();
-	      }
-	    };
-
-	    _this.bodydbClick = function (e) {
-	      e = e || window.event;
-	      var target = e.target || e.srcElement;
-	      if (target === _this.textEle) {
-	        _this.enableEdit();
+	        if (_this._menu.visible === false) {
+	          _this.enableEdit();
+	        }
 	      }
 	    };
 
@@ -7574,6 +7568,16 @@
 
 	  _createClass(TextMarker, [{
 	    key: "createAnchors",
+
+
+	    // bodydbClick = e => {
+	    //   e = e || window.event;
+	    //   var target = e.target || e.srcElement;
+	    //   if (target === this.textEle) {
+	    //     this.enableEdit();
+	    //   }
+	    // };
+
 	    value: function createAnchors() {
 	      this.element.appendChild(createAnchor({ left: "-5px", top: "-5px" }));
 	      this.element.appendChild(createAnchor({ left: "-5px", bottom: "-10px" }));
@@ -15736,7 +15740,7 @@
 	function createtextEle() {
 	  var ele = document.createElement("textarea");
 	  ele.className = "geo-marker-input";
-	  ele.placeholder = "双击此处上传图片";
+	  ele.placeholder = "点击此处上传图片";
 	  return ele;
 	}
 
@@ -18314,7 +18318,7 @@
 	  }
 	});
 
-	var _startDrawingArea = __webpack_require__(91);
+	var _startDrawingArea = __webpack_require__(92);
 
 	Object.defineProperty(exports, "startDrawingArea", {
 	  enumerable: true,
@@ -18323,7 +18327,7 @@
 	  }
 	});
 
-	var _startDrawingPolyline = __webpack_require__(92);
+	var _startDrawingPolyline = __webpack_require__(93);
 
 	Object.defineProperty(exports, "startDrawingPolyline", {
 	  enumerable: true,
@@ -18332,7 +18336,7 @@
 	  }
 	});
 
-	var _startDrawingPolyshape = __webpack_require__(93);
+	var _startDrawingPolyshape = __webpack_require__(94);
 
 	Object.defineProperty(exports, "startDrawingPolyshape", {
 	  enumerable: true,
@@ -18341,7 +18345,7 @@
 	  }
 	});
 
-	var _startDrawingWall = __webpack_require__(94);
+	var _startDrawingWall = __webpack_require__(95);
 
 	Object.defineProperty(exports, "startDrawingWall", {
 	  enumerable: true,
@@ -18350,7 +18354,7 @@
 	  }
 	});
 
-	var _startDrawingAngle = __webpack_require__(95);
+	var _startDrawingAngle = __webpack_require__(96);
 
 	Object.defineProperty(exports, "startDrawingAngle", {
 	  enumerable: true,
@@ -18359,7 +18363,7 @@
 	  }
 	});
 
-	var _startDrawingCutFill = __webpack_require__(96);
+	var _startDrawingCutFill = __webpack_require__(97);
 
 	Object.defineProperty(exports, "startDrawingCutFill", {
 	  enumerable: true,
@@ -18368,7 +18372,7 @@
 	  }
 	});
 
-	var _startDrawingVisibility = __webpack_require__(97);
+	var _startDrawingVisibility = __webpack_require__(98);
 
 	Object.defineProperty(exports, "startDrawingVisibility", {
 	  enumerable: true,
@@ -18377,7 +18381,7 @@
 	  }
 	});
 
-	var _startDrawingMarker = __webpack_require__(99);
+	var _startDrawingMarker = __webpack_require__(100);
 
 	Object.defineProperty(exports, "startDrawingMarker", {
 	  enumerable: true,
@@ -18386,7 +18390,7 @@
 	  }
 	});
 
-	var _startDrawingRect = __webpack_require__(100);
+	var _startDrawingRect = __webpack_require__(101);
 
 	Object.defineProperty(exports, "startDrawingRect", {
 	  enumerable: true,
@@ -18395,7 +18399,7 @@
 	  }
 	});
 
-	var _startDrawingDragMarker = __webpack_require__(101);
+	var _startDrawingDragMarker = __webpack_require__(102);
 
 	Object.defineProperty(exports, "startDrawingDragMarker", {
 	  enumerable: true,
@@ -18404,7 +18408,7 @@
 	  }
 	});
 
-	var _startDrawingGroundText = __webpack_require__(103);
+	var _startDrawingGroundText = __webpack_require__(104);
 
 	Object.defineProperty(exports, "startDrawingGroundText", {
 	  enumerable: true,
@@ -18413,7 +18417,7 @@
 	  }
 	});
 
-	var _startDrawingModel = __webpack_require__(104);
+	var _startDrawingModel = __webpack_require__(105);
 
 	Object.defineProperty(exports, "startDrawingModel", {
 	  enumerable: true,
@@ -26131,7 +26135,7 @@
 	    points.remove();
 	    tooltip.setVisible(false);
 	    earth.off("leftDown", onLeftDown);
-	    earth.off("mouseMove", onMouseMove);
+	    // earth.off("mouseMove", onMouseMove);
 	  });
 
 	  var _self = this;
@@ -26143,7 +26147,7 @@
 	  var points = null;
 
 	  earth.on("leftDown", onLeftDown);
-	  earth.on("mouseMove", onMouseMove);
+	  // earth.on("mouseMove", onMouseMove);
 	  function onLeftDown(event) {
 	    if (event.position != null) {
 	      var cartesian = event.position;
@@ -26160,13 +26164,14 @@
 	          points = _self.points;
 	          points.addPoints([cartesian]);
 	        } else {
+	          circle.radius = GeoVis.Cartesian3.distance(circle.center, cartesian);
 	          finishDrawing(circle.center, circle.radius);
 	          if (typeof options.callback === "function") {
 	            options.callback(circle);
 	          }
 	          _self.stopDrawing();
 	          earth.off("leftDown", onLeftDown);
-	          earth.off("mouseMove", onMouseMove);
+	          // earth.off("mouseMove", onMouseMove);
 	        }
 	      }
 	    }
@@ -26225,13 +26230,17 @@
 	exports.default = function (options) {
 	  options.type = options.type || _Types2.default.PROJ_POLYGON;
 	  options = (0, _util.copyOptions)(options, _config.defaultSurfaceOptions);
-	  var finish = this.startDrawingPolyshape(true, options);
+	  var finish = (0, _startDrawingPoly2.default)(true, options, this);
 	  return finish;
 	};
 
 	var _util = __webpack_require__(8);
 
 	var _config = __webpack_require__(7);
+
+	var _startDrawingPoly = __webpack_require__(91);
+
+	var _startDrawingPoly2 = _interopRequireDefault(_startDrawingPoly);
 
 	var _Types = __webpack_require__(14);
 
@@ -26241,6 +26250,147 @@
 
 /***/ }),
 /* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; // @ts-check
+
+
+	exports.default = function (isPolygon, options, drawHelper) {
+	  options = options || {};
+	  options = (0, _util.copyOptions)(options, _config.defaultPolylineOptions);
+	  options.id = options.id || GeoVis.createGuid();
+	  if (options.color) {
+	    var material = GeoVis.Material.fromType(GeoVis.Material.ColorType);
+	    material.uniforms.color = options.color;
+	    options.material = material;
+	  } else {
+	    material = GeoVis.Material.fromType(GeoVis.Material.ColorType);
+	    material.uniforms.color = GeoVis.Color.fromCssString("#009688").withAlpha(0.7);
+	    options.material = material;
+	  }
+
+	  var _self = drawHelper;
+	  var scene = drawHelper._scene;
+	  var earth = drawHelper._earth;
+	  var primitives = drawHelper._primitives;
+	  var tooltip = drawHelper._tooltip;
+	  var poly;
+
+	  var minPoints = isPolygon ? 3 : 2;
+	  var maxPoints = options.maxPoints || Infinity;
+
+	  if (isPolygon) {
+	    if (options.type === _Types2.default.CLASSIFY_POLYGON) {
+	      poly = new _Classify2.default(_extends({}, options, { drawHelper: _self }));
+	    } else {
+	      poly = new _Polygon2.default(_extends({}, options, { drawHelper: _self }));
+	    }
+	  } else {
+	    poly = new _Polyline2.default(_extends({}, options, { drawHelper: _self }));
+	  }
+
+	  poly.asynchronous = false;
+	  primitives.add(poly);
+
+	  drawHelper.startDrawing(function () {
+	    points.remove();
+	    if (!poly.drawHelper._plots.get(poly.id)) {
+	      poly.deleted();
+	    }
+	    earth.off("click", onLeftClick);
+	    earth.off("doubleClick", onDoubleClick);
+	    tooltip.setVisible(false);
+	  });
+	  var positions = [];
+	  var points = _self.points;
+	  earth.on("click", onLeftClick);
+	  earth.on("doubleClick", onDoubleClick);
+
+	  function onLeftClick(event) {
+	    if (event.position && event.position !== null) {
+	      var cartesian = event.position;
+	      if (cartesian) {
+	        if (positions.length === 0) {
+	          positions.push(cartesian);
+	          points.addPoint(cartesian);
+	        } else if (positions.length < maxPoints) {
+	          positions.push(cartesian);
+	          points.addPoint(cartesian);
+	        }
+	        if (positions.length >= minPoints) {
+	          poly.positions = positions;
+	          poly._createPrimitive = true;
+	          _self.fire("changed", {
+	            entity: poly
+	          });
+	        }
+	      }
+	    }
+	  }
+
+	  function onDoubleClick() {
+	    if (typeof options.callback === "function") {
+	      options.callback(poly);
+	    }
+	    positions.pop();
+	    poly.positions = positions;
+	    poly._createPrimitive = true;
+	    poly.setEditable();
+	    _self.fire("created", {
+	      entity: poly
+	    });
+	    _self._plots.set(poly.id, poly);
+	    _self.stopDrawing();
+	    earth.off("click", onLeftClick);
+	    earth.off("doubleClick", onDoubleClick);
+	  }
+
+	  var finishDrawing = function finishDrawing() {
+	    if (typeof options.callback === "function") {
+	      options.callback(poly);
+	    }
+	    poly.setEditable();
+	    _self.fire("created", {
+	      entity: poly
+	    });
+	    _self._plots.set(poly.id, poly);
+	    _self.stopDrawing();
+	    earth.off("click", onLeftClick);
+	    earth.off("doubleClick", onDoubleClick);
+	  };
+	  return finishDrawing;
+	};
+
+	var _util = __webpack_require__(8);
+
+	var _config = __webpack_require__(7);
+
+	var _Polygon = __webpack_require__(16);
+
+	var _Polygon2 = _interopRequireDefault(_Polygon);
+
+	var _Polyline = __webpack_require__(30);
+
+	var _Polyline2 = _interopRequireDefault(_Polyline);
+
+	var _Classify = __webpack_require__(31);
+
+	var _Classify2 = _interopRequireDefault(_Classify);
+
+	var _Types = __webpack_require__(14);
+
+	var _Types2 = _interopRequireDefault(_Types);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26440,7 +26590,7 @@
 	}
 
 /***/ }),
-/* 92 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26452,13 +26602,17 @@
 	exports.default = function (options) {
 	  options.type = options.type || _Types2.default.PROJ_POLYLINE;
 	  options = (0, _util.copyOptions)(options, _config.defaultPolylineOptions);
-	  var finish = this.startDrawingPolyshape(false, options);
+	  var finish = (0, _startDrawingPoly2.default)(false, options, this);
 	  return finish;
 	};
 
 	var _util = __webpack_require__(8);
 
 	var _config = __webpack_require__(7);
+
+	var _startDrawingPoly = __webpack_require__(91);
+
+	var _startDrawingPoly2 = _interopRequireDefault(_startDrawingPoly);
 
 	var _Types = __webpack_require__(14);
 
@@ -26467,7 +26621,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 93 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26502,7 +26656,7 @@
 	  var scene = this._scene;
 	  var earth = this._earth;
 	  var primitives = this._primitives;
-	  // var tooltip = this._tooltip;
+	  var tooltip = this._tooltip;
 
 	  var minPoints = isPolygon ? 3 : 2;
 	  var maxPoints = options.maxPoints || Infinity;
@@ -26513,7 +26667,7 @@
 	    earth.off("doubleClick", onDoubleClick);
 	    primitives.remove(poly);
 	    points.remove();
-	    // tooltip.setVisible(false);
+	    tooltip.setVisible(false);
 	  });
 
 	  var poly;
@@ -26549,7 +26703,6 @@
 	      var delta = currentTime - lastTime;
 	      lastTime = currentTime;
 	      var cartesian = getposition(scene, event);
-
 	      if (cartesian && delta > 300) {
 	        if (options.type === _Types2.default.CLASSIFY_POLYGON) {
 	          var height = (0, _util.cartesianToLonlat)(cartesian)[2];
@@ -26584,7 +26737,7 @@
 	    };
 	    if (position && position !== null) {
 	      if (positions.length === 0) {
-	        // tooltip.showAt(windowPos, "<p>点击创建第一个点</p>");
+	        tooltip.showAt(windowPos, "<p>点击创建第一个点</p>");
 	      } else {
 	        var cartesian = getposition(scene, event);
 	        if (cartesian) {
@@ -26597,11 +26750,7 @@
 	          // update marker
 	          points.getPoint(positions.length - 1).position = cartesian;
 	          // show tooltip
-	          // tooltip.showAt(
-	          //   windowPos,
-	          //   "<p>点击创建新的点</p>" +
-	          //     (positions.length > minPoints ? "<p>双击结束</p>" : "")
-	          // );
+	          tooltip.showAt(windowPos, "<p>点击创建新的点</p>" + (positions.length > minPoints ? "<p>双击结束</p>" : ""));
 	          if (positions.length >= minPoints) {
 	            _self.fire("changed", {
 	              entity: poly,
@@ -26704,70 +26853,6 @@
 	      }
 	    }
 	  }
-	  var stopDraw = function stopDraw() {
-	    if (isPolygon) {
-	      if (options.type === _Types2.default.CLASSIFY_POLYGON) {
-	        var polygon = new _Classify2.default(_extends({}, options, {
-	          positions: poly.positions,
-	          custom: poly.positions,
-	          material: options.material,
-	          type: options.type,
-	          drawHelper: _self
-	        }));
-	        if (typeof options.callback === "function") {
-	          options.callback(polygon);
-	        }
-	        _self.primitives.add(polygon);
-	        _self.fire("created", {
-	          entity: polygon,
-	          positions: poly.positions
-	        });
-	        _self._plots.set(polygon.id, polygon);
-	      } else {
-	        var polygon1 = new _Polygon2.default(_extends({}, options, {
-	          positions: poly.positions,
-	          custom: poly.positions,
-	          material: options.material,
-	          type: options.type,
-	          drawHelper: _self
-	        }));
-	        if (typeof options.callback === "function") {
-	          options.callback(polygon1);
-	        }
-	        _self.primitives.add(polygon1);
-	        polygon1.setEditable();
-	        _self.fire("created", {
-	          entity: polygon1,
-	          positions: poly.positions
-	        });
-	        _self._plots.set(polygon1.id, polygon1);
-	      }
-	    } else {
-	      var polyline = new _Polyline2.default(_extends({}, options, {
-	        positions: poly.positions,
-	        width: options.width,
-	        material: options.material,
-	        geodesic: true,
-	        type: options.type,
-	        drawHelper: _self
-	      }));
-	      if (typeof options.callback === "function") {
-	        options.callback(polyline);
-	      }
-	      _self.primitives.add(polyline);
-	      polyline.setEditable();
-	      _self.fire("created", {
-	        entity: polyline,
-	        positions: poly.positions
-	      });
-	      _self._plots.set(polyline.id, polyline);
-	    }
-	    _self.stopDrawing();
-	    earth.off("click", onLeftClick);
-	    earth.off("mouseMove", onMouseMove);
-	    earth.off("doubleClick", onDoubleClick);
-	  };
-	  return stopDraw;
 	};
 
 	var _util = __webpack_require__(8);
@@ -26793,7 +26878,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 94 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26949,7 +27034,7 @@
 	}
 
 /***/ }),
-/* 95 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27099,7 +27184,7 @@
 	}
 
 /***/ }),
-/* 96 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27268,7 +27353,7 @@
 	}
 
 /***/ }),
-/* 97 */
+/* 98 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27289,7 +27374,7 @@
 
 	var _PointGroup2 = _interopRequireDefault(_PointGroup);
 
-	var _Angle = __webpack_require__(98);
+	var _Angle = __webpack_require__(99);
 
 	var _Angle2 = _interopRequireDefault(_Angle);
 
@@ -27432,7 +27517,7 @@
 	}
 
 /***/ }),
-/* 98 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27558,7 +27643,7 @@
 	exports.default = Angle;
 
 /***/ }),
-/* 99 */
+/* 100 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27682,7 +27767,7 @@
 	}
 
 /***/ }),
-/* 100 */
+/* 101 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27879,7 +27964,7 @@
 	}
 
 /***/ }),
-/* 101 */
+/* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27891,7 +27976,7 @@
 
 	var _util = __webpack_require__(8);
 
-	var _DragMarker = __webpack_require__(102);
+	var _DragMarker = __webpack_require__(103);
 
 	var _DragMarker2 = _interopRequireDefault(_DragMarker);
 
@@ -27926,7 +28011,7 @@
 	}
 
 /***/ }),
-/* 102 */
+/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28032,7 +28117,7 @@
 	exports.default = DragMarker;
 
 /***/ }),
-/* 103 */
+/* 104 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28150,7 +28235,7 @@
 	}
 
 /***/ }),
-/* 104 */
+/* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28225,7 +28310,7 @@
 	}
 
 /***/ }),
-/* 105 */
+/* 106 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	"use strict";

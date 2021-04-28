@@ -26,7 +26,7 @@
                 "mutex": true
             },
             {
-                "id": "PathPlan",
+                "id": "RouteNav",
                 "parent": "Map",
                 "type": "route",
                 "icon": "icon-luxianchaxun",

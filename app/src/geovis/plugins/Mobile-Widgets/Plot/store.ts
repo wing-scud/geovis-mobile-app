@@ -51,7 +51,7 @@ const types = [
     options: [
       { name: "圆", icon: "icon-yuan" },
       // { name: "墙", icon: "" },
-      { name: "矩形", icon: "icon-juxing" },
+      // { name: "矩形", icon: "icon-juxing" },
       { name: "线", icon: "icon-xiantiao" }, { name: "多边形", icon: "icon-duobianxing" }
     ]
   }
@@ -80,7 +80,28 @@ const types = [
   return `${hours}:${minutes}:${seconds}`;
   // return `${year}-${month}-${days}  ${hours}:${minutes}:${seconds}`;
 }
-
+function formateLength(length) {
+  let value, unit;
+  if (length > 1000) {
+    value = Math.floor(length / 1000)
+    unit = "千米"
+  } else {
+    value = length
+    unit = "米"
+  }
+  return { value, unit }
+}
+function formateArea(area) {
+  let value, unit;
+  if (area > 1000000) {
+    value = Math.floor(area / 1000000)
+    unit = "平方千米"
+  } else {
+    value = area
+    unit = "平方米"
+  }
+  return { value, unit }
+}
 class Plot {
   private _plotType: any;
   public get plotType(): any {
@@ -254,12 +275,12 @@ class Plot {
           type: drawHelperType
         })
         break;
-      case '矩形':
-        drawHelperType = DrawHelper.Types.RECTANGLE
-        this.drawingMarker = this._drawHelper.startDrawingRect({
-          type: drawHelperType
-        })
-        break;
+      // case '矩形':
+      //   drawHelperType = DrawHelper.Types.RECTANGLE
+      //   this.drawingMarker = this._drawHelper.startDrawingRect({
+      //     type: drawHelperType
+      //   })
+      //   break;
       case '线':
         this.startDrawLine('投影')
         break;
@@ -277,20 +298,9 @@ class Plot {
   }
   deleteResult(index) {
     const entity = this._primitives[index]
-    this._drawResults.splice(index, 1);
-    //measure
-    if (this._drawHelper.measure.tags.get(entity.id)) {
-      const labels = this._drawHelper.measure.tags.get(entity.id);
-      labels.map(label => label.removeFrom(this.drawHelper.features));
-    }
-    // marker
-    if ([Types.IMAGE_MARKER, Types.TEXT_MARKER].includes(entity.type)) {
-      entity.removeFrom(this._drawHelper.features);
-    }
-    //other
-    this._drawHelper.primitives.remove(entity)
-    // this._primitives[index].deleted();
+    entity.deleted();
     this._primitives.splice(index, 1);
+    this._drawResults.splice(index, 1);
   }
   save(name) {
     const json = this._drawHelper.serialize();
@@ -304,7 +314,9 @@ class Plot {
     this._drawHelper.unserialize(JSON.parse(string));
   }
   removeAll() {
-    this._drawHelper.removeAll()
+    this._drawHelper.removeAll();
+    this._drawResults.splice(0,this._drawResults.length);
+    this._primitives.splice(0,this._drawResults.length);
   }
   private addPlotResults(type) {
     const instance = this;
@@ -351,37 +363,27 @@ class Plot {
     const instance = this;
     this._drawHelper.once("created", function (e) {
       const id = e.entity.id;
-      const arrayTag = instance._drawHelper.measure.tags.get(id);
-      let value;
-      let unit;
+      const arrayTag = instance._drawHelper._measureTool.tags.get(id);
       let result;
+      let formateValue, formateUnit;
       if (resultFilter === "角度") {
         result = arrayTag[1].text;
+        formateValue = result;;
+        formateUnit = "°";
       } else {
         result = arrayTag[arrayTag.length - 1].text;
         /* 距离、面积结果简化 */
         const num = Number(result.replace(/[^0-9.]/ig, ""));
         if (result.includes('平方米')) {
-          if (num > 1000000) {
-            value = Math.floor(num / 1000000)
-            unit = "平方千米"
-          } else {
-            value = num
-            unit = "平方米"
-          }
+          const { value, unit } = formateArea(num);
+          formateValue = value, formateUnit = unit
         } else {
-          if (num > 1000) {
-            value = Math.floor(num / 1000)
-            unit = "千米"
-          } else {
-            value = num
-            unit = "米"
-          }
-
+          const { value, unit } = formateLength(num);
+          formateValue = value, formateUnit = unit
         }
       }
       const time = formateDate(new Date())
-      instance._drawResults.push({ value: value, unit: unit, type: operator, time: time });
+      instance._drawResults.push({ value: formateValue, unit: formateUnit, type: operator, time: time });
       instance._primitives.push(e.entity);
       instance.drawingMarker = undefined
     });

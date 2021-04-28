@@ -31,7 +31,7 @@
       <table class="result-list">
         <tr class="flex-result">
           <th class="operator">类型</th>
-          <th class="result">结果</th>
+          <th class="result">结果/时间</th>
           <!-- <th class="result">时间</th> -->
         </tr>
         <van-swipe-cell v-for="(item, index) in results" :key="index">
@@ -91,7 +91,7 @@ export default {
     this.componentName = "liangcei";
   },
   beforeDestroy() {
-    earthStore.drawHelper.removeAll()
+    earthStore.drawHelper.removeAll();
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
   },
@@ -167,14 +167,15 @@ export default {
           break;
         case "redraw":
           //清除当前场景内所有的实体
+          // 删除所有的标绘数据
           plot.removeAll();
           break;
       }
     },
     formatUnit(unit) {
       return unit.includes("千米") ? "km" : "m";
-    }
-  }
+    },
+  },
 };
 </script>
 <style scoped>

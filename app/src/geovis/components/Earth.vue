@@ -38,7 +38,7 @@ export default {
 <style scoped>
 
 .fullScreen {
-  position: fixed !important;
+  position: absolute !important;
   left: 0;
   top: 0;
   width: 100%;
@@ -49,17 +49,5 @@ export default {
   pointer-events: none;
   background: transparent;
 }
-#slider {
-  position: fixed;
-  width: 4px;
-  height: 100%;
-  left: 50%;
-  top: 0;
-  background-color: white;
-  z-index: 1111;
-  visibility: hidden;
-}
-#slider:hover {
-  cursor: ew-resize;
-}
+
 </style>

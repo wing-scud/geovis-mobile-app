@@ -2,126 +2,106 @@
   <div class="full">
     <van-nav-bar title="下载管理" left-text="返回" left-arrow @click-left="goBack" />
     <van-tabs v-model="active">
-      <!-- <van-tab name="toDownload" title="下载">下载</van-tab> -->
+      <van-tab name="todownload" title="下载列表">
+        <van-empty description="当前无下载列表" v-if="todownloadList.length === 0" />
+        <van-swipe-cell v-for="item in todownloadList" :key="item.id">
+          <div class="download-item">
+            <van-cell :title="item.name" :value="item.size" size="large" />
+          </div>
+          <template #right>
+            <van-button square type="danger" @click="downloadCity('item.id')" text="下载" />
+          </template>
+        </van-swipe-cell>
+      </van-tab>
       <van-tab name="downloading" title="下载中">
         <van-empty description="当前无下载任务" v-if="downloadingList.length === 0" />
-        <van-list v-model="loading" class="list" :style="{ height: listHeight }" :finished="finished" finished-text="没有更多了" v-else @load="onLoad">
-          <van-swipe-cell v-for="item in downloadingList" :key="item.id">
-            <template #right>
-              <van-button square text="删除" type="danger" class="delete-button" />
-            </template>
-            <div class="download-item">
-              <van-image width="50px" height="50px" fit="fill" src="https://img01.yzcdn.cn/vant/cat.jpeg"> </van-image>
-              <div class="download-describe">
-                <div class="download-infor">
-                  <span class="download-name">
-                    {{ item.name }}
-                  </span>
-                  <span class="download-size">
-                    {{ item.size }}
-                  </span>
-                  <span class="download-time">
-                    {{ item.time }}
-                  </span>
-                </div>
-                <div class="download-progress"><van-progress :percentage="item.progress" /></div>
+        <van-swipe-cell v-for="item in downloadingList" :key="item.id">
+          <template #right>
+            <van-button square text="删除" type="danger" class="delete-button" />
+          </template>
+          <div class="download-item">
+            <van-image width="50px" height="50px" fit="fill" src="https://img01.yzcdn.cn/vant/cat.jpeg"> </van-image>
+            <div class="download-describe">
+              <div class="download-infor">
+                <span class="download-name">
+                  {{ item.name }}
+                </span>
+                <span class="download-size">
+                  {{ item.size }}
+                </span>
+                <span class="download-time">
+                  {{ item.time }}
+                </span>
               </div>
+              <div class="download-progress"><van-progress :percentage="item.progress" /></div>
             </div>
-          </van-swipe-cell>
-        </van-list>
+          </div>
+        </van-swipe-cell>
       </van-tab>
       <van-tab name="downloaded" title="已完成">
         <van-empty description="暂无下载内容" v-if="downloadedList.length === 0" />
-        <van-list v-model="loading" class="list" :style="{ height: listHeight }" :finished="finished" finished-text="没有更多了" v-else @load="onLoad">
-          <van-swipe-cell v-for="item in downloadedList" :key="item.id">
-            <template #right>
-              <van-button square text="删除" type="danger" class="delete-button" />
-            </template>
-            <div class="download-item">
-              <van-image width="50px" height="50px" fit="fill" src="https://img01.yzcdn.cn/vant/cat.jpeg"> </van-image>
-              <div class="download-describe">
-                <div class="downloaded-infor">
-                  <span class="download-name">
-                    {{ item.name }}
-                  </span>
-                  <span class="download-size">
-                    {{ item.size }}
-                  </span>
-                </div>
-                <div class="downloaded-time">已完成 {{ item.time }}</div>
+        <van-swipe-cell v-for="item in downloadedList" :key="item.id">
+          <template #right>
+            <van-button square text="删除" type="danger" class="delete-button" />
+          </template>
+          <div class="download-item">
+            <van-image width="50px" height="50px" fit="fill" src="https://img01.yzcdn.cn/vant/cat.jpeg"> </van-image>
+            <div class="download-describe">
+              <div class="downloaded-infor">
+                <span class="download-name">
+                  {{ item.name }}
+                </span>
+                <span class="download-size">
+                  {{ item.size }}
+                </span>
               </div>
+              <div class="downloaded-time">已完成 {{ item.time }}</div>
             </div>
-          </van-swipe-cell>
-        </van-list>
+          </div>
+        </van-swipe-cell>
       </van-tab>
     </van-tabs>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
+import manager from "./store";
 export default Vue.extend({
   name: "DownloadManager",
   data() {
     return {
-      active: "downloading",
-      downloadingList: [
-        {
-          id: 0,
-          name: "矢量地图1",
-          size: "100G",
-          progress: 100,
-          time: "2021-02-21"
-        }
-      ],
-      loading: false,
-      finished: false,
-      listHeight: "800px",
-      downloadedList: [
-        {
-          id: 0,
-          name: "矢量地图1",
-          size: "100G",
-          time: "2021-02-21"
-        }
-      ]
+      active: "todownload",
+      todownloadList: manager.todownloadList,
+      downloadingList: manager.downloadingList,
+      downloadedList: manager.downloadingList,
     };
   },
   mounted() {
-    // Response.body 属性 下载进度
-    const navBar = document.getElementsByClassName("van-nav-bar")[0];
-    const tabTitle = document.getElementsByClassName("van-tabs__wrap")[0];
-    const topTitleHeight = navBar.clientHeight + tabTitle.clientHeight;
-    this.listHeight = window.innerHeight - topTitleHeight + "px";
+    this.onLoad("todownload");
+  },
+  watch:{
+    active(){
+      this.onLoad(this.active)
+    }
   },
   methods: {
     goBack() {
-            //@ts-ignore
+      //@ts-ignore
       this.$router.backward(-1);
     },
-    onLoad() {
-      // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      const interval = setInterval(() => {
-        const length = this.downloadingList.length;
-        for (let i = 0; i < 10; i++) {
-          this.downloadingList.push({
-            id: i + length,
-            name: (i + length).toString(),
-            size: "100G",
-            progress: Math.floor(Math.random() * 100),
-            time: "2021-02-21"
-          });
-        }
-        // 加载状态结束
-        this.loading = false;
-        // 数据全部加载完成
-        if (this.downloadingList.length >= 40) {
-          this.finished = true;
-          clearInterval(interval);
-        }
-      }, 2000);
+    onLoad(type) {
+      // 这种方法会导致this指向问题，需要bind
+      const types = {
+        todownload: manager.loadTodownload,
+        downloading: manager.loadDownloading,
+        downloaded: manager.loadDownloaded,
+      };
+      types[type] && types[type]();
+    },
+    downloadCity(id){
+      manager.downloadCity(id)
     }
-  }
+  },
 });
 </script>
 <style scoped>
