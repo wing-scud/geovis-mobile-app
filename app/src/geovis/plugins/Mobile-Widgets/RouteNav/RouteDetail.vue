@@ -52,6 +52,7 @@ export default Vue.extend({
         this.overviewPlans = [];
         this.routes.forEach((route, id) => {
           const plan = route.plan;
+          //@ts-ignore
           const summary = plan.summary;
           const distance = parseMetersToKm(summary.totalDistance);
           const time = parseSecondsToMinutes(summary.totalTime);

@@ -1,6 +1,6 @@
 
-import User,{validUser} from "../../server/table/User";
-// import { connectDB, createTabel, addRow, customSql, readRow, removeRow, updateRow, closeDB } from "../../server/db.js";
+import User, { validUser } from "../../server/table/User";
+const loginUrl = "http://49.234.121.120:8091/user/api/login"
 const state = () => ({
   user: undefined
 });
@@ -10,32 +10,46 @@ const getters = {};
 
 // actions
 const actions = {
-  login({context,commit}, options) {
+  login({ context, commit }, options) {
     return new Promise((resolve, reject) => {
       //请求校验
-      const ok = true;
-      const user ={name:options.name,password:options.password,authority:1,birthday:"1999-09-03",headshot:"https://img01.yzcdn.cn/vant/cat.jpeg",sex:0,hometown:"110105",tel:"13956950414"}
-      if (ok) {
-        commit("initUser", user);
-        resolve(true)
-      }else{
-        reject(false)
-      }
+      fetch(loginUrl, {
+        method: "POST",
+        mode: 'cors',
+        // headers: {
+        //   'content-type': 'application/json'
+        // },
+        body: JSON.stringify({
+          username: options.name,
+          password: options.password,
+          rememberMe: false
+        })
+      }).then((res) => res.json()).then((data) => {
+        if (data.status === 'ok') {
+          //@ts-ignore
+          // 暂且再fetch
+          // const user = data.data;
+          // commit("initUser", user);
+          resolve(true)
+        } else {
+          reject(false)
+        }
+      })
     });
   },
-  loginOut({context,commit}){
+  loginOut({ context, commit }) {
     commit("deleteUser");
   },
-  changeUser({context,commit},user){
-    return new Promise((resolve,reject)=>{
+  changeUser({ context, commit }, user) {
+    return new Promise((resolve, reject) => {
       //验证user 是否正确
-      const res=validUser(user)
-     if(res.status){
-       commit('changeUser',user);
-       resolve({status:true})
-     }else{
-      resolve({status:false,error:res.error})
-     }
+      const res = validUser(user)
+      if (res.status) {
+        commit('changeUser', user);
+        resolve({ status: true })
+      } else {
+        resolve({ status: false, error: res.error })
+      }
     })
   }
 };
@@ -44,26 +58,26 @@ const actions = {
 const mutations = {
   initUser(state, user) {
     state.user = new User(user);
-    console.log("add",user);
-    const NativeStorage =window['NativeStorage'];
+    console.log("add", user);
+    const NativeStorage = window['NativeStorage'];
     //localstorge不能储存对象
-    const string=JSON.stringify(state.user);
+    const string = JSON.stringify(state.user);
     console.log(string)
-    NativeStorage.setItem('user',string)
+    NativeStorage.setItem('user', string)
   },
-  deleteUser(state){
-    const NativeStorage =window['NativeStorage'];
+  deleteUser(state) {
+    const NativeStorage = window['NativeStorage'];
     state.user = undefined;
     NativeStorage.remove('user')
   },
   changeUser(state, user) {
     state.user = user;
-    console.log("change",user);
-    const NativeStorage =window['NativeStorage'];
+    console.log("change", user);
+    const NativeStorage = window['NativeStorage'];
     //localstorge不能储存对象
-    const string=JSON.stringify(state.user);
+    const string = JSON.stringify(state.user);
     console.log(string)
-    NativeStorage.setItem('user',string)
+    NativeStorage.setItem('user', string)
   },
 };
 export default {
