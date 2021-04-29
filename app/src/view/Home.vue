@@ -11,7 +11,7 @@
     </div>
     <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar" v-if="!state.fullScreen"></MTabbar>
     <!-- <van-tabbar v-model="active"  :height="50" id="bottomTabbar" v-if="!state.fullScreen">
-      <van-tabbar-item :icon="item.icon" v-for="(item,index0) in list" :key="index0" @change="handleChange">{{item.title}}</van-tabbar-item>
+      <van-tabbar-item   :class="item.icon" v-for="(item,index0) in list" :key="index0" @change="handleChange">{{item.title}}</van-tabbar-item>
     </van-tabbar> -->
   </div>
 </template>
