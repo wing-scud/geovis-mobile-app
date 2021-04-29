@@ -1,12 +1,12 @@
 <template>
   <div class="registrt-page">
-    <div class="title">注册</div>
+    <van-nav-bar title="注册" left-text="返回" left-arrow @click-left="goBack" />
     <div class="form">
       <div class="input-item">
         <van-field v-model="accountName" required label="用户名" placeholder="请输入用户名" />
       </div>
       <div class="input-item">
-        <van-field v-model="phone" type="tel" required label="手机号"  placeholder="请输入手机号" />
+        <van-field v-model="phone" type="tel" required label="手机号" placeholder="请输入手机号" />
       </div>
       <div class="input-item">
         <van-field v-model="password" type="password" required label="密码" placeholder="请输入密码" />
@@ -33,12 +33,16 @@ export default Vue.extend({
       accountName: "",
       phone: "",
       password: "",
-      identifyCode: ""
+      identifyCode: "",
     };
   },
   methods: {
-    registerAccount() {}
-  }
+    goBack() {
+      //@ts-ignore
+      this.$router.backward(-1);
+    },
+    registerAccount() {},
+  },
 });
 </script>
 <style scoped>
@@ -56,7 +60,7 @@ export default Vue.extend({
   font-size: 16px;
   color: black;
   height: 30px;
-  width:50px;
+  width: 50px;
   line-height: 30px;
 }
 .form {
@@ -67,8 +71,8 @@ export default Vue.extend({
   height: 50px;
   margin: 5px 0;
 }
-.foot{
-    width: 100px;
-    height: 30px;
+.foot {
+  width: 100px;
+  height: 30px;
 }
 </style>

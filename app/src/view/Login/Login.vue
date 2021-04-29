@@ -5,6 +5,7 @@
       <div class="login-fields">
         <van-field v-model="name" label="账户名称" clearable class="custom-input" />
         <van-field v-model="password" type="password" clearable label="密码" class="custom-input" />
+        <van-checkbox v-model="remember" class="login-remeber">记住我</van-checkbox>
         <div class="custom-login" @click="loginSubimit">登录</div>
         <div class="login-item">
           <span class="forget-password">忘记密码？</span>
@@ -23,19 +24,20 @@ export default Vue.extend({
   data() {
     return {
       name: "",
-      password: ""
+      password: "",
+      remember: false,
     };
   },
   methods: {
     async loginSubimit() {
-      const result = await this.$store.dispatch("user/login", { name: this.name, password: this.password });
+      const result = await this.$store.dispatch("user/login", { username: this.name, password: this.password, rememberMe: this.remember });
       if (result) {
         this.$router.push({ name: "Index" });
       } else {
         Toast("login error");
       }
-    }
-  }
+    },
+  },
 });
 </script>
 <style scoped>
@@ -55,7 +57,7 @@ export default Vue.extend({
   width: 300px;
   height: 200px;
   background: rgb(241 241 241 / 0%);
-  padding: 40px 30px 40px 30px;
+  padding: 20px 30px 40px 30px;
   box-shadow: -15px 15px 15px rgb(6 17 47 / 70%);
 }
 .app-name {
@@ -86,7 +88,6 @@ export default Vue.extend({
 .custom-login {
   text-align: center;
   margin: 10px auto;
-  /* border-radius: 50%; */
   width: 150px;
   height: 50px;
   line-height: 50px;
@@ -112,5 +113,25 @@ export default Vue.extend({
 }
 .van-field__control {
   color: white;
+}
+.login-remeber {
+  justify-content: flex-end;
+  padding: 4px 8px;
+  color: white;
+  text-align: center;
+}
+.login-remeber >>> .van-checkbox__label {
+  color: white;
+  font-size: 12px;
+}
+.login-remeber >>> .van-checkbox__icon{
+  border-color: white;
+  flex: none;
+  font-size: 15px;
+}
+.login-remeber >>> .van-icon {
+  border-color: white;
+  flex: none;
+  font-size: 12px;
 }
 </style>

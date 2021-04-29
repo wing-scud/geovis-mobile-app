@@ -1,13 +1,13 @@
 <template>
   <div class="home">
     <div class="main-part">
-      <keep-alive include="Map">
+      <!-- <keep-alive include="Map">
         <router-view></router-view>
-      </keep-alive>
-      <!-- <keep-alive >
+      </keep-alive> -->
+      <keep-alive>
         <router-view v-if="$route.meta.keepAlive"></router-view>
       </keep-alive>
-      <router-view v-if="!$route.meta.keepAlive"></router-view> -->
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
     </div>
     <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar" v-if="!state.fullScreen"></MTabbar>
   </div>
@@ -20,18 +20,17 @@ export default Vue.extend({
   name: "Home",
   data() {
     return {
-      active:0,
-      state:earthStore.state,
+      active: 0,
+      state: earthStore.state,
       list: [
         { title: "地图", icon: "icon-ditu", name: "Map" },
         { title: "通讯", icon: "icon-tongxun", name: "ChatIndex" },
         { title: "应用", icon: "icon-yingyong", name: "Application" },
-        { title: "个人", icon: "icon-geren", name: "Person" }
-      ]
+        { title: "个人", icon: "icon-geren", name: "Person" },
+      ],
     };
   },
-  mounted() {
-  },
+  mounted() {},
   beforeCreate() {
     const user = NativeStorage.getItem("user");
     if (user) {
@@ -39,13 +38,13 @@ export default Vue.extend({
     }
   },
   methods: {
-    handleChange(){}
+    handleChange() {},
   },
   watch: {
     active() {
       console.log("MTabbar ", this.active);
-    }
-  }
+    },
+  },
 });
 </script>
 <style scoped>
