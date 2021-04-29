@@ -55,7 +55,8 @@ const types = [
       { name: "线", icon: "icon-xiantiao" }, { name: "多边形", icon: "icon-duobianxing" }
     ]
   }
-]; function formateDate(date) {
+];
+function formateDate(date) {
   const year = date.getFullYear();
   let month = date.getMonth() + 1;
   if (month < 10) {
@@ -166,7 +167,13 @@ class Plot {
         markOptions = textoptions;
         break;
       case '图片':
-        drawHelperType = DrawHelper.Types.IMAGE_MARKER
+        drawHelperType = DrawHelper.Types.IMAGE_MARKER;
+        drawHelper.on('selected', (e) => {
+          const cameraPlugin = window['cordovaPlugin'].camera;
+          cameraPlugin.openFilePickerByThmb('picker-thmb').then((imageUrl) => {
+            e.entity.loadImage(imageUrl)
+          })
+        })
         break;
       case '标签':
         drawHelperType = DrawHelper.Types.LABEL_MARKER
@@ -315,8 +322,8 @@ class Plot {
   }
   removeAll() {
     this._drawHelper.removeAll();
-    this._drawResults.splice(0,this._drawResults.length);
-    this._primitives.splice(0,this._drawResults.length);
+    this._drawResults.splice(0, this._drawResults.length);
+    this._primitives.splice(0, this._drawResults.length);
   }
   private addPlotResults(type) {
     const instance = this;

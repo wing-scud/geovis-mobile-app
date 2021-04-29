@@ -34,13 +34,11 @@ declare module "vue/types/vue" {
 }
 Vue.config.productionTip = false;
 if (navigator.userAgent) {
-  if (navigator.userAgent.indexOf("Android") !== -1) {
-    window.localStorage.__proto__.remove=function(key){
-      window.localStorage.removeItem(key)
-    }
-    window['NativeStorage'] = window['localStorage']
-  }
+  window['NativeStorage'] || (window.localStorage.__proto__.remove = (key) =>{
+    window.localStorage.removeItem(key);
+  })
 }
+window['NativeStorage'] = window['NativeStorage'] || window['localStorage']
 console.log('deviceready,init app');
 new Vue({
   store: mobileStore,

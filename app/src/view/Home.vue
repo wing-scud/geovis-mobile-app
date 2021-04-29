@@ -40,6 +40,7 @@ export default Vue.extend({
   },
   mounted() {},
   beforeCreate() {
+    const NativeStorage = window['NativeStorage'];
     const user = NativeStorage.getItem("user");
     if (user) {
       this.$store.commit("user/initUser", JSON.parse(user));
