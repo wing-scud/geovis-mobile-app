@@ -29,4 +29,4 @@ export default class extends Vue {}
 }
 </style>
 <style src="./assets/iconfont/iconfont.css"></style>
-<style src="./assets/Globe.css"></style>
+<style src="./assets/Globe.scss" lang="scss"></style>
