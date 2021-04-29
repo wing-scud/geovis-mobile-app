@@ -16,20 +16,15 @@ const actions = {
       fetch(loginUrl, {
         method: "POST",
         mode: 'cors',
-        // headers: {
-        //   'content-type': 'application/json'
-        // },
-        body: JSON.stringify({
-          username: options.name,
-          password: options.password,
-          rememberMe: false
-        })
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(options)
       }).then((res) => res.json()).then((data) => {
         if (data.status === 'ok') {
           //@ts-ignore
-          // 暂且再fetch
-          // const user = data.data;
-          // commit("initUser", user);
+          const user = data.data;
+          commit("initUser", user);
           resolve(true)
         } else {
           reject(false)
