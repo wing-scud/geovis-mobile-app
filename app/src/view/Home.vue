@@ -78,4 +78,7 @@ export default Vue.extend({
     background:$navbar-background;
     color:$highlight!important;
 }
+.van-tabbar-item{
+  color:$lightgray-word;
+}
 </style>

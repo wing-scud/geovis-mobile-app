@@ -12,6 +12,7 @@
         <div class="search-buttons">
             <button class="route-delete">清除路线</button>
             <img src="static/images/箭头.png" />
+            <!-- <MIcon :icon="plugin.icon" size="24px" length="30px"></MIcon> -->
         </div>
       </div>
     </div>

@@ -37,14 +37,13 @@ export default Vue.extend({
   },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .group-title {
   width: 100%;
-  height: 32px;
   font-size: 16px;
   text-align: center;
-  color: #000;
-  background-color: white;
+  color: $lightgray-word;
+  background-color: $navbar-background;
   z-index: 2;
   line-height: 32px;
 }

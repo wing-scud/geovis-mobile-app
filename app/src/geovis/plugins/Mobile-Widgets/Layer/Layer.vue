@@ -98,6 +98,12 @@ export default Vue.extend({
   }
 });
 </script>
+<style lang="scss">
+.layer .van-checkbox__icon--checked .van-icon{
+ background-color:$select-color!important;
+ border-color:$select-color!important;
+}
+</style>
 <style scoped lang="scss">
 .layer {
   width: 100%;
