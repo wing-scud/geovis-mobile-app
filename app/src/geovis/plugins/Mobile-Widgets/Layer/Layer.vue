@@ -98,18 +98,30 @@ export default Vue.extend({
   }
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .layer {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
+  background:$board-color;
 }
 .layer-data {
   flex-grow: 1;
   padding: 5px 1.6%;
   /* text-align: center; */
+}
+.van-popup{
+  width:245px!important;
+}
+.van-cell{
+  background:$board-color;
+  color:$lightgray-word;
+  border-bottom: $split-line;
+}
+.van-cell::after{
+  all:initial;
 }
 .map-layer {
   display: flex;
@@ -124,13 +136,16 @@ export default Vue.extend({
   margin: 5px 0;
   padding: 3px 3px;
   font-size: 13px;
-  background-color: #c7c7c76e;
+  // background-color: #c7c7c76e;
+  background-color:$light-blue;
+  color:$darkgray-word;
 }
 .image-container {
-  height: 70px;
+  // height: 75px;
   width: 30%;
   margin: 0 1.66%;
   position: relative;
+  color:$lightgray-word;
 }
 .image {
   width: 100%;
@@ -162,5 +177,8 @@ export default Vue.extend({
 .block-button
 {
   height: 100%;
+  border:$highlight-border!important;
+  color:$highlight!important;
+  background:$board-color;
 }
 </style>

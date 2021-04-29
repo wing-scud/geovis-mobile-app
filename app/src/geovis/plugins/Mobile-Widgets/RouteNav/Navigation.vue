@@ -79,7 +79,7 @@ export default Vue.extend({
   },
 });
 </script>
-  <style scoped>
+  <style scoped lang="scss">
 .navgation {
 }
 .nav-manager {
@@ -90,5 +90,22 @@ export default Vue.extend({
   top: 0;
   left: 0;
 }
+
 </style>
-  
+<style  lang="scss">
+.route-path{
+.van-tabs__nav{
+  background:$navbar-background!important;
+}
+.van-tab--active{
+  color:$select-color!important;
+}
+.van-tab{
+  color:white;
+}
+.van-tabs__line{
+  background-color:$select-color!important;
+}
+}
+
+</style>

@@ -118,10 +118,10 @@ export default Vue.extend({
   },
 });
 </script>
-  <style scoped>
+  <style scoped lang="scss">
 .pathes {
   width: 100%;
-  background-color: white;
+  background-color:$navbar-background;
 }
 
 .route-detail {
@@ -147,18 +147,19 @@ export default Vue.extend({
   max-width: 100px;
   padding: 3px 5px;
   text-align: center;
+  font-size:12px;
 }
 .route-to {
   font-size: 14px;
 }
 .actived-plan {
-  color: blue;
+  color: $highlight;
 }
 .unactived-plan {
-  color: black;
+  color: $lightgray-word;
 }
 .little-name {
-  font-size: 12px;
+  font-size: 16px!important;
 }
 .route-overview .van-cell__value {
   flex: 3;
@@ -424,5 +425,18 @@ button span {
   min-height: 200px;
   max-height: 300px;
 }
+ 
 </style>
-  
+<style lang="scss">
+.pathes {
+  .van-button--info{
+background:$lighter-blue!important;
+border:0!important;
+}
+.van-col{
+  color:white!important;
+  text-align:center!important;
+}
+}
+
+</style>

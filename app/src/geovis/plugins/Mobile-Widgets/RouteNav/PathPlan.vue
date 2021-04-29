@@ -3,11 +3,16 @@
     <div class="route-top">
       <van-nav-bar title="导航" left-text="返回" left-arrow @click-left="goBack" />
       <div class="route-input">
-        <SearchInput v-model="start.input" @choosed="getAddress($event, 1)" label="起点" route> </SearchInput
+        <SearchInput v-model="start.input" @choosed="getAddress($event, 1)" label="起" route> </SearchInput
         ><template v-for="(point, index) in passingPoints">
-          <SearchInput v-model="point.input" @choosed="getAddress($event, 3, index)" @clickRightIcon="displayPassingPointSearch(false, index)" label="途径" route rightIcon="close" :key="index"> </SearchInput>
+          <SearchInput v-model="point.input" @choosed="getAddress($event, 3, index)" @clickRightIcon="displayPassingPointSearch(false, index)" label="经" route rightIcon="close" :key="index"> </SearchInput>
         </template>
-        <SearchInput v-model="end.input" @choosed="getAddress($event, 2)" @clickRightIcon="searchLujing" label="终点" route rightIcon="share-o"> </SearchInput>
+        <SearchInput v-model="end.input" @choosed="getAddress($event, 2)" @clickRightIcon="searchLujing" label="终" route rightIcon="share-o"> </SearchInput>
+        <!-- <SearchInput v-model="end.input" @choosed="getAddress($event, 2)" @clickRightIcon="searchLujing" label="终" route > </SearchInput> -->
+        <div class="search-buttons">
+            <button class="route-delete">清除路线</button>
+            <img src="static/images/箭头.png" />
+        </div>
       </div>
     </div>
     <div class="route-extra">
@@ -288,19 +293,12 @@ export default {
 };
 </script>
   
-  <style>
+  <style lang="scss" scoped>
 .route-top {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-}
-.route-input .van-field__label {
-  width: 30px;
-  margin-right: 0;
-  color: #646566;
-  text-align: center;
-  word-wrap: break-word;
 }
 .route-path {
   position: absolute;
@@ -314,7 +312,83 @@ export default {
   top: 50%;
   left: 0;
 }
+
+.route-input {
+  padding: 10px;
+  background: #0a1024;
+  border-radius: 5px;
+  margin: 5px;
+}
+.search-buttons{
+  width:100%;
+  height:20px;
+  display: flex;
+  justify-content:space-between;
+  margin:5px 0 10px 0;
+  img{
+    width:32px;
+    height:32px;
+  }
+}
 </style>
-  
+<style lang="scss" >
+.route-input .van-field__label {
+  width: 30px;
+  margin-right: 0;
+  color: #646566;
+  text-align: center;
+  word-wrap: break-word;
+}
+.van-nav-bar {
+  background: $navbar-background !important;
+}
+.van-nav-bar__title {
+  color: white;
+}
+.van-nav-bar__text {
+  color: #01d7d1;
+}
+.van-icon-arrow-left:before {
+  color: #01d7d1;
+}
+.search-component{
+  padding: 5px 0!important;
+}
+.van-cell{
+  background:$light-blue;
+  line-height:30px;
+}
+.search-input .van-field__control{
+  background:$lighter-blue;
+  border-radius:5px;
+  color:$lightgray-word;
+}
+.route-input .van-field__label{
+  color:$lightgray-word;
+}
+.van-field__control{
+  padding-left:10px;
+}
+.route-input .van-field__label{
+  width:27px;
+}
+.van-cell__value--alone{
+  color:$lightgray-word;
+}
+
+[class*=van-hairline]:after{
+  border:$split-line
+}
+.route-delete{
+  width:70px;
+  height:28px;
+  background:$highlight;
+  border:0;
+  font-size:14px;
+  color:white;
+  border-radius:5px;
+}
+</style>
+      
   <!-- CzSun拒绝维护使用2空格缩进的代码 -->
   

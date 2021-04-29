@@ -55,7 +55,7 @@ export default Vue.extend({
   },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .home {
   position: fixed;
   top: 0;
@@ -69,5 +69,12 @@ export default Vue.extend({
   flex-grow: 1;
   width: 100%;
   position: relative;
+}
+.bottom-tabbar{
+  background:$navbar-background;
+}
+.van-tabbar-item--active{
+    background:$navbar-background;
+    color:$highlight!important;
 }
 </style>

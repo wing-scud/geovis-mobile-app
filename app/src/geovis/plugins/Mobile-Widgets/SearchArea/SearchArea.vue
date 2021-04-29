@@ -47,12 +47,13 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only 如果用element不能加scoped-->
-<style scoped>
+<style scoped lang="scss">
 .search {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
+
 </style>
 
