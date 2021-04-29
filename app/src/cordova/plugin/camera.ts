@@ -61,8 +61,8 @@ class Store {
         if (selection == "picker-thmb") {
             // To downscale a selected image,
             // Camera.EncodingType (e.g., JPEG) must match the selected image type.
-            options['targetHeight'] = 100;
-            options['targetWidth'] = 100;
+            options['targetHeight'] = 50;
+            options['targetWidth'] = 50;
         }
         return  new Promise((resolve,reject)=>{
             this.camera.getPicture(function cameraSuccess(imageUri) {

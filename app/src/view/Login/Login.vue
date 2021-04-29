@@ -3,7 +3,7 @@
     <div class="app-name">geovis-app-mobile</div>
     <div class="main-part">
       <div class="login-fields">
-        <van-field v-model="name" label="账户名称" clearable class="custom-input" />
+        <van-field v-model="name" label="账户" clearable class="custom-input" />
         <van-field v-model="password" type="password" clearable label="密码" class="custom-input" />
         <van-checkbox v-model="remember" class="login-remeber">记住我</van-checkbox>
         <div class="custom-login" @click="loginSubimit">登录</div>
@@ -42,15 +42,16 @@ export default Vue.extend({
 </script>
 <style scoped>
 .login-page {
-  width: 100%;
-  height: 100%;
-  background-image: url("../../assets/images/bg1.jpeg");
   position: fixed;
   display: flex;
   flex-direction: column;
   background-size: 100% 100%;
   justify-content: center;
+  width: 100%;
+  height: 100%;
+  background-image: url("../../assets/images/bg1.jpeg");
   align-items: center;
+  font-size: 14px;
   color: white;
 }
 .main-part {
@@ -127,7 +128,7 @@ export default Vue.extend({
 .login-remeber >>> .van-checkbox__icon{
   border-color: white;
   flex: none;
-  font-size: 15px;
+  font-size: 14px;
 }
 .login-remeber >>> .van-icon {
   border-color: white;
