@@ -30,7 +30,7 @@ export default Vue.extend({
   },
   methods: {
     async loginSubimit() {
-      const result = await this.$store.dispatch("user/login", { username: this.name, password: this.password, rememberMe: this.remember });
+      const result = await this.$store.dispatch("user/login", { name: this.name, password: this.password, rememberMe: this.remember });
       if (result) {
         this.$router.push({ name: "Index" });
       } else {

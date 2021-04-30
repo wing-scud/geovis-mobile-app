@@ -13,23 +13,31 @@ const actions = {
   login({ context, commit }, options) {
     return new Promise((resolve, reject) => {
       //请求校验
-      fetch(loginUrl, {
-        method: "POST",
-        mode: 'cors',
-        headers: {
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify(options)
-      }).then((res) => res.json()).then((data) => {
-        if (data.status === 'ok') {
-          //@ts-ignore
-          const user = data.data;
-          commit("initUser", user);
-          resolve(true)
-        } else {
-          reject(false)
+      const x = true
+      if (x===true) {
+        //@ts-ignore
+        const user ={name:options.name,password:options.password,authority:1,birthday:"1999-09-03",headshot:"https://img01.yzcdn.cn/vant/cat.jpeg",sex:0,hometown:"110105",tel:"13956950414"}
+        // const user = {...options,};
+        commit("initUser", user);
+        resolve(true)
         }
-      })
+      // fetch(loginUrl, {
+      //   method: "POST",
+      //   mode: 'cors',
+      //   headers: {
+      //     'content-type': 'application/json'
+      //   },
+      //   body: JSON.stringify(options)
+      // }).then((res) => res.json()).then((data) => {
+      //   if (data.status === 'ok') {
+      //     //@ts-ignore
+      //     const user = data.data;
+      //     commit("initUser", user);
+      //     resolve(true)
+      //   } else {
+      //     reject(false)
+      //   }
+      // })
     });
   },
   loginOut({ context, commit }) {
