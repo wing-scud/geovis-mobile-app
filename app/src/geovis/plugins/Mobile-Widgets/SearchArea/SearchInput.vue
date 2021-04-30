@@ -15,13 +15,13 @@
         @keyup.enter.native="getSuggestions"
         @input="getSuggestions"
       >
-        <template #button>
+      </van-field>
+       
           <div class="search-group">
             <van-checkbox v-model="coordinateCheckd" v-if="config.convert" class="search-checkbox search-group-item" @click="handleChecked">反查</van-checkbox>
             <van-button size="small" type="default" class="search-button search-group-item" v-if="config.button" plain @click="submit">搜索</van-button>
           </div>
-        </template>
-      </van-field>
+       
     </div>
     <div class="suggest-panel" v-if="suggestions.length > 0">
       <van-cell-group>
@@ -370,20 +370,18 @@ export default {
 </script>
   
   <!-- Add "scoped" attribute to limit CSS to this component only 如果用element不能加scoped-->
-  <style scoped>
+  <style scoped lang="scss">
 .search-component {
   position: relative;
-  padding: 5px 4%;
+  /* padding: 5px 4%; */
+  width:90%;
+  margin:auto;
 }
 .search-input {
   width: 100%;
   border-radius: 10px;
-  background-color: #fff;
   z-index: 4;
   /* height: 42px; */
-}
-.search-input:first-child {
-  background-color: #7570703d;
 }
 .search-input .van-field__left-icon {
   line-height: 30px;
@@ -394,9 +392,7 @@ export default {
 .search-button {
   color: rgb(34, 126, 247);
 }
-.search-group {
-  display: inline-flex;
-}
+ 
 .search-group-item {
   margin: 0 1px;
 }
@@ -417,11 +413,11 @@ export default {
   margin: 0 4%;
   width: 92%;
   border-radius: 10px;
-  background-color: #fff;
+  background-color: $navbar-background;
   z-index: 5;
 }
 </style>
-  <style>
+  <style lang="scss">
 .suggest-panel .van-cell {
   padding: 3px 2px 3px 2px;
 }
@@ -429,7 +425,10 @@ export default {
   line-height: 35px;
 }
 .search-input .van-field__control {
-  background-color: #f7f8fa;
+    background-color: $lighter-blue;
+    color:$lightgray-word;
+    padding:2px;
+    border-radius: 5px;
 }
 .suggest-panel .van-cell__title {
   -webkit-box-flex: unset !important;
@@ -482,9 +481,63 @@ font-size: 20px;
 }
 .search-input .van-checkbox__label {
   margin: 0 0;
+  color:$lightgray-word;
 }
 .search-input .van-icon-search {
   line-height: 30px;
+}
+</style>
+<style lang="scss">
+ 
+.search-component .van-cell{
+  background:$light-blue;
+  width:95%;
+  margin:5px auto;
+}
+.search-input {
+  padding:5px;
+  border-radius:8px;
+  background-color:$navbar-background;
+}
+.search-group{
+  width: 95%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+.search-group .van-button--plain{
+background:$highlight;
+color: white;
+    border: 0;
+    width: 48px;
+    height: 25px;
+}
+.van-icon-search:before{
+  color:white;
+  font-weight: bold;
+}
+.search-input  .van-cell:after{
+  border-bottom: 0;
+}
+.van-checkbox__icon .van-icon{
+  border:2px solid lightgray;
+  margin-right:5px;
+}
+.van-checkbox__icon--checked .van-icon{
+  background-color: $select-color;
+    border-color: $select-color;
+}
+.search-component .van-cell__value--alone{
+color:$lightgray-word!important;
+}
+.search-component .van-cell-group{
+  background:$navbar-background;
+}
+.search-component .van-cell:after{
+  border-bottom:0;
+}
+[class*=van-hairline]:after{
+  border:0;
 }
 </style>
   
