@@ -172,11 +172,14 @@ export class EarthStore {
   }
   handleResize = () => {
     //@ts-ignore
-    const observer = new ResizeObserver(()=>{
+    // const observer = new ResizeObserver(()=>{
+    //   this._map.resize()
+    // });
+    // const ele = document.getElementById('mapContainer')
+    // observer.observe(ele)
+    window.addEventListener('resize',()=>{
       this._map.resize()
-    });
-    const ele = document.getElementById('mapContainer')
-    observer.observe(ele)
+    })
   };
 }
 

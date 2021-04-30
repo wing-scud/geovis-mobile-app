@@ -131,6 +131,7 @@ export default Vue.extend({
   border-bottom: 1px solid #8080805e;
   overflow-y: auto;
   overflow-x: none;
+  color: #fff;
 }
 .route-overview {
   width: 100%;

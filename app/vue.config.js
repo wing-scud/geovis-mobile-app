@@ -2,7 +2,7 @@
 const path = require("path");
 module.exports = {
   publicPath: "./",
-  outputDir: "../www/",
+  outputDir: "../EmssMobile/",
   // assetsDir: "static",
   css: {
     sourceMap: true,

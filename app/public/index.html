@@ -29,7 +29,7 @@
       return new Promise(function (resolve, reject) {
         var xhr = new XMLHttpRequest
         xhr.onload = function () {
-          resolve(new Response(xhr.responseText, { status: xhr.status }))
+          resolve(new Response(xhr.responseText, { status: xhr.status===0?200:404  }))
         }
         xhr.onerror = function () {
           reject(new TypeError('Local request failed'))
@@ -46,7 +46,7 @@
       }
     }
   </script>
-  <script src="cordova.js"></script>
+  <!-- <script src="cordova.js"></script> -->
   <script src="./static/geovis/turf.min.js"></script>
   <script src="./static/mapbox/mapbox-gl-directions.js"></script>
   <script type="text/javascript" src="./static/css/drawhelper/iconfont.js"></script>

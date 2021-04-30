@@ -8,3 +8,8 @@ app/node_modules/
 /platforms/
 www/
 app/dist/
+/EmssMobile/css/
+/EmssMobile/js/
+/EmssMobile/static/
+/EmssMobile/.settings/
+/.metadata/
