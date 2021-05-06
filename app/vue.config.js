@@ -2,10 +2,11 @@
 const path = require("path");
 module.exports = {
   publicPath: "./",
-  outputDir: "../EmssMobile/",
+  outputDir: "../www/",
+  productionSourceMap:false,
   // assetsDir: "static",
   css: {
-    sourceMap: true,
+    sourceMap: false,
     loaderOptions: {
       sass: {
         additionalData: `@import "./src/geovis/common/scss/style.scss";`
