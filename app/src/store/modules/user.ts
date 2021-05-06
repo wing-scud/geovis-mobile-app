@@ -1,6 +1,7 @@
 
-import User, { validUser } from "../../server/table/User";
-const loginUrl = "http://49.234.121.120:8091/user/api/login"
+import User, { validUser } from "../../api/db/table/User";
+import { database } from "../../api/index"
+const loginUrl = "http://49.234.121.120:8091/api/user/login"
 const state = () => ({
   user: undefined
 });
@@ -12,32 +13,29 @@ const getters = {};
 const actions = {
   login({ context, commit }, options) {
     return new Promise((resolve, reject) => {
-      //请求校验
-      const x = true
-      if (x===true) {
-        //@ts-ignore
-        const user ={name:options.name,password:options.password,authority:1,birthday:"1999-09-03",headshot:"https://img01.yzcdn.cn/vant/cat.jpeg",sex:0,hometown:"110105",tel:"13956950414"}
-        // const user = {...options,};
-        commit("initUser", user);
-        resolve(true)
-        }
-      // fetch(loginUrl, {
-      //   method: "POST",
-      //   mode: 'cors',
-      //   headers: {
-      //     'content-type': 'application/json'
-      //   },
-      //   body: JSON.stringify(options)
-      // }).then((res) => res.json()).then((data) => {
-      //   if (data.status === 'ok') {
-      //     //@ts-ignore
-      //     const user = data.data;
-      //     commit("initUser", user);
-      //     resolve(true)
-      //   } else {
-      //     reject(false)
-      //   }
-      // })
+      const formData = new FormData();
+      Object.keys(options).forEach((key) => {
+        formData.append(key, options[key])
+      })
+      fetch(loginUrl, {
+        method: "POST",
+        mode: 'cors',
+        body: formData
+      }).then((res) => res.json())
+        .then((data) => {
+          if (data.status === 'ok') {
+            //@ts-ignore
+            const value = data.data;
+            value.password = options.password;
+            const user = new User(value);   
+            database.userTable.setItem('user', user).then((user) => {
+              commit("initUser", user);
+              resolve(true)
+            })
+          } else {
+            reject(false)
+          }
+        })
     });
   },
   loginOut({ context, commit }) {
@@ -60,27 +58,14 @@ const actions = {
 // mutations
 const mutations = {
   initUser(state, user) {
-    state.user = new User(user);
-    console.log("add", user);
-    const NativeStorage = window['NativeStorage'];
-    //localstorge不能储存对象
-    const string = JSON.stringify(state.user);
-    console.log(string)
-    NativeStorage.setItem('user', string)
+    state.user = user;
   },
   deleteUser(state) {
-    const NativeStorage = window['NativeStorage'];
     state.user = undefined;
-    NativeStorage.remove('user')
   },
   changeUser(state, user) {
     state.user = user;
     console.log("change", user);
-    const NativeStorage = window['NativeStorage'];
-    //localstorge不能储存对象
-    const string = JSON.stringify(state.user);
-    console.log(string)
-    NativeStorage.setItem('user', string)
   },
 };
 export default {

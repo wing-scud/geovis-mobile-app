@@ -1,5 +1,5 @@
 const NativeStorage= window['NativeStorage'];
-import User from "../../server/table/User"
+import User from "../../api/db/table/User"
 import mobileStore from "../../store/index"
 function loginSubmit(name,password){
 

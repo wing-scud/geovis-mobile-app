@@ -1,11 +1,14 @@
 <template>
   <div class="person-infor">
     <van-nav-bar title="个人信息" left-arrow @click-left="goBack" />
-    <van-cell title="头像" is-link class="person-infor-img" @click="chooseImg">
-      <template v-slot:default>
-        <van-image width="40" height="40" :src="user.headshot" class="custom-user-img" fill="fill" />
-      </template>
-    </van-cell>
+    <div class="headshot">
+      <input type="file" name="image" id="headshot-picker" :multiple="false" accept="image/*" @change="setImagePreview($event)" />
+      <van-cell title="头像" is-link class="person-infor-img" @click="chooseImg">
+        <template v-slot:default>
+          <van-image width="40" height="40" :src="user.headshot" class="custom-user-img" fill="fill" />
+        </template>
+      </van-cell>
+    </div>
     <van-cell title="用户名" :value="user.name" is-link @click="changeUserInfor('name')"> </van-cell>
     <van-cell title="性别" :value="user.sex ? '男' : '女'" is-link @click="changeUserInfor('sex')"> </van-cell>
     <van-cell title="出生日期" :value="user.birthday" is-link @click="changeUserInfor('birthday')"> </van-cell>
@@ -30,12 +33,16 @@ export default Vue.extend({
     this.user = this.$store.state.user.user;
   },
   methods: {
+    setImagePreview(e) {
+      const files = e.target.files;
+      const imgSrc = window.URL.createObjectURL(files[0]);
+      console.log("image path: " + imgSrc);
+      this.user.headshot = imgSrc;
+      this.$store.dispatch("user/changeUser", this.user)
+      //存储到本地
+    },
     chooseImg() {
-      const cameraPlugin = window.cordovaPlugin["camera"];
-      cameraPlugin.openFilePicker().then((imageUrl) => {
-        console.log(imageUrl);
-        this.user.headshot = imageUrl;
-      });
+      document.getElementById("headshot-picker").click();
     },
     changeUserInfor(type) {
       const names = ["用户名", "性别", "出生日期", "手机号", "地区"];
@@ -67,7 +74,7 @@ export default Vue.extend({
       return hometown;
     },
     goBack() {
-      this.$router.push({name:"Person"});
+      this.$router.push({ name: "Person" });
     },
   },
 });
@@ -78,5 +85,23 @@ export default Vue.extend({
   position: fixed;
   top: 0;
   left: 0;
+}
+.headshot {
+  position: relative;
+  height: 67px;
+}
+.person-infor-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+#headshot-picker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
