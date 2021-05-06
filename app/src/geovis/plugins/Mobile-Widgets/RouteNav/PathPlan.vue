@@ -331,6 +331,15 @@ export default {
     height:32px;
   }
 }
+.route-delete{
+  width:70px;
+  height:28px;
+  background:$highlight;
+  border:0;
+  font-size:14px;
+  color:white;
+  border-radius:5px;
+}
 </style>
 <style lang="scss" >
 .route-input .van-field__label {
@@ -340,7 +349,8 @@ export default {
   text-align: center;
   word-wrap: break-word;
 }
-.van-nav-bar {
+.route-top{
+  .van-nav-bar {
   background: $navbar-background !important;
 }
 .van-nav-bar__title {
@@ -352,17 +362,21 @@ export default {
 .van-icon-arrow-left:before {
   color: #01d7d1;
 }
-.search-component{
-  padding: 5px 0!important;
-}
 .van-cell{
   background:$light-blue;
   line-height:30px;
+  padding:10px 10px 10px 0;
 }
-.search-input .van-field__control{
+.van-field__control{
   background:$lighter-blue;
   border-radius:5px;
   color:$lightgray-word;
+}
+.van-cell__value--alone{
+  color:$lightgray-word;
+}
+[class*=van-hairline]:after{
+  border:$split-line
 }
 .route-input .van-field__label{
   color:$lightgray-word;
@@ -373,22 +387,16 @@ export default {
 .route-input .van-field__label{
   width:27px;
 }
-.van-cell__value--alone{
-  color:$lightgray-word;
+}
+.search-component{
+  padding: 5px 0!important;
+  .van-cell {
+    margin: 0 auto;
+}
 }
 
-[class*=van-hairline]:after{
-  border:$split-line
-}
-.route-delete{
-  width:70px;
-  height:28px;
-  background:$highlight;
-  border:0;
-  font-size:14px;
-  color:white;
-  border-radius:5px;
-}
+
+
 </style>
       
   <!-- CzSun拒绝维护使用2空格缩进的代码 -->

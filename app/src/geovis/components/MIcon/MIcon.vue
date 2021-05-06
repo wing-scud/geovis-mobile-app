@@ -22,7 +22,7 @@ export default Vue.extend({
     },
     backgroundColor: {
       type: String,
-      default: "white",
+      default: "#0A1024",
     },
     size: {
       type: String,
@@ -62,7 +62,7 @@ export default Vue.extend({
       if (this.circle) {
         borderRadius = "50%";
       }
-      return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, lineHeight: this.length, backgroundColor: this.backgroundColor };
+      return { color:'white',fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, lineHeight: this.length, backgroundColor: this.backgroundColor };
     },
   },
   methods: {

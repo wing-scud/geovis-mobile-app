@@ -74,11 +74,16 @@ export default Vue.extend({
 .bottom-tabbar{
   background:$navbar-background;
 }
+
+</style>
+<style lang="scss">
+.home{
 .van-tabbar-item--active{
     background:$navbar-background;
     color:$highlight!important;
 }
 .van-tabbar-item{
   color:$lightgray-word;
+}
 }
 </style>
