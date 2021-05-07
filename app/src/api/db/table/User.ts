@@ -21,7 +21,7 @@ class User {
     regtime: string;
 
     constructor(options) {
-        const { name, nickname, password, roles = [], avatar = "", sex, zip_code = "111111", phone, birthday = "2000-01-01", regtime = "2021-01-01" } = options;
+        const { name, nickname, password, roles = [], avatar = "", sex="male", zip_code = "111111", phone="13956950414", birthday = "2000-01-01", regtime = "2021-01-01" } = options;
         this.name = name;
         this.nickname = nickname;
         this.password = password;

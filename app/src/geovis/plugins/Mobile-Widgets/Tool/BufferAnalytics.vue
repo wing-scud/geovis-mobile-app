@@ -122,7 +122,6 @@ const BufferAnalytics = Vue.extend({
     },
     changeRadius() {},
     select(item) {
-      alert('hi')
       this.show = false;
       const type = item.name;
       this.type = type;

@@ -5,26 +5,26 @@
       <div class="input-item">
         <van-field v-model="name" required label="账户" placeholder="请输入账户" />
       </div>
-      <!-- <div class="input-item">
-        <van-field v-model="nickname" required label="昵称" placeholder="请输入昵称" />
-      </div> -->
       <div class="input-item">
-        <van-field v-model="tel" type="tel" required label="手机号" placeholder="请输入手机号" />
+        <van-field v-model="nickname" required label="昵称" placeholder="请输入昵称" />
+      </div>
+      <div class="input-item">
+        <van-field v-model="phone" type="tel" required label="手机号" placeholder="请输入手机号" />
       </div>
       <div class="input-item">
         <van-field v-model="password" type="password" required label="密码" placeholder="请输入密码" />
       </div>
       <!-- <div class="input-item">
-        <van-field v-model="hometown" type="text" required label="地区" placeholder="请输入地区" />
+        <van-field v-model="zip_code" type="text" required label="地区" placeholder="请输入地区" />
       </div> -->
       <div class="input-item">
         <div class="input-field">
-      <span class="register-label" >性别</span> 
-        <van-radio-group v-model="sex" class="register-input" direction="horizontal">
-          <van-radio name="man">男</van-radio>
-          <van-radio name="wowan"> 女</van-radio>
-        </van-radio-group>
-      </div>
+          <span class="register-label">性别</span>
+          <van-radio-group v-model="sex" class="register-input" direction="horizontal">
+            <van-radio name="male">男</van-radio>
+            <van-radio name="female"> 女</van-radio>
+          </van-radio-group>
+        </div>
       </div>
       <div class="input-item">
         <van-field v-model="identifyCode" center clearable label="验证码" placeholder="请输入短信验证码">
@@ -40,18 +40,20 @@
   </div>
 </template>
 <script lang="ts">
+/* eslint-disable */
 import Vue from "vue";
 export default Vue.extend({
   name: "Register",
   data() {
     return {
       name: "",
-      tel: "",
+      nickname: "",
+      phone: "",
       password: "",
       identifyCode: "",
       sex: "",
-      hometown:"",
-      nickname:""
+      //@ts-ignore
+      zip_code: "",
     };
   },
   methods: {
@@ -59,7 +61,34 @@ export default Vue.extend({
       //@ts-ignore
       this.$router.backward(-1);
     },
-    registerAccount() {},
+    registerAccount() {
+      const SERVER_ROOT = window['SERVER_ROOT'];
+      const registerUrl =SERVER_ROOT+'/api/user/register'
+      const formData = new FormData();
+      const options = {
+        name: this.name,
+        nickname: this.nickname,
+        phone: this.phone,
+        password: this.password,
+        sex: this.sex,
+        //@ts-ignore
+        zip_code: this.zip_code,
+      };
+      Object.keys(options).forEach((key) => {
+        formData.append(key, options[key]);
+      });
+      fetch(registerUrl, {
+        method: "POST",
+        mode: "cors",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === "ok") {
+            this.$router.push({name:"Login"})
+          } 
+        });
+    },
   },
 });
 </script>
@@ -67,6 +96,7 @@ export default Vue.extend({
 .registrt-page {
   position: fixed;
   top: 0;
+
   left: 0;
   align-items: center;
   width: 100%;
@@ -88,16 +118,16 @@ export default Vue.extend({
   margin: 5px 0;
   font-size: 14px;
 }
-.input-field{
+.input-field {
   display: flex;
   flex-direction: row;
   padding: 10px 16px;
 }
 .register-label {
-  width:3.2rem;
+  width: 3.2rem;
 }
-.register-input{
-  margin-left:10px;
+.register-input {
+  margin-left: 10px;
 }
 .foot {
   width: 100%;

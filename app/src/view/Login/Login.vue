@@ -13,7 +13,7 @@
         </div>
       </div>
     </div>
-    <div class="clause">注册/登录即代表你年满18周岁，已认真阅读并同意接受服务条款、隐私政策</div>
+    <!-- <div class="clause">注册/登录即代表你年满18周岁，已认真阅读并同意接受服务条款、隐私政策</div> -->
   </div>
 </template>
 <script lang="ts">

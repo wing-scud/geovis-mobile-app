@@ -5,15 +5,15 @@
       <input type="file" name="image" id="headshot-picker" :multiple="false" accept="image/*" @change="setImagePreview($event)" />
       <van-cell title="头像" is-link class="person-infor-img" @click="chooseImg">
         <template v-slot:default>
-          <van-image width="40" height="40" :src="user.headshot" class="custom-user-img" fill="fill" />
+          <van-image width="40" height="40" :src="user.avatar" class="custom-user-img" fill="fill" />
         </template>
       </van-cell>
     </div>
-    <van-cell title="用户名" :value="user.name" is-link @click="changeUserInfor('name')"> </van-cell>
-    <van-cell title="性别" :value="user.sex ? '男' : '女'" is-link @click="changeUserInfor('sex')"> </van-cell>
+    <van-cell title="用户名" :value="user.nickname" is-link @click="changeUserInfor('nickname')"> </van-cell>
+    <van-cell title="性别" :value="user.sex === 'male' ? '男' : '女'" is-link @click="changeUserInfor('sex')"> </van-cell>
     <van-cell title="出生日期" :value="user.birthday" is-link @click="changeUserInfor('birthday')"> </van-cell>
-    <van-cell title="手机号" :value="user.tel" is-link @click="changeUserInfor('tel')"> </van-cell>
-    <van-cell title="地区" :value="formateAddress(user.hometown)" is-link @click="changeUserInfor('hometown')"> </van-cell>
+    <van-cell title="手机号" :value="user.phone" is-link @click="changeUserInfor('phone')"> </van-cell>
+    <van-cell title="地区" :value="formateAddress(user.zip_code)" is-link @click="changeUserInfor('zip_code')"> </van-cell>
   </div>
 </template>
 <script lang="ts">
@@ -37,8 +37,11 @@ export default Vue.extend({
       const files = e.target.files;
       const imgSrc = window.URL.createObjectURL(files[0]);
       console.log("image path: " + imgSrc);
-      this.user.headshot = imgSrc;
-      this.$store.dispatch("user/changeUser", this.user)
+      this.user.avatar = imgSrc;
+      this.$store.dispatch("user/changeUser",{
+        type:'avatar',
+        value:imgSrc
+      });
       //存储到本地
     },
     chooseImg() {
@@ -46,7 +49,7 @@ export default Vue.extend({
     },
     changeUserInfor(type) {
       const names = ["用户名", "性别", "出生日期", "手机号", "地区"];
-      const types = ["name", "sex", "birthday", "tel", "hometown"];
+      const types = ["nickname", "sex", "birthday", "phone", "zip_code"];
       const name = names[types.indexOf(type)];
       this.$router.push({
         name: "EditPersonInfor",
@@ -63,14 +66,14 @@ export default Vue.extend({
       //match province
       const provinceSlice = postalCode.substr(0, 2);
       const provinceCode = provinceSlice + "0000";
-      hometown += areaList.province_list[provinceCode];
+      hometown += areaList.province_list[provinceCode]??"";
       // match city
       const citySlice = postalCode.substr(2, 2);
       const cityCode = provinceSlice + citySlice + "00";
-      hometown += areaList.city_list[cityCode];
+      hometown += areaList.city_list[cityCode]??"";
       //match county
       const countyCode = postalCode;
-      hometown += areaList.county_list[countyCode];
+      hometown += areaList.county_list[countyCode]??"";
       return hometown;
     },
     goBack() {

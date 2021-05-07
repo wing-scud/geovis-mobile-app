@@ -1,4 +1,4 @@
-const SERVER_ROOT = "http://localhost:8900";
+const SERVER_ROOT = "http://49.234.121.120:8091";
 const TILESERVER_ROOT = "http://localhost:8082";
 const GEOSERVER_ROOT = "http://localhost:8088";
 const MODELSERVER_ROOT = "http://localhost:4000";
@@ -6,10 +6,6 @@ const mountainModel = "http://192.168.13.32/3dtile/mountain/Production_1/Scene/P
 const yuxiModel = "http://localhost:8900/static/tiles/3dtiles/xinping/Production_1.json"; //"http://bj.geovisweb.cn:10080/data/3dtile/guizhou/Production_1.json";
 const tokyoModel = "http://localhost:8900/static/tiles/3dtiles/东京_机场/315260534350.json";
 // 新山王 新山王美军中心 新潟分屯基地 亚特兰大海军航空站  知念自卫队
-
-
-
-
 
 window.sceneData = {
   SERVER_ROOT,

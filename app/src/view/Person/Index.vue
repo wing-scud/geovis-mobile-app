@@ -10,9 +10,9 @@
       </van-nav-bar>
     </div>
     <div class="user-infor" @click="enterPersonInfor">
-      <van-image width="40" height="40" :src="user.headshot" class="custom-user-img" round fill="fill" />
+      <van-image width="40" height="40" :src="user.avatar" class="custom-user-img" round fill="fill" />
       <div class="user-name">
-        {{ user.name }}
+        {{ user.nickname }}
       </div>
       <van-icon name="arrow" class="custom-arrow" />
     </div>
@@ -34,13 +34,13 @@ export default Vue.extend({
     return {
       items: indexItems,
       user: {
-        headshot: "",
-        name: "",
+        avatar: "",
+        nickname: "",
       },
     };
   },
-  mounted() {
-    this.user = this.$store.state.user.user;
+   mounted() {
+    this.user =  this.$store.state.user.user;
   },
   methods: {
     enterMessage() {},

@@ -13,7 +13,7 @@ export default Vue.extend({
   name: "AccountAndSafe",
   data() {
     return {
-      items: AccountAndSafeItems
+      items: AccountAndSafeItems,
     };
   },
   methods: {
@@ -24,27 +24,19 @@ export default Vue.extend({
           oldPassword: "111111",
           type: "password",
           title: "修改密码",
-          user: {
-            name: "xiaowang",
-            sex: true,
-            birthday: new Date(1999, 9, 1),
-            tel: 12345671212,
-            img: require("../../assets/images/bg1.jpeg"),
-            hometown: "110101"
-          }
+          user: this.$store.state.user.user,
         };
       }
       this.$router.push({ name: name, params: params });
     },
     goBack() {
-            //@ts-ignore
+      //@ts-ignore
       this.$router.backward(-1);
     },
-    loginOut() {
-      this.$store.dispatch("user/loginOut");
-      this.$router.push({ name: "Index" });
-    }
-  }
+    async loginOut() {
+      (await this.$store.dispatch("user/loginOut")) && this.$router.push({ name: "Index" });
+    },
+  },
 });
 </script>
 <style scoped></style>

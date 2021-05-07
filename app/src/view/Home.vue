@@ -39,11 +39,11 @@ export default Vue.extend({
     };
   },
   mounted() {},
-  beforeCreate() {
-    const NativeStorage = window['NativeStorage'];
-    const user = NativeStorage.getItem("user");
+  async beforeCreate() {
+    const database = window['plugin'].database;
+    const user = await database.userTable.getItem("user");
     if (user) {
-      this.$store.commit("user/initUser", JSON.parse(user));
+      this.$store.commit("user/initUser", user);
     }
   },
   methods: {

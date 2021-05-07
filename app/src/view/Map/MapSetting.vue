@@ -29,7 +29,7 @@ export default Vue.extend({
         const mapPlugins = [];
         const pluginMap = this.state.pluginMap;
         Object.keys(pluginMap).forEach(key => {
-          if (pluginMap[key].parent === "map") {
+          if (pluginMap[key].parent === "Map") {
             if (!this.bindVModels[key]) {
               this.bindVModels[key] = pluginMap[key].enabled;
             }

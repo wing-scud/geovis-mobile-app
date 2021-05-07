@@ -15,7 +15,7 @@
             </van-grid-item>
           </van-grid>
           <template #reference>
-            <MIcon icon="icon-gengduo" size="24px" length="32px" customClass="icon-component" :circle="true" @click="displayMore"> </MIcon>
+            <MIcon icon="icon-gengduo" size="24px" length="32px" customClass="icon-component" :circle="true" v-if="moreItems.length>0" @click="displayMore"> </MIcon>
           </template>
         </van-popover>
       </div>
