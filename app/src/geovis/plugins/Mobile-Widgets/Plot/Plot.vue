@@ -178,7 +178,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
 .editor {
   position: fixed;
   top: 0;
@@ -194,8 +194,9 @@ export default {
   justify-content: space-around;
   width: 100%;
   align-items: center;
-  background-color: white;
-  height: 35px;
+  background-color:$navbar-background;
+  height: 48px;
+  line-height:48px;
 }
 .results-popup {
   position: fixed;
@@ -203,7 +204,7 @@ export default {
   right: 0;
 }
 .editor-types {
-  background-color: #3faef7c9;
+  background-color: $navbar-background;
   display: inline-flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -278,4 +279,26 @@ export default {
   display: flex;
   flex-direction: row;
 }
+</style>
+<style lang="scss">
+.editor{
+.van-icon-arrow-left:before,.van-icon-success:before{
+  color:white;
+}
+.iconfont{
+  background:$light-blue!important;
+}
+
+}
+.property{
+  .icon-container{
+  background:transparent!important;
+}
+}
+.results-popup{
+.icon-ziyuan{
+  background:$light-blue!important;
+}
+}
+
 </style>

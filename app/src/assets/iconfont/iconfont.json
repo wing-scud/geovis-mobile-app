@@ -6,6 +6,62 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "12574133",
+      "name": "路径规划",
+      "font_class": "lujingguihua",
+      "unicode": "e8b1",
+      "unicode_decimal": 59569
+    },
+    {
+      "icon_id": "19772098",
+      "name": "保存 存储 存储卡",
+      "font_class": "baocun",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "18445581",
+      "name": "完成 成功",
+      "font_class": "wancheng",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "9858953",
+      "name": "线",
+      "font_class": "xian",
+      "unicode": "e742",
+      "unicode_decimal": 59202
+    },
+    {
+      "icon_id": "10131400",
+      "name": "点",
+      "font_class": "dian",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "15940163",
+      "name": "检索",
+      "font_class": "jiansuo",
+      "unicode": "e67d",
+      "unicode_decimal": 59005
+    },
+    {
+      "icon_id": "20411188",
+      "name": "缓冲区分析",
+      "font_class": "huanchongqufenxi",
+      "unicode": "e873",
+      "unicode_decimal": 59507
+    },
+    {
+      "icon_id": "7891417",
+      "name": "纸飞机",
+      "font_class": "start-search",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
       "icon_id": "1309818",
       "name": "转换",
       "font_class": "zuobiaozhuanhuan",

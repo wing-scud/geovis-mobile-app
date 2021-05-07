@@ -16,12 +16,10 @@
         @input="getSuggestions"
       >
       </van-field>
-       
-          <div class="search-group">
-            <van-checkbox v-model="coordinateCheckd" v-if="config.convert" class="search-checkbox search-group-item" @click="handleChecked">反查</van-checkbox>
-            <van-button size="small" type="default" class="search-button search-group-item" v-if="config.button" plain @click="submit">搜索</van-button>
-          </div>
-       
+      <div class="search-group">
+        <van-checkbox v-model="coordinateCheckd" v-if="config.convert" class="search-checkbox search-group-item" @click="handleChecked">反查</van-checkbox>
+        <van-button size="small" type="default" class="search-button search-group-item" v-if="config.button" plain @click="submit">搜索</van-button>
+      </div>
     </div>
     <div class="suggest-panel" v-if="suggestions.length > 0">
       <van-cell-group>
@@ -77,10 +75,10 @@ export default {
       type: String,
       default: "",
     },
-    leftIcon:{
+    leftIcon: {
       type: String,
       default: "",
-    }
+    },
   },
   data() {
     return {
@@ -373,15 +371,18 @@ export default {
 .search-component {
   position: relative;
   /* padding: 5px 4%; */
-  width:90%;
-  margin:auto;
+  width: 90%;
+  margin: auto;
 }
 .search-input {
   width: 100%;
-  border-radius: 10px;
   z-index: 4;
   /* height: 42px; */
+  padding: 5px;
+  border-radius: 8px;
+  background-color: $navbar-background;
 }
+
 .search-input .van-field__left-icon {
   line-height: 30px;
 }
@@ -391,7 +392,7 @@ export default {
 .search-button {
   color: rgb(34, 126, 247);
 }
- 
+
 .search-group-item {
   margin: 0 1px;
 }
@@ -408,12 +409,18 @@ export default {
 .suggest-panel {
   position: absolute;
   top: 34px;
-  left:0;
+  left: 0;
   margin: 0 4%;
   width: 92%;
   border-radius: 10px;
   background-color: $navbar-background;
   z-index: 5;
+}
+.search-group {
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
 }
 </style>
   <style lang="scss">
@@ -424,10 +431,10 @@ export default {
   line-height: 35px;
 }
 .search-input .van-field__control {
-    background-color: $lighter-blue;
-    color:$lightgray-word;
-    padding:2px;
-    border-radius: 5px;
+  background-color: $lighter-blue;
+  color: $lightgray-word;
+  padding: 2px;
+  border-radius: 5px;
 }
 .suggest-panel .van-cell__title {
   -webkit-box-flex: unset !important;
@@ -471,8 +478,8 @@ export default {
 .person-infor-img .van-cell__right-icon {
   line-height: 40px;
 }
-.suggest-panel .van-icon{
-font-size: 20px;
+.suggest-panel .van-icon {
+  font-size: 20px;
 }
 .search-input .van-checkbox__icon--round .van-icon {
   border-radius: 100%;
@@ -480,63 +487,55 @@ font-size: 20px;
 }
 .search-input .van-checkbox__label {
   margin: 0 0;
-  color:$lightgray-word;
+  color: $lightgray-word;
 }
 .search-input .van-icon-search {
   line-height: 30px;
 }
 </style>
 <style lang="scss">
- 
-.search-component .van-cell{
-  background:$light-blue;
-  width:95%;
-  margin:5px auto;
+.search-group .van-button--plain {
+  background: $highlight;
+  color: white;
+  border: 0;
+  width: 48px;
+  height: 25px;
 }
-.search-input {
-  padding:5px;
-  border-radius:8px;
-  background-color:$navbar-background;
-}
-.search-group{
-  width: 95%;
-    margin: auto;
-    display: flex;
-    justify-content: space-between;
-}
-.search-group .van-button--plain{
-background:$highlight;
-color: white;
-    border: 0;
-    width: 48px;
-    height: 25px;
-}
-.van-icon-search:before{
-  color:white;
-  font-weight: bold;
-}
-.search-input  .van-cell:after{
+.search-input .van-cell:after {
   border-bottom: 0;
 }
-.van-checkbox__icon .van-icon{
-  border:2px solid lightgray;
-  margin-right:5px;
+
+.search-component {
+  .van-cell {
+    background: $light-blue;
+    width: 95%;
+    margin: 5px auto;
+  }
+  .van-cell__value--alone {
+    color: $lightgray-word !important;
+  }
+  .van-cell-group {
+    background: $navbar-background;
+  }
+  .van-cell:after {
+    border-bottom: 0;
+  }
+  .van-checkbox__icon .van-icon {
+  border: 2px solid lightgray;
+  margin-right: 5px;
 }
-.van-checkbox__icon--checked .van-icon{
+.van-checkbox__icon--checked .van-icon {
   background-color: $select-color;
-    border-color: $select-color;
+  border-color: $select-color;
 }
-.search-component .van-cell__value--alone{
-color:$lightgray-word!important;
+.van-icon-search:before {
+  color: white;
+  font-weight: bold;
 }
-.search-component .van-cell-group{
-  background:$navbar-background;
+[class*="van-hairline"]:after {
+  border: 0;
 }
-.search-component .van-cell:after{
-  border-bottom:0;
 }
-[class*=van-hairline]:after{
-  border:0;
-}
+
 </style>
   

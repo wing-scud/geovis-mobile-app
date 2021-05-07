@@ -1,7 +1,7 @@
 <template>
-  <div class="full">
+  <div class="mine-page">
     <div class="person-nav">
-      <van-nav-bar title="我的" right-text="消息"  @click-right="enterMessage">
+      <van-nav-bar title="我的" right-text="消息" @click-right="enterMessage">
         <template v-slot:right>
           <van-badge :content="5" max="10">
             <MIcon icon="icon-xiaoxi" size="20px" length="20px"></MIcon>
@@ -35,8 +35,8 @@ export default Vue.extend({
       items: indexItems,
       user: {
         headshot: "",
-        name: ""
-      }
+        name: "",
+      },
     };
   },
   mounted() {
@@ -46,35 +46,69 @@ export default Vue.extend({
     enterMessage() {},
     goBack() {
       //@ts-ignore
-      this.$router.backward(-1)
+      this.$router.backward(-1);
     },
     enterItem(name) {
       this.$router.push({ name: name });
     },
     enterPersonInfor() {
       this.$router.push({ name: "PersonInfor" });
-    }
-  }
+    },
+  },
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
+.mine-page {
+  background: $navbar-background;
+}
 .user-infor {
   display: inline-flex;
   width: calc(100% - 30px);
   padding: 10px 10px 10px 20px;
   /* border-top: 1px solid #ebedf0; */
-  border-bottom: 1px solid #ebedf0;
+  border-bottom: $split-line;
 }
 .user-name {
   flex-grow: 1;
   padding-left: 20px;
   line-height: 40px;
   text-align: left;
+  color:white;
 }
 .custom-arrow {
   width: 30px;
   height: 40px;
   text-align: center;
   line-height: 40px;
+}
+</style>
+<style lang="scss">
+.mine-page {
+  .van-nav-bar {
+    background: $navbar-background;
+  }
+  .van-cell {
+    background: $navbar-background;
+  }
+  .van-nav-bar__title{
+    color:$lightgray-word;
+  }
+  .icon-xiaoxi:before{
+    background:$navbar-background;
+    color:$lightgray-word;
+  }
+}
+.main-part {
+  background: $navbar-background;
+}
+.person-items {
+  .van-cell {
+    border-bottom: $split-line;
+      color:$lightgray-word;
+      padding:15px 16px;
+  }
+  .van-cell:after {
+    border-bottom: 0;
+  }
 }
 </style>
