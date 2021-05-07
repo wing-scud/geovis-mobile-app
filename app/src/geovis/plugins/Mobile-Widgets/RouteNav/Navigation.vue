@@ -9,7 +9,7 @@ import Vue from "vue";
 import state,{ event } from "./store";
 import mapboxManager from "./mapbox";
 import { earthStore } from "@/geovis/store";
-import mapLocation from "@/cordova/plugin/location";
+const mapLocation = window['plugin'].mapLocation;
 export default Vue.extend({
   name: "Navigation",
   props: ["mode"],
@@ -48,15 +48,11 @@ export default Vue.extend({
   },
   methods: {
     simulateNav() {
-      //@ts-ignore
-      const mapLocation = window.cordovaPlugin?.mapLocation;
       this.addMarker();
       const marker = this.marker;
     },
     async liveNav() {
       earthStore.map.setPitch(20);
-      //@ts-ignore
-      const mapLocation = window.cordovaPlugin?.mapLocation;
       this.addMarker();
       const marker = this.marker;
       this.watchPosition = mapLocation.testWatchPosition((position) => {
@@ -68,9 +64,8 @@ export default Vue.extend({
       // event.$emit("change", true, "live");
     },
     async addMarker() {
-      //@ts-ignore
-      const mapLocation = window.cordovaPlugin?.mapLocation;
       const position = await mapLocation.getCurrentPosition();
+      //@ts-ignore
       const lonlat = [position.coords.longitude, position.coords.latitude];
       mapboxManager.addImageMarker("car", "./static/images/car.png", lonlat);
       const marker = mapboxManager.markers.get("car");

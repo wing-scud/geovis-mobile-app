@@ -45,6 +45,7 @@ import { earthStore } from "@/geovis/store";
 import _ from "lodash";
 /* eslint-disable @typescript-eslint/camelcase */
 import util from "./util";
+const mapLocation = window['plugin'].mapLocation;
 export default {
   name: "SearchInput",
   props: {
@@ -317,8 +318,6 @@ export default {
     searchRequest: async function (placeName) {},
     routeTo(id) {
       const point = this.getPlaceFromId(id);
-      //@ts-ignore
-      const mapLocation = window.cordovaPlugin.mapLocation;
       mapLocation.getCurrentPosition().then((position) => {
         const start = [position.coords.longitude, position.coords.latitude];
         const end = point.location;

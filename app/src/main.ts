@@ -7,7 +7,7 @@ import { earthStore, EarthStore } from "./geovis/store/index.js";
 import router from "./router/index.js"
 // import "./cordova/index.js"
 import mobileStore from "./store/index.js"
-import { database } from "./api/index";
+import "./api/index";
 // 适配
 Vue.use(Vant);
 Vue.use({
@@ -20,7 +20,6 @@ declare module "vue/types/vue" {
     $earthStore: EarthStore;
   }
 }
-Vue.prototype.$database = database
 Vue.config.productionTip = false;
 new Vue({
   store: mobileStore,

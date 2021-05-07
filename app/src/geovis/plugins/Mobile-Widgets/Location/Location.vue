@@ -5,6 +5,7 @@
 import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 import { Toast } from "vant";
+const mapLocation = window['plugin'].mapLocation;
 export default Vue.extend({
   name: "Location",
   data() {
@@ -14,8 +15,6 @@ export default Vue.extend({
     };
   },
   mounted() {
-    //@ts-ignore
-    const mapLocation = window.cordovaPlugin.mapLocation;
     this.watchId = mapLocation.watchLocation((position) => {
       this.flyTo(position);
       Toast("持续定位");
@@ -53,8 +52,6 @@ export default Vue.extend({
     },
   },
   beforeDestroy() {
-    //@ts-ignore
-    const mapLocation = window.cordovaPlugin.mapLocation;
     if (this.watchId) {
       mapLocation.clearWatchLocation(this.watchId);
     }
@@ -62,9 +59,8 @@ export default Vue.extend({
   watch: {
     "state.mode": function (value) {
       //@ts-ignore
-      const mapLocation = window.cordovaPlugin.mapLocation;
-      //@ts-ignore
       if (mapLocation.locking) {
+        //@ts-ignore
         mapLocation.locking = !mapLocation.locking;
         //@ts-ignore
         document.getElementsByClassName("icon-suoding")[0].style.color = location.locking ? "#0c87f1" : "#333";
