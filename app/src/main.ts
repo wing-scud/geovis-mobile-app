@@ -3,8 +3,8 @@ import App from "./App.vue";
 import Vant from "vant";
 import "vant/lib/index.css";
 import "mapbox-gl/src/css/mapbox-gl.css"
-import "./api/index";
 import { earthStore, EarthStore } from "./geovis/store/index.js";
+import "./api/index";
 import router from "./router/index.js"
 // import "./cordova/index.js"
 import mobileStore from "./store/index.js"
