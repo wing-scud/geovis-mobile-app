@@ -10,7 +10,7 @@
     </van-radio-group>
     <van-calendar title="出生时间" :poppable="false" :show-confirm="true" ref="date" :style="{ height: '500px' }" :min-date="minDate" v-if="type === 'birthday'" @confirm="onConfirmBirthday" />
     <div class="edit-password" v-if="type === 'password'">
-      <van-field v-model="user.password" type="password" label="原密码" />
+      <van-field v-model="password" type="password" label="原密码" />
       <van-field v-model="newPassword" type="password" label="新密码" />
       <van-field v-model="confirmPassword" :error-message="errorMessage" type="password" label="确认" @input="verifyPassword" />
     </div>
@@ -31,6 +31,7 @@ export default Vue.extend({
       areaList: areaList,
       minDate: new Date(1900, 1, 1),
       newPassword: "",
+      password:"",
       cobeforenfirmPassword: "",
       confirmText: "",
       errorMessage: "",

@@ -62,7 +62,7 @@ export default Vue.extend({
       this.$router.backward(-1);
     },
     registerAccount() {
-      const SERVER_ROOT = window['SERVER_ROOT'];
+      const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
       const registerUrl =SERVER_ROOT+'/api/user/register'
       const formData = new FormData();
       const options = {

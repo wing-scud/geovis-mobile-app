@@ -10,18 +10,19 @@
       <router-view v-if="!$route.meta.keepAlive"></router-view> -->
     </div>
     <van-tabbar v-model="active" id="bottomTabbar" v-if="!state.fullScreen" class="bottom-tabbar" @change="handleChange" :fixed="true" route active-color="#0372f1e0" replace>
-    <van-tabbar-item push :to="{ name: item.name }" v-for="item in list" :key="item['title']">
-      <span class="tabbar-name">{{ item["title"] }} </span>
-      <template #icon>
-        <div :class="[item['icon'], 'iconfont']"></div>
-      </template>
-    </van-tabbar-item>
-  </van-tabbar>
+      <van-tabbar-item push :to="{ name: item.name }" v-for="item in list" :key="item['title']">
+        <span class="tabbar-name">{{ item["title"] }} </span>
+        <template #icon>
+          <div :class="[item['icon'], 'iconfont']"></div>
+        </template>
+      </van-tabbar-item>
+    </van-tabbar>
     <!-- <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar" v-if="!state.fullScreen"></MTabbar> -->
   </div>
 </template>
 <script lang="ts">
 import { earthStore } from "@/geovis/store";
+import { Toast } from "vant";
 import Vue from "vue";
 const NativeStorage = window["NativeStorage"];
 export default Vue.extend({
@@ -40,10 +41,17 @@ export default Vue.extend({
   },
   mounted() {},
   async beforeCreate() {
-    const database = window['plugin'].database;
+    const database = window["plugin"].database;
     const user = await database.userTable.getItem("user");
-    if (user) {
-      this.$store.commit("user/initUser", user);
+    if (user && user.rememberMe) {
+      const result = await this.$store.dispatch("user/login", { username: user.name, password: user.password, rememberMe: user.rememberMe });
+      if (result) {
+        this.$router.push({ name: "Index" });
+      } else {
+        Toast("login error");
+      }
+    }else{
+      console.log("需要登录")
     }
   },
   methods: {
@@ -70,20 +78,20 @@ export default Vue.extend({
   flex-grow: 1;
   width: 100%;
   position: relative;
+  background: $navbar-background;
 }
-.bottom-tabbar{
-  background:$navbar-background;
+.bottom-tabbar {
+  background: $navbar-background;
 }
-
 </style>
 <style lang="scss">
-.home{
-.van-tabbar-item--active{
-    background:$navbar-background;
-    color:$highlight!important;
-}
-.van-tabbar-item{
-  color:$lightgray-word;
-}
+.home {
+  .van-tabbar-item--active {
+    background: $navbar-background;
+    color: $highlight !important;
+  }
+  .van-tabbar-item {
+    color: $lightgray-word;
+  }
 }
 </style>

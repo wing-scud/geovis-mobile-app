@@ -1,6 +1,6 @@
 
 import User, { validUser } from "../../api/db/table/User";
-const SERVER_ROOT = window['SERVER_ROOT'];
+const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
 const loginUrl = SERVER_ROOT + "/api/user/login";
 const loginOutUrl = SERVER_ROOT + "/api/user/logout"
 const database = window['plugin'].database
@@ -22,6 +22,7 @@ const actions = {
       fetch(loginUrl, {
         method: "POST",
         mode: 'cors',
+        credentials: "include",
         body: formData
       }).then((res) => res.json())
         .then((data) => {
@@ -29,6 +30,7 @@ const actions = {
             //@ts-ignore
             const value = data.data;
             value.password = options.password;
+            value.rememberMe = options.rememberMe
             const user = new User(value);
             database.userTable.setItem('user', user).then((user) => {
               commit("initUser", user);
@@ -40,11 +42,12 @@ const actions = {
         })
     });
   },
-  loginOut({commit }) {
+  loginOut({ commit }) {
     return new Promise((resolve, reject) => {
       fetch(loginOutUrl, {
         method: "POST",
         mode: 'cors',
+        credentials: 'include'
       }).then((res) => res.json())
         .then((data) => {
           if (data.status === 'ok') {
