@@ -47,6 +47,27 @@ class State {
             state: false
         };
     }
+    destory() {
+        this.point = {
+            start: {
+                input: "",
+                point: ""
+            },
+            end: {
+                input: "",
+                point: ""
+            },
+            passings: []
+        };
+        this.routes = new Map();
+        this.choosedId = {
+            id: "路线1"
+        };
+        this.transportation = "driving";
+        this.routesChange = {
+            state: false
+        };
+    }
 }
 const event = new Vue();
 const state = new State();

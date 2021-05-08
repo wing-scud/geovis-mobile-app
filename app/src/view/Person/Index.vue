@@ -88,32 +88,5 @@ export default Vue.extend({
     padding:15px 16px !important;
   }
 }
-// .mine-page {
-//   .van-nav-bar {
-//     background: $navbar-background;
-//   }
-//   .van-cell {
-//     background: $navbar-background;
-//   }
-//   .van-nav-bar__title{
-//     color:$lightgray-word;
-//   }
-//   .icon-xiaoxi:before{
-//     background:$navbar-background;
-//     color:$lightgray-word;
-//   }
-// }
-// .main-part {
-//   background: $navbar-background;
-// }
-// .person-items {
-//   .van-cell {
-//     border-bottom: $split-line;
-//       color:$lightgray-word;
-//       padding:15px 16px;
-//   }
-//   .van-cell:after {
-//     border-bottom: 0;
-//   }
-// }
+
 </style>

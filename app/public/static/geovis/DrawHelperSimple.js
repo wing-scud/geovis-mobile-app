@@ -15789,21 +15789,26 @@
 
 	    var _this = _possibleConstructorReturn(this, (ImageMarker.__proto__ || Object.getPrototypeOf(ImageMarker)).call(this, pos, options));
 
-	    _this.loadImage = function (imgUrl) {
-	      if (!_this.imageEle) {
-	        _this.imageEle = createImage();
-	        // this.deleteHover = createDeleteHover();
-	        _this.element.removeChild(_this.textEle);
-	        _this.element.appendChild(_this.imageEle);
-	        _this.element.appendChild(_this.deleteHover);
-	      }
-	      _this.imageEle.src = imgUrl;
-	      _this.imageEle.onload = function (e) {
-	        var originWidth = _this.imageEle.naturalWidth > 400 ? 400 : _this.imageEle.naturalWidth;
-	        var originHeight = originWidth * _this.imageEle.naturalHeight / _this.imageEle.naturalWidth;
+	    _this.loadImage = function (e) {
+	      var reads = new FileReader();
+	      var f = _this.uploadEle.files[0];
+	      reads.readAsDataURL(f);
+	      reads.onload = function (e) {
+	        if (!_this.imageEle) {
+	          _this.imageEle = createImage();
+	          // this.deleteHover = createDeleteHover();
+	          _this.element.removeChild(_this.textEle);
+	          _this.element.appendChild(_this.imageEle);
+	          // this.element.appendChild(this.deleteHover);
+	        }
+	        _this.imageEle.src = reads.result;
+	        _this.imageEle.onload = function (e) {
+	          var originWidth = _this.imageEle.naturalWidth > 400 ? 400 : _this.imageEle.naturalWidth;
+	          var originHeight = originWidth * _this.imageEle.naturalHeight / _this.imageEle.naturalWidth;
 
-	        _this._element.style.width = originWidth + "px";
-	        _this._element.style.height = originHeight + "px";
+	          _this._element.style.width = originWidth + "px";
+	          _this._element.style.height = originHeight + "px";
+	        };
 	      };
 	      // this.uploadEle.files[0];
 	    };
@@ -15815,6 +15820,9 @@
 	        _this.disableEdit();
 	        _this.disableResize();
 	      } else {
+	        if (target === _this.textEle) {
+	          _this.enableEdit();
+	        }
 	        _this.enableResize();
 	        _this.drawHelper.fire("selected", {
 	          entity: _this
@@ -15865,15 +15873,15 @@
 	    if (options.width) _this.width = options.width;
 	    if (options.height) _this.height = options.height;
 	    if (options.name) _this.name = options.name;
-	    // this.uploadEle = createFileInput();
-	    // this.uploadEle.addEventListener("change", this.loadImage);
+	    _this.uploadEle = createFileInput();
+	    _this.uploadEle.addEventListener("change", _this.loadImage);
 	    _this.imageEle = undefined;
 	    _this.createAnchors();
 	    _this.type = _Types2.default.IMAGE_MARKER;
 	    _this._element.ondblclick = _this.eledbClick;
 	    document.body.addEventListener("click", _this.bodyClick);
 	    // document.body.addEventListener("dblclick", this.bodydbClick);
-	    if (options.imageUrl) _this.loadImage();
+	    // if (options.imageUrl) this.loadImage();
 	    // document.body.onclick.addEventListener(this.bodyClick);
 	    return _this;
 	  }

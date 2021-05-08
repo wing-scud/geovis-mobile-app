@@ -33,16 +33,13 @@ export default Vue.extend({
     this.user = this.$store.state.user.user;
   },
   methods: {
-    setImagePreview(e) {
+   async setImagePreview(e) {
       const files = e.target.files;
-      const imgSrc = window.URL.createObjectURL(files[0]);
-      console.log("image path: " + imgSrc);
-      this.user.avatar = imgSrc;
-      this.$store.dispatch("user/changeUser",{
+     await  this.$store.dispatch("user/changeUser",{
         type:'avatar',
-        value:imgSrc
+        value:files[0]
       });
-      //存储到本地
+      this.user.avatar = this.$store.state.user.user.avatar;
     },
     chooseImg() {
       document.getElementById("headshot-picker").click();

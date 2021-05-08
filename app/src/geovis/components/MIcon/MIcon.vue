@@ -74,7 +74,7 @@ export default Vue.extend({
 </script>
 <style scoped>
 .icon-container {
-  display: inline-block;
+  /* display: inline-block; */
   width: 30px;
   height: 30px;
   background-color: white;

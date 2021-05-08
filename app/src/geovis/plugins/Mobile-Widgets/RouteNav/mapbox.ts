@@ -47,7 +47,6 @@ class MapboxManager {
      * layer add，未指定beforeId，则默认最高优先级（假设为999）,
      */
     addGeojsonLine(source, id, color, beforeId) {
-        debugger
         const route = this._map.addSource(id, source);
         const layer = this._map.addLayer({
             id: id,
@@ -179,6 +178,9 @@ class MapboxManager {
     }
     listenerMarker(e, id) {
         this.events.marker = { lngLat: e.lngLat, id }
+    }
+    destory(){
+       this.clearAll() 
     }
 }
 const mapboxManager = new MapboxManager()

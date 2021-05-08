@@ -7,8 +7,7 @@ class User {
     password: string;
 
     roles: [];
-
-    avatar: string;
+    avatar: string
 
     sex: string;
 
@@ -20,21 +19,32 @@ class User {
 
     regtime: string;
 
-    rememberMe:boolean
+    rememberMe: boolean
 
     constructor(options) {
-        const { name, nickname, password, roles = [], avatar = "", sex="male", zip_code = "111111", phone="13956950414", birthday = "2000-01-01", regtime = "2021-01-01",rememberMe=false } = options;
+        const { name, nickname, password, roles = [], avatar = "", sex = "male", zip_code = "111111", phone = "13956950414", birthday = "2000-01-01", regtime = "2021-01-01", rememberMe = false } = options;
         this.name = name;
         this.nickname = nickname;
         this.password = password;
         this.roles = roles;
-        this.avatar = avatar;
         this.sex = sex;
         this.phone = phone;
         this.regtime = regtime;
         this.birthday = birthday
         this.zip_code = zip_code;
-        this.rememberMe =rememberMe
+        this.rememberMe = rememberMe;
+        this.avatar = avatar;
+        // const filePlugin = window['plugin'].file;
+        // filePlugin.getRootDirEntry().then(async (rootEntry) => {
+        //     const array = avatar.split('/');
+        //     const imageName = array.pop()
+        //     filePlugin.getFileEntry('images', imageName).then((fileEntry) => {
+        //         fileEntry.file((file) => {
+        //             const filePath = window.URL.createObjectURL(file);
+        //             this.avatar = filePath;
+        //         })
+        //     })
+        // })
     }
 }
 function validUser(user) {

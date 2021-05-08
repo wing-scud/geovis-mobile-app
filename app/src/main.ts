@@ -4,10 +4,10 @@ import Vant from "vant";
 import "vant/lib/index.css";
 import "mapbox-gl/src/css/mapbox-gl.css"
 import { earthStore, EarthStore } from "./geovis/store/index.js";
-import "./api/index";
-import router from "./router/index.js"
-// import "./cordova/index.js"
 import mobileStore from "./store/index.js"
+import router from "./router/index.js"
+import "./api/index";
+// import "./cordova/index.js"
 // 适配
 Vue.use(Vant);
 Vue.use({
@@ -20,7 +20,6 @@ declare module "vue/types/vue" {
     $earthStore: EarthStore;
   }
 }
-Vue.config.productionTip = false;
 new Vue({
   store: mobileStore,
   render: h => h(App),

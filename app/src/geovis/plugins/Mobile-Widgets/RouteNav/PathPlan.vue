@@ -7,12 +7,12 @@
         ><template v-for="(point, index) in passingPoints">
           <SearchInput v-model="point.input" @choosed="getAddress($event, 3, index)" @clickRightIcon="displayPassingPointSearch(false, index)" label="经" route rightIcon="close" :key="index"> </SearchInput>
         </template>
-        <SearchInput v-model="end.input" @choosed="getAddress($event, 2)" @clickRightIcon="searchLujing" label="终" route rightIcon="share-o"> </SearchInput>
-        <!-- <SearchInput v-model="end.input" @choosed="getAddress($event, 2)" @clickRightIcon="searchLujing" label="终" route > </SearchInput> -->
+        <SearchInput v-model="end.input" @choosed="getAddress($event, 2)" label="终" route> </SearchInput>
+        <!-- <SearchInput v-model="end.input" @choosed="getAddress($event, 2)" @clickRightIcon="searchLujing" label="终" route rightIcon="share-o"> </SearchInput> -->
         <div class="search-buttons">
-            <button class="route-delete">清除路线</button>
-            <img src="static/images/箭头.png" />
-            <!-- <MIcon :icon="plugin.icon" size="24px" length="30px"></MIcon> -->
+          <button class="route-delete" @click="clearMapboxLines">清除路线</button>
+          <img src="static/images/箭头.png" @click="searchLujing" />
+          <!-- <MIcon :icon="plugin.icon" size="24px" length="30px"></MIcon> -->
         </div>
       </div>
     </div>
@@ -175,7 +175,7 @@ export default {
     async searchLujing() {
       this.choosedId.id = "路线1";
       this.clearMapboxLines();
-      this.routes.clear();
+      // this.routes.clear();
       if (!this.start.point || !this.end.point) {
         return;
       }
@@ -272,6 +272,8 @@ export default {
       this.routes.forEach((route, id) => {
         mapboxManager.removeLine(id);
       });
+      this.routes.clear();
+      this.routesChange.state = !this.routesChange.state;
     },
 
     JsonOutLj() {
@@ -320,25 +322,25 @@ export default {
   border-radius: 5px;
   margin: 5px;
 }
-.search-buttons{
-  width:100%;
-  height:20px;
+.search-buttons {
+  // width:100%;
+  height: 35px;
   display: flex;
-  justify-content:space-between;
-  margin:5px 0 10px 0;
-  img{
-    width:32px;
-    height:32px;
+  justify-content: space-between;
+  margin: 5px 10px 10px 10px;
+  img {
+    width: 32px;
+    height: 32px;
   }
 }
-.route-delete{
-  width:70px;
-  height:28px;
-  background:$highlight;
-  border:0;
-  font-size:14px;
-  color:white;
-  border-radius:5px;
+.route-delete {
+  width: 70px;
+  height: 28px;
+  background: $highlight;
+  border: 0;
+  font-size: 14px;
+  color: white;
+  border-radius: 5px;
 }
 // .search-component{
 //   padding: 5px 0!important;
@@ -352,53 +354,50 @@ export default {
   text-align: center;
   word-wrap: break-word;
 }
-.route-top{
+.route-top {
   .van-nav-bar {
-  background: $navbar-background !important;
+    background: $navbar-background !important;
+  }
+  .van-nav-bar__title {
+    color: white;
+  }
+  .van-nav-bar__text {
+    color: #01d7d1;
+  }
+  .van-icon-arrow-left:before {
+    color: #01d7d1;
+  }
+  .van-cell {
+    background: $light-blue;
+    line-height: 30px;
+    padding: 10px 10px 10px 0;
+  }
+  .van-field__control {
+    background: $lighter-blue;
+    border-radius: 5px;
+    color: $lightgray-word;
+  }
+  .van-cell__value--alone {
+    color: $lightgray-word;
+  }
+  [class*="van-hairline"]:after {
+    border: $split-line;
+  }
+  .route-input .van-field__label {
+    color: $lightgray-word;
+  }
+  .van-field__control {
+    padding-left: 10px;
+  }
+  .route-input .van-field__label {
+    width: 27px;
+  }
 }
-.van-nav-bar__title {
-  color: white;
-}
-.van-nav-bar__text {
-  color: #01d7d1;
-}
-.van-icon-arrow-left:before {
-  color: #01d7d1;
-}
-.van-cell{
-  background:$light-blue;
-  line-height:30px;
-  padding:10px 10px 10px 0;
-}
-.van-field__control{
-  background:$lighter-blue;
-  border-radius:5px;
-  color:$lightgray-word;
-}
-.van-cell__value--alone{
-  color:$lightgray-word;
-}
-[class*=van-hairline]:after{
-  border:$split-line
-}
-.route-input .van-field__label{
-  color:$lightgray-word;
-}
-.van-field__control{
-  padding-left:10px;
-}
-.route-input .van-field__label{
-  width:27px;
-}
-}
-.search-component{
-   .van-cell {
+.search-component {
+  .van-cell {
     margin: 0 auto;
+  }
 }
-}
-
-
-
 </style>
       
   <!-- CzSun拒绝维护使用2空格缩进的代码 -->

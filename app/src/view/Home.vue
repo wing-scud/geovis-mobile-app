@@ -17,14 +17,13 @@
         </template>
       </van-tabbar-item>
     </van-tabbar>
-    <!-- <MTabbar v-model="active" :list="list" @change="handleChange" :height="50" id="bottomTabbar" v-if="!state.fullScreen"></MTabbar> -->
   </div>
 </template>
 <script lang="ts">
 import { earthStore } from "@/geovis/store";
 import { Toast } from "vant";
 import Vue from "vue";
-const NativeStorage = window["NativeStorage"];
+
 export default Vue.extend({
   name: "Home",
   data() {

@@ -80,7 +80,7 @@ class LocationPlugin {
                 }
             }
             //@ts-ignore
-            if (lnglat[0] !== this.position.coords.longitude && lnglat[1] !== this.position.coords.latitude) {
+            if (lnglat[0] !== position.coords.longitude && lnglat[1] !== position.coords.latitude) {
                 callback(position);
             }
             index++;

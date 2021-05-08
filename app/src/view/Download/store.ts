@@ -60,19 +60,27 @@ class DownLoadManager {
             },
         )
     }
-    downloadCity(name) {
+   async downloadCity(name) {
         const filePlugin = window['plugin'].file;
         const downloadUrl = SERVER_ROOT + `/api/job/sync/${name}/down/mbtiles`;
-        fetch(downloadUrl,{
-            method:'POST',
-            mode: 'cors',
-            credentials: "include",
-        }).then(res => res.blob()).then(async blob => {
+        // fetch(downloadUrl, {
+        //     method: 'POST',
+        //     mode: 'cors',
+        //     credentials: "include",
+        //     // headers: {
+        //     //     "Content-Type": "application/octet-stream;charset=UTF-8"
+        //     // }
+        // }).then(res => res.blob()).then(async blob => {
+            const blob ="111";
             const rootEntry = await filePlugin.getRootDirEntry();
-            const mapDireEntry = await filePlugin.getDirectory(rootEntry, 'mapData', true);
-            const fileEntry = await filePlugin.getFileEntry(mapDireEntry, `${name}.mbtiles`)
-            filePlugin.writeFile(fileEntry, blob, false)
-        })
+            const mapDireEntry = await filePlugin.getDirectory(rootEntry, 'mapData', false);
+            const fileName = `${name}.mbtiles`
+            const fileEntry = await filePlugin.getFileEntry(mapDireEntry, fileName)
+            filePlugin.writeFile(fileEntry, blob, false);
+            const mapData = window['plugin'].database.mapData;
+            mapData.setItem(name,fileName)
+            console.log('write ok')
+        // })
     }
 }
 const manager = new DownLoadManager();

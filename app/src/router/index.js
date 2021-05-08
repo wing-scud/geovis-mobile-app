@@ -2,6 +2,11 @@ import Vue from "vue";
 //修改为异步组件加载
 import VueRouter from "vue-router";
 import mobileStore from "@/store/index.js";
+// 解决路由重复问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 Vue.use(VueRouter);
 import { earthStore } from "../geovis/store/index.js";
 import Map from "../view/Map/Index.vue";

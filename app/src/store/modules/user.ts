@@ -3,7 +3,6 @@ import User, { validUser } from "../../api/db/table/User";
 const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
 const loginUrl = SERVER_ROOT + "/api/user/login";
 const loginOutUrl = SERVER_ROOT + "/api/user/logout"
-const database = window['plugin'].database
 const state = () => ({
   user: undefined
 });
@@ -14,6 +13,7 @@ const getters = {};
 // actions
 const actions = {
   login({ commit }, options) {
+    const database = window['plugin'].database
     return new Promise((resolve, reject) => {
       const formData = new FormData();
       Object.keys(options).forEach((key) => {
@@ -32,10 +32,14 @@ const actions = {
             value.password = options.password;
             value.rememberMe = options.rememberMe
             const user = new User(value);
-            database.userTable.setItem('user', user).then((user) => {
-              commit("initUser", user);
+            if (value.rememberMe) {
+              database.userTable.setItem('user', user).then((user) => {
+                commit("initUser", user);
+                resolve(true)
+              })
+            } else {
               resolve(true)
-            })
+            }
           } else {
             reject(false)
           }
@@ -43,6 +47,7 @@ const actions = {
     });
   },
   loginOut({ commit }) {
+    const database = window['plugin'].database
     return new Promise((resolve, reject) => {
       fetch(loginOutUrl, {
         method: "POST",
@@ -62,6 +67,7 @@ const actions = {
     })
   },
   changeUser({ state, commit }, changedValues) {
+    const database = window['plugin'].database
     return new Promise((resolve, reject) => {
       //验证user 是否正确
       // const res = validUser(changedValues);
@@ -69,12 +75,39 @@ const actions = {
         status: "ok",
         error: false,
       }
+      const filePlugin = window['plugin'].file;
       if (res.status) {
-        commit('changeUser', changedValues);
-        const user = state.user;
-        database.userTable.setItem('user', user).then((user) => {
-          resolve({ status: true })
-        })
+        //如果是图像
+        if (changedValues.type === "avatar") {
+          filePlugin.getRootDirEntry().then(async (rootEntry) => {
+            const reader = new FileReader();
+            reader.readAsArrayBuffer(changedValues.value);
+            reader.onload = async (e) => {
+              const blob = new Blob([e.target.result]);
+              const mapDireEntry = await filePlugin.getDirectory(rootEntry, 'images', true);
+              const fileName = changedValues.value.name;
+              const fileEntry = await filePlugin.getFileEntry(mapDireEntry, fileName)
+              await filePlugin.writeFile(fileEntry, blob, false);
+              fileEntry.file((file) => {
+                const filePath = window.URL.createObjectURL(file);
+                changedValues.value = filePath;
+                commit('changeUser', changedValues);
+                const user = state.user;
+                database.userTable.setItem('user', user).then((user) => {
+                  console.log(' database.userTable.setItem user')
+                  resolve({ status: true })
+                })
+              })
+            }
+          });
+        } else {
+          commit('changeUser', changedValues);
+          const user = state.user;
+          database.userTable.setItem('user', user).then((user) => {
+            console.log(' database.userTable.setItem user')
+            resolve({ status: true })
+          })
+        }
       } else {
         resolve({ status: false, error: res.error })
       }

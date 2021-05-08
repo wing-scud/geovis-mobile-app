@@ -8,9 +8,16 @@ class FilePlugin {
         this._file = value;
     }
     constructor() {
-        document.addEventListener("deviceready", () => {
-            this._file = window['cordova'].file;
-        }, false);
+        // if (navigator?.userAgent.includes('Windows')) {
+        const requestedBytes = 1024 * 1024 * 100;
+        //@ts-ignore
+        navigator.webkitPersistentStorage.requestQuota(
+            requestedBytes, function (grantedBytes) {
+                console.log("获取权限")
+            }
+        )
+
+        // }
     }
     /**
      * 向文件写入内容
@@ -19,29 +26,32 @@ class FilePlugin {
      * @param isAppend  是否向文件中追加
      */
     writeFile(fileEntry, dataObj, isAppend) {
-        // Create a FileWriter object for our FileEntry
-        fileEntry.createWriter(function (fileWriter) {
-            fileWriter.onwriteend = function () {
-                console.log("Successful file write...");
-            };
-            fileWriter.onerror = function (e) {
-                console.log("Failed file write: " + e.toString());
-            };
-            // If data object is not passed in,
-            // create a new Blob instead.
-            if (isAppend) {
-                try {
-                    fileWriter.seek(fileWriter.length);
+        return new Promise((resolve) => {
+            // Create a FileWriter object for our FileEntry
+            fileEntry.createWriter(function (fileWriter) {
+                fileWriter.onwriteend = function () {
+                    console.log("Successful file write...");
+                    resolve(true)
+                };
+                fileWriter.onerror = function (e) {
+                    console.log("Failed file write: " + e.toString());
+                };
+                // If data object is not passed in,
+                // create a new Blob instead.
+                if (isAppend) {
+                    try {
+                        fileWriter.seek(fileWriter.length);
+                    }
+                    catch (e) {
+                        console.log("file doesn't exist!");
+                    }
                 }
-                catch (e) {
-                    console.log("file doesn't exist!");
+                if (!dataObj) {
+                    dataObj = new Blob(['nothing write'], { type: 'text/plain' });
                 }
-            }
-            if (!dataObj) {
-                dataObj = new Blob(['nothing write'], { type: 'text/plain' });
-            }
-            fileWriter.write(dataObj);
-        });
+                fileWriter.write(dataObj);
+            });
+        })
     }
     /**
      * 读取文件内容
@@ -71,9 +81,11 @@ class FilePlugin {
     }
     /* 获取保存文件的根路径 */
     getRootDirEntry() {
+        const requestedBytes = 1024 * 1024 * 10;
         return new Promise(resolve => {
+
             //@ts-ignore
-            window.requestFileSystem(window.PERSISTENT, 0, function (fs) {
+            window.webkitRequestFileSystem(window.PERSISTENT, requestedBytes, function (fs) {
                 //cordova.file.dataDirectory
                 console.log('file system open: ' + fs.name);
                 resolve(fs.root)
@@ -91,11 +103,11 @@ class FilePlugin {
     getFileEntry(dirEntry, fileName) {
         const instance = this;
         return new Promise((resolve, reject) => {
-            dirEntry.getFile(fileName, { create: false, exclusive: false }, function (fileEntry) {
+            dirEntry.getFile(fileName, { create: true, exclusive: false }, function (fileEntry) {
                 console.log("fileEntry is file?" + fileEntry.isFile.toString());
                 resolve(fileEntry)
-            }, () => {
-                console.log('error')
+            }, (e) => {
+                console.log(e)
             });
         })
     }
@@ -106,9 +118,10 @@ class FilePlugin {
      */
     createPersistentFile(fileName, fileObj) {
         const instance = this;
+        const requestedBytes = 1024 * 1024 * 10;
         const promise = new Promise((resolve, reject) => {
             //@ts-ignore
-            window.requestFileSystem(window.PERSISTENT, 0, function (fs) {
+            window.webkitRequestFileSystem(window.PERSISTENT, requestedBytes, function (fs) {
                 //cordova.file.dataDirectory
                 console.log('file system open: ' + fs.name);
                 //fs.root-->DirectoryEntry
@@ -132,12 +145,12 @@ class FilePlugin {
      * @param create 是否创建 true下新建目录若存在则删除，重建，false若存在即不创建
      * @returns 
      */
-     getDirectory(rootDirEntry, dirName, create) {
+    getDirectory(rootDirEntry, dirName, create) {
         return new Promise((resolve) => {
             rootDirEntry.getDirectory(dirName, { create: create }, function (dirEntry) {
                 resolve(dirEntry)
-            }, () => {
-                console.log('error')
+            }, (e) => {
+                console.log(e)
             });
         })
     }

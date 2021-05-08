@@ -113,8 +113,6 @@ export class EarthStore {
       // 设置语言
       const language = new MapboxLanguage({ defaultLanguage: "zh" });
       this._map.addControl(language);
-      // this._map.getCanvas().style.height = "100%";
-      // this._map.getCanvas().style.width = "";
     }
     this.earth.scene.postProcessStages.fxaa.enabled = true;
     GeoVis.Camera.MAX_PITCH = 0;
@@ -128,7 +126,6 @@ export class EarthStore {
     });
 
     this._sceneManager = new SceneManager(earth);
-
     // window.addEventListener("resize", this.handleResize);
     this.handleResize();
     //@ts-ignore
@@ -172,14 +169,14 @@ export class EarthStore {
   }
   handleResize = () => {
     //@ts-ignore
-    // const observer = new ResizeObserver(()=>{
-    //   this._map.resize()
-    // });
-    // const ele = document.getElementById('mapContainer')
-    // observer.observe(ele)
-    window.addEventListener('resize',()=>{
+    const observer = new ResizeObserver(()=>{
       this._map.resize()
-    })
+    });
+    const ele = document.getElementById('mapContainer')
+    observer.observe(ele)
+    // window.addEventListener('resize',()=>{
+    //   this._map.resize()
+    // })
   };
 }
 

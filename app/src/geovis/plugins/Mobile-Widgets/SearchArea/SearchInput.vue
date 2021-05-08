@@ -15,11 +15,17 @@
         @keyup.enter.native="getSuggestions"
         @input="getSuggestions"
       >
-      </van-field>
-      <div class="search-group">
+      <template v-slot:button>
+        <div class="search-group">
         <van-checkbox v-model="coordinateCheckd" v-if="config.convert" class="search-checkbox search-group-item" @click="handleChecked">反查</van-checkbox>
         <van-button size="small" type="default" class="search-button search-group-item" v-if="config.button" plain @click="submit">搜索</van-button>
       </div>
+      </template>
+      </van-field>
+      <!-- <div class="search-group">
+        <van-checkbox v-model="coordinateCheckd" v-if="config.convert" class="search-checkbox search-group-item" @click="handleChecked">反查</van-checkbox>
+        <van-button size="small" type="default" class="search-button search-group-item" v-if="config.button" plain @click="submit">搜索</van-button>
+      </div> -->
     </div>
     <div class="suggest-panel" v-if="suggestions.length > 0">
       <van-cell-group>
@@ -405,7 +411,7 @@ export default {
 }
 .suggest-panel {
   position: absolute;
-  top: 34px;
+  top: 62px;
   left: 0;
   margin: 0 4%;
   width: 92%;
@@ -414,8 +420,7 @@ export default {
   z-index: 5;
 }
 .search-group {
-  width: 95%;
-  margin: auto;
+  // margin: auto;
   display: flex;
   justify-content: space-between;
 }

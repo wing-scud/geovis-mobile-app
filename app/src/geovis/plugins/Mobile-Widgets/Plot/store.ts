@@ -168,12 +168,6 @@ class Plot {
         break;
       case '图片':
         drawHelperType = DrawHelper.Types.IMAGE_MARKER;
-        drawHelper.on('selected', (e) => {
-          const cameraPlugin = window['cordovaPlugin'].camera;
-          cameraPlugin.openFilePickerByThmb('picker-thmb').then((imageUrl) => {
-            e.entity.loadImage(imageUrl)
-          })
-        })
         break;
       case '标签':
         drawHelperType = DrawHelper.Types.LABEL_MARKER

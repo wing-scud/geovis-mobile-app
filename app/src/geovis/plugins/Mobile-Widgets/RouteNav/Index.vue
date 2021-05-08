@@ -9,6 +9,8 @@ import { event } from "./store";
 import PathPlan from "./PathPlan.vue";
 import Navagation from "./Navigation.vue";
 import { earthStore } from "@/geovis/store";
+import state from "./store"
+import mapboxManager from "./mapbox"
 export default Vue.extend({
   name: "RouteNav",
   components: {
@@ -35,7 +37,8 @@ export default Vue.extend({
     earthStore.state.onlyMap = false;
     earthStore.state.mode = "globe3";
     earthStore.earth.scene.mode = GeoVis.SceneMode.SCENE3D;
-    // this.clearMapboxObjects();
+    state.destory();
+    mapboxManager.destory()
   },
   methods: {
     goBack() {
