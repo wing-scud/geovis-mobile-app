@@ -315,7 +315,7 @@ export default {
 }
 
 .route-input {
-  padding: 10px;
+  // padding: 10px;
   background: #0a1024;
   border-radius: 5px;
   margin: 5px;
@@ -340,6 +340,9 @@ export default {
   color:white;
   border-radius:5px;
 }
+// .search-component{
+//   padding: 5px 0!important;
+// }
 </style>
 <style lang="scss" >
 .route-input .van-field__label {
@@ -389,8 +392,7 @@ export default {
 }
 }
 .search-component{
-  padding: 5px 0!important;
-  .van-cell {
+   .van-cell {
     margin: 0 auto;
 }
 }

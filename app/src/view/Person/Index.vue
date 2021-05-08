@@ -83,6 +83,11 @@ export default Vue.extend({
 }
 </style>
 <style lang="scss">
+.mine-page{
+  .van-cell{
+    padding:15px 16px !important;
+  }
+}
 // .mine-page {
 //   .van-nav-bar {
 //     background: $navbar-background;

@@ -126,7 +126,7 @@ ul[class="ipAdress-input"] input[type="text"] {
   height: 23px;
   text-align: center;
   background: transparent;
-  color: black;
+  color: white;
 }
 .ipAdress-input li div {
   position: absolute;

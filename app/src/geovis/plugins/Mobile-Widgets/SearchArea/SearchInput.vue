@@ -365,14 +365,11 @@ export default {
   },
 };
 </script>
-  
-  <!-- Add "scoped" attribute to limit CSS to this component only 如果用element不能加scoped-->
-  <style scoped lang="scss">
+<style scoped lang="scss">
 .search-component {
   position: relative;
-  /* padding: 5px 4%; */
-  width: 90%;
-  margin: auto;
+  width: 95%;
+  margin: 5px auto;
 }
 .search-input {
   width: 100%;
@@ -433,7 +430,7 @@ export default {
 .search-input .van-field__control {
   background-color: $lighter-blue;
   color: $lightgray-word;
-  padding: 2px;
+  padding: 2px 5px;
   border-radius: 5px;
 }
 .suggest-panel .van-cell__title {
@@ -501,8 +498,13 @@ export default {
   width: 48px;
   height: 25px;
 }
-.search-input .van-cell:after {
+.search-input {
+  .van-cell:after {
   border-bottom: 0;
+}
+ .van-field{
+  background-color:$board-color!important;
+}
 }
 
 .search-component {
@@ -535,6 +537,10 @@ export default {
 [class*="van-hairline"]:after {
   border: 0;
 }
+.van-cell{
+  border-bottom:0!important;
+}
+
 }
 
 </style>

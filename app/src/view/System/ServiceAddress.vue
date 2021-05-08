@@ -46,7 +46,7 @@ export default Vue.extend({
   }
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .service-items {
   width: 100%;
 }
@@ -70,5 +70,8 @@ export default Vue.extend({
   width: 30px;
   /* flex-grow: 1; */
   height: 30px;
+}
+.ipAddress{
+  color:$lightgray-word;
 }
 </style>
