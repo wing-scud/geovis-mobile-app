@@ -88,5 +88,4 @@ export default Vue.extend({
     padding:15px 16px !important;
   }
 }
-
 </style>

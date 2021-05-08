@@ -90,8 +90,13 @@ export default {
     });
     this.componentName = "liangcei";
   },
+  deactivated() {
+    plot.removeAll();
+    earthStore.setMapFullScreen(false);
+    earthStore.state.onlyMap = false;
+  },
   beforeDestroy() {
-    earthStore.drawHelper.removeAll();
+    plot.removeAll();
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
   },
@@ -194,9 +199,9 @@ export default {
   justify-content: space-around;
   width: 100%;
   align-items: center;
-  background-color:$navbar-background;
+  background-color: $navbar-background;
   height: 48px;
-  line-height:48px;
+  line-height: 48px;
 }
 .results-popup {
   position: fixed;
@@ -279,26 +284,31 @@ export default {
   display: flex;
   flex-direction: row;
 }
+.unactived {
+  color: white;
+}
+.actived {
+  color: #00a3f1;
+}
 </style>
 <style lang="scss">
-.editor{
-.van-icon-arrow-left:before,.van-icon-success:before{
-  color:white;
+.editor {
+  .van-icon-arrow-left:before,
+  .van-icon-success:before {
+    color: white;
+  }
+  .iconfont {
+    background: $light-blue !important;
+  }
 }
-.iconfont{
-  background:$light-blue!important;
+.property {
+  .icon-container {
+    background: transparent !important;
+  }
 }
-
+.results-popup {
+  .icon-ziyuan {
+    background: $light-blue !important;
+  }
 }
-.property{
-  .icon-container{
-  background:transparent!important;
-}
-}
-.results-popup{
-.icon-ziyuan{
-  background:$light-blue!important;
-}
-}
-
 </style>

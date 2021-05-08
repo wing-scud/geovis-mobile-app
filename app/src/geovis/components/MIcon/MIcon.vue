@@ -62,7 +62,7 @@ export default Vue.extend({
       if (this.circle) {
         borderRadius = "50%";
       }
-      return { color:'white',fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, lineHeight: this.length, backgroundColor: this.backgroundColor };
+      return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, backgroundColor: this.backgroundColor };
     },
   },
   methods: {
@@ -79,14 +79,14 @@ export default Vue.extend({
   height: 30px;
   background-color: white;
   text-align: center;
-  line-height: 30px;
+  line-height: inherit;
   margin: 0 5px 0 5px;
 }
 .unactived {
-  color: #333333;
+  color: white;
 }
 .actived {
-  color: #0372f1e0;
+  color: #00a3f1;
 }
 .label {
   width: 100%;

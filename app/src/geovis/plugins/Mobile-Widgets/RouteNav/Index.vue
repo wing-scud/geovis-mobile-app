@@ -9,8 +9,8 @@ import { event } from "./store";
 import PathPlan from "./PathPlan.vue";
 import Navagation from "./Navigation.vue";
 import { earthStore } from "@/geovis/store";
-import state from "./store"
-import mapboxManager from "./mapbox"
+import state from "./store";
+import mapboxManager from "./mapbox";
 export default Vue.extend({
   name: "RouteNav",
   components: {
@@ -20,39 +20,42 @@ export default Vue.extend({
   data() {
     return {
       componentName: "PathPlan", //Navagation
-      navMode:"live"
+      navMode: "live",
     };
   },
-  mounted() {
-    event.$on("change", (bool,mode) => {
+  activated() {
+    event.$on("change", (bool, mode) => {
       this.componentName = bool ? "Navagation" : "PathPlan";
-      this.navMode = mode
+      this.navMode = mode;
     });
     earthStore.state.mode = "map";
     earthStore.setMapFullScreen(true);
     earthStore.state.onlyMap = true;
   },
-  beforeDestroy() {
-    earthStore.setMapFullScreen(false);
-    earthStore.state.onlyMap = false;
-    earthStore.state.mode = "globe3";
-    earthStore.earth.scene.mode = GeoVis.SceneMode.SCENE3D;
-    state.destory();
-    mapboxManager.destory()
+  deactivated(){
+    this.destory();
   },
   methods: {
     goBack() {
       //@ts-ignore
       this.$router.backward(-1);
     },
+    destory() {
+      state.destory();
+      mapboxManager.destory();
+      earthStore.setMapFullScreen(false);
+      earthStore.state.onlyMap = false;
+      earthStore.state.mode = "globe3";
+      earthStore.earth.scene.mode = GeoVis.SceneMode.SCENE3D;
+    },
   },
 });
 </script>
 <style scoped>
-  .route-title{
-    position: absolute;
-    top:0;
-    left:0;
-    width: 100%;;
-  }
+.route-title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
 </style>

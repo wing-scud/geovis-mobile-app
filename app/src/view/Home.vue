@@ -49,8 +49,8 @@ export default Vue.extend({
       } else {
         Toast("login error");
       }
-    }else{
-      console.log("需要登录")
+    } else {
+      console.log("需要登录");
     }
   },
   methods: {

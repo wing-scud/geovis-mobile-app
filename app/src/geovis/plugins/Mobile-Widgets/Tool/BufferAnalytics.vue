@@ -22,7 +22,7 @@
   </div> -->
   <div class="buffer-plugin">
     <van-nav-bar title="缓冲区" left-text="返回" left-arrow @click-left="goBack" />
-    <MIcon icon="icon-baocun"  size="24px" length="32px" @click="goBack" class="buffer-save"> </MIcon>
+    <MIcon icon="icon-baocun" size="24px" length="32px" @click="goBack" class="buffer-save"> </MIcon>
     <div class="buffer-container">
       <van-tabs type="card">
         <van-tab title="选择图形">
@@ -95,15 +95,24 @@ const BufferAnalytics = Vue.extend({
       ],
     };
   },
-  mounted() {
+  activated() {
     earthStore.setMapFullScreen(true);
     earthStore.state.onlyMap = true;
   },
-  beforeDestroy() {
+  // mounted() {
+  //   earthStore.setMapFullScreen(true);
+  //   earthStore.state.onlyMap = true;
+  // },
+  deactivated() {
     this.clearAll();
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
   },
+  // beforeDestroy() {
+  //   this.clearAll();
+  //   earthStore.setMapFullScreen(false);
+  //   earthStore.state.onlyMap = false;
+  // },
   methods: {
     finishDraw() {
       if (this._drawing) {
@@ -149,16 +158,16 @@ const BufferAnalytics = Vue.extend({
 export default BufferAnalytics;
 </script>
 <style scoped lang="scss">
-.buffer-save{
-  position:fixed;
+.buffer-save {
+  position: fixed;
   top: 8px;
   right: 10px;
-  z-index:999;
+  z-index: 999;
 }
-.buffer-container{
-  position:fixed;
-  bottom:0;
-  width:100%;
+.buffer-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
 }
 .shape-list {
   width: 100%;
@@ -183,19 +192,19 @@ export default BufferAnalytics;
   line-height: 42px;
   display: flex;
   justify-content: space-around;
-  background:$navbar-background;
+  background: $navbar-background;
 }
-.buffer-icon{
-   height:17px;
+.buffer-icon {
+  height: 17px;
 }
-.buffer-tool{
+.buffer-tool {
   text-align: center;
 }
- .buffer-name{
-   color:white;
-   font-size:12px;
-   margin:auto;
- }
+.buffer-name {
+  color: white;
+  font-size: 12px;
+  margin: auto;
+}
 </style>
 <style lang="scss"  >
 .buffer-plugin {
@@ -232,8 +241,8 @@ export default BufferAnalytics;
   .van-tabs__content {
     height: 48px;
     line-height: 48px;
-    border-bottom:$split-line;
-    overflow:hidden;
+    border-bottom: $split-line;
+    overflow: hidden;
   }
   .van-popup--bottom.van-popup--round {
     border-radius: 0;
@@ -246,8 +255,10 @@ export default BufferAnalytics;
     width: 16px;
     height: 16px;
   }
-  .van-nav-bar__title,.van-nav-bar__text,.van-nav-bar .van-icon{
-    color:white;
+  .van-nav-bar__title,
+  .van-nav-bar__text,
+  .van-nav-bar .van-icon {
+    color: white;
   }
   //  .van-action-sheet__content{
   //    display: flex;

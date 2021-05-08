@@ -166,6 +166,15 @@ router.beforeResolve((to, from, next) => {
     }
   }
   back ? "" : router.routerHistory.push(to);
+  const pluginMap = earthStore.state.pluginMap;
+  // if (pluginMap[from.name]) {
+  //   //如果没有触发关闭状态，主动关闭
+  //   if (pluginMap[from.name].active) {
+  //     pluginMap[from.name].active = false;
+  //     console.log(`主动关闭${from.name}`);
+  //   }
+  // }
+
   next(nextPath === to ? undefined : nextPath);
 });
 router.backward = function (step) {
