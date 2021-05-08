@@ -9,7 +9,7 @@
             <van-cell :title="item.name" :value="item.size" size="large" />
           </div>
           <template #right>
-            <van-button square type="danger" @click="downloadCity('item.id')" text="下载" />
+            <van-button square type="danger" @click="downloadCity(item.name)" text="下载" />
           </template>
         </van-swipe-cell>
       </van-tab>
@@ -98,8 +98,8 @@ export default Vue.extend({
       };
       types[type] && types[type]();
     },
-    downloadCity(id){
-      manager.downloadCity(id)
+    downloadCity(name){
+      manager.downloadCity(name)
     }
   },
 });
