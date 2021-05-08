@@ -21,7 +21,7 @@
     </van-row>
   </div> -->
   <div class="buffer-plugin">
-    <van-nav-bar title="导航" left-text="返回" left-arrow @click-left="goBack" />
+    <van-nav-bar title="缓冲区" left-text="返回" left-arrow @click-left="goBack" />
     <MIcon icon="icon-baocun"  size="24px" length="32px" @click="goBack" class="buffer-save"> </MIcon>
     <div class="buffer-container">
       <van-tabs type="card">
@@ -40,20 +40,21 @@
       </van-tabs>
       <div class="buffer-tools">
         <div class="buffer-tool" @click="analyticsArea">
-          <MIcon icon="icon-jiansuo" size="24px" length="32px"></MIcon>
-          <div color="white">检索</div>
+          <MIcon icon="icon-jiansuo" size="24px" length="32px" class="buffer-icon"></MIcon>
+          <div class="buffer-name">检索</div>
         </div>
+
         <div class="buffer-tool" @click="getBuffer">
-          <MIcon icon="icon-huanchongqufenxi" size="24px" length="32px"></MIcon>
-          <div color="white">缓冲区</div>
+          <MIcon icon="icon-huanchongqufenxi" size="24px" length="32px" class="buffer-icon"></MIcon>
+          <div class="buffer-name">缓冲区</div>
         </div>
         <div class="buffer-tool" @click="finishDraw">
-          <MIcon icon="icon-wancheng" size="24px" length="32px"></MIcon>
-          <div color="white">结束绘制</div>
+          <MIcon icon="icon-wancheng" size="24px" length="32px" class="buffer-icon"></MIcon>
+          <div class="buffer-name">结束绘制</div>
         </div>
         <div class="buffer-tool" @click="clearAll">
-          <MIcon icon="icon-qingchu" size="24px" length="32px"></MIcon>
-          <div color="white">清除</div>
+          <MIcon icon="icon-qingchu" size="24px" length="32px" class="buffer-icon"></MIcon>
+          <div class="buffer-name">清除</div>
         </div>
       </div>
     </div>
@@ -179,12 +180,22 @@ export default BufferAnalytics;
 .buffer-tools {
   width: 100%;
   height: 48px;
-  line-height: 48px;
+  line-height: 42px;
   display: flex;
   justify-content: space-around;
   background:$navbar-background;
 }
- 
+.buffer-icon{
+   height:17px;
+}
+.buffer-tool{
+  text-align: center;
+}
+ .buffer-name{
+   color:white;
+   font-size:12px;
+   margin:auto;
+ }
 </style>
 <style lang="scss"  >
 .buffer-plugin {

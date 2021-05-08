@@ -138,4 +138,23 @@ color: white;
   .van-nav-bar__text,.van-icon-arrow-left:before{
     color:$lightgray-word!important;
   }
-  
+  .van-tabs__nav{
+    background:$navbar-background!important;
+  }
+  .van-tab{
+    color:$lightgray-word!important;
+  }
+  .van-tab--active{
+    color:$highlight!important;
+  }
+  .van-tabs__line{
+    background:$highlight!important;
+  }
+  .van-field__label,.van-field__control{
+    color:$lightgray-word!important;
+  }
+  .van-button--default{
+    background:$lighter-blue!important;
+    color:$lightgray-word!important;
+    border:0!important;
+  }

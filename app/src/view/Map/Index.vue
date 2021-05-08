@@ -35,7 +35,7 @@ export default Vue.extend({
 }
 .group-title {
   width: 100%;
-  height: 32px;
+  height: 40px;
 }
 .content {
   width: 100%;

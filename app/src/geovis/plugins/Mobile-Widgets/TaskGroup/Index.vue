@@ -45,7 +45,7 @@ export default Vue.extend({
   color: $lightgray-word;
   background-color: $navbar-background;
   z-index: 2;
-  line-height: 32px;
+  line-height: 40px;
 }
 .custon-arrow-title {
   font-size: 12px;

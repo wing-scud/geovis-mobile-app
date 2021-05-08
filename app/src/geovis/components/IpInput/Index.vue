@@ -101,7 +101,7 @@ export default Vue.extend({
   }
 });
 </script>
-<style scoped>
+<style scoped lang="scss">
 .ipAddress {
   width: calc(100% - 15px);
   padding: 5px 5px 5px 10px;
@@ -126,7 +126,7 @@ ul[class="ipAdress-input"] input[type="text"] {
   height: 23px;
   text-align: center;
   background: transparent;
-  color: white;
+  color: $lightgray-word;
 }
 .ipAdress-input li div {
   position: absolute;
