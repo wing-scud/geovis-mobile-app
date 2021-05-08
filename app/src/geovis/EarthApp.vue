@@ -20,10 +20,10 @@ export default Vue.extend({
     return {
       earthStore: earthStore,
       earthState: earthStore.state,
-      currentMutexPlugin: ""
+      currentMutexPlugin: "",
     };
   },
-  methods: {}
+  methods: {},
 });
 </script>
 
@@ -34,7 +34,7 @@ export default Vue.extend({
   left: 0;
   width: 100%;
   height: 100%;
-  background:$navbar-background;
+  background: $navbar-background;
 }
 .frame {
   position: absolute;

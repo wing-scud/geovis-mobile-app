@@ -78,22 +78,15 @@ export default {
     };
   },
   mounted() {
-    /**
-     *  初始化
-     * 根据路由传来的保存的场景路径，反序列化场景
-     */
-    const earth = earthStore.earth;
-    earthStore.setMapFullScreen(true);
-    earthStore.state.onlyMap = true;
-    types.forEach((item) => {
-      this.totalOptions[item.id] = item.options;
-    });
-    this.componentName = "liangcei";
+    this.init();
   },
   deactivated() {
     plot.removeAll();
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
+  },
+  activeated(){
+    this.init()
   },
   beforeDestroy() {
     plot.removeAll();
@@ -106,6 +99,19 @@ export default {
     },
   },
   methods: {
+    init() {
+      /**
+       *  初始化
+       * 根据路由传来的保存的场景路径，反序列化场景
+       */
+      const earth = earthStore.earth;
+      earthStore.setMapFullScreen(true);
+      earthStore.state.onlyMap = true;
+      types.forEach((item) => {
+        this.totalOptions[item.id] = item.options;
+      });
+      this.componentName = "liangcei";
+    },
     goBack() {
       //@ts-ignore
       this.$router.backward(-1);

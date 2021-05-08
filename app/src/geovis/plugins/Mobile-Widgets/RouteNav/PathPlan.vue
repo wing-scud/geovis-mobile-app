@@ -94,7 +94,6 @@ export default {
     // earthStore.state.onlyMap = false;
     // earthStore.state.mode = "globe3";
     // earthStore.earth.scene.mode = GeoVis.SceneMode.SCENE3D;
-    // this.clearMapboxObjects();
   },
   /**
    * 在变更 (不是替换) 对象或数组时，旧值将与新值相同
