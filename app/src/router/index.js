@@ -32,6 +32,10 @@ const DownloadManager = () => import("../view/Download/Index.vue");
 const ChatIndex = () => import("../view/Chat/Index.vue");
 const News = () => import("../view/News/Index.vue");
 const Test = () => import("../view/Test/index.vue");
+const LiveWeather = () => import('../view/Weather/LiveWeather.vue')
+const SearchCity = () => import("../geovis/plugins/Mobile-Widgets/LiveWeather/SearchCity.vue");
+const Fifteen = () => import("../geovis/plugins/Mobile-Widgets/LiveWeather/Fifteen.vue");
+const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/LiveWeather/TodayDetail.vue");
 const routes = [
   {
     path: "/",
@@ -147,6 +151,25 @@ const routes = [
     path: "/news",
     component: News,
     name: "News"
+  }, {
+    path: "/liveWeather",
+    component: LiveWeather,
+    name: "LiveWeather",
+    children: [
+      {
+        path: "/searchCity",
+        component: SearchCity,
+        name: "SearchCity"
+      }, {
+        path: "/fifteen",
+        component: Fifteen,
+        name: "Fifteen"
+      }, {
+        path: "/todayDetail",
+        component: TodayDetail,
+        name: "TodayDetail"
+      },
+    ]
   }
 ];
 
