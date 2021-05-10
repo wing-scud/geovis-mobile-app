@@ -24,13 +24,15 @@ const actions = {
         mode: 'cors',
         credentials: "include",
         body: formData
-      }).then((res) => res.json())
+      }).then((res) => {            // 保存cookie
+        return res.json()
+      })
         .then((data) => {
           if (data.status === 'ok') {
             //@ts-ignore
             const value = data.data;
             value.password = options.password;
-            value.rememberMe = options.rememberMe
+            value.rememberMe = options.rememberMe;
             const user = new User(value);
             if (value.rememberMe) {
               database.userTable.setItem('user', user).then((user) => {
@@ -38,6 +40,7 @@ const actions = {
                 resolve(true)
               })
             } else {
+              commit("initUser", user);
               resolve(true)
             }
           } else {
@@ -46,7 +49,7 @@ const actions = {
         })
     });
   },
-  loginOut({ commit }) {
+  loginOut({ state, commit }) {
     const database = window['plugin'].database
     return new Promise((resolve, reject) => {
       fetch(loginOutUrl, {
@@ -54,12 +57,11 @@ const actions = {
         mode: 'cors',
         credentials: 'include'
       }).then((res) => res.json())
-        .then((data) => {
+        .then(async (data) => {
           if (data.status === 'ok') {
-            database.userTable.removeItem('user').then((user) => {
-              commit("deleteUser");
-              resolve(true)
-            })
+            state.user.rememberMe && database.userTable.removeItem('user');
+            commit("deleteUser");
+            resolve(true)
           } else {
             reject(false)
           }

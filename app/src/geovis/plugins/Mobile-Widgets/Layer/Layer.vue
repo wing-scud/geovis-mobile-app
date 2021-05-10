@@ -182,7 +182,7 @@ export default Vue.extend({
 }
 .block-button
 {
-  height: 100%;
+  height: 32px;
   border:$highlight-border!important;
   color:$highlight!important;
   background:$board-color;

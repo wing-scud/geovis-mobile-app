@@ -39,20 +39,6 @@ export default Vue.extend({
     };
   },
   mounted() {},
-  async beforeCreate() {
-    const database = window["plugin"].database;
-    const user = await database.userTable.getItem("user");
-    if (user && user.rememberMe) {
-      const result = await this.$store.dispatch("user/login", { username: user.name, password: user.password, rememberMe: user.rememberMe });
-      if (result) {
-        this.$router.push({ name: "Index" });
-      } else {
-        Toast("login error");
-      }
-    } else {
-      console.log("需要登录");
-    }
-  },
   methods: {
     handleChange() {},
   },

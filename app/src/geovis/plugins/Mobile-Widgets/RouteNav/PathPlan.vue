@@ -32,7 +32,6 @@
     </div>
     <div class="route-path">
       <van-tabs v-model="transportation" @click="changeTransportation">
-        <!-- driving -->
         <van-tab title="驾车" name="driving"> </van-tab>
         <van-tab title="自行车" name="bike"> </van-tab>
         <van-tab title="步行" name="foot"> </van-tab>
@@ -90,10 +89,6 @@ export default {
     this.searchLujing.call(this);
   },
   beforeDestroy() {
-    // earthStore.setMapFullScreen(false);
-    // earthStore.state.onlyMap = false;
-    // earthStore.state.mode = "globe3";
-    // earthStore.earth.scene.mode = GeoVis.SceneMode.SCENE3D;
   },
   /**
    * 在变更 (不是替换) 对象或数组时，旧值将与新值相同

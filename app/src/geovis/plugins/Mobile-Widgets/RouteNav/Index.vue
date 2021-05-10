@@ -23,7 +23,7 @@ export default Vue.extend({
       navMode: "live",
     };
   },
-  mounted(){
+  mounted() {
     this.init();
   },
   activated() {
@@ -32,18 +32,18 @@ export default Vue.extend({
   deactivated() {
     this.destory();
   },
-  destroyed(){
+  destroyed() {
     this.destory();
   },
   methods: {
     init() {
+      earthStore.state.mode = "map";
+      earthStore.setMapFullScreen(true);
+      earthStore.state.onlyMap = true;
       event.$on("change", (bool, mode) => {
         this.componentName = bool ? "Navagation" : "PathPlan";
         this.navMode = mode;
       });
-      earthStore.state.mode = "map";
-      earthStore.setMapFullScreen(true);
-      earthStore.state.onlyMap = true;
     },
     goBack() {
       //@ts-ignore

@@ -188,7 +188,6 @@ router.backward = function (step) {
   }
 };
 router.afterEach((to, from) => {
-  console.log("afterEach");
   if (to.name === from.name) {
     return;
   }

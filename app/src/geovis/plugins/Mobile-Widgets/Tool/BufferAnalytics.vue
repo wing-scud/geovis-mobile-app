@@ -1,25 +1,4 @@
 <template>
-  <!-- <div class="buffer-plugin">
-    <van-row class="row">
-      <van-col span="22"
-        ><span class="text"> 缓冲区半径&nbsp;{{ radius }} m</span></van-col
-      >
-    </van-row>
-    <van-row class="row-slider" type="flex" align="center">
-      <van-col span="22" offset="1"> <van-slider v-model="radius" :min="1" :max="1000" @change="changeRadius"> </van-slider></van-col>
-    </van-row>
-    <van-row class="row">
-      <van-col span="8"> <van-button plain hairline class="buffer-button" type="primary" @click="show = true"> 选择图形</van-button></van-col>
-      <van-col span="8" offset="8"><van-button plain hairline class="buffer-button" type="primary" @click="finishDraw">结束绘制</van-button></van-col>
-    </van-row>
-    <van-action-sheet v-model="show" :actions="actions" @select="select" />
-    <van-row class="row" gutter="20">
-      <van-col span="6"><van-button plain hairline class="buffer-button" type="primary" @click="clearAll"> 清除</van-button></van-col>
-      <van-col span="6"><van-button plain hairline class="buffer-button" type="primary" @click="getBuffer"> 缓冲区</van-button></van-col>
-      <van-col span="6"><van-button plain hairline class="buffer-button" type="primary" @click="analyticsArea"> 检索</van-button></van-col>
-      <van-col span="6"><van-button plain hairline class="buffer-button" type="primary" @click="goBack">退出</van-button></van-col>
-    </van-row>
-  </div> -->
   <div class="buffer-plugin">
     <van-nav-bar title="缓冲区" left-text="返回" left-arrow @click-left="goBack" />
     <MIcon icon="icon-baocun" size="24px" length="32px" @click="goBack" class="buffer-save"> </MIcon>
@@ -99,20 +78,15 @@ const BufferAnalytics = Vue.extend({
     earthStore.setMapFullScreen(true);
     earthStore.state.onlyMap = true;
   },
-  // mounted() {
-  //   earthStore.setMapFullScreen(true);
-  //   earthStore.state.onlyMap = true;
-  // },
-  deactivated() {
+  mounted() {
+    earthStore.setMapFullScreen(true);
+    earthStore.state.onlyMap = true;
+  },
+  beforeDestroy() {
     this.clearAll();
     earthStore.setMapFullScreen(false);
     earthStore.state.onlyMap = false;
   },
-  // beforeDestroy() {
-  //   this.clearAll();
-  //   earthStore.setMapFullScreen(false);
-  //   earthStore.state.onlyMap = false;
-  // },
   methods: {
     finishDraw() {
       if (this._drawing) {
@@ -145,7 +119,7 @@ const BufferAnalytics = Vue.extend({
       earthStore.setMapFullScreen(false);
       earthStore.state.onlyMap = false;
       //@ts-ignore
-      this.$router.backward(-1);
+      earthStore.togglePlugin('BufferAnalytics',false)
     },
     getBuffer() {
       this.buffer = generateBuffer(this.type, this._primitive, this.radius);
