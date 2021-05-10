@@ -7,8 +7,17 @@ import { earthStore, EarthStore } from "./geovis/store/index.js";
 import mobileStore from "./store/index.js"
 import router from "./router/index.js"
 import "./api/index";
-// import "./cordova/index.js"
-// 适配
+
+const agent = navigator.userAgent;
+if (agent.includes('Windows')) {
+// window 下平台
+} else if (agent.includes('emss')) {
+  //真机mate20
+} else {
+  //其他手机平台
+}
+
+
 Vue.use(Vant);
 Vue.use({
   install: (plugin: any, options: any) => {
