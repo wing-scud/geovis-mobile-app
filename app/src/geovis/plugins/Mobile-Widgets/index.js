@@ -6,3 +6,4 @@ Vue.component("WeatherInfor", () => import("./LiveWeather/WeatherInfor.vue"));
 Vue.component("Location", () => import("./Location/Location.vue"));
 Vue.component("TaskGroup", () => import("./TaskGroup/Index.vue"));
 Vue.component("BriefAddress", () => import("./Address/BriefAddress.vue"));
+Vue.component("TodayDetail", () => import("./LiveWeather/TodayDetail.vue"));
