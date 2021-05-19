@@ -112,6 +112,17 @@
                 "active": false,
                 "componentIcon": true,
                 "mutex": false
+            },
+            {
+                "id": "FPS",
+                "parent": "Map",
+                "type": "component",
+                "icon": "icon-shikuangqixiang",
+                "name": "渲染帧率",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
+                "mutex": false
             }
         ]
     },
@@ -168,7 +179,8 @@
                 "active": false,
                 "componentIcon": true,
                 "mutex": false
-            }, {
+            },
+            {
                 "id": "FeatureWeather",
                 "parent": "Index",
                 "type": "route",
@@ -178,7 +190,8 @@
                 "active": false,
                 "componentIcon": true,
                 "mutex": false
-            }, {
+            },
+            {
                 "id": "Communication",
                 "parent": "Index",
                 "type": "route",
@@ -188,7 +201,8 @@
                 "active": false,
                 "componentIcon": true,
                 "mutex": false
-            }, {
+            },
+            {
                 "id": "Infor",
                 "parent": "Index",
                 "type": "route",

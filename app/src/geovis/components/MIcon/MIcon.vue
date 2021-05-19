@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div :class="[icon, 'iconfont', 'icon-container', actived ? 'actived' : 'unactived', customClass]" :style="styleComputed" @click="handleClick" :name="name"></div>
+  <div :class="customClass">
+    <div :class="[icon, 'iconfont', 'icon-container', actived ? 'actived' : 'unactived']" :style="styleComputed" @click="handleClick" :name="name"></div>
     <span class="label" v-if="label !== ''" :style="{ color: labelColor }">{{ label }}</span>
   </div>
 </template>

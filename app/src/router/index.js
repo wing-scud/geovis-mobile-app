@@ -32,10 +32,11 @@ const DownloadManager = () => import("../view/Download/Index.vue");
 const ChatIndex = () => import("../view/Chat/Index.vue");
 const News = () => import("../view/News/Index.vue");
 const Test = () => import("../view/Test/index.vue");
-const LiveWeather = () => import('../view/Weather/LiveWeather.vue')
-const SearchCity = () => import("../geovis/plugins/Mobile-Widgets/LiveWeather/SearchCity.vue");
-const Fifteen = () => import("../geovis/plugins/Mobile-Widgets/LiveWeather/Fifteen.vue");
-const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/LiveWeather/TodayDetail.vue");
+const FeatureWeather = () => import('../view/Weather/FeatureWeather.vue')
+const SearchCity = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/SearchCity.vue");
+const Fifteen = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/Fifteen.vue");
+const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/TodayDetail.vue");
+const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LiveWeather/Index.vue");
 const routes = [
   {
     path: "/",
@@ -59,7 +60,8 @@ const routes = [
           { path: "searchArea", component: SearchArea, name: "SearchArea" },
           { path: "routeNav", component: RouteNav, name: "RouteNav" },
           { path: "plot", component: Plot, name: "Plot" },
-          { path: "bufferAnalytics", component: BufferAnalytics, name: "BufferAnalytics" }
+          { path: "bufferAnalytics", component: BufferAnalytics, name: "BufferAnalytics" },
+          { path: "liveWeather", component: LiveWeather, name: "LiveWeather" }
         ],
         meta: {
           keepAlive: true
@@ -152,9 +154,9 @@ const routes = [
     component: News,
     name: "News"
   }, {
-    path: "/liveWeather",
-    component: LiveWeather,
-    name: "LiveWeather",
+    path: "/featureWeather",
+    component: FeatureWeather,
+    name: "FeatureWeather",
     children: [
       {
         path: "/searchCity",

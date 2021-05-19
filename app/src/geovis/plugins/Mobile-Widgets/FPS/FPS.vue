@@ -1,29 +1,30 @@
 <template>
-  <div />
+    <div />
 </template>
 
 <script lang="ts">
-import { earthStore } from "@/geovis/store";
+import { earthStore } from '@/geovis/store';
 import Vue from "vue";
+
 const FPS = Vue.extend({
   name: "FPS",
-  mounted() {
-    earthStore.earth.scene.debugShowFramesPerSecond = true;
+  mounted(){
+      earthStore.earth.scene.debugShowFramesPerSecond = true;
   },
-  destroyed() {
+  destroyed(){
     earthStore.earth.scene.debugShowFramesPerSecond = false;
-  },
+  }
 });
 
 export default FPS;
 </script>
 
-<style>
-.cesium-performanceDisplay-defaultContainer ,.cesium-performanceDisplay{
+<style lang="scss">
+.cesium-performanceDisplay-defaultContainer{
   position: absolute;
-  top: 36px;
+  top: 0;
   right: 10px;
-  background: rgb(38, 50, 56);
+  background: transparent;
   padding: 10px;
   z-index: 5;
   user-select: none;
