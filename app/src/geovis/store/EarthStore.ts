@@ -165,7 +165,8 @@ export class EarthStore {
     }
   }
   setMapFullScreen(bool) {
-    this.state.fullScreen = bool
+    this.state.fullScreen = bool;
+    this._map&&this._map.resize()
   }
   handleResize = () => {
     //@ts-ignore
@@ -181,9 +182,9 @@ export class EarthStore {
     const MutationObserver = window.MutationObserver || window.WebkitMutaionObserver || window.MozMutationObserver;
     // 自定义回函数,实现当监听到元素变化,实现的内容
     const callback = (records) => {
-      for (const record of records) {
-        console.log(record)
-      }
+      // for (const record of records) {
+      //   console.log(record)
+      // }
       this._map.resize()
     }
     // 获取实例

@@ -71,8 +71,8 @@ export default Vue.extend({
       manager.seconds = this.formatDateToHours(date);
     },
     destory() {
-      earthStore.state.mode = "globe3";
       manager.destory();
+      earthStore.state.mode = "globe3";
       earthStore.setMapFullScreen(false);
       earthStore.state.onlyMap = false;
     },

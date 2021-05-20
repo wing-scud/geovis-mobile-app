@@ -1,55 +1,52 @@
 import { earthStore } from "@/geovis/store"
 import * as mapboxWind from "@sakitam-gis/mapbox-wind";
-const vectorAddress = "http://localhost:8091/weather/mapboxVector"
-const scalarAddress = "http://localhost:8091/weather/mapboxScalar"
-const list = [
-    {
-        name: "风",
-        id: "wind",
-        type: "vector",
-        icon: "icon-baocun",
-    },
-    {
-        name: "云",
-        id: "cloud",
-        type: "scalar",
-        icon: "icon-baocun",
-    },
-    {
-        name: "降水",
-        id: "rainfall",
-        type: "scalar",
-        icon: "icon-baocun",
-    },
-    {
-        name: "温度",
-        id: "temperature",
-        type: "scalar",
-        icon: "icon-baocun",
-    },
-    {
-        name: "气压",
-        id: "airPressure",
-        type: "scalar",
-        icon: "icon-baocun",
-    },
-    {
-        name: "湿度",
-        id: "humidity",
-        type: "scalar",
-        icon: "icon-baocun",
-    },
-]
+const vectorAddress = "http://localhost:8091/weather/mapboxVector";
+const scalarAddress = "http://localhost:8091/weather/mapboxScalar";
+const phenomenaListAddress = "http://localhost:8091/static/weather/weather-config.json"
+// const list = [
+//     {
+//         name: "风",
+//         id: "wind",
+//         type: "vector",
+//         icon: "icon-baocun",
+//     },
+//     {
+//         name: "云",
+//         id: "cloud",
+//         type: "scalar",
+//         icon: "icon-baocun",
+//     },
+//     {
+//         name: "降水",
+//         id: "rainfall",
+//         type: "scalar",
+//         icon: "icon-baocun",
+//     },
+//     {
+//         name: "温度",
+//         id: "temperature",
+//         type: "scalar",
+//         icon: "icon-baocun",
+//     },
+//     {
+//         name: "气压",
+//         id: "airPressure",
+//         type: "scalar",
+//         icon: "icon-baocun",
+//     },
+//     {
+//         name: "湿度",
+//         id: "humidity",
+//         type: "scalar",
+//         icon: "icon-baocun",
+//     },
+// ]
+const list = []
 async function remoteFetch(type, datatype, time, name) {
     const url = type === "vector" ? vectorAddress : scalarAddress;
-    const contentType = datatype === "json" ? "application/json" : "image/png"
     const remote = await fetch(url, {
         method: "post",
         mode: 'cors',
-        // credentials: "include",
-        // headers: {
-        //     "Content-Type": contentType
-        // },
         headers: {
             'Content-Type': 'application/json'
         },
@@ -58,10 +55,9 @@ async function remoteFetch(type, datatype, time, name) {
             time: time,
             type: datatype
         })
-    }).then(res => {
-        const data = datatype === "json" ? (res.json()) : (res.blob());
-        return data
-    })
+    }).then(res =>
+        res.json()
+    )
     return remote;
 }
 class WeatherManager {
@@ -88,7 +84,7 @@ class WeatherManager {
         return this._mode
     }
     public set mode(value: string) {
-        this.close();
+        // this.close();
         this._mode = value;
         this.update()
     }
@@ -96,8 +92,7 @@ class WeatherManager {
         return this._seconds;
     }
     public set seconds(value: number) {
-        this.close();
-        value = 1621944000;
+        // this.close();
         this._seconds = value;
         this.update();
     }
@@ -109,11 +104,11 @@ class WeatherManager {
     }
     constructor(map) {
         this._map = map;
-        this._mode = "wind";
         this._layer = {
             vector: undefined,
             scalar: undefined
         }
+        this.initList()
     }
     // 加载json
     vectorLoad(data, imgUrl) {
@@ -239,40 +234,31 @@ class WeatherManager {
     scalarLoad(data, imgUrl) {
         const map = this._map;
         const color = {
-            temp: [
-                [0, [98, 113, 183, 255]],
-                [1, [57, 97, 159, 255]],
-                [3, [74, 148, 169, 255]],
-                [5, [77, 141, 123, 255]],
-                [7, [83, 165, 83, 255]],
-                [9, [53, 159, 53, 255]],
-                [11, [167, 157, 81, 255]],
-                [13, [159, 127, 58, 255]],
-                [15, [161, 108, 92, 255]],
-                [17, [129, 58, 78, 255]],
-                [19, [175, 80, 136, 255]],
-                [21, [117, 74, 147, 255]],
-                [24, [109, 97, 163, 255]],
-                [27, [68, 105, 141, 255]],
-                [29, [92, 144, 152, 255]],
-                [36, [125, 68, 165, 255]],
-                [46, [231, 215, 215, 255]],
-                [51, [219, 212, 135, 255]],
-                [77, [205, 202, 112, 255]],
-                [104, [128, 128, 128, 255]]
-            ],
+            temp: [[203, [115, 70, 105, 255]],
+            [218, [202, 172, 195, 255]],
+            [233, [162, 70, 145, 255]],
+            [248, [143, 89, 169, 255]],
+            [258, [157, 219, 217, 255]],
+            [265, [106, 191, 181, 255]],
+            [269, [100, 166, 189, 255]],
+            [273.15, [93, 133, 198, 255]],
+            [274, [68, 125, 99, 255]],
+            [283, [128, 147, 24, 255]],
+            [294, [243, 183, 4, 255]],
+            [303, [232, 83, 25, 255]],
+            [320, [71, 14, 0, 255]]]
         };
         const header = data.header;
         //@ts-ignore
-        const tempInterpolateColor = color.wind.reduce((result, item, key) => result.concat(item[0], 'rgba(' + item[1].join(',') + ')'), []);
+        const tempInterpolateColor = color.temp.reduce((result, item, key) => result.concat(item[0], 'rgba(' + item[1].join(',') + ')'), []);
         const fillLayer = new mapboxWind.ScalarFill('tempImage', {
             "type": "image",
             "url": imgUrl,
             "extent": [
-                // [uheader.lo1, uheader.la2],
-                // [uheader.lo1, uheader.la1],
-                // [uheader.lo2, uheader.la2],
-                // [uheader.lo2, uheader.la1]
+                // [header.lo1, header.la2],
+                // [header.lo1, header.la1],
+                // [header.lo2, header.la2],
+                // [header.lo2, header.la1]
                 [-180, 85.051129],
                 [-180, -85.051129],
                 [180, 85.051129],
@@ -312,28 +298,49 @@ class WeatherManager {
     }
     async update() {
         const mode = this._mode;
-        const seconds = this._seconds;
-        const value = list.find((item) => item.id === mode);
-        if (value && value.type === "vector") {
-            const data = await remoteFetch('vector', 'json', seconds, mode);
-            const imgUrl = `${vectorAddress}?type=png&name=${mode}&time=${seconds}`
-            this.vectorLoad(data, imgUrl)
-        } else {
-            // 标量
-            const data = await remoteFetch('scalar', 'json', seconds, mode);
-            const imgUrl = `${scalarAddress}?type=png&name=${mode}&time=${seconds}`
-            this.scalarLoad(data, imgUrl)
+        let seconds = this._seconds;
+        if (mode && seconds) {
+            const value = list.find((item) => item.id === mode);
+            if (value && value.type === "vector") {
+                seconds = 1621944000;
+                const data = await remoteFetch('vector', 'json', seconds, mode);
+                const imgUrl = `${vectorAddress}?type=png&name=${mode}&time=${seconds}`
+                this.vectorLoad(data, imgUrl)
+            } else {
+                // 标量
+                seconds = 1621922400;
+                const data = await remoteFetch('scalar', 'json', seconds, mode);
+                const imgUrl = `${scalarAddress}?type=png&name=${mode}&time=${seconds}`
+                this.scalarLoad(data, imgUrl)
+            }
         }
     }
     close() {
+        const map = this._map;
+        const vectorLayer = this._layer.vector;
+        const scalarLayer = this._layer.scalar;
+        vectorLayer && map.removeLayer(vectorLayer.id);
+        scalarLayer && map.removeLayer(scalarLayer.id);
+    }
+    initList() {
+        fetch(phenomenaListAddress).then((res) => res.json()).then((data) => {
+            const obj = data.fileMap;
+            Object.keys(obj).map((id) => {
+                list.push({
+                    name: obj[id].name,
+                    id: id,
+                    type: obj[id].type,
+                    icon: "icon-" + id,
+                })
+            })
+        });
     }
     destory() {
-        const map = this._map;
-        const windLayer = this._layer.vector
-        map.addLayer(windLayer);
+        this.close()
     }
 }
 
 const manager = new WeatherManager(earthStore.map);
+window['manager'] = manager
 export default manager;
 export { list };

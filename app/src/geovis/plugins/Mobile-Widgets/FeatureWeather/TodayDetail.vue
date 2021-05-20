@@ -1,5 +1,5 @@
 <template>
-  <div class="full" :style="{ backgroundImage: backgroundImage }">
+  <div class="full">
     <van-nav-bar :title="city" left-text="返回" left-arrow @click-left="goBack" @click-right="goSearchPage">
       <template #right>
         <van-icon name="search" size="18" />
@@ -8,24 +8,32 @@
     <div class="live-weather-content">
       <div class="weather-day-brief">
         <div class="weather-temperature">
-          {{ temperture }}
+          {{ dayDetail.temp }}
           <span class="temperature-unit"> °C </span>
         </div>
-        <div class="weather-descripe">{{ descripe }}</div>
+        <div class="weather-descripe">{{ dayDetail.weather }}</div>
       </div>
-      <div class="weather-toast">雷雨大风天气黄色预警：-----------</div>
-    <div class="sun-intro">
-      <span class="sun-item">
-        日出8:00
-      </span>
-      <span class="sun-item">
-        日落17:00
-      </span>
-    </div>
+      <div class="weather-toast">{{ dayDetail.describe }}</div>
+      <div class="sun-intro">
+        <span class="sun-item"> 日出{{ dayDetail.sunrise }} </span>
+        <span class="sun-item"> 日落{{ dayDetail.sunset }} </span>
+      </div>
       <div class="weather-basic">
-        <div class="basic-item" v-for="i in 4" :key="i">
-          <div>2级</div>
-          <div class="basic-item-intro">北风</div>
+        <div class="basic-item">
+          <div>{{ dayDetail.windDir }}</div>
+          <div class="basic-item-intro">风向</div>
+        </div>
+        <div class="basic-item">
+          <div>{{ dayDetail.humidity }}</div>
+          <div class="basic-item-intro">湿度</div>
+        </div>
+        <div class="basic-item">
+          <div>{{ dayDetail.pressure }}</div>
+          <div class="basic-item-intro">气压</div>
+        </div>
+        <div class="basic-item">
+          <div>{{ dayDetail.windPower }}</div>
+          <div class="basic-item-intro">风力</div>
         </div>
       </div>
       <div class="weather-24-table">
@@ -47,26 +55,24 @@
           <td class="air-detail-item" v-for="air in getTypeArray(timeDetails, 'air')" :key="air">{{ air }}</td>
         </tr>
       </div>
-      <van-row class="weather-nearday" v-for="i in 3" :key="i">
-        <van-col span="16">今天天气-阴转雷阵雨</van-col>
-        <van-col span="8">32°/20°</van-col>
+      <van-row class="weather-nearday" v-for="day in nearDays" :key="day.date">
+        <van-col span="16" class="near-week">{{ day.week }}·{{ day.weather }}</van-col>
+        <van-col span="8" class="near-weather">{{ day.minTemp }}/{{ day.maxTemp }} °C</van-col>
       </van-row>
-      <div class="look-15-weather">
-        查看近15日天气
-      </div>
+      <div class="look-15-weather">查看近15日天气</div>
     </div>
   </div>
 </template>
   <script lang="ts">
 import Vue from "vue";
+import manager from "./store";
 export default Vue.extend({
   name: "TodayDetail",
   data() {
     return {
-      city: "",
+      city: "苏州",
+      dayDetail: {},
       backgroundImage: "",
-      temperture: "37",
-      descripe: "阴",
       timeDetails: [
         {
           time: "8:00",
@@ -160,7 +166,13 @@ export default Vue.extend({
           air: "优",
         },
       ],
+      nearDays: [],
     };
+  },
+  async mounted() {
+    this.dayDetail = await manager.getTodayDetail();
+    const fifteenData = await manager.getFifteenWeather();
+    this.nearDays = fifteenData.slice(0, 3);
   },
   methods: {
     goBack() {
@@ -176,11 +188,8 @@ export default Vue.extend({
   },
 });
 </script>
-  <style lang="scss" scoped>
+<style lang="scss" scoped>
 .live-weather-content {
-  // position: relative;
-  // top:0;
-  // left:0;
   color: white;
   text-align: center;
 }
@@ -217,20 +226,20 @@ export default Vue.extend({
   font-size: 16px;
   line-height: 48px;
 }
-.sun-intro{
-  padding:5px 0;
+.sun-intro {
+  padding: 5px 0;
 }
-.sun-item{
+.sun-item {
   display: inline-block;
-  width:120px;
-  height:24px;
+  width: 120px;
+  height: 24px;
   font-size: 16px;
 }
 .weather-basic {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  margin:10px 0;
+  margin: 10px 0;
   font-size: 16px;
 }
 .basic-item {
@@ -276,17 +285,24 @@ export default Vue.extend({
 .weather-nearday {
   height: 32px;
   line-height: 32px;
-  padding: 8px 6px;
+  padding: 8px 24px;
   font-size: 16px;
+  // text-align: left;
 }
-.look-15-weather{
+.near-week{
+  text-align: left;
+}
+.near-weather{
+  text-align: right;
+}
+.look-15-weather {
   position: absolute;
   bottom: 5px;
-  left:0;
-  width:calc(100% - 48px);
+  left: 0;
+  width: calc(100% - 48px);
   height: 32px;
-  margin:0 12px;
-  padding:8px 12px;
+  margin: 0 12px;
+  padding: 8px 12px;
   border-radius: 12px;
   line-height: 32px;
   font-size: 18px;
