@@ -1,11 +1,11 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2396389 */
-  src: url('iconfont.eot?t=1620462884474'); /* IE9 */
-  src: url('iconfont.eot?t=1620462884474#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('iconfont.woff2?t=1620462884474') format('woff2'),
-       url('iconfont.woff?t=1620462884474') format('woff'),
-       url('iconfont.ttf?t=1620462884474') format('truetype'),
-       url('iconfont.svg?t=1620462884474#iconfont') format('svg');
+  src: url('iconfont.eot?t=1621578198902'); /* IE9 */
+  src: url('iconfont.eot?t=1621578198902#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1621578198902') format('woff2'),
+       url('iconfont.woff?t=1621578198902') format('woff'),
+       url('iconfont.ttf?t=1621578198902') format('truetype'),
+       url('iconfont.svg?t=1621578198902#iconfont') format('svg');
 }
 
 .iconfont {
@@ -14,6 +14,34 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-humidity:before {
+  content: "\e60f";
+}
+
+.icon-temperature:before {
+  content: "\e620";
+}
+
+.icon-cloud:before {
+  content: "\e6cf";
+}
+
+.icon-rain:before {
+  content: "\e633";
+}
+
+.icon-salt:before {
+  content: "\e643";
+}
+
+.icon-wind:before {
+  content: "\e610";
+}
+
+.icon-pm25:before {
+  content: "\e7e7";
 }
 
 .icon-lujingguihua:before {

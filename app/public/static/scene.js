@@ -1,4 +1,5 @@
-const SERVER_ROOT = "http://49.234.121.120:8091";
+// const SERVER_ROOT = "http://49.234.121.120:8092";
+const SERVER_ROOT = "http://localhost:8092";
 const TILESERVER_ROOT = "http://localhost:8082";
 const GEOSERVER_ROOT = "http://localhost:8088";
 const MODELSERVER_ROOT = "http://localhost:4000";
@@ -117,7 +118,7 @@ window.sceneData = {
             waterMask: false,
             // url:"http://192.168.13.32/tiles/dem",
             proxy: {
-              getURL: function(url) {
+              getURL: function (url) {
                 return `${SERVER_ROOT}/proxy/` + url;
               }
             },
@@ -132,7 +133,7 @@ window.sceneData = {
             }
             // 可选参数， bounding
           }
-        },        {
+        }, {
           id: "global-Terrain-8x",
           parentId: "terrain-layer",
           name: "全球海陆融合地形(8倍)",
@@ -151,7 +152,7 @@ window.sceneData = {
             waterMask: false,
             // url:"http://192.168.13.32/tiles/dem",
             proxy: {
-              getURL: function(url) {
+              getURL: function (url) {
                 return `${SERVER_ROOT}/proxy/` + url;
               }
             },

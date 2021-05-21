@@ -1,14 +1,20 @@
 <template>
-  <div class="left-bottom-weather">阴天 12°</div>
+  <div class="left-bottom-weather">{{data.weather}}</div>
 </template>
 <script lang="ts">
 import Vue from "vue";
+import manager from "./store";
 export default Vue.extend({
   name: "WeatherInfor",
   data() {
-    return {};
+    return {
+      data:""
+    };
   },
-  methods: {}
+  async mounted() {
+    this.data = await manager.getBriefWeather();
+  },
+  methods: {},
 });
 </script>
 <style scoped>

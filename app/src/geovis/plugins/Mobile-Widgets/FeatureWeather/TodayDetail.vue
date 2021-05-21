@@ -1,7 +1,7 @@
 <template>
   <div class="full">
     <van-nav-bar :title="city" left-text="返回" left-arrow @click-left="goBack" @click-right="goSearchPage">
-      <template #right>
+      <template v-slot:right>
         <van-icon name="search" size="18" />
       </template>
     </van-nav-bar>
@@ -38,21 +38,21 @@
       </div>
       <div class="weather-24-table">
         <tr class="time-detail">
-          <th v-for="time in getTypeArray(timeDetails, 'time')" :key="time">
+          <th v-for="(time, index) in getTypeArray(timeDetails, 'time')" :key="index">
             <div class="detail-item">{{ time }}</div>
           </th>
         </tr>
         <tr class="temperature-detail">
-          <td v-for="temperature in getTypeArray(timeDetails, 'temperature')" :key="temperature">{{ temperature }}</td>
+          <td v-for="(temperature, index) in getTypeArray(timeDetails, 'temperature')" :key="index">{{ temperature }}</td>
         </tr>
         <tr class="weather-detail">
-          <td v-for="weather in getTypeArray(timeDetails, 'weather')" :key="weather">{{ weather }}</td>
+          <td v-for="(weather, index) in getTypeArray(timeDetails, 'weather')" :key="index">{{ weather }}</td>
         </tr>
         <tr class="wind-detail">
-          <td v-for="wind in getTypeArray(timeDetails, 'wind')" :key="wind">{{ wind }}</td>
+          <td v-for="(wind, index) in getTypeArray(timeDetails, 'wind')" :key="index">{{ wind }}</td>
         </tr>
         <tr class="air-detail">
-          <td class="air-detail-item" v-for="air in getTypeArray(timeDetails, 'air')" :key="air">{{ air }}</td>
+          <td class="air-detail-item" v-for="(air, index) in getTypeArray(timeDetails, 'air')" :key="index">{{ air }}</td>
         </tr>
       </div>
       <van-row class="weather-nearday" v-for="day in nearDays" :key="day.date">
@@ -63,7 +63,7 @@
     </div>
   </div>
 </template>
-  <script lang="ts">
+<script lang="ts">
 import Vue from "vue";
 import manager from "./store";
 export default Vue.extend({
@@ -72,9 +72,18 @@ export default Vue.extend({
     return {
       city: "苏州",
       dayDetail: {},
-      backgroundImage: "",
       timeDetails: [
         {
+          id: "1",
+          time: "8:00",
+          temperature: "22°",
+          weather: "阴",
+          wind: "东2级",
+          air: "优",
+        },
+        { id: "2", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        {
+          id: "3",
           time: "8:00",
           temperature: "22°",
           weather: "阴",
@@ -82,6 +91,7 @@ export default Vue.extend({
           air: "优",
         },
         {
+          id: "4",
           time: "8:00",
           temperature: "22°",
           weather: "阴",
@@ -89,6 +99,7 @@ export default Vue.extend({
           air: "优",
         },
         {
+          id: "5",
           time: "8:00",
           temperature: "22°",
           weather: "阴",
@@ -96,6 +107,7 @@ export default Vue.extend({
           air: "优",
         },
         {
+          id: "6",
           time: "8:00",
           temperature: "22°",
           weather: "阴",
@@ -103,6 +115,7 @@ export default Vue.extend({
           air: "优",
         },
         {
+          id: "7",
           time: "8:00",
           temperature: "22°",
           weather: "阴",
@@ -110,61 +123,18 @@ export default Vue.extend({
           air: "优",
         },
         {
+          id: "8",
           time: "8:00",
           temperature: "22°",
           weather: "阴",
           wind: "东2级",
           air: "优",
         },
-        {
-          time: "8:00",
-          temperature: "22°",
-          weather: "阴",
-          wind: "东2级",
-          air: "优",
-        },
-        {
-          time: "8:00",
-          temperature: "22°",
-          weather: "阴",
-          wind: "东2级",
-          air: "优",
-        },
-        {
-          time: "8:00",
-          temperature: "22°",
-          weather: "阴",
-          wind: "东2级",
-          air: "优",
-        },
-        {
-          time: "8:00",
-          temperature: "22°",
-          weather: "阴",
-          wind: "东2级",
-          air: "优",
-        },
-        {
-          time: "8:00",
-          temperature: "22°",
-          weather: "阴",
-          wind: "东2级",
-          air: "优",
-        },
-        {
-          time: "8:00",
-          temperature: "22°",
-          weather: "阴",
-          wind: "东2级",
-          air: "优",
-        },
-        {
-          time: "8:00",
-          temperature: "22°",
-          weather: "阴",
-          wind: "东2级",
-          air: "优",
-        },
+        { id: "9", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "10", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "11", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "12", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "13", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
       ],
       nearDays: [],
     };
@@ -172,7 +142,7 @@ export default Vue.extend({
   async mounted() {
     this.dayDetail = await manager.getTodayDetail();
     const fifteenData = await manager.getFifteenWeather();
-    this.nearDays = fifteenData.slice(0, 3);
+    this.nearDays = this.getNearData(fifteenData.slice(0, 3));
   },
   methods: {
     goBack() {
@@ -184,6 +154,13 @@ export default Vue.extend({
     },
     getTypeArray(arrayObject, type) {
       return arrayObject.map((item) => item[type]);
+    },
+    getNearData(array) {
+      const dayDescribe = ["今天", "明天", "后天"];
+      return array.map((item, index) => {
+        item.week = dayDescribe[index];
+        return item;
+      });
     },
   },
 });
@@ -289,10 +266,10 @@ export default Vue.extend({
   font-size: 16px;
   // text-align: left;
 }
-.near-week{
+.near-week {
   text-align: left;
 }
-.near-weather{
+.near-weather {
   text-align: right;
 }
 .look-15-weather {

@@ -1,10 +1,59 @@
 {
   "id": "2396389",
-  "name": "android-gis",
+  "name": "app-mobile-geovis",
   "font_family": "iconfont",
   "css_prefix_text": "icon-",
   "description": "",
   "glyphs": [
+    {
+      "icon_id": "4236632",
+      "name": "湿度",
+      "font_class": "humidity",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "5147491",
+      "name": "温度",
+      "font_class": "temperature",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "8361846",
+      "name": "云",
+      "font_class": "cloud",
+      "unicode": "e6cf",
+      "unicode_decimal": 59087
+    },
+    {
+      "icon_id": "8872002",
+      "name": "降水量",
+      "font_class": "rain",
+      "unicode": "e633",
+      "unicode_decimal": 58931
+    },
+    {
+      "icon_id": "9556634",
+      "name": "盐度",
+      "font_class": "salt",
+      "unicode": "e643",
+      "unicode_decimal": 58947
+    },
+    {
+      "icon_id": "11464305",
+      "name": "风",
+      "font_class": "wind",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "19990403",
+      "name": "pm2.5",
+      "font_class": "pm25",
+      "unicode": "e7e7",
+      "unicode_decimal": 59367
+    },
     {
       "icon_id": "12574133",
       "name": "路径规划",

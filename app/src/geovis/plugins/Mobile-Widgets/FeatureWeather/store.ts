@@ -1,6 +1,7 @@
-const dayDetailAddress = "http://localhost:8091/weather/dayDetail";
-const dayBriefAddress = "http://localhost:8091/weather/dayBrief";
-const fifteenDayWeatherAddress = "http://localhost:8091/weather/fifteenDayWeather";
+const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
+const dayDetailAddress = SERVER_ROOT + "/weather/dayDetail";
+const dayBriefAddress = SERVER_ROOT + "/weather/dayBrief";
+const fifteenDayWeatherAddress = SERVER_ROOT + "/weather/fifteenDayWeather";
 function remoteFetch(address, options) {
     return fetch(address, {
         method: "post",
@@ -26,15 +27,16 @@ class Manager {
         const city = "苏州"
         return city;
     }
-    // getCodeById(id) {
-    //     return 101190401;
-    // }
     getCodeByCity(city) {
-        return 101190401;
+        return;
     }
     getTodayDetail() {
         const code = this.state.code;
         return remoteFetch(dayDetailAddress, { code })
+    }
+    getBriefWeather() {
+        const code = this.state.code;
+        return remoteFetch(dayBriefAddress, { code })
     }
     getFifteenWeather() {
         const code = this.state.code;

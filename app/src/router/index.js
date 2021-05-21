@@ -36,7 +36,7 @@ const FeatureWeather = () => import('../view/Weather/FeatureWeather.vue')
 const SearchCity = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/SearchCity.vue");
 const Fifteen = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/Fifteen.vue");
 const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/TodayDetail.vue");
-const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LiveWeather/Index.vue");
+const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LivePhenomena/Index.vue");
 const routes = [
   {
     path: "/",

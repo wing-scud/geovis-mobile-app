@@ -1,8 +1,9 @@
 import { earthStore } from "@/geovis/store"
 import * as mapboxWind from "@sakitam-gis/mapbox-wind";
-const vectorAddress = "http://localhost:8091/weather/mapboxVector";
-const scalarAddress = "http://localhost:8091/weather/mapboxScalar";
-const phenomenaListAddress = "http://localhost:8091/static/weather/weather-config.json"
+const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
+const vectorAddress = SERVER_ROOT + "/weather/mapboxVector";
+const scalarAddress = SERVER_ROOT + "/weather/mapboxScalar";
+const phenomenaListAddress = SERVER_ROOT + "/static/weather/weather-config.json"
 // const list = [
 //     {
 //         name: "风",
@@ -84,7 +85,7 @@ class WeatherManager {
         return this._mode
     }
     public set mode(value: string) {
-        // this.close();
+        this.close();
         this._mode = value;
         this.update()
     }
@@ -92,7 +93,7 @@ class WeatherManager {
         return this._seconds;
     }
     public set seconds(value: number) {
-        // this.close();
+        this.close();
         this._seconds = value;
         this.update();
     }
@@ -170,7 +171,7 @@ class WeatherManager {
             "vMin": vheader.min,
             "vMax": vheader.max,
         }, {
-            wrapX: false,
+            wrapX: true,
             styleSpec: {
                 'fill-color': [
                     'interpolate',
@@ -191,8 +192,7 @@ class WeatherManager {
             renderForm: 'rg',
             widthSegments: 1,
             heightSegments: 1,
-            mappingRange: [0, 5000000],
-            wireframe: false,
+            mappingRange: [1000000, 5000000],
         });
         map.addLayer(fillLayer);
         this._layer.scalar = fillLayer;
@@ -228,7 +228,6 @@ class WeatherManager {
         });
         map.addLayer(windLayer);
         this._layer.vector = windLayer
-
     }
     // 记载tiff
     scalarLoad(data, imgUrl) {
@@ -253,7 +252,8 @@ class WeatherManager {
         const tempInterpolateColor = color.temp.reduce((result, item, key) => result.concat(item[0], 'rgba(' + item[1].join(',') + ')'), []);
         const fillLayer = new mapboxWind.ScalarFill('tempImage', {
             "type": "image",
-            "url": imgUrl,
+            // "url": imgUrl,
+            "url":"static/data/weather/var_tmp.png",
             "extent": [
                 // [header.lo1, header.la2],
                 // [header.lo1, header.la1],
@@ -269,7 +269,7 @@ class WeatherManager {
             "min": header.min,
             "max": header.max
         }, {
-            wrapX: false,
+            wrapX: true,
             styleSpec: {
                 'fill-color': [
                     'interpolate',
@@ -290,8 +290,7 @@ class WeatherManager {
             renderForm: 'r',
             widthSegments: 1,
             heightSegments: 1,
-            mappingRange: [0, 5000000],
-            wireframe: false,
+            mappingRange: [1000000, 5000000],
         });
         map.addLayer(fillLayer);
         this._layer.scalar = fillLayer;
