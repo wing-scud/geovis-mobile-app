@@ -252,8 +252,8 @@ class WeatherManager {
         const tempInterpolateColor = color.temp.reduce((result, item, key) => result.concat(item[0], 'rgba(' + item[1].join(',') + ')'), []);
         const fillLayer = new mapboxWind.ScalarFill('tempImage', {
             "type": "image",
-            // "url": imgUrl,
-            "url":"static/data/weather/var_tmp.png",
+            "url": imgUrl,
+            // "url":"static/data/weather/var_tmp.png",
             "extent": [
                 // [header.lo1, header.la2],
                 // [header.lo1, header.la1],
@@ -297,17 +297,15 @@ class WeatherManager {
     }
     async update() {
         const mode = this._mode;
-        let seconds = this._seconds;
+        const seconds = this._seconds;
         if (mode && seconds) {
             const value = list.find((item) => item.id === mode);
             if (value && value.type === "vector") {
-                seconds = 1621944000;
                 const data = await remoteFetch('vector', 'json', seconds, mode);
                 const imgUrl = `${vectorAddress}?type=png&name=${mode}&time=${seconds}`
                 this.vectorLoad(data, imgUrl)
             } else {
                 // 标量
-                seconds = 1621922400;
                 const data = await remoteFetch('scalar', 'json', seconds, mode);
                 const imgUrl = `${scalarAddress}?type=png&name=${mode}&time=${seconds}`
                 this.scalarLoad(data, imgUrl)

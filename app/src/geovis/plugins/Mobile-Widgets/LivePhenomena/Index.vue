@@ -5,7 +5,7 @@
       <MIcon :icon="item.icon" v-for="item in activedList" :key="item.name" size="24px" length="32px" :label="item.name" customClass="icon-weather" :circle="true" @click="changeMode(item.id, item.type)"></MIcon>
     </div>
     <div class="liveweather-timeline">
-      <van-slider v-model="time" :min="minTime" :max="maxTime" active-color="blue" inactive-color="blue" bar-height="4px" @change="changeTime">
+      <van-slider v-model="time" :min="minTime" :max="maxTime" active-color="blue" step="3" inactive-color="blue" bar-height="4px" @input="changeTime">
         <template #button>
           <div class="custom-button" v-html="pointTime"></div>
         </template>
@@ -45,7 +45,7 @@ export default Vue.extend({
   computed: {
     pointTime: function () {
       //@ts-ignore
-      const date = this.formatHoursToDate(this.current + this.time);
+      const date = this.formatSecondsToDate(this.current + this.time*3600);
       //@ts-ignore
       const string = this.formatDate(date.getTime(), "MM-dd <br> hh:mm");
       return string;
@@ -66,9 +66,9 @@ export default Vue.extend({
       earthStore.state.mode = "map";
       earthStore.setMapFullScreen(true);
       earthStore.state.onlyMap = true;
-      this.current = this.formatDateToHours(new Date());
-      const date = this.formatHoursToDate(this.current + this.time);
-      manager.seconds = this.formatDateToHours(date);
+      this.current = this.formatDateToSeconds(new Date("2021-05-22 12:00Z"));
+      const date = this.formatSecondsToDate(this.current + this.time * 3600);
+      manager.seconds = this.formatDateToSeconds(date);
     },
     destory() {
       manager.destory();
@@ -76,11 +76,11 @@ export default Vue.extend({
       earthStore.setMapFullScreen(false);
       earthStore.state.onlyMap = false;
     },
-    formatHoursToDate(hours: number) {
-      return new Date(hours * 3600 * 1000);
+    formatSecondsToDate(seconds: number) {
+      return new Date(seconds * 1000);
     },
-    formatDateToHours(date: Date) {
-      return Math.floor(date.getTime() / 1000 / 3600);
+    formatDateToSeconds(date: Date) {
+      return Math.floor(date.getTime() / 1000);
     },
     formatDate(secs, format) {
       // console.log("日期", format(1505729264599, "yyyy-MM-dd hh:mm:ss"));
@@ -106,8 +106,7 @@ export default Vue.extend({
       return format;
     },
     changeTime() {
-      const date = this.formatHoursToDate(this.current + this.time);
-      manager.seconds = this.formatDateToHours(date);
+      manager.seconds = this.current + this.time * 3600;
     },
   },
 });
