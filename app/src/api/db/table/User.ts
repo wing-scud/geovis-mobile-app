@@ -1,57 +1,50 @@
 /*eslint-disable*/
 class User {
-    name: string;
+    account: string;
 
     nickname: string;
 
     password: string;
 
-    roles: [];
-    avatar: string
+    role: number;
+
+    profilePhoto: string;
 
     sex: string;
 
-    zip_code: string;
+    postCode: string;
 
     birthday: string;
 
-    phone: string;
+    tel: string;
 
-    regtime: string;
+    createTime: string;
+
+    token: String;
 
     rememberMe: boolean
 
     constructor(options) {
-        const { name, nickname, password, roles = [], avatar = "", sex = "male", zip_code = "111111", phone = "13956950414", birthday = "2000-01-01", regtime = "2021-01-01", rememberMe = false } = options;
-        this.name = name;
+        const { account, nickname, password, token,role, profilePhoto, sex, postCode, tel, birthday, createTime, rememberMe } = options;
+        this.account = account;
         this.nickname = nickname;
         this.password = password;
-        this.roles = roles;
+        this.role = role;
         this.sex = sex;
-        this.phone = phone;
-        this.regtime = regtime;
+        this.tel = tel;
+        this.createTime = createTime;
         this.birthday = birthday
-        this.zip_code = zip_code;
+        this.postCode = postCode;
         this.rememberMe = rememberMe;
-        this.avatar = avatar;
-        // const filePlugin = window['plugin'].file;
-        // filePlugin.getRootDirEntry().then(async (rootEntry) => {
-        //     const array = avatar.split('/');
-        //     const imageName = array.pop()
-        //     filePlugin.getFileEntry('images', imageName).then((fileEntry) => {
-        //         fileEntry.file((file) => {
-        //             const filePath = window.URL.createObjectURL(file);
-        //             this.avatar = filePath;
-        //         })
-        //     })
-        // })
+        this.profilePhoto = profilePhoto;
+        this.token =token;
     }
 }
 function validUser(user) {
     let error;
     let status = 1;
     //@ts-ignore
-    if (user.name == "") {
+    if (user.account == "") {
         status = 0;
         error = "用户名不能为空"
     }

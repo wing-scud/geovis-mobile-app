@@ -1,3 +1,4 @@
+import { resolveFullPath } from "@/util/utils.js"
 class FilePlugin {
     //cordova.file.dataDirectory
     private _file;
@@ -100,10 +101,10 @@ class FilePlugin {
      * @param fileName  文件名
      * @returns  文件入口
      */
-    getFileEntry(dirEntry, fileName) {
+    getFileEntry(dirEntry, fileName, options?) {
         const instance = this;
         return new Promise((resolve, reject) => {
-            dirEntry.getFile(fileName, { create: true, exclusive: false }, function (fileEntry) {
+            dirEntry.getFile(fileName, { create: options?.create ?? true, exclusive: false }, function (fileEntry) {
                 console.log("fileEntry is file?" + fileEntry.isFile.toString());
                 resolve(fileEntry)
             }, (e) => {
@@ -161,13 +162,15 @@ class FilePlugin {
      * @param fileName 文件名
      * 
      */
-    saveFile(dirEntry, fileData, fileName) {
-        const instance = this;
-        dirEntry.getFile(fileName, { create: true, exclusive: false }, function (fileEntry) {
-            instance.writeFile(fileEntry, fileData, false);
-        }, () => {
-            console.log('onErrorSaveDir')
-        });
+    saveFile(dirEntry, fileData, fileName, options?) {
+        return new Promise((resolve) => {
+            const instance = this;
+            dirEntry.getFile(fileName, { create: options?.create ?? true }, async function (fileEntry) {
+                resolve(await instance.writeFile(fileEntry, fileData, false))
+            }, () => {
+                console.log('onErrorSaveDir')
+            });
+        })
     }
     /**
      * 读取图片
@@ -186,12 +189,33 @@ class FilePlugin {
                     resolve(blob)
                 };
                 reader.readAsArrayBuffer(file);
-
             }, () => {
                 console.log('error')
             });
         })
     }
+
+    /**
+     * 
+     * @param path 默认市根目录下，即相对路径
+     * @param data 
+     * @param options: create
+     */
+    async writeFileAsync(fullPath, data, options) {
+        const rootEntry = await this.getRootDirEntry();
+        const { path, fileName } = resolveFullPath(fullPath);
+        const directoryEntry = await this.getDirectory(rootEntry, path, options.dirCreate ?? false);
+        return this.saveFile(directoryEntry, data, fileName, options.fileCreate ?? true)
+    }
+
+
+    async readFileAsync(fullPath) {
+        const rootEntry = await this.getRootDirEntry();
+        const { path, fileName } = resolveFullPath(fullPath);
+        const dirEntry =await this.getDirectory(rootEntry, path, false)
+        const fileEntry = await this.getFileEntry(dirEntry, fileName, { create: false });
+        return this.readFile(fileEntry, 'image')
+    }
 }
-const file = new FilePlugin()
+const file = new FilePlugin();
 export default file;

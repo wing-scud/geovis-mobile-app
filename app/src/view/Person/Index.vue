@@ -10,9 +10,9 @@
       </van-nav-bar>
     </div>
     <div class="user-infor" @click="enterPersonInfor">
-      <van-image width="40" height="40" :src="user.avatar" class="custom-user-img" round fill="fill" />
+      <van-image width="40" height="40" :src="profilePhoto" class="custom-user-img" round fill="fill" />
       <div class="user-name">
-        {{ user.nickname }}
+        {{ nickname }}
       </div>
       <van-icon name="arrow" class="custom-arrow" />
     </div>
@@ -33,14 +33,14 @@ export default Vue.extend({
   data() {
     return {
       items: indexItems,
-      user: {
-        avatar: "",
-        nickname: "",
-      },
+      profilePhoto: "",
+      nickname: "",
     };
   },
-   mounted() {
-    this.user =  this.$store.state.user.user;
+  async mounted() {
+    const user = this.$store.state.user.user;
+    this.nickname = user.nickname;
+    this.profilePhoto = await this.getLocalImage(user.profilePhoto);
   },
   methods: {
     enterMessage() {},
@@ -53,6 +53,10 @@ export default Vue.extend({
     },
     enterPersonInfor() {
       this.$router.push({ name: "PersonInfor" });
+    },
+    async getLocalImage(path) {
+      const filePlugin = window["plugin"].file;
+      return await filePlugin.readFileAsync(path);
     },
   },
 });
@@ -73,7 +77,7 @@ export default Vue.extend({
   padding-left: 20px;
   line-height: 40px;
   text-align: left;
-  color:white;
+  color: white;
 }
 .custom-arrow {
   width: 30px;
@@ -83,9 +87,9 @@ export default Vue.extend({
 }
 </style>
 <style lang="scss">
-.mine-page{
-  .van-cell{
-    padding:15px 16px !important;
+.mine-page {
+  .van-cell {
+    padding: 15px 16px !important;
   }
 }
 </style>

@@ -71,7 +71,7 @@ export default Vue.extend({
             }
           }
         });
-        console.log("change");
+        // console.log("change");
         this.pluginState = { pluginMapUnactived, pluginStateActived };
       },
       immediate: true,

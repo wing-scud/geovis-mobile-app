@@ -13,18 +13,18 @@
     <van-tabs v-model="activeTab">
       <van-tab title="地点" name="place">
         <van-empty description="暂无地点收藏" v-if="filterPlaces.length <= 0" />
-        <van-collapse v-model="activePlaces">
-          <van-collapse-item :title="rough(item.name)" :name="item.id" v-for="(item, index) in filterPlaces" :key="item.id">
+        <van-collapse v-model="activePlaces" v-else>
+          <van-collapse-item :title="rough(item.place.name)" :name="item.id" v-for="(item, index) in filterPlaces" :key="item.index">
             <template #value>
               <MIcon icon="icon-sousuo" length="20px" customClass="starSearchTo" size="20px" :circle="true" @click="starSearchTo(index)"> </MIcon>
               <van-icon name="star-o" class="stared" @click="deletePlace(item.id)" />
             </template>
             <div class="detailPlace">
               <div class="label">
-                名称:<span class="value">{{ item.name }}</span>
+                名称:<span class="value">{{ item.place.name }}</span>
               </div>
               <div class="label">
-                坐标:<span class="value">{{ item.location[0] }},{{ item.location[1] }}</span>
+                坐标:<span class="value">{{ item.place.location[0] }},{{ item.place.location[1] }}</span>
               </div>
             </div>
           </van-collapse-item>
@@ -32,7 +32,7 @@
       </van-tab>
       <van-tab title="路线" name="route">
         <van-empty description="暂无路线收藏" v-if="filterRoutes.length <= 0" />
-        <van-collapse v-model="activeRoutes">
+        <!-- <van-collapse v-model="activeRoutes" v-else>
           <van-collapse-item :title="item.id" :name="index" v-for="(item, index) in filterRoutes" :key="index">
             <template #value>
               <MIcon icon="icon-luxianchaxun" length="20px" customClass="starRouteTo" size="20px" :circle="true" @click="starRouteTo(index)"> </MIcon>
@@ -51,7 +51,7 @@
               </div>
             </div>
           </van-collapse-item>
-        </van-collapse>
+        </van-collapse> -->
       </van-tab>
     </van-tabs>
   </div>
@@ -96,11 +96,11 @@ export default Vue.extend({
     },
     deletePlace(id) {
       Toast("取消收藏成功");
-      this.$store.commit("starPlaces/deletePlace", id);
+      this.$store.commit("starPlaces/removePlace", id);
     },
     deleteRoute(id) {
       Toast("取消收藏成功");
-      this.$store.commit("starRoutes/deleteRoute", id);
+      this.$store.commit("starRoutes/removeRoute", id);
     },
     goBack() {
       //@ts-ignore
@@ -168,7 +168,8 @@ export default Vue.extend({
   /* color: red; */
 }
 .starSearchTo {
-  margin-top: 5px;
+  // margin-top: 5px;
+  display: inline-block;
 }
 .star .van-collapse-item__content {
   background: $navbar-background !important;

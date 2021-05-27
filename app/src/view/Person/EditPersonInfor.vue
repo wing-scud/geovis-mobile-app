@@ -1,14 +1,14 @@
 <template>
   <div class="full">
     <van-nav-bar :title="name" left-text="返回" left-arrow :right-text="confirmText" @click-left="goBack" @click-right="confirm"></van-nav-bar>
-    <van-field v-model="user.phone" type="tel" label="手机号" ref="phone" autofocus :error-message="errorMessage" @input="validatorTel" v-if="type === 'phone'" />
+    <van-field v-model="user.tel" type="tel" label="手机号" ref="tel" autofocus :error-message="errorMessage" @input="validatorTel" v-if="type === 'phone'" />
     <van-field v-model="user.nickname" label="用户名" border ref="nickname" v-if="type === 'nickname'" />
-    <van-area title="地区" :area-list="areaList" :value="user.zip_code" @confirm="onConfirmAddress" v-if="type === 'zip_code'" />
+    <van-area title="地区" :area-list="areaList" :value="user.postCode" @confirm="onConfirmAddress" v-if="type === 'postCode'" />
     <van-radio-group v-model="user.sex" direction="horizontal" class="custom-sexbox" v-if="type === 'sex'">
-      <van-radio name="male">男</van-radio>
-      <van-radio name="female"> 女</van-radio>
+      <van-radio name="man">男</van-radio>
+      <van-radio name="woman"> 女</van-radio>
     </van-radio-group>
-    <van-calendar title="出生时间" :poppable="false" :show-confirm="true" ref="date" :style="{ height: '500px' }" :min-date="minDate" v-if="type === 'birthday'" @confirm="onConfirmBirthday" />
+    <van-calendar title="出生时间" :poppable="false" :show-confirm="true" ref="date" class="custom-calendar" :min-date="minDate" v-if="type === 'birthday'" @confirm="onConfirmBirthday" />
     <div class="edit-password" v-if="type === 'password'">
       <van-field v-model="password" type="password" label="原密码" />
       <van-field v-model="newPassword" type="password" label="新密码" />
@@ -31,7 +31,7 @@ export default Vue.extend({
       areaList: areaList,
       minDate: new Date(1900, 1, 1),
       newPassword: "",
-      password:"",
+      password: "",
       cobeforenfirmPassword: "",
       confirmText: "",
       errorMessage: "",
@@ -43,7 +43,7 @@ export default Vue.extend({
     this.type = params.type;
     //@ts-ignore
     this.user = params.user;
-    if (["birthday", "zip_code"].indexOf(this.type) === -1) {
+    if (["birthday", "postCode"].indexOf(this.type) === -1) {
       this.confirmText = "确认";
     }
   },
@@ -52,7 +52,7 @@ export default Vue.extend({
       const date = new Date(this.user.birthday);
       //@ts-ignore
       this.$refs.date.reset(date);
-    } else if (this.type === "nickname" || this.type === "phone") {
+    } else if (this.type === "nickname" || this.type === "tel") {
       //@ts-ignore
       this.$refs[this.type].focus();
     }
@@ -131,12 +131,17 @@ export default Vue.extend({
   },
 });
 </script>
-<style scoped>
+<style lang="scss" scoped>
 .custom-sexbox {
   width: 90%;
   padding: 10px 5%;
 }
 .edit-password {
   width: 100%;
+}
+.custom-calendar {
+  background: $navbar-background !important;
+  height: 500px;
+  color: white !important;
 }
 </style>

@@ -15,12 +15,12 @@
         @keyup.enter.native="getSuggestions"
         @input="getSuggestions"
       >
-      <template v-slot:button>
-        <div class="search-group">
-        <van-checkbox v-model="coordinateCheckd" v-if="config.convert" class="search-checkbox search-group-item" @click="handleChecked">反查</van-checkbox>
-        <van-button size="small" type="default" class="search-button search-group-item" v-if="config.button" plain @click="submit">搜索</van-button>
-      </div>
-      </template>
+        <template v-slot:button>
+          <div class="search-group">
+            <van-checkbox v-model="coordinateCheckd" v-if="config.convert" class="search-checkbox search-group-item" @click="handleChecked">反查</van-checkbox>
+            <van-button size="small" type="default" class="search-button search-group-item" v-if="config.button" plain @click="submit">搜索</van-button>
+          </div>
+        </template>
       </van-field>
       <!-- <div class="search-group">
         <van-checkbox v-model="coordinateCheckd" v-if="config.convert" class="search-checkbox search-group-item" @click="handleChecked">反查</van-checkbox>
@@ -49,7 +49,7 @@ import { earthStore } from "@/geovis/store";
 import _ from "lodash";
 /* eslint-disable @typescript-eslint/camelcase */
 import util from "./util";
-const mapLocation = window['plugin'].mapLocation;
+const mapLocation = window["plugin"].mapLocation;
 export default {
   name: "SearchInput",
   props: {
@@ -113,13 +113,14 @@ export default {
       this.$emit("checked", this.coordinateCheckd);
     },
     starAddress(id) {
-      const staredPlaceBool = this.$store.state.starPlaces.places.findIndex((place) => place.id === id);
-      if (staredPlaceBool !== -1) {
-        this.$store.commit("starPlaces/deletePlace", id);
+      const index = this.$store.getters["starPlaces/getById"](id);
+      if (index!==-1) {
+        this.$store.dispatch("starPlaces/remove", id);
+        // this.$store.commit("starPlaces/deletePlace", id);
       } else {
         const place = this.getPlaceFromId(id);
         console.log(place);
-        this.$store.commit("starPlaces/addPlace", place);
+        this.$store.dispatch("starPlaces/save", { place, id });
       }
     },
     getPlaceFromId(id) {
@@ -130,7 +131,6 @@ export default {
             location: place.location,
             polygonpoints: place.polygonpoints,
             name: place.name,
-            ...place,
           };
         }
       });
@@ -358,12 +358,9 @@ export default {
       return configItems;
     },
     addressStarIconStyle: function () {
-      const places = this.$store.state.starPlaces.places;
       return function (id) {
-        const place = places.find((item) => {
-          return item.id === id;
-        });
-        if (place) {
+        const index = this.$store.getters["starPlaces/getById"](id);
+        if (index !== -1) {
           return { color: "red" };
         }
       };
@@ -505,11 +502,11 @@ export default {
 }
 .search-input {
   .van-cell:after {
-  border-bottom: 0;
-}
- .van-field{
-  background-color:$board-color!important;
-}
+    border-bottom: 0;
+  }
+  .van-field {
+    background-color: $board-color !important;
+  }
 }
 
 .search-component {
@@ -528,25 +525,23 @@ export default {
     border-bottom: 0;
   }
   .van-checkbox__icon .van-icon {
-  border: 2px solid lightgray;
-  margin-right: 5px;
+    border: 2px solid lightgray;
+    margin-right: 5px;
+  }
+  .van-checkbox__icon--checked .van-icon {
+    background-color: $select-color;
+    border-color: $select-color;
+  }
+  .van-icon-search:before {
+    color: white;
+    font-weight: bold;
+  }
+  [class*="van-hairline"]:after {
+    border: 0;
+  }
+  .van-cell {
+    border-bottom: 0 !important;
+  }
 }
-.van-checkbox__icon--checked .van-icon {
-  background-color: $select-color;
-  border-color: $select-color;
-}
-.van-icon-search:before {
-  color: white;
-  font-weight: bold;
-}
-[class*="van-hairline"]:after {
-  border: 0;
-}
-.van-cell{
-  border-bottom:0!important;
-}
-
-}
-
 </style>
   

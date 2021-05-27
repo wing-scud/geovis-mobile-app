@@ -5,15 +5,15 @@
       <input type="file" name="image" id="headshot-picker" :multiple="false" accept="image/*" @change="setImagePreview($event)" />
       <van-cell title="头像" is-link class="person-infor-img" @click="chooseImg">
         <template v-slot:default>
-          <van-image width="40" height="40" :src="user.avatar" class="custom-user-img" fill="fill" />
+          <van-image width="40" height="40" :src="profilePhoto" class="custom-user-img" fill="fill" />
         </template>
       </van-cell>
     </div>
     <van-cell title="用户名" :value="user.nickname" is-link @click="changeUserInfor('nickname')"> </van-cell>
-    <van-cell title="性别" :value="user.sex === 'male' ? '男' : '女'" is-link @click="changeUserInfor('sex')"> </van-cell>
+    <van-cell title="性别" :value="user.sex === 'man' ? '男' : '女'" is-link @click="changeUserInfor('sex')"> </van-cell>
     <van-cell title="出生日期" :value="user.birthday" is-link @click="changeUserInfor('birthday')"> </van-cell>
-    <van-cell title="手机号" :value="user.phone" is-link @click="changeUserInfor('phone')"> </van-cell>
-    <van-cell title="地区" :value="formateAddress(user.zip_code)" is-link @click="changeUserInfor('zip_code')"> </van-cell>
+    <van-cell title="手机号" :value="user.tel" is-link @click="changeUserInfor('tel')"> </van-cell>
+    <van-cell title="地区" :value="formateAddress(user.postCode)" is-link @click="changeUserInfor('postCode')"> </van-cell>
   </div>
 </template>
 <script lang="ts">
@@ -26,27 +26,29 @@ export default Vue.extend({
   data() {
     return {
       user: {},
+      profilePhoto: "",
     };
   },
   // 需要再挂载节点时，就渲染数据
-  beforeMount() {
+  async beforeMount() {
     this.user = this.$store.state.user.user;
+    this.profilePhoto = await this.getLocalImage(this.user.profilePhoto);
   },
   methods: {
-   async setImagePreview(e) {
+    async setImagePreview(e) {
       const files = e.target.files;
-     await  this.$store.dispatch("user/changeUser",{
-        type:'avatar',
-        value:files[0]
+      await this.$store.dispatch("user/changeUser", {
+        type: "profilePhoto",
+        value: files[0],
       });
-      this.user.avatar = this.$store.state.user.user.avatar;
+      this.profilePhoto = await this.getLocalImage(this.$store.state.user.user.profilePhoto);
     },
     chooseImg() {
       document.getElementById("headshot-picker").click();
     },
     changeUserInfor(type) {
       const names = ["用户名", "性别", "出生日期", "手机号", "地区"];
-      const types = ["nickname", "sex", "birthday", "phone", "zip_code"];
+      const types = ["nickname", "sex", "birthday", "tel", "postCode"];
       const name = names[types.indexOf(type)];
       this.$router.push({
         name: "EditPersonInfor",
@@ -58,23 +60,27 @@ export default Vue.extend({
         },
       });
     },
-    formateAddress(postalCode) {
+    formateAddress(postCode) {
       let hometown = "";
       //match province
-      const provinceSlice = postalCode.substr(0, 2);
+      const provinceSlice = postCode.substr(0, 2);
       const provinceCode = provinceSlice + "0000";
-      hometown += areaList.province_list[provinceCode]??"";
+      hometown += areaList.province_list[provinceCode] ?? "";
       // match city
-      const citySlice = postalCode.substr(2, 2);
+      const citySlice = postCode.substr(2, 2);
       const cityCode = provinceSlice + citySlice + "00";
-      hometown += areaList.city_list[cityCode]??"";
+      hometown += areaList.city_list[cityCode] ?? "";
       //match county
-      const countyCode = postalCode;
-      hometown += areaList.county_list[countyCode]??"";
+      const countyCode = postCode;
+      hometown += areaList.county_list[countyCode] ?? "";
       return hometown;
     },
     goBack() {
       this.$router.push({ name: "Person" });
+    },
+    async getLocalImage(path) {
+      const filePlugin = window["plugin"].file;
+      return await filePlugin.readFileAsync(path);
     },
   },
 });

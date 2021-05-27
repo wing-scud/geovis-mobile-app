@@ -12,15 +12,7 @@ import EarthApp from "./geovis/EarthApp.vue";
   components: {
     EarthApp,
   },
-  async mounted() {
-    const database = window["plugin"].database;
-    const user = await database.userTable.getItem("user");
-    if (user && user.rememberMe) {
-      this.$store.commit("user/initUser", user);
-    }else{
-      console.log("需要登录 ");
-    }
-  },
+  mounted() {},
 })
 export default class extends Vue {}
 </script>

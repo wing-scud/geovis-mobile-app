@@ -11,4 +11,5 @@ const mobileStore = new Vuex.Store({
     user: user
   }
 });
+// 离线模式下， 如何实现存储，再同步
 export default mobileStore;

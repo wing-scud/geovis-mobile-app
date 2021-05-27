@@ -1,8 +1,13 @@
-
+import uuid from "uuid"
 import User, { validUser } from "../../api/db/table/User";
+import { fetchByToken, fetchForJson, fetchFileByToken, resolveFullPath, generateRouteId, getFileSuffix, fetchFromFormDataByToken } from "@/util/utils.js"
 const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
-const loginUrl = SERVER_ROOT + "/api/user/login";
-const loginOutUrl = SERVER_ROOT + "/api/user/logout"
+const loginUrl = SERVER_ROOT + "/user/login";
+const loginOutUrl = SERVER_ROOT + "/user/loginOut";
+const getProfilePhotoUrl = SERVER_ROOT + "/user/getProfilePhoto";
+const setProfilePhotoUrl = SERVER_ROOT + "/user/setProfilePhoto";
+const updateUserUrl = SERVER_ROOT + "/user/updateUserInfo";
+const profilePhotoBaseDir = "/profilePhoto/"
 const state = () => ({
   user: undefined
 });
@@ -13,62 +18,49 @@ const getters = {};
 // actions
 const actions = {
   login({ commit }, options) {
-    const database = window['plugin'].database
+    const database = window['plugin'].database;
+    const filePlugin = window['plugin'].file;
     return new Promise((resolve, reject) => {
-      const formData = new FormData();
-      Object.keys(options).forEach((key) => {
-        formData.append(key, options[key])
-      })
-      fetch(loginUrl, {
-        method: "POST",
-        mode: 'cors',
-        credentials: "include",
-        body: formData
-      }).then((res) => {            // 保存cookie
-        return res.json()
-      })
-        .then((data) => {
-          if (data.status === 'ok') {
-            //@ts-ignore
-            const value = data.data;
-            value.password = options.password;
-            value.rememberMe = options.rememberMe;
+      fetchForJson(loginUrl, options).then(async (data) => {
+        if (data.success) {
+          //@ts-ignore
+          const value = data.user;
+          //不加密
+          value.password = options.password;
+          value.rememberMe = options.rememberMe;
+          const profilePhotoFileName = resolveFullPath(value.profilePhoto).fileName;
+          // 获取头像
+          const token = value.token;
+          fetchFileByToken(getProfilePhotoUrl, token).then(async (blob) => {
+            const filePath = profilePhotoBaseDir + profilePhotoFileName
+            await filePlugin.writeFileAsync(filePath, blob, { dirCreate: true, fileCreate: true });
+            value.profilePhoto = filePath
             const user = new User(value);
             if (value.rememberMe) {
-              database.userTable.setItem('user', user).then((user) => {
-                commit("initUser", user);
-                resolve(true)
-              })
-            } else {
-              commit("initUser", user);
-              resolve(true)
+              await database.userTable.setItem('user', user)
             }
-          } else {
-            reject(false)
-          }
-        })
+            commit("initUser", user);
+            resolve(true)
+          })
+        } else {
+          reject(false)
+        }
+      })
     });
   },
   loginOut({ state, commit }) {
-    const database = window['plugin'].database
-    return new Promise((resolve, reject) => {
-      fetch(loginOutUrl, {
-        method: "POST",
-        mode: 'cors',
-        credentials: 'include'
-      }).then((res) => res.json())
-        .then(async (data) => {
-          if (data.status === 'ok') {
-            state.user.rememberMe && database.userTable.removeItem('user');
-            commit("deleteUser");
-            resolve(true)
-          } else {
-            reject(false)
-          }
-        })
+    const token = state.user.token;
+    return fetchByToken(loginOutUrl, token).then((result) => {
+      if (result.success) {
+        commit("deleteUser");
+        return true
+      } else {
+        return false
+      }
     })
   },
   changeUser({ state, commit }, changedValues) {
+    const token = state.user.token;
     const database = window['plugin'].database
     return new Promise((resolve, reject) => {
       //验证user 是否正确
@@ -80,35 +72,46 @@ const actions = {
       const filePlugin = window['plugin'].file;
       if (res.status) {
         //如果是图像
-        if (changedValues.type === "avatar") {
-          filePlugin.getRootDirEntry().then(async (rootEntry) => {
-            const reader = new FileReader();
-            reader.readAsArrayBuffer(changedValues.value);
-            reader.onload = async (e) => {
-              const blob = new Blob([e.target.result]);
-              const mapDireEntry = await filePlugin.getDirectory(rootEntry, 'images', true);
-              const fileName = changedValues.value.name;
-              const fileEntry = await filePlugin.getFileEntry(mapDireEntry, fileName)
-              await filePlugin.writeFile(fileEntry, blob, false);
-              fileEntry.file((file) => {
-                const filePath = window.URL.createObjectURL(file);
+        if (changedValues.type === "profilePhoto") {
+          // 上传 服务器更新
+          const formData = new FormData();
+          formData.append('profilePhoto', changedValues.value)
+          fetchFromFormDataByToken(setProfilePhotoUrl, token, formData).then((result) => {
+            if (result.success) {
+              //本地更新
+              const profilePhotoFileName = generateRouteId() + getFileSuffix(changedValues.value.name);
+              const filePath = profilePhotoBaseDir + profilePhotoFileName
+              filePlugin.writeFileAsync(filePath, changedValues.value, { dirCreate: false, fileCreate: true }).then(() => {
                 changedValues.value = filePath;
                 commit('changeUser', changedValues);
                 const user = state.user;
-                database.userTable.setItem('user', user).then((user) => {
-                  console.log(' database.userTable.setItem user')
-                  resolve({ status: true })
-                })
-              })
+                if (user.rememberMe) {
+                  database.userTable.setItem('user', user).then((user) => {
+                    console.log(' database.userTable.setItem user')
+                    resolve(true)
+                  })
+                } else {
+                  resolve(true)
+                }
+              });
             }
           });
+
         } else {
+          // 上传 服务器更新
+
+          //本地更新
           commit('changeUser', changedValues);
           const user = state.user;
-          database.userTable.setItem('user', user).then((user) => {
-            console.log(' database.userTable.setItem user')
+          if (user.rememberMe) {
+            database.userTable.setItem('user', user).then((user) => {
+              console.log(' database.userTable.setItem user')
+              resolve({ status: true })
+            })
+          } else {
             resolve({ status: true })
-          })
+          }
+
         }
       } else {
         resolve({ status: false, error: res.error })
@@ -121,9 +124,13 @@ const actions = {
 const mutations = {
   initUser(state, user) {
     state.user = user;
+    const login = new Event("login");
+    window.dispatchEvent(login);
   },
   deleteUser(state) {
     state.user = undefined;
+    const loginOut = new Event("loginOut");
+    window.dispatchEvent(loginOut);
   },
   /*
     options:new Map(key,value); 

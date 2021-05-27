@@ -34,7 +34,8 @@ export default Vue.extend({
       this.$router.backward(-1);
     },
     async loginOut() {
-      (await this.$store.dispatch("user/loginOut")) && this.$router.push({ name: "Index" });
+      const result = await this.$store.dispatch("user/loginOut");
+      result && this.$router.push({ name: "Index" });
     },
   },
 });

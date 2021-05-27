@@ -9,13 +9,12 @@ import "./api/index";
 import App from "./App.vue";
 const agent = navigator.userAgent;
 if (agent.includes('Windows')) {
-// window 下平台
+  // window 下平台
 } else if (agent.includes('emss')) {
   //真机mate20
 } else {
   //其他手机平台
 }
-
 
 Vue.use(Vant);
 Vue.use({
@@ -33,3 +32,6 @@ new Vue({
   render: h => h(App),
   router
 }).$mount("#app");
+
+const created = new Event("created");
+window.dispatchEvent(created);

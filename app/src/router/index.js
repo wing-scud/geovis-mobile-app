@@ -98,7 +98,7 @@ const routes = [
     }
   },
   {
-    path: "editPersonInfor",
+    path: "/editPersonInfor",
     component: EditPersonInfor,
     name: "EditPersonInfor",
     meta: {
@@ -106,7 +106,7 @@ const routes = [
     }
   },
   {
-    path: "accountAndSafe",
+    path: "/accountAndSafe",
     component: AccountAndSafe,
     name: "AccountAndSafe",
     meta: {
@@ -114,7 +114,7 @@ const routes = [
     }
   },
   {
-    path: "personInfor",
+    path: "/personInfor",
     component: PersonInfor,
     name: "PersonInfor",
     meta: {

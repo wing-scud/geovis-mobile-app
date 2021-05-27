@@ -19,7 +19,7 @@ module.exports = {
   },
   configureWebpack: {
     // entry: "./src/main.js",
-    devtool: "source-map",
+    devtool: 'source-map',
     devServer: {
       headers: { "Access-Control-Allow-Origin": "*" }
     }
