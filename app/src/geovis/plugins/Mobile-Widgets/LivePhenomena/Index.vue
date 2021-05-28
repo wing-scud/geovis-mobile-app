@@ -45,7 +45,7 @@ export default Vue.extend({
   computed: {
     pointTime: function () {
       //@ts-ignore
-      const date = this.formatSecondsToDate(this.current + this.time*3600);
+      const date = this.formatSecondsToDate(this.current + this.time * 3600);
       //@ts-ignore
       const string = this.formatDate(date.getTime(), "MM-dd <br> hh:mm");
       return string;
@@ -66,15 +66,20 @@ export default Vue.extend({
       earthStore.state.mode = "map";
       earthStore.setMapFullScreen(true);
       earthStore.state.onlyMap = true;
+      // 禁止拖拽旋转
+      earthStore.map.dragRotate.disable();
+      // // 禁止拖拽平移
+      // earthStore.map.dragPan.disable();
       this.current = this.formatDateToSeconds(new Date("2021-05-22 12:00Z"));
       const date = this.formatSecondsToDate(this.current + this.time * 3600);
       manager.seconds = this.formatDateToSeconds(date);
     },
     destory() {
-      manager.destory();
+      manager.destroy();
       earthStore.state.mode = "globe3";
       earthStore.setMapFullScreen(false);
       earthStore.state.onlyMap = false;
+      earthStore.map.dragRotate.enable();
     },
     formatSecondsToDate(seconds: number) {
       return new Date(seconds * 1000);
@@ -134,7 +139,7 @@ export default Vue.extend({
   line-height: 18px;
   font-size: 12px;
   color: white;
-  background: red;
+  background: rgb(16, 180, 230);
   text-align: center;
 }
 

@@ -104,6 +104,7 @@ export class EarthStore {
     });
     if (mapRef) {
       this._map = new mapboxgl.Map({
+        minZoom:2,
         container: mapRef,
         trackResize: true,
         attributionControl: false,

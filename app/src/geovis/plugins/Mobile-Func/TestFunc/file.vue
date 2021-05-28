@@ -1,6 +1,7 @@
 <template>
   <div class="full">
-    <van-button @click="createFile"> 创建并写入hello文件 </van-button>
+    <van-button @click="getFile"> 测试getFile接口 </van-button>
+    <!-- <van-button @click="createFile"> 创建并写入hello文件 </van-button>
     <van-button @click="appendFile"> 追加内容 </van-button>
     <van-button @click="readFile"> 读取 </van-button>
     <van-button @click="createDir"> 创建目录 </van-button>
@@ -12,7 +13,7 @@
     </div>
     <img :src="imageUrl" class="img" id="image" />
     <canvas id="canvas"></canvas>
-    <van-image width="100" height="100" :src="imageUrl" />
+    <van-image width="100" height="100" :src="imageUrl" /> -->
   </div>
 </template>
 <script lang="ts">
@@ -23,10 +24,24 @@ export default Vue.extend({
     return {
       content: "",
       imageUrl: "",
-      lastName: ""
+      lastName: "",
     };
   },
   methods: {
+    async getFile() {
+      const filePlugin = window["plugin"].file;
+      const result = await filePlugin.getFile("/firstDir/secondDir/1.txt", {
+        dirCreate: true,
+        fileCreate: true,
+      });
+      console.log(result);
+      const result2= await filePlugin.getFile("/firstDir/secondDir/1.txt", {
+        dirCreate: false,
+        fileCreate: false,
+      });
+      console.log(result2);
+    },
+
     async createFile() {
       //@ts-ignore
       const filePlugin = window.cordovaPlugin.file;
@@ -60,15 +75,15 @@ export default Vue.extend({
       const filePlugin = window.cordovaPlugin.file;
       const rootDirEntry = await filePlugin.getRootDirEntry();
       const imageEntry = await filePlugin.getDirectory(rootDirEntry, "images", false);
-      fetch("https://2a.zol-img.com.cn/product/124_500x2000/746/cexItD2yJ21Rs.jpg").then(res => {
-        res.blob().then(blob => {
+      fetch("https://2a.zol-img.com.cn/product/124_500x2000/746/cexItD2yJ21Rs.jpg").then((res) => {
+        res.blob().then((blob) => {
           instance.lastName = `${Math.floor(Math.random() * 100)}.jpg`;
           filePlugin.saveFile(imageEntry, blob, instance.lastName);
         });
       });
     },
     saveImageToGallery() {
-        //暂未制作
+      //暂未制作
     },
     async readImage() {
       //@ts-ignore
@@ -92,8 +107,8 @@ export default Vue.extend({
       //@ts-ignore
       const dataURL = canvas.toDataURL("image/jpg");
       return dataURL;
-    }
-  }
+    },
+  },
 });
 </script>
 <style scoped>

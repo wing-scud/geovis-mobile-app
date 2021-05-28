@@ -1,4 +1,5 @@
 import uuid from "uuid"
+import mime from "mime"
 function fetchByToken(address, token, options) {
     token = `Bearer ${token}`;
     return fetch(address, {
@@ -57,12 +58,28 @@ function getFileSuffix(fileName) {
     const array = fileName.split('.')
     return "." + array[array.length - 1]
 }
+/**
+ * 默认路径为 /a/b
+ * @param {*} fullPath 
+ * @returns 
+ */
 function resolveFullPath(fullPath) {
     let splitSymbol = fullPath.includes('/');
     splitSymbol = splitSymbol ? '/' : "\\"
     const splitArray = fullPath.split(splitSymbol);
     const fileName = splitArray[splitArray.length - 1];
-    const path = splitArray.slice(0, splitArray.length - 1).join('/');
+
+    const path = splitArray.slice(1, splitArray.length - 1).join('/');
     return { path, fileName }
 }
-export { resolveFullPath, fetchByToken, generateRouteId, fetchForJson, fetchFileByToken, getFileSuffix, fetchFromFormDataByToken }
+function linearRangeNumber(start,end,number){
+    const array =[];
+    for(let i=0;i<number;i++){
+        array.push(start+(end-start)/number*i);
+    }
+    return array
+}
+function getFileSuffixByMime(mimeString){
+    return "."+mime.getExtension(mimeString)
+}
+export { resolveFullPath, fetchByToken, generateRouteId, fetchForJson, fetchFileByToken, getFileSuffix, fetchFromFormDataByToken ,linearRangeNumber,getFileSuffixByMime}

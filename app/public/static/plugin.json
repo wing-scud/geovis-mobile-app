@@ -212,6 +212,17 @@
                 "active": false,
                 "componentIcon": false,
                 "mutex": false
+            },
+            {
+                "id": "Test",
+                "parent": "Index",
+                "type": "route",
+                "icon": "icon-xiaoxi",
+                "name": "测试",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
+                "mutex": false
             }
         ]
     }

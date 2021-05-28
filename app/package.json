@@ -16,6 +16,7 @@
     "fs": "0.0.1-security",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.1.1",
+    "mime": "^2.5.2",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.3",
     "svg-sprite-loader": "^5.0.0",
