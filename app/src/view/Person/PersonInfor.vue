@@ -80,7 +80,8 @@ export default Vue.extend({
     },
     async getLocalImage(path) {
       const filePlugin = window["plugin"].file;
-      return await filePlugin.readFileAsync(path);
+      const file = await filePlugin.readFile(path);
+      return await filePlugin.readBlob(file, file.type);
     },
   },
 });

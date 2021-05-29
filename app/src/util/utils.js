@@ -72,14 +72,27 @@ function resolveFullPath(fullPath) {
     const path = splitArray.slice(1, splitArray.length - 1).join('/');
     return { path, fileName }
 }
-function linearRangeNumber(start,end,number){
-    const array =[];
-    for(let i=0;i<number;i++){
-        array.push(start+(end-start)/number*i);
+function linearRangeNumber(start, end, number) {
+    const array = [];
+    for (let i = 0; i < number; i++) {
+        array.push(start + (end - start) / number * i);
     }
     return array
 }
-function getFileSuffixByMime(mimeString){
-    return "."+mime.getExtension(mimeString)
+function getFileSuffixByMime(mimeString) {
+    return "." + mime.getExtension(mimeString)
 }
-export { resolveFullPath, fetchByToken, generateRouteId, fetchForJson, fetchFileByToken, getFileSuffix, fetchFromFormDataByToken ,linearRangeNumber,getFileSuffixByMime}
+
+function getDataType(data) {
+    // let type= "Blob";
+    // 基本数据类型判断，均转为string
+    const type = Object.prototype.toString.call(data).split(" ")[1].split("]")[0]
+    if (["String", "Number", "Boolean", "Undefined", "Null"].includes(type)) {
+        return "string"
+    }
+    if(type ==="Blob"){
+        return "Blob"
+    }
+}
+export { resolveFullPath, fetchByToken, generateRouteId, fetchForJson, fetchFileByToken, 
+    getFileSuffix, fetchFromFormDataByToken, linearRangeNumber, getFileSuffixByMime,getDataType }

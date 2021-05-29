@@ -1,6 +1,6 @@
 import store from "../../store/index.js"
 import database from "../db/localforage.js"
-
+import file from "./file"
 const createdHandle = async function () {
     console.log("created");
     //联网更新，如果联网不成功则读取本地

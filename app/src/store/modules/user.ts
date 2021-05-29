@@ -32,8 +32,8 @@ const actions = {
           // 获取头像
           const token = value.token;
           fetchFileByToken(getProfilePhotoUrl, token).then(async (blob) => {
-            const filePath = profilePhotoBaseDir + profilePhotoFileName
-            await filePlugin.writeFileAsync(filePath, blob, { dirCreate: true, fileCreate: true });
+            const filePath = profilePhotoBaseDir + profilePhotoFileName;
+            await filePlugin.writeFile(filePath, blob, { create: true });
             value.profilePhoto = filePath
             const user = new User(value);
             if (value.rememberMe) {
@@ -81,7 +81,7 @@ const actions = {
               //本地更新
               const profilePhotoFileName = generateRouteId() + getFileSuffix(changedValues.value.name);
               const filePath = profilePhotoBaseDir + profilePhotoFileName
-              filePlugin.writeFileAsync(filePath, changedValues.value, { dirCreate: false, fileCreate: true }).then(() => {
+              filePlugin.writeFile(filePath, changedValues.value, { create: true }).then(() => {
                 changedValues.value = filePath;
                 commit('changeUser', changedValues);
                 const user = state.user;

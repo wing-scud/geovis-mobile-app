@@ -1139,6 +1139,14 @@
   resolved "https://registry.npm.taobao.org/@popperjs/core/download/@popperjs/core-2.9.1.tgz?cache=0&sync_timestamp=1615219280778&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40popperjs%2Fcore%2Fdownload%2F%40popperjs%2Fcore-2.9.1.tgz#7f554e7368c9ab679a11f4a042ca17149d70cf12"
   integrity sha1-f1VOc2jJq2eaEfSgQsoXFJ1wzxI=
 
+"@sakitam-gis/mapbox-wind@^1.1.1-alpha.2":
+  version "1.1.1-alpha.2"
+  resolved "https://registry.nlark.com/@sakitam-gis/mapbox-wind/download/@sakitam-gis/mapbox-wind-1.1.1-alpha.2.tgz#41edc4c7bb53684601bde1e2b04d03456b282c26"
+  integrity sha1-Qe3Ex7tTaEYBveHisE0DRWsoLCY=
+  dependencies:
+    wind-core "^1.1.1-alpha.2"
+    wind-gl-core "^1.1.1-alpha.2"
+
 "@soda/friendly-errors-webpack-plugin@^1.7.1":
   version "1.7.1"
   resolved "https://registry.npm.taobao.org/@soda/friendly-errors-webpack-plugin/download/@soda/friendly-errors-webpack-plugin-1.7.1.tgz#706f64bcb4a8b9642b48ae3ace444c70334d615d"
@@ -3522,6 +3530,14 @@ color-string@^1.5.2:
   version "1.5.3"
   resolved "https://registry.npm.taobao.org/color-string/download/color-string-1.5.3.tgz#c9bbc5f01b58b5492f3d6857459cb6590ce204cc"
   integrity sha1-ybvF8BtYtUkvPWhXRZy2WQziBMw=
+  dependencies:
+    color-name "^1.0.0"
+    simple-swizzle "^0.2.2"
+
+color-string@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.npm.taobao.org/color-string/download/color-string-1.5.5.tgz?cache=0&sync_timestamp=1614967248053&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcolor-string%2Fdownload%2Fcolor-string-1.5.5.tgz#65474a8f0e7439625f3d27a6a19d89fc45223014"
+  integrity sha1-ZUdKjw50OWJfPSemoZ2J/EUiMBQ=
   dependencies:
     color-name "^1.0.0"
     simple-swizzle "^0.2.2"
@@ -6845,6 +6861,11 @@ mime@^2.4.4:
   version "2.4.6"
   resolved "https://registry.npm.taobao.org/mime/download/mime-2.4.6.tgz#e5b407c90db442f2beb5b162373d07b69affa4d1"
   integrity sha1-5bQHyQ20QvK+tbFiNz0Htpr/pNE=
+
+mime@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.nlark.com/mime/download/mime-2.5.2.tgz#6e3dc6cc2b9510643830e5f19d5cb753da5eeabe"
+  integrity sha1-bj3GzCuVEGQ4MOXxnVy3U9pe6r4=
 
 mimic-fn@^1.0.0:
   version "1.2.0"
@@ -10465,6 +10486,20 @@ which@^2.0.1:
   integrity sha1-fGqN0KY2oDJ+ELWckobu6T8/UbE=
   dependencies:
     isexe "^2.0.0"
+
+wind-core@^1.1.1-alpha.2:
+  version "1.1.1-alpha.2"
+  resolved "https://registry.nlark.com/wind-core/download/wind-core-1.1.1-alpha.2.tgz#7608eae3fe685213bf66c0eff9f912b2bd1ce35d"
+  integrity sha1-dgjq4/5oUhO/ZsDv+fkSsr0c410=
+  dependencies:
+    gl-matrix "^3.3.0"
+
+wind-gl-core@^1.1.1-alpha.2:
+  version "1.1.1-alpha.2"
+  resolved "https://registry.nlark.com/wind-gl-core/download/wind-gl-core-1.1.1-alpha.2.tgz#c0a532193b28dcdfab06fa69f02ffd27a6948b67"
+  integrity sha1-wKUyGTso3N+rBvpp8C/9J6aUi2c=
+  dependencies:
+    color-string "^1.5.5"
 
 window-size@0.1.0:
   version "0.1.0"
