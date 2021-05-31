@@ -81,8 +81,8 @@
                 "mutex": false
             },
             {
-                "id": "InforCollection",
-                "parent": "Map",
+                "id": "InfoCollection",
+                "parent": "Index",
                 "type": "route",
                 "icon": "icon-xinxicaiji",
                 "name": "信息采集",

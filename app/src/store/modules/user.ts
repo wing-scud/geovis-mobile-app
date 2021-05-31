@@ -1,6 +1,6 @@
 import uuid from "uuid"
 import User, { validUser } from "../../api/db/table/User";
-import { fetchByToken, fetchForJson, fetchFileByToken, resolveFullPath, generateRouteId, getFileSuffix, fetchFromFormDataByToken } from "@/util/utils.js"
+import { fetchByToken, fetchForJson, fetchFileByToken, resolveFullPath, generateId, getFileSuffix, fetchFromFormDataByToken } from "@/util/utils.js"
 const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
 const loginUrl = SERVER_ROOT + "/user/login";
 const loginOutUrl = SERVER_ROOT + "/user/loginOut";
@@ -79,7 +79,7 @@ const actions = {
           fetchFromFormDataByToken(setProfilePhotoUrl, token, formData).then((result) => {
             if (result.success) {
               //本地更新
-              const profilePhotoFileName = generateRouteId() + getFileSuffix(changedValues.value.name);
+              const profilePhotoFileName = generateId() + getFileSuffix(changedValues.value.name);
               const filePath = profilePhotoBaseDir + profilePhotoFileName
               filePlugin.writeFile(filePath, changedValues.value, { create: true }).then(() => {
                 changedValues.value = filePath;

@@ -21,6 +21,7 @@ const Login = () => import("../view/Login/Login.vue");
 const Register = () => import("../view/Login/Register.vue");
 const MapSetting = () => import("../view/Map/MapSetting.vue");
 const Star = () => import("../view/Star/Star.vue");
+const InfoCollectionShow = () => import("../view/Star/InfoCollectionShow.vue");
 const ServiceAddress = () => import("../view/System/ServiceAddress.vue");
 const About = () => import("../view/System/About.vue");
 const Feedback = () => import("../view/System/Feedback.vue");
@@ -37,6 +38,7 @@ const SearchCity = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather
 const Fifteen = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/Fifteen.vue");
 const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/TodayDetail.vue");
 const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LivePhenomena/Index.vue");
+const InfoCollection = () => import("../geovis/plugins/Mobile-Widgets/InfoCollection/Index.vue");
 const routes = [
   {
     path: "/",
@@ -77,6 +79,10 @@ const routes = [
   { path: "/login", component: Login, name: "Login" },
   { path: "/register", component: Register, name: "Register" },
   {
+    path: "/infoCollection", component: InfoCollection, name: "InfoCollection"
+
+  },
+  {
     path: "/mapSetting",
     component: MapSetting,
     name: "MapSetting"
@@ -89,6 +95,16 @@ const routes = [
       requireLogin: true
     }
   },
+  {
+    path: "/infoCollectionShow",
+    component: InfoCollectionShow,
+    name: "InfoCollectionShow",
+    meta: {
+      requireLogin: true
+    }
+  },
+
+
   {
     path: "/serviceAddress",
     component: ServiceAddress,

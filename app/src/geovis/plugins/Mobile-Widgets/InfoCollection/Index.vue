@@ -1,0 +1,208 @@
+<template>
+  <div class="full">
+    <van-nav-bar title="采集信息" class="feedtitle" left-text="返回" left-arrow @click-left="goBack" right-text="保存" @click-right="save" />
+    <div class="info-container">
+      <van-form @submit="onSubmit">
+        <div class="info-title">主题</div>
+        <van-field v-model="title" class="info-field" name="title" />
+        <div class="info-title">描述</div>
+        <van-field v-model="describe" class="info-field" type="textarea" name="describe" placeholder="请填写十字以上的描述" rows="3" autosize show-word-limit />
+        <div class="info-title">文件</div>
+        <van-field name="fileList">
+          <template v-slot:input>
+            <div class="files-list-preview">
+              <div class="custom-file-load" v-for="(item, index) in fileList" :key="index">
+                <van-icon name="cross" class="right-top-close" @click="removeFile(index)" />
+                <img class="custom-image-preview" fit="fill" :src="item.content" v-if="isImage(item.file)" />
+                <div class="file-preview" v-else>
+                  {{ item.file.name }}
+                </div>
+              </div>
+              <div class="custom-file-load" @click="dialogShow">
+                <van-icon name="orders-o" />
+              </div>
+            </div>
+          </template>
+        </van-field>
+        <van-dialog v-model="show" title="类型选择" show-cancel-button>
+          <div class="type-choose">
+            <van-uploader accept=".*" :before-read="dialogShow" :after-read="afterRead" multiple :max-count="4">
+              <template>
+                <div class="custom-file-load">
+                  <span> 选择文件 </span>
+                </div>
+              </template>
+            </van-uploader>
+            <van-uploader accept="image/*,video/*" capture="camera" :before-read="dialogShow" :after-read="afterRead" multiple :max-count="4">
+              <template>
+                <div class="custom-file-load">
+                  <span> 拍照或录像 </span>
+                </div>
+              </template>
+            </van-uploader>
+          </div>
+        </van-dialog>
+        <div class="info-title">位置</div>
+        <van-field name="fileList">
+          <template #input>
+            <van-cell :title="point.lonlat" :value="point.name" icon="location-o" />
+          </template>
+        </van-field>
+        <div class="center">
+          <van-button type="info" class="info-submit" plain hairline native-type="onSubmit"> 提交 </van-button>
+        </div>
+      </van-form>
+    </div>
+  </div>
+</template>
+<script lang="ts">
+import Vue from "vue";
+import mime from "mime";
+import { Toast } from "vant";
+export default Vue.extend({
+  name: "InfoCollection",
+  data() {
+    return {
+      describe: "",
+      fileList: [],
+      title: "",
+      point: {
+        lonlat: "",
+        name: "",
+      },
+      show: false,
+    };
+  },
+  async beforeMount() {
+    const locationPlugin = window["plugin"]["mapLocation"];
+    const position = await locationPlugin.getCurrentPosition();
+    //@ts-ignore
+    const lonlat = [position.coords.longitude, position.coords.latitude];
+    this.point = {
+      lonlat: lonlat.join(","),
+      name: "苏州",
+    };
+  },
+  methods: {
+    goBack() {
+      //@ts-ignore
+      this.$router.backward(-1);
+    },
+    afterRead(file, detail) {
+      this.fileList.push(file);
+      console.log(file);
+    },
+    isImage(file) {
+      //@ts-ignore
+      return file.type.split("/")[0] === "image";
+    },
+    async onSubmit(values) {
+      // fileList:[
+      // content:base64
+      // file:File
+      // status
+      // message
+      // ]
+      (await this.$store.dispatch("gisInfos/submit", values)) && Toast("上传成功");
+    },
+    dialogShow() {
+      this.show = !this.show;
+      return !this.show;
+    },
+    save() {
+      Toast("保存成功");
+    },
+    removeFile(index) {
+      this.fileList.splice(index, 1);
+    },
+  },
+});
+</script>
+<style lang="scss" scoped>
+.info-container {
+  background-color: $navbar-background;
+  padding: 5px 5px;
+  font-size: 14px;
+  height: calc(100% - 46px);
+}
+.feedtitle {
+  background-color: $navbar-background;
+}
+.info-title {
+  width: 90%;
+  padding: 0 5px;
+  font-size: 12px;
+  margin: 8px 0;
+  color: rgb(153, 147, 147);
+}
+.info-field {
+  font-size: 13px;
+}
+.info-input {
+  height: 32px;
+  line-height: 32px;
+  padding: 0 0;
+}
+.center {
+  width: 100%;
+  height: 32px;
+  margin: 16px 0;
+  text-align: center;
+}
+.info-submit {
+  width: 80px;
+  height: 32px;
+  text-align: center;
+}
+.files-list-preview {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  text-align: center;
+  font-size: 16px;
+  width: 100%;
+}
+.custom-file-load {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  // flex-grow: 1;
+  width: 30%;
+  height: 80px;
+  margin: 0 1.6%;
+  // margin: 5px 5px;
+  // max-width: 100px;
+  min-width: 80px;
+  min-height: 80px;
+  background: white;
+  color: #dcdee0;
+}
+.right-top-close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 12px;
+  z-index: 4;
+}
+.type-choose {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  // margin: 5px 5px;
+  width: 100%;
+}
+.van-dialog {
+  background: #2a355d;
+  color: white;
+}
+.file-preview {
+  font-size: 12px;
+}
+.custom-image-preview {
+  width: 100%;
+  height: 100%;
+}
+</style>

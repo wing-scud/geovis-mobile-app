@@ -8,3 +8,4 @@ Vue.component("TaskGroup", () => import("./TaskGroup/Index.vue"));
 Vue.component("BriefAddress", () => import("./Address/BriefAddress.vue"));
 Vue.component("TodayDetail", () => import("./FeatureWeather/TodayDetail.vue"));
 Vue.component("FPS", () => import("./FPS/FPS.vue"));
+

@@ -20,6 +20,7 @@ export default Vue.extend({
       const filePlugin = window["plugin"].file;
       const result = await filePlugin.createFile("/firstDir/secondDir/create2.txt", true);
       console.log(result);
+      //@ts-ignore
       console.log(mime.getExtension('image'))
     },
     async writeFile() {

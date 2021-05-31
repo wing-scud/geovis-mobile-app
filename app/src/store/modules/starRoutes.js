@@ -1,4 +1,4 @@
-import { fetchByToken, generateRouteId } from "@/util/utils.js"
+import { fetchByToken, generateId } from "@/util/utils.js"
 const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
 const starRouteAddress = SERVER_ROOT + "/conserve/editStaredRoute"
 const state = () => ({
@@ -35,7 +35,7 @@ const actions = {
   },
   save({ state, commit }, route) {
     const token = this.state.user.user.token;
-    const id = generateRouteId(route);
+    const id = generateId(route);
     const promise = fetchByToken(starRouteAddress, token, {
       type: "save",
       route: route,

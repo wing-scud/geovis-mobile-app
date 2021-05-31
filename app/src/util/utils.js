@@ -50,7 +50,7 @@ function fetchFromFormDataByToken(address, token, formData) {
         return res.json()
     })
 }
-function generateRouteId(route) {
+function generateId(route) {
     // const {start,end,wawypoints,way,routes};
     return uuid.v1()
 }
@@ -94,5 +94,5 @@ function getDataType(data) {
         return "Blob"
     }
 }
-export { resolveFullPath, fetchByToken, generateRouteId, fetchForJson, fetchFileByToken, 
+export { resolveFullPath, fetchByToken, generateId, fetchForJson, fetchFileByToken, 
     getFileSuffix, fetchFromFormDataByToken, linearRangeNumber, getFileSuffixByMime,getDataType }
