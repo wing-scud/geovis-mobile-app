@@ -1,12 +1,12 @@
 <template>
   <div class="full">
-    <van-nav-bar title="采集信息编辑" left-text="返回" left-arrow @click-left="goBack" />
+    <EditInfoCollection></EditInfoCollection>
   </div>
 </template>
-  <script lang="ts">
+<script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  name: "EditInfoCollection",
+  name: "EditInfoCollectionShow",
   data() {
     return {};
   },
@@ -18,5 +18,4 @@ export default Vue.extend({
   },
 });
 </script>
-  <style scoped></style>
-  
+<style scoped></style>

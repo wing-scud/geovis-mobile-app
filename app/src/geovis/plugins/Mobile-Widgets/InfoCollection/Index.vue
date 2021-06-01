@@ -43,9 +43,9 @@
           </div>
         </van-dialog>
         <div class="info-title">位置</div>
-        <van-field name="fileList">
+        <van-field name="position">
           <template #input>
-            <van-cell :title="point.lonlat" :value="point.name" icon="location-o" />
+            <van-cell v-model="point.lnglat" :title="point.name" icon="location-o" />
           </template>
         </van-field>
         <div class="center">
@@ -67,7 +67,7 @@ export default Vue.extend({
       fileList: [],
       title: "",
       point: {
-        lonlat: "",
+        lnglat: "",
         name: "",
       },
       show: false,
@@ -76,11 +76,14 @@ export default Vue.extend({
   async beforeMount() {
     const locationPlugin = window["plugin"]["mapLocation"];
     const position = await locationPlugin.getCurrentPosition();
+    //度、纬度如需精确到米需5位小数，10米 4位
+    const lng = position.coords.longitude.toFixed(4);
+    const lat = position.coords.latitude.toFixed(4);
     //@ts-ignore
-    const lonlat = [position.coords.longitude, position.coords.latitude];
+    const lnglat = [lng, lat];
     this.point = {
-      lonlat: lonlat.join(","),
-      name: "苏州",
+      lnglat: lnglat.join(","),
+      name: "苏州工业园区空天院",
     };
   },
   methods: {
@@ -90,31 +93,44 @@ export default Vue.extend({
     },
     afterRead(file, detail) {
       this.fileList.push(file);
-      console.log(file);
     },
     isImage(file) {
       //@ts-ignore
       return file.type.split("/")[0] === "image";
     },
-    async onSubmit(values) {
-      // fileList:[
-      // content:base64
-      // file:File
-      // status
-      // message
-      // ]
-      (await this.$store.dispatch("gisInfos/submit", values)) && Toast("上传成功");
+    async onSubmit() {
+      const values = {
+        status: true,
+        describe: this.describe,
+        fileList: this.getBlob(),
+        title: this.title,
+        position: this.point,
+      };
+      const result =await this.$store.dispatch("gisInfos/submit", values);
+      result && Toast("上传成功");
     },
     dialogShow() {
       this.show = !this.show;
       return !this.show;
     },
-    save() {
-      Toast("保存成功");
+    async save() {
+      const values = {
+        status: false,
+        describe: this.describe,
+        fileList: this.getBlob(),
+        title: this.title,
+        position: this.point,
+      };
+      (await this.$store.dispatch("gisInfos/submit", values)) && Toast("保存成功");
     },
     removeFile(index) {
       this.fileList.splice(index, 1);
     },
+    getBlob(){
+     return this.fileList.map((item)=>{
+        return item.file;
+      })
+    }
   },
 });
 </script>
@@ -191,7 +207,7 @@ export default Vue.extend({
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  // margin: 5px 5px;
+  margin: 8px 0;
   width: 100%;
 }
 .van-dialog {

@@ -62,6 +62,7 @@ class FilePlugin {
     async creatDir() {
 
     }
+
     async readBlob(blob, mimeType) {
         return new Promise((resolve) => {
             const reader = new FileReader();
@@ -89,6 +90,10 @@ class FilePlugin {
      */
     async readFile(fullPath) {
         return Promise.resolve(this._getFileByFileEntry(await this.getFileEntry(fullPath, { create: false })))
+    }
+
+    async removeFile(fullPath){
+        
     }
     /**
      * 

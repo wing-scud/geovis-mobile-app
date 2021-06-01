@@ -22,6 +22,8 @@ const Register = () => import("../view/Login/Register.vue");
 const MapSetting = () => import("../view/Map/MapSetting.vue");
 const Star = () => import("../view/Star/Star.vue");
 const InfoCollectionShow = () => import("../view/Star/InfoCollectionShow.vue");
+const EditInfoCollectionShow = () => import("../view/Star/EditInfoCollectionShow.vue");
+
 const ServiceAddress = () => import("../view/System/ServiceAddress.vue");
 const About = () => import("../view/System/About.vue");
 const Feedback = () => import("../view/System/Feedback.vue");
@@ -99,6 +101,13 @@ const routes = [
     path: "/infoCollectionShow",
     component: InfoCollectionShow,
     name: "InfoCollectionShow",
+    meta: {
+      requireLogin: true
+    }
+  }, {
+    path: "/editInfoCollectionShow",
+    component: EditInfoCollectionShow,
+    name: "EditInfoCollectionShow",
     meta: {
       requireLogin: true
     }

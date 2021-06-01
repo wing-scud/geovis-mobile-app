@@ -11,8 +11,9 @@ const createdHandle = async function () {
         console.log("需要登录 ");
     }
 }
-const loginHandle = function () {
+const loginHandle =  function () {
     console.log('login');
+    store.dispatch('gisInfos/getList');
     store.dispatch('starPlaces/getList');
     store.dispatch('starRoutes/getList')
 }

@@ -10,30 +10,7 @@
         <div @click="showSearchInput(false)">取消</div>
       </template>
     </van-search>
-    <van-tabs v-model="activeTab">
-      <van-tab title="未上传" name="place">
-        <van-empty description="暂无地点收藏" v-if="filterPlaces.length <= 0" />
-        <van-collapse v-model="activePlaces" v-else>
-          <van-collapse-item :title="rough(item.place.name)" :name="item.id" v-for="(item, index) in filterPlaces" :key="item.index">
-            <template #value>
-              <MIcon icon="icon-sousuo" length="20px" customClass="starSearchTo" size="20px" :circle="true" @click="starSearchTo(index)"> </MIcon>
-              <van-icon name="star-o" class="stared" @click="deletePlace(item.id)" />
-            </template>
-            <div class="detailPlace">
-              <div class="label">
-                名称:<span class="value">{{ item.place.name }}</span>
-              </div>
-              <div class="label">
-                坐标:<span class="value">{{ item.place.location[0] }},{{ item.place.location[1] }}</span>
-              </div>
-            </div>
-          </van-collapse-item>
-        </van-collapse>
-      </van-tab>
-      <van-tab title="已上传" name="route">
-        <van-empty description="暂无路线收藏" v-if="filterRoutes.length <= 0" />
-      </van-tab>
-    </van-tabs>
+    <InfoCollectionList :filter="searchValue"> </InfoCollectionList>
   </div>
 </template>
   <script lang="ts">
@@ -44,44 +21,16 @@ export default Vue.extend({
   name: "InfoCollectionShow",
   data() {
     return {
-      activeTab: "place", // place、route
-      activePlaces: [],
-      activeRoutes: [],
-      places: [],
-      routes: [],
       navBar: true,
       searchValue: "",
-      debounceSearch: undefined,
-      filterRoutes: [],
-      filterPlaces: [],
+      debounceSearch:null
     };
   },
   mounted() {
-    this.places = this.$store.state.starPlaces.places;
-    this.routes = this.$store.state.starRoutes.routes;
-    this.filterPlaces = this.places;
-    this.filterRoutes = this.routes;
     const debounceSearch = _.debounce(this.search, 500);
     this.debounceSearch = debounceSearch;
   },
-  computed: {
-    searchTab: function () {
-      //@ts-ignore
-      return this.activeTab === "place" ? "地址" : "路线";
-    },
-  },
   methods: {
-    rough(name) {
-      return name.split(",")[0];
-    },
-    deletePlace(id) {
-      Toast("取消收藏成功");
-      this.$store.commit("starPlaces/removePlace", id);
-    },
-    deleteRoute(id) {
-      Toast("取消收藏成功");
-      this.$store.commit("starRoutes/removeRoute", id);
-    },
     goBack() {
       //@ts-ignore
       this.$router.backward(-1);
@@ -90,44 +39,6 @@ export default Vue.extend({
       this.debounceSearch();
     },
     search() {
-      const type = this.activeTab;
-      let searchArray;
-      if (type === "place") {
-        searchArray = this.places;
-        this.filterPlaces = [];
-        searchArray.map((item) => {
-          if (item.name.indexOf(this.searchValue) !== -1) this.filterPlaces.push(item);
-        });
-      } else {
-        searchArray = this.routes;
-        this.filterRoutes = [];
-        searchArray.map((item) => {
-          if (item.name.indexOf(this.searchValue) !== -1) this.filterRoutes.push(item);
-        });
-      }
-    },
-    starRouteTo(index) {
-      const route = this.filterRoutes[index];
-      const waypoints = route.waypoints.map((obj) => {
-        return obj.geometry.coordinates;
-      });
-      this.$router.push({ name: "PathPlan", params: { origin: route.origin.geometry.coordinates, destination: route.destination.geometry.coordinates, waypoints: waypoints } });
-    },
-    starSearchTo(index) {
-      const place = this.filterPlaces[index];
-      this.$router.push({
-        name: "SearchArea",
-        params: place,
-      });
-    },
-    showSearchInput(bool) {
-      if (bool) {
-        this.navBar = false;
-      } else {
-        this.navBar = true;
-        this.filterPlaces = this.places;
-        this.filterRoutes = this.routes;
-      }
     },
   },
 });

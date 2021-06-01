@@ -1,6 +1,6 @@
 import uuid from "uuid"
 import User, { validUser } from "../../api/db/table/User";
-import { fetchByToken, fetchForJson, fetchFileByToken, resolveFullPath, generateId, getFileSuffix, fetchFromFormDataByToken } from "@/util/utils.js"
+import { fetchByToken, fetchForJson, fetchFileByToken, resolveFullPath, generateId, getFileSuffix, fetchByFormDataByToken } from "@/util/utils.js"
 const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
 const loginUrl = SERVER_ROOT + "/user/login";
 const loginOutUrl = SERVER_ROOT + "/user/loginOut";
@@ -59,12 +59,18 @@ const actions = {
       }
     })
   },
-  changeUser({ state, commit }, changedValues) {
+  /**
+   *  目前只能单项的修改用户信息
+   * @param param0 
+   * @param options 
+   * @returns 
+   */
+  changeUser({ state, commit }, options) {
     const token = state.user.token;
     const database = window['plugin'].database
     return new Promise((resolve, reject) => {
       //验证user 是否正确
-      // const res = validUser(changedValues);
+      // const res = validUser(options);
       const res = {
         status: "ok",
         error: false,
@@ -72,18 +78,16 @@ const actions = {
       const filePlugin = window['plugin'].file;
       if (res.status) {
         //如果是图像
-        if (changedValues.type === "profilePhoto") {
+        if (options.attribute === "profilePhoto") {
           // 上传 服务器更新
-          const formData = new FormData();
-          formData.append('profilePhoto', changedValues.value)
-          fetchFromFormDataByToken(setProfilePhotoUrl, token, formData).then((result) => {
+          fetchByFormDataByToken(setProfilePhotoUrl, token, options.value).then((result) => {
             if (result.success) {
               //本地更新
-              const profilePhotoFileName = generateId() + getFileSuffix(changedValues.value.name);
+              const profilePhotoFileName = generateId() + getFileSuffix(options.value.name);
               const filePath = profilePhotoBaseDir + profilePhotoFileName
-              filePlugin.writeFile(filePath, changedValues.value, { create: true }).then(() => {
-                changedValues.value = filePath;
-                commit('changeUser', changedValues);
+              filePlugin.writeFile(filePath, options.value, { create: true }).then(() => {
+                options.value = filePath;
+                commit('changeUser', options);
                 const user = state.user;
                 if (user.rememberMe) {
                   database.userTable.setItem('user', user).then((user) => {
@@ -101,7 +105,7 @@ const actions = {
           // 上传 服务器更新
 
           //本地更新
-          commit('changeUser', changedValues);
+          commit('changeUser', options);
           const user = state.user;
           if (user.rememberMe) {
             database.userTable.setItem('user', user).then((user) => {
@@ -132,12 +136,10 @@ const mutations = {
     const loginOut = new Event("loginOut");
     window.dispatchEvent(loginOut);
   },
-  /*
-    options:new Map(key,value); 
-   */
-  changeUser(state, changedValues) {
-    state.user[changedValues.type] = changedValues.value;
-    console.log("change-user-" + changedValues.type, changedValues.value);
+
+  changeUser(state, options) {
+    state.user[options.attribute] = options.value;
+    console.log("change-user-" + options.attribute, options.value);
   },
 };
 export default {
