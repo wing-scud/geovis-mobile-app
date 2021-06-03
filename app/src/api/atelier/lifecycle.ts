@@ -1,3 +1,7 @@
+/**
+ * 离线模式 
+ * service worker ，本地不做存储
+ */
 import store from "../../store/index.js"
 import database from "../db/localforage.js"
 import file from "./file"
@@ -11,8 +15,10 @@ const createdHandle = async function () {
         console.log("需要登录 ");
     }
 }
-const loginHandle =  function () {
+const loginHandle = function () {
     console.log('login');
+    const account = store.state.user.user.account;
+    file.initUserEntry(account)
     store.dispatch('gisInfos/getList');
     store.dispatch('starPlaces/getList');
     store.dispatch('starRoutes/getList')

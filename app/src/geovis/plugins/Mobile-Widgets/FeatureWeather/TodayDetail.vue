@@ -75,7 +75,7 @@ export default Vue.extend({
       timeDetails: [
         {
           id: "1",
-          time: "8:00",
+          time: "6:00",
           temperature: "22°",
           weather: "阴",
           wind: "东2级",
@@ -84,7 +84,7 @@ export default Vue.extend({
         { id: "2", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
         {
           id: "3",
-          time: "8:00",
+          time: "10:00",
           temperature: "22°",
           weather: "阴",
           wind: "东2级",
@@ -92,7 +92,7 @@ export default Vue.extend({
         },
         {
           id: "4",
-          time: "8:00",
+          time: "12:00",
           temperature: "22°",
           weather: "阴",
           wind: "东2级",
@@ -100,7 +100,7 @@ export default Vue.extend({
         },
         {
           id: "5",
-          time: "8:00",
+          time: "14:00",
           temperature: "22°",
           weather: "阴",
           wind: "东2级",
@@ -116,7 +116,7 @@ export default Vue.extend({
         },
         {
           id: "7",
-          time: "8:00",
+          time: "16:00",
           temperature: "22°",
           weather: "阴",
           wind: "东2级",
@@ -124,17 +124,17 @@ export default Vue.extend({
         },
         {
           id: "8",
-          time: "8:00",
+          time: "18:00",
           temperature: "22°",
           weather: "阴",
           wind: "东2级",
           air: "优",
         },
-        { id: "9", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
-        { id: "10", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
-        { id: "11", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
-        { id: "12", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
-        { id: "13", time: "8:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "9", time: "20:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "10", time: "22:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "11", time: "24:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "12", time: "2:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
+        { id: "13", time: "4:00", temperature: "22°", weather: "阴", wind: "东2级", air: "优" },
       ],
       nearDays: [],
     };

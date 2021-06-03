@@ -15,6 +15,13 @@ import { resolveFullPath, getFileSuffix, getFileSuffixByMime, getDataType } from
 class FilePlugin {
     private _size;
     private _rootEntry;
+    private _userEntry;
+    public get userEntry() {
+        return this._userEntry;
+    }
+    public set userEntry(value) {
+        this._userEntry = value;
+    }
     public get size() {
         return this._size;
     }
@@ -39,9 +46,12 @@ class FilePlugin {
         navigator.webkitPersistentStorage.requestQuota(
             this._size, async (grantedBytes) => {
                 console.log("储存权限获取", grantedBytes);
-                this._rootEntry = await this._getRootDirEntry(this._size)
+                this.rootEntry = await this._getRootDirEntry(this._size);
             }
         )
+    }
+    async initUserEntry(account) {
+        this._userEntry = await this._getDirectory(this._rootEntry, `/account/`, true)
     }
 
     /**
@@ -92,8 +102,8 @@ class FilePlugin {
         return Promise.resolve(this._getFileByFileEntry(await this.getFileEntry(fullPath, { create: false })))
     }
 
-    async removeFile(fullPath){
-        
+    async removeFile(fullPath) {
+
     }
     /**
      * 

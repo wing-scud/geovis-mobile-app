@@ -20,7 +20,14 @@ const gisInfos = localforage.createInstance({
     storeName: 'gisInfo',
     description: '储存信息采集的相关内容'
 });
+
+
+const fileTable = localforage.createInstance({
+    name: dbName,
+    storeName: 'fileTable',
+    description: '文件保存的映射表'
+});
 const database = {
-    mapData, userTable, gisInfos
+    mapData, userTable, gisInfos,fileTable
 }
 export default database;

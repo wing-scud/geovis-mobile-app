@@ -143,7 +143,80 @@ async function getLocalPreview(path) {
         return null;
     }
 }
+
+
+function deepProxy(obj, cb, keys) {
+    if (!keys) {
+        keys = []
+    }
+    if (typeof obj === "object") {
+        for (const key in obj) {
+            const newArray = [...keys]
+            newArray.push(key);
+            if (typeof obj[key] === "object" && !(obj[key] instanceof Blob)) {
+                obj[key] = deepProxy(obj[key], cb, newArray);
+            }
+        }
+
+    }
+
+    return new Proxy(obj, {
+
+        /**
+         * @param {Object, Array} target 设置值的对象
+         * @param {String} key 属性
+         * @param {any} value 值
+         * @param {Object} receiver this
+         */
+        set: function (target, key, value, receiver) {
+            if (typeof value === "object" && !(value instanceof Blob) && (key !== "__proto__")) {
+                keys.push(key);
+                value = deepProxy(value, cb, keys);
+            }
+            const cbType = target[key] == undefined ? "create" : "modify";
+            //排除数组修改length回调
+            if (!(Array.isArray(target) && key === "length") && key !== "__proto__") {
+                cb(cbType, { target, key, value, parent: keys });
+            }
+            return Reflect.set(target, key, value, receiver);
+
+        },
+        deleteProperty(target, key) {
+            cb("delete", { target, key });
+            return Reflect.deleteProperty(target, key);
+        }
+
+    });
+
+}
+function deepCopy(target) {
+    const copyedObjs = []; //此数组解决了循环引用和相同引用的问题，它存放已经递归到的目标对象
+    function _deepCopy(target) {
+        if (typeof target !== "object" || !target) {
+            return target;
+        }
+        for (let i = 0; i < copyedObjs.length; i++) {
+            if (copyedObjs[i].target === target) {
+                return copyedObjs[i].copyTarget;
+            }
+        }
+        let obj = {};
+        if (Array.isArray(target)) {
+            obj = []; //处理target是数组的情况
+        }
+        copyedObjs.push({ target: target, copyTarget: obj });
+        Object.keys(target).forEach(key => {
+            if (obj[key]) {
+                return;
+            }
+            obj[key] = _deepCopy(target[key]);
+        });
+        return obj;
+    }
+    return _deepCopy(target);
+}
 export {
     resolveFullPath, fetchByToken, generateId, fetchForJson, fetchFileByToken,
-    getFileSuffix, fetchByFormDataByToken, linearRangeNumber, getFileSuffixByMime, getDataType, formateDate, getLocalPreview
+    getFileSuffix, fetchByFormDataByToken, linearRangeNumber, getFileSuffixByMime,
+    getDataType, formateDate, getLocalPreview, deepProxy, deepCopy
 }

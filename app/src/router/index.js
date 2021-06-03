@@ -40,7 +40,7 @@ const SearchCity = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather
 const Fifteen = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/Fifteen.vue");
 const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/TodayDetail.vue");
 const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LivePhenomena/Index.vue");
-const InfoCollection = () => import("../geovis/plugins/Mobile-Widgets/InfoCollection/Index.vue");
+const InfoCollection = () => import("../geovis/plugins/Mobile-Widgets/InfoCollection/AddInfo.vue");
 const routes = [
   {
     path: "/",

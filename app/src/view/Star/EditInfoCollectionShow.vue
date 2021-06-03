@@ -1,6 +1,6 @@
 <template>
   <div class="full">
-    <EditInfoCollection></EditInfoCollection>
+    <EditInfoCollection :id=id></EditInfoCollection>
   </div>
 </template>
 <script lang="ts">
@@ -8,7 +8,12 @@ import Vue from "vue";
 export default Vue.extend({
   name: "EditInfoCollectionShow",
   data() {
-    return {};
+    return {
+      id:""
+    };
+  },
+  beforeMount(){
+    this.id = this.$route.params.id;
   },
   methods: {
     goBack() {

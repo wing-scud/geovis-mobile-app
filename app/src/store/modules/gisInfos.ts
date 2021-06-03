@@ -1,21 +1,25 @@
 // 每个table对应一个 account？
-import { fetchByToken, fetchFileByToken, formateDate, getFileSuffixByMime, generateId, getFileSuffix, fetchByFormDataByToken } from "@/util/utils.js"
+import { fetchByToken, fetchFileByToken, formateDate, getFileSuffixByMime, generateId, getFileSuffix, fetchByFormDataByToken, fetchForJson } from "@/util/utils.js"
+import { GridItem } from "vant";
 const SERVER_ROOT = window['sceneData'].SERVER_ROOT;
 const editGisInfoUrl = SERVER_ROOT + "/conserve/editGisInfo";
 const LocalFilePath = "/gisInfos/";
 const state = () => ({
     gisInfos: []
 });
-
 // getters
-const getters = {};
+const getters = {
+    getById: (state) => (id) => {
+        const gisInfos = state.gisInfos;
+        const index = gisInfos.findIndex((item) => item.id === id)
+        return state.gisInfos[index]
+    }
+};
 // actions
 const actions = {
-    submit({ commit }, options) {
+    upload({ commit }, options) {
         const database = window['plugin'].database;
         const filePlugin = window['plugin'].file;
-        // local表示是否上传服务器
-        const local = options.local;
         const id = generateId();
         options.id = id;
         options.type = "add";
@@ -23,39 +27,48 @@ const actions = {
         //@ts-ignore
         const token = this.state.user.user.token;
         return new Promise((resolve) => {
-            fetchByFormDataByToken(editGisInfoUrl, token, options).then(async (data) => {
-                if (data.success) {
+            fetchByFormDataByToken(editGisInfoUrl, token, options).then(async (result) => {
+                if (result.success) {
+                    const data = result.data;
                     // 保存到本地
-                    const fileList = options.fileList;
-                    fileList.map((file, index) => {
-                        const fullPath = LocalFilePath + generateId() + getFileSuffixByMime(file.type)
+                    const files = options.fileList;
+                    const id = data.id;
+                    const promises = data.fileList.map((item, index) => {
+                        const file = files[index]
+                        const storageName = generateId() + getFileSuffixByMime(file.type)
+                        const fullPath = LocalFilePath + storageName
                         filePlugin.writeFile(fullPath, file, { create: true });
-                        options.fileList[index] = fullPath
+                        item.storageName = storageName;
+                        item.fullPath = fullPath;
+                        item.content = file.type.includes('image') ? window.URL.createObjectURL(file) : null
+                        return item;
                     })
                     // 添加的数据库
-                    database.gisInfos.setItem(id, options).then(() => {
-                        commit("add", options);
-                        resolve(true)
-                    })
+                    data.fileList = await Promise.all(promises)
+                    commit("add", data);
+                    resolve(result)
                 } else {
-                    resolve(false)
+                    resolve(result)
                 }
             })
         });
     },
-    remove({ state, commit }, id) {
+    remove({ state, commit, getter }, id) {
         //@ts-ignore
         const token = this.state.user.user.token;
         return new Promise((resolve) => {
-            fetchByToken(editGisInfoUrl, token, { id, type: 'remove' }).then((result) => {
+            fetchByToken(editGisInfoUrl, token, { id, type: 'remove' }).then(async (result) => {
                 if (result.success) {
                     const database = window['plugin'].database;
-                    database.gisInfo.removeItem(id).then(() => {
-                        commit("remove");
-                        resolve(true)
-                    });
+                    const fileList = getter['getById'](id).fileList;
+                    const promises = fileList.map((fileName) => {
+                        // 文件也应该删除
+                        return database.fileTable.removeItem(fileName)
+                    })
+                    await promises && (commit("remove", id),
+                        resolve(true))
                 } else {
-                    resolve(true)
+                    resolve(false)
                 }
             })
         })
@@ -66,105 +79,113 @@ const actions = {
      * @param options { attributes:[], data:[]}
      * @returns 
      */
-    edit({ state, commit }, options) {
+    edit({ state, commit ,getters}, options) {
         //@ts-ignore
         const token = this.state.user.user.token;
         const database = window['plugin'].database
         return new Promise((resolve) => {
             const filePlugin = window['plugin'].file;
             const id = options.id;
-            options.type = "edit"
-            fetchByToken(editGisInfoUrl, token, options).then(async (result) => {
+            options.type = "edit";
+            fetchByFormDataByToken(editGisInfoUrl, token, options).then(async (result) => {
                 if (result.success) {
-                    const gisInfo = database.gisInfos.getItem(id);
-                    const data = options.data;
-                    options.attributes.forEach((attribute, index) => {
-                        //文件
-                        if (attribute === "fileList") {
-                            data.forEach(async (item, index) => {
-                                const fullPath = LocalFilePath + generateId + getFileSuffixByMime(item.file.type)
-                                await filePlugin.writeFile(fullPath, item.file, { create: true });
-                                data.fileList[index] = fullPath
-                            })
-                            gisInfo.fileList.forEach((item, index) => {
-                                filePlugin.removeFile(item);
-                            });
-                            gisInfo.fileList = data.fileList;
-                            // commit
+                    const updatedInfo = result.data;
+                    const originInfo = getters['getById'](id);
+                    // attribute string 更新
+                    const files = options.fileList;
+                    //fileList 更新
+                    const promises = updatedInfo.fileList.map((updatedItem, index) => {
+                        const exist = originInfo.fileList.find((item) => item.id === updatedItem.id);
+                        if (exist) {
+                            updatedItem = exist
                         } else {
-                            gisInfo[attribute] = options.data[index]
+                            const file = files.find((file) => updatedItem.fileName === file.name)
+                            const storageName = generateId() + getFileSuffixByMime(file.type)
+                            const fullPath = LocalFilePath + storageName
+                            filePlugin.writeFile(fullPath, file, { create: true });
+                            updatedItem.storageName = storageName;
+                            updatedItem.fullPath = fullPath;
+                            updatedItem.content = file.type.includes('image') ? window.URL.createObjectURL(file) : null
                         }
+                        return updatedItem;
                     })
-                    await database.gisInfos.setItem(id, gisInfo)
-                    commit('edit', gisInfo)
+                    // 添加的数据库
+                    updatedInfo.fileList = await Promise.all(promises)
+                    commit("change", updatedInfo);
+                    resolve(result)
                 } else {
-                    resolve(false)
+                    resolve(result)
                 }
             })
         })
     },
-
     getList({ state, commit }) {
         //@ts-ignore
         const token = this.state.user.user.token;
         return new Promise((resolve) => {
-            const database = window['plugin'].database;
             const filePlugin = window['plugin'].file;
             fetchByToken(editGisInfoUrl, token, { type: "getList" }).then((result) => {
                 if (result.success) {
-                    const data = result.data;
-                    data.forEach(async (item) => {
-                        const gisInfo = item.info;
-                        const id = item.id;
-                        const fileNameList = gisInfo.fileList;
-                        gisInfo.id = id;
-                        const localBool = await database.gisInfos.getItem(id);
-                        if (!localBool) {
-                            const promises = fileNameList.map(async (fileName, index) => {
-                                return await fetchFileByToken(editGisInfoUrl, token, { type: 'getFile', fileName }).then(async (blob) => {
-                                    const fullPath = LocalFilePath + fileName
-                                    await filePlugin.writeFile(fullPath, blob, { create: true });
-                                    return fullPath;
-                                })
-                            })
-                            Promise.all(promises).then(async (filePathList) => {
-                                gisInfo.fileList = filePathList;
-                                await database.gisInfos.setItem(id, gisInfo)
-                                commit('add', gisInfo)
-                            })
-                        } else {
-                            const gisInfo = await database.gisInfos.getItem(id);
+                    const infoArray = result.data;
+                    infoArray.forEach(async (gisInfo) => {
+                        const id = gisInfo.id;
+                        const serverFileList = gisInfo.fileList;
+                        const promises = serverFileList.map(async (item, index) => {
+                            const blob = await fetchFileByToken(editGisInfoUrl, token, { type: 'getFile', fileId: item.id, id: id })
+                            const storageName = generateId() + getFileSuffixByMime(blob.type);
+                            const fullPath = LocalFilePath + storageName;
+                            await filePlugin.writeFile(fullPath, blob, { create: true });
+                            const content = blob.type.includes('image') ? window.URL.createObjectURL(blob) : null
+                            return {
+                                storageName, fullPath, fileName: item.fileName,
+                                id: item.id,
+                                content: content
+                            };
+                        })
+                        Promise.all(promises).then(async (localFileList) => {
+                            gisInfo.fileList = localFileList;
                             commit('add', gisInfo)
-                        }
+                        })
                     })
                 } else {
                     resolve(false)
                 }
             })
         })
-    }
+    },
+    // clear({}){
+
+    // }
 };
 
 // mutations
 const mutations = {
-    findById(state, id) {
-        return state.gisInfos.findIndex((gisInfo) => gisInfo.id === id)
-    },
-    add(state, gisInfo) {
+    add(state, options) {
+        const gisInfo = {
+            title: options.title,
+            describe: options.describe,
+            fileList: options.fileList,
+            createTime: options.createTime,
+            position: options.position,
+            status: options.status,
+            id: options.id
+        }
         state.gisInfos.push(gisInfo);
     },
-    removeGisInfo(state, id) {
+    remove(state, id) {
         const gisInfos = state.gisInfos;
-        state.gisInfos.splice(gisInfos.findById(state, id), 1);
+        const index = gisInfos.findIndex((item) => item.id === id)
+        state.gisInfos.splice(index, 1);
     },
     /*
       options:new Map(key,value); 
      */
     change(state, options) {
         const gisInfos = state.gisInfos;
-        const gisInfo = gisInfos.findById(state, options.id)
-        options.attributes.forEach((attribute, index) => {
-            gisInfo[attribute] = options.data[index];
+        const index = gisInfos.findIndex((item) => item.id === options.id);
+        const gisInfo = gisInfos[index];
+        Object.keys(options).forEach((attribute, index) => {
+            gisInfo[attribute] = options[attribute];
         });
     },
 };

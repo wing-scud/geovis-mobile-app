@@ -45,7 +45,7 @@
         <div class="info-title">位置</div>
         <van-field name="position">
           <template #input>
-            <van-cell v-model="point.lnglat" :title="point.name" icon="location-o" />
+            <van-cell v-model="point.lngLat" :title="point.locationName" icon="location-o" />
           </template>
         </van-field>
         <div class="center">
@@ -60,15 +60,15 @@ import Vue from "vue";
 import mime from "mime";
 import { Toast } from "vant";
 export default Vue.extend({
-  name: "InfoCollection",
+  name: "AddInfo",
   data() {
     return {
       describe: "",
       fileList: [],
       title: "",
       point: {
-        lnglat: "",
-        name: "",
+        lngLat: "",
+        locationName: "",
       },
       show: false,
     };
@@ -82,8 +82,8 @@ export default Vue.extend({
     //@ts-ignore
     const lnglat = [lng, lat];
     this.point = {
-      lnglat: lnglat.join(","),
-      name: "苏州工业园区空天院",
+      lngLat: lnglat.join(","),
+      locationName: "苏州工业园区空天院",
     };
   },
   methods: {
@@ -106,8 +106,8 @@ export default Vue.extend({
         title: this.title,
         position: this.point,
       };
-      const result =await this.$store.dispatch("gisInfos/submit", values);
-      result && Toast("上传成功");
+      const result = await this.$store.dispatch("gisInfos/upload", values);
+      Toast(result.message);
     },
     dialogShow() {
       this.show = !this.show;
@@ -121,16 +121,17 @@ export default Vue.extend({
         title: this.title,
         position: this.point,
       };
-      (await this.$store.dispatch("gisInfos/submit", values)) && Toast("保存成功");
+      const result = await this.$store.dispatch("gisInfos/upload", values);
+      Toast(result.message);
     },
     removeFile(index) {
       this.fileList.splice(index, 1);
     },
-    getBlob(){
-     return this.fileList.map((item)=>{
+    getBlob() {
+      return this.fileList.map((item) => {
         return item.file;
-      })
-    }
+      });
+    },
   },
 });
 </script>
