@@ -18,6 +18,7 @@ export default class extends Vue {}
 </script>
 
 <style scoped>
+
 #app {
   position: fixed;
   top: 0;

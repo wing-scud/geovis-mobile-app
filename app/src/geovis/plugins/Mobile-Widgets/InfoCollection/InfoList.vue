@@ -1,65 +1,75 @@
 <template>
-  <van-tabs v-model="activeTab">
-    <van-tab title="已上传" name="submited">
-      <van-empty description="暂无已上传信息列表" v-if="filterSubInfos.length <= 0" />
-      <van-collapse v-model="unfoldUnSubInfos" v-else>
-        <van-swipe-cell v-for="(gisInfo, index) in filterSubInfos" :key="index">
-          <van-collapse-item :title="gisInfo.title" :name="gisInfo.id">
-            <div class="detail">
-              <div class="label">
-                名称:<span class="value">{{ gisInfo.title }}</span>
+  <div class="gis-info-show">
+    <van-tabs v-model="activeTab">
+      <van-tab title="已上传" name="submited">
+        <van-empty description="暂无已上传信息列表" v-if="filterSubInfos.length <= 0" />
+        <van-collapse v-model="unfoldUnSubInfos" v-else>
+          <van-swipe-cell v-for="(gisInfo, index) in filterSubInfos" :key="index">
+            <van-collapse-item :title="gisInfo.title" :name="gisInfo.id">
+              <div class="detail">
+                <div class="label">
+                  名称:<span class="value">{{ gisInfo.title }}</span>
+                </div>
+                <div class="label">
+                  描述:<span class="value">{{ gisInfo.describe ? gisInfo.describe : "无描述" }}</span>
+                </div>
               </div>
-              <div class="label">
-                描述:<span class="value">{{ gisInfo.describe }}</span>
+              <div class="detail">文件</div>
+              <div class="files-list-preview" v-if="gisInfo.fileList.length > 0">
+                <div class="custom-file-load" v-for="(item, index) in gisInfo.fileList" :key="index">
+                  <img class="custom-image-preview" fit="fill" :src="item.content" v-if="item.content" />
+                  <div v-text="item.fileName" v-else></div>
+                </div>
               </div>
-            </div>
-            <div class="files-list-preview">
-              <div class="custom-file-load" v-for="(item, index) in gisInfo.fileList" :key="index">
-                <img class="custom-image-preview" fit="fill" :src="item.content" v-if="item.content" />
-                <div v-text="item.fileName" v-else></div>
+              <div class="value" v-else>
+                {{ "无文件" }}
               </div>
-            </div>
-          </van-collapse-item>
-          <template #left>
-            <van-button square type="primary" text="删除" @click="removeItem(gisInfo)" />
-          </template>
-          <template #right>
-            <van-button square type="danger" text="编辑" @click="routeToEdit(gisInfo.id)" />
-          </template>
-        </van-swipe-cell>
-      </van-collapse>
-    </van-tab>
-    <van-tab title="未上传" name="unSubmited">
-      <van-empty description="暂无未上传信息列表" v-if="filterUnSubInfos.length <= 0" />
-      <van-collapse v-model="unfoldUnSubInfos" v-else>
-        <van-swipe-cell v-for="(gisInfo, index) in filterUnSubInfos" :key="index">
-          <van-collapse-item :title="gisInfo.title" :name="gisInfo.id">
-            <div class="detail">
-              <div class="label">
-                名称:<span class="value">{{ gisInfo.title }}</span>
+            </van-collapse-item>
+            <template #left>
+              <van-button square type="primary" text="删除" @click="removeItem(gisInfo)" />
+            </template>
+            <template #right>
+              <van-button square type="danger" text="编辑" @click="routeToEdit(gisInfo.id)" />
+            </template>
+          </van-swipe-cell>
+        </van-collapse>
+      </van-tab>
+      <van-tab title="未上传" name="unSubmited">
+        <van-empty description="暂无未上传信息列表" v-if="filterUnSubInfos.length <= 0" />
+        <van-collapse v-model="unfoldUnSubInfos" v-else>
+          <van-swipe-cell v-for="(gisInfo, index) in filterUnSubInfos" :key="index">
+            <van-collapse-item :title="gisInfo.title" :name="gisInfo.id">
+              <div class="detail">
+                <div class="label">
+                  名称:<span class="value">{{ gisInfo.title }}</span>
+                </div>
+                <div class="label">
+                  描述:<span class="value">{{ gisInfo.describe ? gisInfo.describe : "无描述" }}</span>
+                </div>
               </div>
-              <div class="label">
-                描述:<span class="value">{{ gisInfo.describe }}</span>
+              <div class="detail">文件</div>
+              <div class="files-list-preview" v-if="gisInfo.fileList.length > 0">
+                <div class="custom-file-load" v-for="(item, index) in gisInfo.fileList" :key="index">
+                  <img class="custom-image-preview" fit="fill" :src="item.content" v-if="item.content" />
+                  <div v-text="item.fileName" v-else></div>
+                </div>
               </div>
-            </div>
-            <div class="files-list-preview">
-              <div class="custom-file-load" v-for="(item, index) in gisInfo.fileList" :key="index">
-                <img class="custom-image-preview" fit="fill" :src="item.content" v-if="item.content" />
-                <div v-text="item.fileName" v-else></div>
+              <div class="value" v-else>
+                {{ "无文件" }}
               </div>
-            </div>
-          </van-collapse-item>
-          <template #left>
-            <van-button square type="primary" text="删除" @click="removeItem(gisInfo)" />
-          </template>
-          <template #right>
-            <van-button square type="danger" text="编辑" @click="routeToEdit(gisInfo.id)" />
-            <van-button square type="primary" text="上传" @click="submit(gisInfo.id)" />
-          </template>
-        </van-swipe-cell>
-      </van-collapse>
-    </van-tab>
-  </van-tabs>
+            </van-collapse-item>
+            <template #left>
+              <van-button square type="primary" text="删除" @click="removeItem(gisInfo)" />
+            </template>
+            <template #right>
+              <van-button square type="danger" text="编辑" @click="routeToEdit(gisInfo.id)" />
+              <van-button square type="primary" text="上传" @click="submit(gisInfo.id)" />
+            </template>
+          </van-swipe-cell>
+        </van-collapse>
+      </van-tab>
+    </van-tabs>
+  </div>
 </template>
 <script>
 import { Toast } from "vant";
@@ -127,7 +137,7 @@ export default {
     async submit(id) {
       const result = await this.$store.dispatch("gisInfos/edit", {
         id: id,
-        status:true
+        status: true,
       });
       result && Toast("上传成功");
     },
@@ -178,6 +188,7 @@ export default {
   min-width: 80px;
   min-height: 80px;
   color: #dcdee0;
+  background: white;
 }
 .right-top-close {
   position: absolute;
@@ -194,5 +205,16 @@ export default {
   width: 100%;
   height: 100%;
 }
+.gis-info-show {
+  height: calc(100% - 36px);
+}
+.gis-info-show .van-tabs {
+  height: 100%;
+}
 </style>
-    
+<style>
+.van-tabs__content {
+  height: calc(100% - 44px);
+  overflow-y: auto;
+}
+</style>

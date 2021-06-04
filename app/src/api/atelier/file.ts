@@ -11,16 +11,16 @@
 // Bug: condition1 不覆盖源文件
 
 import mime from "mime"
-import { resolveFullPath, getFileSuffix, getFileSuffixByMime, getDataType } from "@/util/utils.js"
+import { resolveFullPath, getDataType } from "@/util/utils.js"
 class FilePlugin {
     private _size;
+    private _dataEntry;
     private _rootEntry;
-    private _userEntry;
-    public get userEntry() {
-        return this._userEntry;
+    public get rootEntry() {
+        return this._rootEntry;
     }
-    public set userEntry(value) {
-        this._userEntry = value;
+    public set rootEntry(value) {
+        this._rootEntry = value;
     }
     public get size() {
         return this._size;
@@ -30,11 +30,11 @@ class FilePlugin {
         this._size = value;
         this.init()
     }
-    public get rootEntry() {
-        return this._rootEntry;
+    public get dataEntry() {
+        return this._dataEntry;
     }
-    public set rootEntry(value) {
-        this._rootEntry = value;
+    public set dataEntry(value) {
+        this._dataEntry = value;
     }
     constructor(size?) {
         // 100MB
@@ -47,13 +47,14 @@ class FilePlugin {
             this._size, async (grantedBytes) => {
                 console.log("储存权限获取", grantedBytes);
                 this._rootEntry = await this._getRootDirEntry(this._size);
+                this._dataEntry = this._rootEntry;
             }
         )
     }
-    async initUserEntry(account) {
-        this._userEntry = await this._getDirectory(this._rootEntry, `/${account}/`, true)
-    }
 
+    async initUserEntry(account) {
+        this._dataEntry = await this._getDirectory(this._rootEntry, `/${account}/`, true);
+    }
     /**
      * 创建一个文件，
      * true 文件存在则覆盖，false 文件存在则忽略创建
@@ -70,7 +71,6 @@ class FilePlugin {
     }
 
     async creatDir() {
-
     }
 
     async readBlob(blob, mimeType) {
@@ -98,13 +98,13 @@ class FilePlugin {
      * @param fullPath 
      * 若无文件则报错
      */
-    async readFile(fullPath) {
-        return Promise.resolve(this._getFileByFileEntry(await this.getFileEntry(fullPath, { create: false })))
+    async readFile(fullPath, root?) {
+        return Promise.resolve(this._getFileByFileEntry(await this.getFileEntry(fullPath, { create: false, root: root })))
     }
 
-    async removeFile(fullPath) {
+    async removeFile(fullPath, root) {
         return new Promise((resolve) => {
-            this.getFileEntry(fullPath, { create: false }).then((fileEntry) => {
+            this.getFileEntry(fullPath, { create: false, root: root }).then((fileEntry) => {
                 //@ts-ignore
                 fileEntry.remove((success) => {
                     resolve(true)
@@ -112,10 +112,11 @@ class FilePlugin {
             })
         })
     }
-    async copyFileTo(originPath, destDirPath, newName?) {
+    async copyFileTo(originPath, destDirPath, newName?, root?) {
         return new Promise((resolve) => {
-            this.getFileEntry(originPath, { create: false }).then(async (fileEntry) => {
-                const dirEntry = await this._rootEntry.getDirectory(destDirPath, { create: false });
+            this.getFileEntry(originPath, { create: false, root: root }).then(async (fileEntry) => {
+                const firstDirEntry = root ? this._rootEntry : this._dataEntry
+                const dirEntry = await firstDirEntry.getDirectory(destDirPath, { create: false });
                 //@ts-ignore
                 fileEntry.copyTo(dirEntry, newName, (success) => {
                     resolve(true)
@@ -124,10 +125,10 @@ class FilePlugin {
         })
     }
 
-    async moveFileTo(originPath, destDirPath, newName?) {
+    async moveFileTo(originPath, destDirPath, newName?, root?) {
         return new Promise((resolve) => {
-            this.getFileEntry(originPath, { create: false }).then(async (fileEntry) => {
-                const dirEntry = await this._rootEntry.getDirectory(destDirPath, { create: false });
+            this.getFileEntry(originPath, { create: false, root: root }).then(async (fileEntry) => {
+                const dirEntry = await this._dataEntry.getDirectory(destDirPath, { create: false });
                 //@ts-ignore
                 fileEntry.moveTo(dirEntry, newName, (success) => {
                     resolve(true)
@@ -135,9 +136,11 @@ class FilePlugin {
             })
         })
     }
-    async removeDir(dirPath) {
+    async removeDir(dirPath, root?) {
+
+        const firstDirEntry = root ? this._rootEntry : this._dataEntry
         return new Promise((resolve) => {
-            this._rootEntry.getDirectory(dirPath, { create: false }, (dirEntry) => {
+            firstDirEntry.getDirectory(dirPath, { create: false }, (dirEntry) => {
                 dirEntry.removeRecursively((success) => {
                     resolve(true)
                 });
@@ -154,11 +157,12 @@ class FilePlugin {
         const dirCreate = options?.create ?? false;
         const fileCreate = options?.create ?? false;
         const exclusive = options?.exclusive ?? false;
+        const root = options?.root ?? false
         return new Promise((resolve, reject) => {
-            const rootEntry = this._rootEntry;
+            const firstDirEntry = root ? this._rootEntry : this._dataEntry;
             const { path, fileName } = resolveFullPath(fullPath);
             const dirArray = path.split('/');
-            let parentDirEntry = rootEntry;
+            let parentDirEntry = firstDirEntry;
             const instance = this;
             try {
                 const getLastDir = async function (i) {
@@ -183,10 +187,11 @@ class FilePlugin {
         })
     }
 
-    async existDir(dirPaths) {
+    async existDir(dirPaths,root?) {
         return new Promise((resolve) => {
             const dirArray = dirPaths.split('/');
-            let parentDirEntry = this._rootEntry;
+            
+            let parentDirEntry =root?this._rootEntry: this._dataEntry;
             const instance = this;
             try {
                 const getLastDir = async function (i) {
@@ -207,11 +212,11 @@ class FilePlugin {
         })
 
     }
-    async existFile(fullPath) {
+    async existFile(fullPath,root?) {
         const { path: dirPaths, fileName } = resolveFullPath(fullPath)
         return new Promise((resolve) => {
             const dirArray = dirPaths.split('/');
-            let parentDirEntry = this._rootEntry;
+            let parentDirEntry = root?this._rootEntry: this._dataEntry;
             const instance = this;
             try {
                 const getLastDir = async function (i) {
@@ -264,8 +269,8 @@ class FilePlugin {
      * @returns 
      */
     async writeFile(fullPath, data, options) {
-        const { isAppend = false, create = false } = options;
-        const fileEntry = await this.getFileEntry(fullPath, { create, exclusive: false });
+        const { isAppend = false, create = false ,root=false} = options;
+        const fileEntry = await this.getFileEntry(fullPath, { create, exclusive: false,root:root });
         return this._writeDataByFileEntry(fileEntry, data, isAppend);
     }
 
@@ -273,7 +278,7 @@ class FilePlugin {
     _getRootDirEntry(size) {
         return new Promise(resolve => {
             //@ts-ignore
-            window.webkitRequestFileSystem(window.PERSISTENT, size, function (fs) {
+            window.webkitRequestFileSystem(window.PERSISTENT, size, async (fs) => {
                 resolve(fs.root);
             }, (error) => {
                 console.log(error)
@@ -359,7 +364,12 @@ class FilePlugin {
             });
         })
     }
-
+    destroyUserEntry() {
+        this._dataEntry.removeRecursively((success) => {
+            console.log('clear');
+            this._dataEntry = this._rootEntry;
+        });
+    }
 }
 const file = new FilePlugin();
 export default file;

@@ -230,7 +230,6 @@ router.beforeResolve((to, from, next) => {
       console.log(`主动关闭${from.name}`);
     }
   }
-
   next(nextPath === to ? undefined : nextPath);
 });
 router.backward = function (step) {

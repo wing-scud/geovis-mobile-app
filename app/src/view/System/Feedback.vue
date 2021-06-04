@@ -24,16 +24,6 @@ export default Vue.extend({
       tel: "",
       fileList: [
         {
-          url: "https://img01.yzcdn.cn/vant/leaf.jpg",
-          status: "uploading",
-          message: "上传中...",
-        },
-        {
-          url: "https://img01.yzcdn.cn/vant/tree.jpg",
-          status: "failed",
-          message: "上传失败",
-        },
-        {
           url: "https://img01.yzcdn.cn/vant/tree.jpg",
           status: "done",
           message: "上传成功",

@@ -49,9 +49,11 @@ const actions = {
     });
   },
   loginOut({ state, commit }) {
+    const database = window['plugin'].database;
     const token = state.user.token;
-    return fetchByToken(loginOutUrl, token).then((result) => {
+    return fetchByToken(loginOutUrl, token).then(async (result) => {
       if (result.success) {
+        await database.userTable.removeItem('user')
         commit("deleteUser");
         return true
       } else {
@@ -121,6 +123,9 @@ const actions = {
         resolve({ status: false, error: res.error })
       }
     })
+  },
+  clear({ state, commit }) {
+
   }
 };
 

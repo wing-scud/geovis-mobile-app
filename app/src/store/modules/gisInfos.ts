@@ -163,7 +163,7 @@ const actions = {
                 const fullPath = item.fullPath;
                 return filePlugin.removeFile(fullPath)
             })
-            promises.all(() => {
+            Promise.all(promises).then(() => {
                 commit('remove', gisInfo.id)
             })
         })

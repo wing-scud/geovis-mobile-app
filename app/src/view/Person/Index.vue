@@ -19,7 +19,9 @@
     <div class="person-items">
       <van-cell :title="item.title" is-link v-for="item in items" :key="item.title" @click="enterItem(item.name)">
         <template v-slot:icon>
-          <MIcon :icon="item.icon" length="15px" size="15px" custom-class="custom-item-icon"> </MIcon>
+          <div class="custom-item-icon">
+            <MIcon :icon="item.icon" length="15px" size="15px"> </MIcon>
+          </div>
         </template>
       </van-cell>
     </div>
@@ -56,8 +58,8 @@ export default Vue.extend({
     },
     async getLocalImage(path) {
       const filePlugin = window["plugin"].file;
-      const file =await filePlugin.readFile(path)
-      return await filePlugin.readBlob(file,file.type);
+      const file = await filePlugin.readFile(path, true);
+      return await filePlugin.readBlob(file, file.type);
     },
   },
 });
@@ -85,6 +87,11 @@ export default Vue.extend({
   height: 40px;
   text-align: center;
   line-height: 40px;
+}
+.custom-item-icon {
+  display: flex;
+  width:25px;
+  align-items: center;
 }
 </style>
 <style lang="scss">

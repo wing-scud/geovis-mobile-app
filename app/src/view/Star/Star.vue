@@ -32,7 +32,7 @@
       </van-tab>
       <van-tab title="路线" name="route">
         <van-empty description="暂无路线收藏" v-if="filterRoutes.length <= 0" />
-        <!-- <van-collapse v-model="activeRoutes" v-else>
+        <van-collapse v-model="activeRoutes" v-else>
           <van-collapse-item :title="item.id" :name="index" v-for="(item, index) in filterRoutes" :key="index">
             <template #value>
               <MIcon icon="icon-luxianchaxun" length="20px" customClass="starRouteTo" size="20px" :circle="true" @click="starRouteTo(index)"> </MIcon>
@@ -51,7 +51,7 @@
               </div>
             </div>
           </van-collapse-item>
-        </van-collapse> -->
+        </van-collapse>
       </van-tab>
     </van-tabs>
   </div>

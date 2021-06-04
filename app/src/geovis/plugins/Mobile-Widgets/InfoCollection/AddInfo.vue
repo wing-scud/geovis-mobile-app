@@ -19,7 +19,7 @@
                 </div>
               </div>
               <div class="custom-file-load" @click="dialogShow">
-                <van-icon name="orders-o" />
+                <van-icon name="plus" />
               </div>
             </div>
           </template>
@@ -108,7 +108,7 @@ export default Vue.extend({
       };
       const result = await this.$store.dispatch("gisInfos/upload", values);
       Toast(result.message);
-      result.success && this.$router.push({ name: "InfoCollectionDeatil", params: result.id });
+      result.success && this.$router.push({ name: "InfoCollectionDetail", params: {id:result.id }});
     },
     dialogShow() {
       this.show = !this.show;
@@ -124,6 +124,7 @@ export default Vue.extend({
       };
       const result = await this.$store.dispatch("gisInfos/upload", values);
       Toast(result.message);
+      result.success && this.$router.push({ name: "InfoCollectionDetail", params:{id:result.id} });
     },
     removeFile(index) {
       this.fileList.splice(index, 1);

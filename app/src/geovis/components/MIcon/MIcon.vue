@@ -62,7 +62,8 @@ export default Vue.extend({
       if (this.circle) {
         borderRadius = "50%";
       }
-      return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, backgroundColor: this.backgroundColor };
+      const lineHeight = this.length
+      return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, backgroundColor: this.backgroundColor ,lineHeight:lineHeight};
     },
   },
   methods: {

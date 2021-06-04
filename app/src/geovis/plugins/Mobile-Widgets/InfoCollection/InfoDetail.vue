@@ -6,10 +6,10 @@
     </div>
     <div class="info-title">描述</div>
     <div class="info-field">
-      {{ gisInfo.describe }}
+      {{ gisInfo.describe ? gisInfo.describe : "无描述" }}
     </div>
     <div class="info-title">文件</div>
-    <div class="files-list-preview">
+    <div class="files-list-preview" v-if="gisInfo.fileList.length > 0">
       <div class="custom-file-load" v-for="(item, index) in gisInfo.fileList" :key="index">
         <img class="custom-image-preview" fit="fill" :src="item.content" v-if="item.content" />
         <div class="file-preview" v-else>
@@ -17,6 +17,10 @@
         </div>
       </div>
     </div>
+    <template v-else>
+      <div class="info-field">无文件</div>
+    </template>
+
     <div class="info-title">位置</div>
     <van-cell v-model="gisInfo.position.lngLat" :title="gisInfo.position.locationName" icon="location-o" />
   </div>

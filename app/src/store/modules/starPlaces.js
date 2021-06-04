@@ -7,7 +7,6 @@ const starPlaceAddress = SERVER_ROOT + "/conserve/editStaredPlace"
  * place:{
  *       name:String
  *       location:Array ;
- *       polygonpoints:[[],[]]  
  *      }
  * }
  * @returns 

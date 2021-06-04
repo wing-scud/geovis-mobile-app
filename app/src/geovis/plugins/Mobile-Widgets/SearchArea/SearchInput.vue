@@ -91,7 +91,7 @@ export default {
       prompts: [], //用作存储后台数据的仓库，使得本组件的每个方法都能取
       suggestions: [],
       //@ts-ignore
-      inputValue: this.value,
+      inputValue:this.value,
       queryFormat: this.format,
       queryDataType: this.dataType,
       _polygon: undefined,
@@ -104,9 +104,18 @@ export default {
   destroyed() {
     util.clear();
   },
-  mounted() {
+  beforeMount() {
     const debounceFetchSuggest = _.debounce(this.fetchSuggestions, 500);
     this.debounceFetchSuggest = debounceFetchSuggest;
+  },
+  watch: {
+    value: {
+      immediate: false,
+      handler() {
+        this.inputValue = this.value;
+        this.getSuggestions()
+      },
+    },
   },
   methods: {
     handleChecked() {
@@ -114,12 +123,11 @@ export default {
     },
     starAddress(id) {
       const index = this.$store.getters["starPlaces/getById"](id);
-      if (index!==-1) {
+      if (index !== -1) {
         this.$store.dispatch("starPlaces/remove", id);
-        // this.$store.commit("starPlaces/deletePlace", id);
       } else {
         const place = this.getPlaceFromId(id);
-        console.log(place);
+        delete place.polygonpoints;
         this.$store.dispatch("starPlaces/save", { place, id });
       }
     },
@@ -460,9 +468,6 @@ export default {
 .star .van-cell__value {
   display: inline-flex;
   justify-content: flex-end;
-}
-.custom-item-icon {
-  line-height: 24px !important;
 }
 .person-items .van-cell__title,
 .van-cell__value {

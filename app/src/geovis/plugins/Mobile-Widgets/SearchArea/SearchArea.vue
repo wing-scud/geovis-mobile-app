@@ -3,7 +3,7 @@
     <div class="search">
       <SearchInput v-model="inputValue" leftIcon="search" :route="false" @checked="checkedConvert" @choosed="choosedAddress"></SearchInput>
     </div>
-    <BriefAddress v-if="showAddressDetail"  leftIcon="search" :address="addressDetail"> </BriefAddress>
+    <BriefAddress v-if="showAddressDetail" leftIcon="search" :address="addressDetail"> </BriefAddress>
   </div>
 </template>
 <script>
@@ -27,10 +27,10 @@ export default {
     util.clear();
   },
   mounted() {
-    //从路线收藏点击过来
-    if (this.$route.params && (this.$route.params.name || this.$route.params.location)) {
-      const params = this.$route.params;
-      this.inputValue = params.name;
+    // 从地点收藏过来
+    if (this.$route.params && (this.$route.params.id || this.$route.params.place)) {
+      const place = this.$route.params.place;
+      this.inputValue = place.name;
     }
   },
   methods: {
@@ -52,8 +52,8 @@ export default {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;z-index: 4;
+  width: 100%;
+  z-index: 4;
 }
-
 </style>
 

@@ -26,7 +26,7 @@
                 </div>
               </div>
               <div class="custom-file-load" @click="dialogShow">
-                <van-icon name="orders-o" />
+                <van-icon name="plus" />
               </div>
             </div>
           </template>

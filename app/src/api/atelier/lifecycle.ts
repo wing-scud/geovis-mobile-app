@@ -15,18 +15,18 @@ const createdHandle = async function () {
         console.log("需要登录 ");
     }
 }
-const loginHandle = function () {
+const loginHandle = async function () {
     console.log('login');
-    const account = store.state.user.user.account;
-    file.initUserEntry(account)
-    store.dispatch('gisInfos/getList');
-    store.dispatch('starPlaces/getList');
-    store.dispatch('starRoutes/getList')
+    file.initUserEntry(store.state.user.user.account).then(() => {
+        store.dispatch('gisInfos/getList');
+        store.dispatch('starPlaces/getList');
+        store.dispatch('starRoutes/getList')
+    })
 }
 
 const loginOutHandle = function () {
     console.log('loginOut')
-    store.dispatch('gisInfos/clear');
+    file.destroyUserEntry();
 }
 
 const onlineHandle = function () {

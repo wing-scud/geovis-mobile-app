@@ -239,6 +239,8 @@ export default {
 .result-list {
   padding: 5px 5px;
   width: 100%;
+  background: $navbar-background;
+  color:white
 }
 .measure-value {
   line-height: 40px;
@@ -316,5 +318,9 @@ export default {
   .icon-ziyuan {
     background: $light-blue !important;
   }
+}
+.van-popup{
+  background-color: $navbar-background !important;
+  color:white
 }
 </style>
