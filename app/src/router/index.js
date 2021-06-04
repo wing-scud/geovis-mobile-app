@@ -21,8 +21,11 @@ const Login = () => import("../view/Login/Login.vue");
 const Register = () => import("../view/Login/Register.vue");
 const MapSetting = () => import("../view/Map/MapSetting.vue");
 const Star = () => import("../view/Star/Star.vue");
-const InfoCollectionShow = () => import("../view/Star/InfoCollectionShow.vue");
-const EditInfoCollectionShow = () => import("../view/Star/EditInfoCollectionShow.vue");
+
+const InfoCollectionDetail = () => import("../view/Star/InfoCollectionDetail.vue");
+const EditInfoCollection = () => import("../view/Star/EditInfoCollection.vue");
+const InfoCollection = () => import("../geovis/plugins/Mobile-Widgets/InfoCollection/AddInfo.vue");
+const InfoCollectionList = () => import("../view/Star/InfoCollectionList.vue");
 
 const ServiceAddress = () => import("../view/System/ServiceAddress.vue");
 const About = () => import("../view/System/About.vue");
@@ -40,7 +43,6 @@ const SearchCity = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather
 const Fifteen = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/Fifteen.vue");
 const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/TodayDetail.vue");
 const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LivePhenomena/Index.vue");
-const InfoCollection = () => import("../geovis/plugins/Mobile-Widgets/InfoCollection/AddInfo.vue");
 const routes = [
   {
     path: "/",
@@ -98,21 +100,28 @@ const routes = [
     }
   },
   {
-    path: "/infoCollectionShow",
-    component: InfoCollectionShow,
-    name: "InfoCollectionShow",
+    path: "/infoCollectionList",
+    component: InfoCollectionList,
+    name: "InfoCollectionList",
     meta: {
       requireLogin: true
     }
   }, {
-    path: "/editInfoCollectionShow",
-    component: EditInfoCollectionShow,
-    name: "EditInfoCollectionShow",
+    path: "/editInfoCollection",
+    component: EditInfoCollection,
+    name: "EditInfoCollection",
     meta: {
       requireLogin: true
     }
   },
-
+  {
+    path: "/infoCollectionDetail",
+    component: InfoCollectionDetail,
+    name: "InfoCollectionDetail",
+    meta: {
+      requireLogin: true
+    }
+  },
 
   {
     path: "/serviceAddress",
@@ -208,9 +217,7 @@ router.beforeResolve((to, from, next) => {
   //链判断操作符
   let nextPath = to;
   if (to.meta?.requireLogin) {
-    if (mobileStore.state.user.user) {
-      // nextPath = to;
-    } else {
+    if (!mobileStore.state.user.user) {
       nextPath = { name: "Login" };
     }
   }

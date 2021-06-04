@@ -26,6 +26,7 @@ const loginHandle = function () {
 
 const loginOutHandle = function () {
     console.log('loginOut')
+    store.dispatch('gisInfos/clear');
 }
 
 const onlineHandle = function () {

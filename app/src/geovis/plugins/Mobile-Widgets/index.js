@@ -8,7 +8,7 @@ Vue.component("TaskGroup", () => import("./TaskGroup/Index.vue"));
 Vue.component("BriefAddress", () => import("./Address/BriefAddress.vue"));
 Vue.component("TodayDetail", () => import("./FeatureWeather/TodayDetail.vue"));
 Vue.component("FPS", () => import("./FPS/FPS.vue"));
-Vue.component("EditInfoCollection", () => import("./InfoCollection/EditInfoCollection.vue"));
-Vue.component("InfoCollectionList", () => import("./InfoCollection/InfoCollectionList.vue"));
-
+Vue.component("EditInfo", () => import("./InfoCollection/EditInfo.vue"));
+Vue.component("InfoList", () => import("./InfoCollection/InfoList.vue"));
+Vue.component("InfoDetail", () => import("./InfoCollection/InfoDetail.vue"));
 

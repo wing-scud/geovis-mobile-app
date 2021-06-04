@@ -46,6 +46,7 @@ const actions = {
                     // 添加的数据库
                     data.fileList = await Promise.all(promises)
                     commit("add", data);
+                    result.id = id;
                     resolve(result)
                 } else {
                     resolve(result)
@@ -79,7 +80,7 @@ const actions = {
      * @param options { attributes:[], data:[]}
      * @returns 
      */
-    edit({ state, commit ,getters}, options) {
+    edit({ state, commit, getters }, options) {
         //@ts-ignore
         const token = this.state.user.user.token;
         const database = window['plugin'].database
@@ -153,9 +154,21 @@ const actions = {
             })
         })
     },
-    // clear({}){
+    clear({ state, commit }) {
+        const gisInfos = state.gisInfos;
+        const filePlugin = window['plugin']['file']
+        gisInfos.map((gisInfo) => {
+            const fileList = gisInfo.fileList ?? [];
+            const promises = fileList.map((item) => {
+                const fullPath = item.fullPath;
+                return filePlugin.removeFile(fullPath)
+            })
+            promises.all(() => {
+                commit('remove', gisInfo.id)
+            })
+        })
 
-    // }
+    }
 };
 
 // mutations

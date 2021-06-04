@@ -108,6 +108,7 @@ export default Vue.extend({
       };
       const result = await this.$store.dispatch("gisInfos/upload", values);
       Toast(result.message);
+      result.success && this.$router.push({ name: "InfoCollectionDeatil", params: result.id });
     },
     dialogShow() {
       this.show = !this.show;

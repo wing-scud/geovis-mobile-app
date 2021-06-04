@@ -18,8 +18,7 @@
                   {{ item.fileName }}
                 </div>
               </div>
-
-              <div class="custom-file-load" v-for="(item, index) in addedFiles" :key="index">
+              <div class="custom-file-load" v-for="(item, index) in addedFiles" :key="item.file.lastModified">
                 <van-icon name="cross" class="right-top-close" @click="removeAddedFile(item, index)" />
                 <img class="custom-image-preview" fit="fill" :src="item.content" v-if="item.content" />
                 <div class="file-preview" v-else>
@@ -99,8 +98,8 @@ export default Vue.extend({
     },
     afterRead(obj, detail) {
       this.addedFiles.push({
-        content: window.URL.createObjectURL(obj.file),
-        fileName: obj.file.fileName,
+        content: obj.file.type.includes("image") ? window.URL.createObjectURL(obj.file) : null,
+        fileName: obj.file.name,
         file: obj.file,
       });
     },
@@ -126,7 +125,8 @@ export default Vue.extend({
         options["position"]["lngLat"] = this.gisInfo.position.lngLat;
       }
       const result = await this.$store.dispatch("gisInfos/edit", options);
-      result && Toast("编辑成功");
+      //@ts-ignore
+      result.success && Toast("编辑成功") && this.$router.push({ name: "InfoCollectionDetail", params: { id } });
     },
     dialogShow() {
       this.show = !this.show;

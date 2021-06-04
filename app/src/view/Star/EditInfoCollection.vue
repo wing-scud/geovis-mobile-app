@@ -1,12 +1,12 @@
 <template>
   <div class="full">
-    <EditInfoCollection :id=id></EditInfoCollection>
+    <EditInfo :id=id></EditInfo>
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 export default Vue.extend({
-  name: "EditInfoCollectionShow",
+  name: "EditInfoCollection",
   data() {
     return {
       id:""

@@ -122,7 +122,7 @@ export default {
       this.$router.backward(-1);
     },
     routeToEdit(id) {
-      this.$router.push({ name: "EditInfoCollectionShow", params: { id } });
+      this.$router.push({ name: "EditInfoCollection", params: { id } });
     },
     async submit(id) {
       const result = await this.$store.dispatch("gisInfos/edit", {

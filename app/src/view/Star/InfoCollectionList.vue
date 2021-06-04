@@ -10,7 +10,7 @@
         <div @click="showSearchInput(false)">取消</div>
       </template>
     </van-search>
-    <InfoCollectionList :filter="searchValue"> </InfoCollectionList>
+    <InfoList :filter="searchValue"> </InfoList>
   </div>
 </template>
   <script lang="ts">
@@ -18,12 +18,12 @@ import { Toast } from "vant";
 import Vue from "vue";
 import _ from "lodash";
 export default Vue.extend({
-  name: "InfoCollectionShow",
+  name: "InfoCollectionList",
   data() {
     return {
       navBar: true,
       searchValue: "",
-      debounceSearch:null
+      debounceSearch: null,
     };
   },
   mounted() {
@@ -38,8 +38,7 @@ export default Vue.extend({
     onSearch() {
       this.debounceSearch();
     },
-    search() {
-    },
+    search() {},
   },
 });
 </script>

@@ -34,7 +34,7 @@
           <van-cell title="天气地图" is-link />
           <van-cell title="下载管理" is-link to="/downloadManager"/>
           <van-cell title="其他地图" is-link />
-          <van-cell title="采集列表" is-link to="/infoCollectionShow"/>
+          <van-cell title="采集列表" is-link to="/infoCollectionList"/>
           <van-cell title="收藏管理" is-link to="/star"/>
           <!-- <div class="map-item">其他地图</div> -->
         </van-checkbox-group>
