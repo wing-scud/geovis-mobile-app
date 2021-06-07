@@ -6,6 +6,55 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "980890",
+      "name": "结束",
+      "font_class": "finish",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "6330045",
+      "name": "解锁",
+      "font_class": "lock-open",
+      "unicode": "e62f",
+      "unicode_decimal": 58927
+    },
+    {
+      "icon_id": "7617413",
+      "name": "重置",
+      "font_class": "reset",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "7872836",
+      "name": "开始",
+      "font_class": "start",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    },
+    {
+      "icon_id": "9512595",
+      "name": "锁",
+      "font_class": "lock",
+      "unicode": "e629",
+      "unicode_decimal": 58921
+    },
+    {
+      "icon_id": "21151020",
+      "name": "暂停",
+      "font_class": "suspend",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "5712199",
+      "name": "地图定位",
+      "font_class": "trail-map",
+      "unicode": "e663",
+      "unicode_decimal": 58979
+    },
+    {
       "icon_id": "4236632",
       "name": "湿度",
       "font_class": "humidity",

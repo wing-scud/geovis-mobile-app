@@ -106,8 +106,8 @@ function getFileSuffixByMime(mimeString) {
     return "." + mime.getExtension(mimeString)
 }
 
-function formateDate(date) {
-    let fmt = "yyyy-MM-dd";
+function formateDate(date, fmt) {
+    fmt || (fmt = "yyyy-MM-dd hh:mm:ss");
     const o = {
         "M+": date.getMonth() + 1, //月份
         "d+": date.getDate(), //日

@@ -1,11 +1,11 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2396389 */
-  src: url('iconfont.eot?t=1621578198902'); /* IE9 */
-  src: url('iconfont.eot?t=1621578198902#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('iconfont.woff2?t=1621578198902') format('woff2'),
-       url('iconfont.woff?t=1621578198902') format('woff'),
-       url('iconfont.ttf?t=1621578198902') format('truetype'),
-       url('iconfont.svg?t=1621578198902#iconfont') format('svg');
+  src: url('iconfont.eot?t=1623034569638'); /* IE9 */
+  src: url('iconfont.eot?t=1623034569638#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1623034569638') format('woff2'),
+       url('iconfont.woff?t=1623034569638') format('woff'),
+       url('iconfont.ttf?t=1623034569638') format('truetype'),
+       url('iconfont.svg?t=1623034569638#iconfont') format('svg');
 }
 
 .iconfont {
@@ -14,6 +14,34 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-finish:before {
+  content: "\e618";
+}
+
+.icon-lock-open:before {
+  content: "\e62f";
+}
+
+.icon-reset:before {
+  content: "\e628";
+}
+
+.icon-start:before {
+  content: "\e646";
+}
+
+.icon-lock:before {
+  content: "\e629";
+}
+
+.icon-suspend:before {
+  content: "\e65a";
+}
+
+.icon-trail-map:before {
+  content: "\e663";
 }
 
 .icon-humidity:before {

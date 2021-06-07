@@ -30,7 +30,7 @@ class LocationPlugin {
     getCurrentPosition() {
         return new Promise((resolve, reject) => {
             const onSuccess = function (position) {
-                Toast('获取位置');
+                // Toast('获取位置');
                 resolve(position)
             };
             function onError(error) {

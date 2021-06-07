@@ -4,13 +4,15 @@ import starPlaces from "./modules/starPlaces.js";
 import starRoutes from "./modules/starRoutes.js";
 import user from "./modules/user.ts";
 import gisInfos from "./modules/gisInfos.ts";
+import trails from "./modules/trails.ts";
 Vue.use(Vuex);
 const mobileStore = new Vuex.Store({
   modules: {
     starPlaces: starPlaces,
     starRoutes: starRoutes,
     user: user,
-    gisInfos:gisInfos
+    gisInfos:gisInfos,
+    trails:trails
   }
 });
 window['mobileStore']=mobileStore

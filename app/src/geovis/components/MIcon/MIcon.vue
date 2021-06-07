@@ -1,5 +1,5 @@
 <template>
-  <div :class="customClass">
+  <div :class="[customClass, 'container']">
     <div :class="[icon, 'iconfont', 'icon-container', actived ? 'actived' : 'unactived']" :style="styleComputed" @click="handleClick" :name="name"></div>
     <span class="label" v-if="label !== ''" :style="{ color: labelColor }">{{ label }}</span>
   </div>
@@ -15,6 +15,10 @@ export default Vue.extend({
         // 这个值必须匹配下列字符串中的一个
         return value.split("-")[0] === "icon";
       },
+    },
+    color: {
+      type: String,
+      default: "white",
     },
     customClass: {
       type: String,
@@ -54,7 +58,9 @@ export default Vue.extend({
     },
   },
   data() {
-    return {};
+    return {
+      iconColor: this.color,
+    };
   },
   computed: {
     styleComputed() {
@@ -62,8 +68,10 @@ export default Vue.extend({
       if (this.circle) {
         borderRadius = "50%";
       }
-      const lineHeight = this.length
-      return { fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, backgroundColor: this.backgroundColor ,lineHeight:lineHeight};
+      //@ts-ignore
+      const color = this.actived ? "#00a3f1" : this.iconColor;
+      const lineHeight = this.length;
+      return { lineHeight: lineHeight,fontSize: this.size, height: this.length, width: this.length, borderRadius: borderRadius, backgroundColor: this.backgroundColor, color: color };
     },
   },
   methods: {
@@ -94,5 +102,11 @@ export default Vue.extend({
   text-align: center;
   font-size: 15px;
   display: inline-block;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 </style>

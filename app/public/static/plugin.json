@@ -123,6 +123,17 @@
                 "active": false,
                 "componentIcon": true,
                 "mutex": false
+            },
+            {
+                "id": "TrailRecord",
+                "parent": "Map",
+                "type": "route",
+                "icon": "icon-default",
+                "name": "轨迹记录",
+                "enabled": true,
+                "active": false,
+                "componentIcon": true,
+                "mutex": false
             }
         ]
     },

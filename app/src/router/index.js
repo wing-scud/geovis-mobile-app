@@ -43,6 +43,8 @@ const SearchCity = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather
 const Fifteen = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/Fifteen.vue");
 const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeather/TodayDetail.vue");
 const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LivePhenomena/Index.vue");
+
+const TrailRecord = () => import("../geovis/plugins/Mobile-Widgets/Trail/Index.vue");
 const routes = [
   {
     path: "/",
@@ -67,7 +69,8 @@ const routes = [
           { path: "routeNav", component: RouteNav, name: "RouteNav" },
           { path: "plot", component: Plot, name: "Plot" },
           { path: "bufferAnalytics", component: BufferAnalytics, name: "BufferAnalytics" },
-          { path: "liveWeather", component: LiveWeather, name: "LiveWeather" }
+          { path: "liveWeather", component: LiveWeather, name: "LiveWeather" },
+          { path: "trailRecord", component: TrailRecord, name: "TrailRecord" }
         ],
         meta: {
           keepAlive: true
