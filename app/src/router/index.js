@@ -26,6 +26,7 @@ const InfoCollectionDetail = () => import("../view/Star/InfoCollectionDetail.vue
 const EditInfoCollection = () => import("../view/Star/EditInfoCollection.vue");
 const InfoCollection = () => import("../geovis/plugins/Mobile-Widgets/InfoCollection/AddInfo.vue");
 const InfoCollectionList = () => import("../view/Star/InfoCollectionList.vue");
+const TrailCataView = () => import("../view/Star/TrailCataView.vue");
 
 const ServiceAddress = () => import("../view/System/ServiceAddress.vue");
 const About = () => import("../view/System/About.vue");
@@ -45,6 +46,7 @@ const TodayDetail = () => import("../geovis/plugins/Mobile-Widgets/FeatureWeathe
 const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LivePhenomena/Index.vue");
 
 const TrailRecord = () => import("../geovis/plugins/Mobile-Widgets/Trail/Index.vue");
+const TrailDetail = () => import("../geovis/plugins/Mobile-Widgets/Trail/TrailDetail.vue");
 const routes = [
   {
     path: "/",
@@ -70,7 +72,10 @@ const routes = [
           { path: "plot", component: Plot, name: "Plot" },
           { path: "bufferAnalytics", component: BufferAnalytics, name: "BufferAnalytics" },
           { path: "liveWeather", component: LiveWeather, name: "LiveWeather" },
-          { path: "trailRecord", component: TrailRecord, name: "TrailRecord" }
+          { path: "trailRecord", component: TrailRecord, name: "TrailRecord" },
+
+          { path: "trailDetail", component: TrailDetail, name: "TrailDetail" }
+
         ],
         meta: {
           keepAlive: true
@@ -93,6 +98,13 @@ const routes = [
     path: "/mapSetting",
     component: MapSetting,
     name: "MapSetting"
+  }, {
+    path: "/trailCataView",
+    component: TrailCataView,
+    name: "TrailCataView",
+    meta: {
+      requireLogin: true
+    }
   },
   {
     path: "/star",

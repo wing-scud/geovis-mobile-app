@@ -20,8 +20,8 @@ const actions = {
     upload({ commit }, options) {
         const database = window['plugin'].database;
         const filePlugin = window['plugin'].file;
-        const id = generateId();
-        options.id = id;
+        // const id = generateId();
+        // options.id = id;
         options.type = "add";
         options.createTime = formateDate(new Date());
         //@ts-ignore

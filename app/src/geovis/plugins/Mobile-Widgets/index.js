@@ -12,3 +12,4 @@ Vue.component("EditInfo", () => import("./InfoCollection/EditInfo.vue"));
 Vue.component("InfoList", () => import("./InfoCollection/InfoList.vue"));
 Vue.component("InfoDetail", () => import("./InfoCollection/InfoDetail.vue"));
 
+Vue.component("TrailCata", () => import("./Trail/TrailCata.vue"));

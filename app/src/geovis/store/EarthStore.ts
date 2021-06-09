@@ -170,40 +170,40 @@ export class EarthStore {
     this._map&&this._map.resize()
   }
   handleResize = () => {
-    //@ts-ignore
-    // const observer = new ResizeObserver(()=>{
-    //   this._map.resize()
-    // });
-    // const ele = document.getElementById('mapContainer')
-    // observer.observe(ele)
-
-
-    // 适配emss
-    // 基于浏览器获取对应的MutationObserver的实现
-    const MutationObserver = window.MutationObserver || window.WebkitMutaionObserver || window.MozMutationObserver;
-    // 自定义回函数,实现当监听到元素变化,实现的内容
-    const callback = (records) => {
-      // for (const record of records) {
-      //   console.log(record)
-      // }
+   // @ts-ignore
+    const observer = new ResizeObserver(()=>{
       this._map.resize()
-    }
-    // 获取实例
-    const observer = new MutationObserver(callback);
-    // 获取元素
-    const element = document.getElementById('mapContainer');
-    // 配置选项
-    const config = {
-      attributes: true, // 是否监听attributes属性变化
-      attributeFilter: ['style'], // 数组,过滤attributes
-      attributeOldValue: false, //获取未变化前的属性值
-      childList: false, //是否监听指定元素的所有子元素.不监听指定元素
-      characterData: true, // 监听元素的data变化
-      characterDataOldValue: false, // 获取未变化前的data值
-      subtree: true, // 是否按配置监听指定元素和所有子元素,必须配合attributes || childList || characterData之一使用
-    }
-    // 注册某个元素的监听
-    observer.observe(element, config);
+    });
+    const ele = document.getElementById('mapContainer')
+    observer.observe(ele)
+
+    //BUG :与添加marker冲突
+    // // 适配emss
+    // // 基于浏览器获取对应的MutationObserver的实现
+    // const MutationObserver = window.MutationObserver || window.WebkitMutaionObserver || window.MozMutationObserver;
+    // // 自定义回函数,实现当监听到元素变化,实现的内容
+    // const callback = (records) => {
+    //   // for (const record of records) {
+    //   //   console.log(record)
+    //   // }
+    //   this._map.resize()
+    // }
+    // // 获取实例
+    // const observer = new MutationObserver(callback);
+    // // 获取元素
+    // const element = document.getElementById('mapContainer');
+    // // 配置选项
+    // const config = {
+    //   attributes: true, // 是否监听attributes属性变化
+    //   attributeFilter: ['style'], // 数组,过滤attributes
+    //   attributeOldValue: false, //获取未变化前的属性值
+    //   childList: false, //是否监听指定元素的所有子元素.不监听指定元素
+    //   characterData: true, // 监听元素的data变化
+    //   characterDataOldValue: false, // 获取未变化前的data值
+    //   subtree: true, // 是否按配置监听指定元素和所有子元素,必须配合attributes || childList || characterData之一使用
+    // }
+    // // 注册某个元素的监听
+    // observer.observe(element, config);
   };
 }
 

@@ -1,13 +1,10 @@
 <template>
   <div id="trail-container">
-    <van-nav-bar ref="nav-bar" title="轨迹记录" left-text="返回" left-arrow @click-left="goBack" right-text="保存" @click-right="submit">
-      <!-- <template v-slot:right>
-        <div class="micon-container">
-          <van-icon name="cross" v-if="mapShow" />
-          <MIcon icon="icon-trail-map" length="16px" size="24px" v-else> </MIcon>
-        </div>
-      </template> -->
-    </van-nav-bar>
+    <van-nav-bar ref="nav-bar" title="轨迹记录" left-text="返回" left-arrow @click-left="goBack" right-text="保存" @click-right="displayDialog(true)"> </van-nav-bar>
+    <van-dialog v-model="show" title="轨迹保存" show-cancel-button @confirm="submit" @cancel="displayDialog(false)">
+      <van-field v-model="title" label="标题" />
+      <van-field v-model="describe" label="描述" />
+    </van-dialog>
     <div class="trail-info trail-content-brief">
       <div class="split-equal">
         <div>{{ formateStartTime(state.startTime) }}</div>
@@ -35,32 +32,48 @@ export default Vue.extend({
   data() {
     return {
       state: store.state,
+      show: false,
+      title: "",
+      describe: "",
     };
   },
-  mounted() {},
+  mounted() {
+    this.init();
+  },
   destroyed() {
     this.destroy();
   },
   methods: {
+    displayDialog(bool) {
+      this.show = bool;
+      if (!bool) {
+        this.title = "";
+        this.describe = "";
+      }
+    },
     init() {
       earthStore.state.mode = "map";
       earthStore.setMapFullScreen(true);
       earthStore.state.onlyMap = true;
+      store.mapShow = true;
     },
     goBack() {
       //@ts-ignore
       this.$router.backward(-1);
       this.destroy();
     },
-    submit() {
+    async submit() {
       const data = {
         startTime: store.state.startTime,
         trailTime: store.state.trailTime,
         distance: store.state.distance,
-        position: store.state.position,
+        geojson: store.geojson,
+        title: this.title,
+        describe: this.describe,
       };
-      const result = this.$store.state.dispatch("trail/add", data);
-      Toast(result.message);
+      const result = await this.$store.dispatch("trails/add", data);
+      result && Toast(result.message);
+      this.displayDialog(false);
     },
     formateTime(time) {
       let string;

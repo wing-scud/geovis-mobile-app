@@ -1,5 +1,5 @@
 <template>
-  <van-popup v-model="popShow" transition-appear  position="right" :style="{ width: '200px', height: '100%' }" :close-on-popstate="true" @close="closePopup">
+  <van-popup v-model="popShow" transition-appear position="right" :style="{ width: '200px', height: '100%' }" :close-on-popstate="true" @close="closePopup">
     <div class="layer">
       <div class="layer-data">
         <van-checkbox-group v-model="checkedMap">
@@ -29,13 +29,13 @@
               </div>
             </div>
           </div>
-          <div class="head">其他</div>
-          <!-- <van-cell title="友邻位置" is-link /> -->
-          <van-cell title="天气地图" is-link />
-          <van-cell title="下载管理" is-link to="/downloadManager"/>
+
+          <van-cell title="友邻位置" is-link />
+          <van-cell title="轨迹列表" is-link to="/trailCataView" />
+          <van-cell title="下载管理" is-link to="/downloadManager" />
+          <van-cell title="采集列表" is-link to="/infoCollectionList" />
+          <van-cell title="收藏管理" is-link to="/star" />
           <van-cell title="其他地图" is-link />
-          <van-cell title="采集列表" is-link to="/infoCollectionList"/>
-          <van-cell title="收藏管理" is-link to="/star"/>
           <!-- <div class="map-item">其他地图</div> -->
         </van-checkbox-group>
       </div>
@@ -55,7 +55,7 @@ export default Vue.extend({
       offlineImages: [],
       onlineImages: [],
       checkedMap: [],
-      popShow: true
+      popShow: true,
     };
   },
   mounted() {
@@ -81,28 +81,28 @@ export default Vue.extend({
       let offlineImages;
       let onlineImages;
       const checkedMap = [];
-      tree.map(node => {
+      tree.map((node) => {
         if (node.name === "离线地图") {
           offlineImages = node.children;
         }
         if (node.name === "在线地图") {
           onlineImages = node.children;
         }
-        node.children.map(layer => {
+        node.children.map((layer) => {
           if (layer.checked) {
             checkedMap.push(layer.id);
           }
         });
       });
       return [offlineImages, onlineImages, checkedMap];
-    }
-  }
+    },
+  },
 });
 </script>
 <style lang="scss">
-.layer .van-checkbox__icon--checked .van-icon{
- background-color:$select-color!important;
- border-color:$select-color!important;
+.layer .van-checkbox__icon--checked .van-icon {
+  background-color: $select-color !important;
+  border-color: $select-color !important;
 }
 </style>
 <style scoped lang="scss">
@@ -112,23 +112,23 @@ export default Vue.extend({
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  background:$board-color;
+  background: $board-color;
 }
 .layer-data {
   flex-grow: 1;
   padding: 5px 1.6%;
   /* text-align: center; */
 }
-.van-popup{
-  width:245px!important;
+.van-popup {
+  width: 245px !important;
 }
-.van-cell{
-  background:$board-color;
-  color:$lightgray-word;
+.van-cell {
+  background: $board-color;
+  color: $lightgray-word;
   border-bottom: $split-line;
 }
-.van-cell::after{
-  all:initial;
+.van-cell::after {
+  all: initial;
 }
 .map-layer {
   display: flex;
@@ -144,15 +144,15 @@ export default Vue.extend({
   padding: 3px 3px;
   font-size: 13px;
   // background-color: #c7c7c76e;
-  background-color:$light-blue;
-  color:$darkgray-word;
+  background-color: $light-blue;
+  color: $darkgray-word;
 }
 .image-container {
   // height: 75px;
   width: 30%;
   margin: 0 1.66%;
   position: relative;
-  color:$lightgray-word;
+  color: $lightgray-word;
 }
 .image {
   width: 100%;
@@ -181,11 +181,10 @@ export default Vue.extend({
   width: 100%;
   height: 35px;
 }
-.block-button
-{
+.block-button {
   height: 32px;
-  border:$highlight-border!important;
-  color:$highlight!important;
-  background:$board-color;
+  border: $highlight-border !important;
+  color: $highlight !important;
+  background: $board-color;
 }
 </style>

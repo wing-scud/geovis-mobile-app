@@ -159,3 +159,9 @@ color: white;
     color:$lightgray-word!important;
     border:0!important;
   }
+  .van-collapse-item__content{
+    background-color: $navbar-background !important;
+  }
+  .van-dialog__header{
+    background-color: $navbar-background !important;
+  }

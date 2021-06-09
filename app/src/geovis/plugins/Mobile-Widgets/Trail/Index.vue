@@ -36,7 +36,6 @@ export default Vue.extend({
       earthStore.state.mode = "globe3";
       earthStore.setMapFullScreen(false);
       earthStore.state.onlyMap = false;
-      // store.destroy();
     },
   },
 });

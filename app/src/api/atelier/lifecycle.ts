@@ -18,6 +18,7 @@ const createdHandle = async function () {
 const loginHandle = async function () {
     console.log('login');
     file.initUserEntry(store.state.user.user.account).then(() => {
+        store.dispatch('trails/getList');
         store.dispatch('gisInfos/getList');
         store.dispatch('starPlaces/getList');
         store.dispatch('starRoutes/getList')

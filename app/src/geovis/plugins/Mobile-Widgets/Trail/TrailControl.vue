@@ -11,7 +11,7 @@
     <div class="trail-content-detail" id="trail-content">
       <div class="trail-distance">
         <div class="trail-distance-number">
-          {{ formateDistance(state.distance) }}
+          {{ state.distance }}
         </div>
         <div class="trail-unit">km</div>
       </div>
@@ -66,10 +66,9 @@ export default Vue.extend({
     },
     displayMap() {
       this.mapShow = !this.mapShow;
-      const container = document.getElementById("trail-container");
-      // container.style.zIndex = this.mapShow ? "10" : "1";
       const trailData = document.getElementById("trail-content");
       trailData.className = this.mapShow ? "trail-content-brief" : "trail-content-detail";
+      store.mapShow = this.mapShow;
     },
     changeMode(value) {
       store.mode = value;
@@ -102,9 +101,6 @@ export default Vue.extend({
     formateState(state) {
       const array = ["未开始", "结束", "暂停", "进行中"];
       return array[state];
-    },
-    formateDistance(distance) {
-      return distance.toFixed(2);
     },
     reset() {
       store.init();
