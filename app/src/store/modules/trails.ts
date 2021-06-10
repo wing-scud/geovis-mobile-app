@@ -30,6 +30,7 @@ const getters = {
 const actions = {
   getList({ state, commit }) {
     const filePlugin = window['plugin'].file;
+    //@ts-ignore
     const token = this.state.user.user.token;
     const promise = fetchByToken(trailsAddress, token, {
       type: "getList"
@@ -83,6 +84,7 @@ const actions = {
     })
   },
   remove({ state, commit }, id) {
+    //@ts-ignore
     const token = this.state.user.user.token;
     const promise = fetchByToken(trailsAddress, token, {
       type: "remove",

@@ -40,8 +40,8 @@ export default Vue.extend({
   mounted() {
     this.init();
   },
-  destroyed() {
-    this.destroy();
+  destroyed(){
+    this.destroy()
   },
   methods: {
     displayDialog(bool) {
@@ -57,10 +57,12 @@ export default Vue.extend({
       earthStore.state.onlyMap = true;
       store.mapShow = true;
     },
+    destroy(){
+      store.destroy();
+    },
     goBack() {
       //@ts-ignore
       this.$router.backward(-1);
-      this.destroy();
     },
     async submit() {
       const data = {
@@ -106,12 +108,6 @@ export default Vue.extend({
     },
     formateStartTime(date) {
       return formateDate(date, "hh:mm:ss");
-    },
-    destroy() {
-      earthStore.state.mode = "globe3";
-      earthStore.setMapFullScreen(false);
-      earthStore.state.onlyMap = false;
-      store.destroy();
     },
   },
 });

@@ -3,11 +3,24 @@
     <van-nav-bar ref="nav-bar" title="轨迹内容" left-text="返回" left-arrow @click-left="goBack" right-text="设置" @click-right="showSetting"> </van-nav-bar>
     <van-popup v-model="show">
       <div class="setting">
-        <van-cell title="播放速度">
-          <template v-slot:default>
-            <van-slider v-model="state.speed" :min="1" :max="100"> </van-slider><span>{{ state.speed }}</span>
-          </template>
-        </van-cell>
+        <div class="setting-title">常规</div>
+        <div class="setting-item">
+          播放速度: {{ speed }}
+          <van-slider class="setting-slider" v-model="speed" :min="1" :max="100" @change="changeSpeed"> </van-slider>
+        </div>
+        <div class="setting-title">跟踪模式</div>
+        <div class="setting-item">
+          偏航: {{ cameraState.heading }}
+          <van-slider class="setting-slider" v-model="cameraState.heading" :min="0" :max="360" @change="changeSpeed"> </van-slider>
+        </div>
+        <div class="setting-item">
+          俯仰: {{ cameraState.pitch }}
+          <van-slider class="setting-slider" v-model="cameraState.pitch" :min="0" :max="30" @change="changeSpeed"> </van-slider>
+        </div>
+        <div class="setting-item">
+          高度: {{ cameraState.altitude }}
+          <van-slider class="setting-slider" v-model="cameraState.altitude" :min="1" :max="1000" @change="changeSpeed"> </van-slider>
+        </div>
       </div>
     </van-popup>
     <div class="trail-info trail-content-brief">
@@ -25,14 +38,14 @@
       </div>
     </div>
     <div class="trail-control">
-      <div class="control-buttons"> 
+      <div class="control-buttons">
         <van-button @click="play()"> {{ state.play ? "结束" : "播放" }}</van-button>
-        <!-- <van-button @click="suspend()"> 暂停 </van-button> -->
-        <van-button @click="modeSet()"> 3D模式 </van-button>
+        <van-button @click="suspend()"> 暂停 </van-button>
+        <van-button @click="modeSet()" :color="state.mode ? 'red' : '#2a355d'"> 跟踪 </van-button>
       </div>
       <div class="time-setting">
         时间: {{ time }}
-        <van-slider class="time-slider" v-model="time" :min="0" :max="trail.trailTime" @input="changeTime"> </van-slider>
+        <van-slider class="time-slider" v-model="time" :min="0" :max="trail.trailTime" @drag-start="stopPlay" @input="changeTime" @drag-end="startPlay"> </van-slider>
       </div>
     </div>
   </div>
@@ -42,6 +55,7 @@ import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 import { formateDate } from "@/util/utils";
 import TrailPlayer from "./TrailPlayer";
+import * as _ from "loadsh";
 import { Toast } from "vant";
 export default Vue.extend({
   name: "TrailDetail",
@@ -56,13 +70,22 @@ export default Vue.extend({
       show: false,
       state: null,
       time: 0,
+      speed: 1,
+      throttleUpdateTime: null,
+      cameraState: null,
     };
   },
-  beforeMount() {
+  created() {
     this.init();
   },
   destroyed() {
     this.destroy();
+  },
+  watch: {
+    "state.time": function () {
+      //加个节流
+      this.throttleUpdateTime();
+    },
   },
   methods: {
     async init() {
@@ -75,13 +98,27 @@ export default Vue.extend({
       trail.geojson = geojson;
       this.trail = trail;
       this._player = new TrailPlayer(trail);
+      this.cameraState = this._player.cameraState;
       this.state = this._player.state;
       earthStore.state.mode = "map";
       earthStore.setMapFullScreen(true);
       earthStore.state.onlyMap = true;
+      this.throttleUpdateTime = _.throttle(this.updateTime, 100);
     },
     play() {
       this._player.play = !this._player._state.play;
+    },
+    stopPlay() {
+      this._player._state.play = false;
+    },
+    startPlay() {
+      this._player._state.play = true;
+    },
+    changeSpeed() {
+      this._player.state.speed = this.speed;
+    },
+    updateTime() {
+      this.time = Math.floor(this.state.time * this.state.speed);
     },
     suspend() {
       this._player._state.play = false;
@@ -95,7 +132,9 @@ export default Vue.extend({
     formateStartTime(date) {
       return date && formateDate(new Date(date), "yyyy-MMM-dd hh:mm:ss");
     },
-    changeTime() {},
+    changeTime() {
+      this._player.changeTime(this.time);
+    },
     goBack() {
       //@ts-ignore
       this.$router.backward();
@@ -152,7 +191,9 @@ export default Vue.extend({
 }
 .setting {
   width: 80vw;
-  height: 256px;
+  height: 224px;
+  background-color: $navbar-background;
+  padding: 16px 8px;
 }
 .control-buttons {
   margin-bottom: 16px;
@@ -173,6 +214,25 @@ export default Vue.extend({
 }
 .van-slider {
   height: 3px;
+}
+.setting-speed {
+  margin: 8px 8px;
+}
+.setting-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  height: 24px;
+  margin: 12px 0;
+}
+.setting-slider {
+  flex: 1;
+  margin: 0 12px 0 16px;
+}
+.setting-title {
+  color: rgb(96, 102, 101);
+  font-size: 14px;
 }
 </style>
   

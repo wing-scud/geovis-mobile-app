@@ -1,3 +1,7 @@
+/**
+ * Bug: 调控speed，time计算有问题
+ */
+
 import { earthStore } from "@/geovis/store"
 const turf = window['turf']
 import mapboxgl from "mapbox-gl"
@@ -6,32 +10,42 @@ class TrailPlayer {
     public trailTime
     public distance
     public geojson;
-    public mode;
     // 单位 m/s
     public speed;
     private _listener;
+    private _distances;
     private _marker;
+    private _cameraState
+    public get cameraState() {
+        return this._cameraState
+    }
+    public set cameraState(value) {
+        this._cameraState = value
+    }
+    private _baseSpeed; //单位m/s
     private _state: {
-        time; play, speed
+        time; play, speed, drivingDistance, mode
     }
     public get state(): {
-        time; play, speed
+        time; play, speed, drivingDistance,
+        mode
     } {
         return this._state
     }
     public set state(value: {
-        time; play, speed
+        time; play, speed, drivingDistance, mode
     }) {
         this._state = value;
     }
     public set play(bool) {
         this._state.play = bool;
-        if (bool) {
-            this.animateTrail()
-        } else {
-            this._listener && cancelAnimationFrame(this._listener)
-            this._marker.remove()
-        }
+        this.animateTrail(bool)
+    }
+    public get mode() {
+        return this._state.mode
+    }
+    public set mode(value) {
+        this._state.mode = value;
     }
     constructor(trail) {
         this.startTime = trail.startTime;
@@ -41,91 +55,59 @@ class TrailPlayer {
         this._state = {
             time: 0,
             play: false,
-            speed: 1
+            speed: 1,
+            drivingDistance: 0,
+            mode: false
         }
+        this._cameraState = {
+            altitude: 50,
+            heading: 100,
+            pitch: 30
+        }
+        this._baseSpeed = this.distance * 1000 / this.trailTime
         this.setCenter();
         this._addGeojsonSource();
+        this.update = this.update.bind(this);
     }
-    animateTrail() {
-        // 初始化marker
+    update() {
         const map = earthStore.map;
-        const geojson = this.geojson;
-        const lngLat = this._marker ? this._marker.getLngLat().toArray() :
-            turf.getCoord(geojson.features[2]);
-        this._marker = this._marker ? this._marker : (new mapboxgl.Marker())
-        this._marker.setLngLat(lngLat).addTo(map);
-        //获取当前位置
-        let distance = 0;
-        const options = { units: 'kilometers' };
-        const lines = geojson.features[0];
-        const linesLength = lines.geometry.coordinates.length;
-        let currentLineIndex = 0;
-        let line, isPointOnLine;
-        //判断当前点位于哪个线上，排除二条线交叉
-        for (let i = 0; i < linesLength; i++) {
-            const point = turf.point(lngLat);
-            line = turf.lineString(lines.geometry.coordinates[i])
-            isPointOnLine = turf.booleanPointOnLine(point, line);
-            if (isPointOnLine) {
-                currentLineIndex = i;
-                break;
-            }
-        }
-        const currentPoint = turf.point(lngLat);
-        const lineCoords = turf.getCoords(line)
-        const startPoint = turf.point(lineCoords[0]);
-        const sliced = turf.lineSlice(startPoint, currentPoint, line);
-        distance = turf.length(sliced, { units: 'kilometers' });
         let lastTimestamp;
-        const animateMarker = (timestamp) => {
-            let time;
-            if (!lastTimestamp) {
-                time = performance.now() - timestamp
-            } else {
-                time = timestamp - lastTimestamp
-            }
-            const seconds = time / 1000
-            // @ts-ignore
-            const speed = this._state.speed;
-            const getNextLine = () => {
-                line = turf.lineString(lines.geometry.coordinates[currentLineIndex])
-                const currentPoint = turf.point(this._marker.getLngLat().toArray());
-                const lineCoords = turf.getCoords(line)
-                const stopPoint = turf.point(lineCoords[lineCoords.length - 1]);
-                const sliced = turf.lineSlice(currentPoint, stopPoint, line);
-                const slicedDistance = turf.length(sliced, { units: 'kilometers' });
-                const changedDistance = seconds * speed / 1000
-                if (changedDistance >= slicedDistance) {
-                    distance = changedDistance - slicedDistance;
-                    currentLineIndex++;
-                    getNextLine()
-                } else {
-                    distance += changedDistance;
+        const updateMarker = (timestamp?) => {
+            let seconds = 0;
+            if (this._state.play) {
+                if (lastTimestamp) {
+                    const intervalTime = timestamp - lastTimestamp;
+                    seconds = intervalTime / 1000
+                    const speed = this._state.speed * this._baseSpeed;
+                    const distance = speed * seconds / 1000;
+                    this._state.drivingDistance += distance;
+                }
+                const lngLat = this._getPoint();
+                if (lngLat) {
+                    this._state.time += seconds;
+                    this._marker || (this._marker = new mapboxgl.Marker());
+                    this._marker.setLngLat(lngLat).addTo(map);
+                    if (this._state.mode) {
+                        this._updateCamera(lngLat)
+                    }
                 }
             }
-            getNextLine();
-            line = turf.lineString(lines.geometry.coordinates[currentLineIndex])
-            const along = turf.along(line, distance, options);
-            //???
-            // isPointOnLine = turf.booleanPointOnLine(along, line);
-            // if (!isPointOnLine) {
-            //     console.log("getNextLine error")
-            // }
-            this._state.time = this._state.time + seconds;
-            this._marker.setLngLat(turf.getCoord(along));
             lastTimestamp = timestamp;
-            if (currentLineIndex < linesLength && this._state.play) {
-                this._listener = requestAnimationFrame(animateMarker);
-            } else {
-                this._state.play = false;
-            }
+            this._listener = requestAnimationFrame(updateMarker);
         }
-        this._listener = requestAnimationFrame(animateMarker);
+        updateMarker();
     }
-    destroy() {
-        this._clearMap()
+    animateTrail(bool) {
+        if (bool) {
+            this._listener = requestAnimationFrame(this.update);
+        } else {
+            this._listener && cancelAnimationFrame(this._listener)
+            this._listener = null;
+            this._state.drivingDistance = 0;
+            this._state.time = 0;
+        }
     }
-    async setCenter() {
+    setCenter() {
         const map = earthStore.map;
         const geojson = this.geojson
         const multiLine = turf.multiLineString(geojson.features[0].geometry.coordinates);
@@ -134,7 +116,44 @@ class TrailPlayer {
         map.fitBounds(bounds, {
             padding: 20
         });
+    } changeTime(trailTime) {
+        const nowTime = trailTime / this._state.speed;
+        this._state.drivingDistance += (nowTime - this._state.time) * this._state.speed * this._baseSpeed / 1000
+        this._state.time = nowTime;
+        const lngLat = this._getPoint()
+        this._marker && lngLat && (this._marker.setLngLat(lngLat), this._updateCamera(lngLat))
     }
+    destroy() {
+        this._listener && cancelAnimationFrame(this._listener)
+        this._listener = null;
+        this._clearMap()
+    }
+    // 初始定位靠distance ，后续定位靠speed
+    _getPoint() {
+        this._distances || (this._distances = turf.getCoords(this.geojson.features[0]).map((lineCoords) => {
+            const line = turf.lineString(lineCoords);
+            return turf.length(line);
+        }))
+        //turf along 之后无法判断点在线上
+        let totalDistance = 0;
+        let lineIndex = 0;
+        const drivingDistance = this._state.drivingDistance;
+        for (let i = 0; i < this._distances.length; i++) {
+            totalDistance += this._distances[i];
+            if (totalDistance > drivingDistance) {
+                lineIndex = i;
+                break;
+            }
+        }
+        if (drivingDistance >= totalDistance) {
+            return null
+        }
+        const lineDrivingDistance = this._distances[lineIndex] - (totalDistance - drivingDistance);
+        const lineString = turf.lineString(turf.getCoords(this.geojson.features[0])[lineIndex]);
+        const point = turf.along(lineString, lineDrivingDistance)
+        return turf.getCoord(point)
+    }
+
     _addGeojsonSource() {
         const map = earthStore.map;
         // Create a GeoJSON source with an empty lineString.
@@ -188,6 +207,9 @@ class TrailPlayer {
             },
             'filter': ['==', 'title', '终点']
         });
+        const startCoords = turf.getCoord(geojson.features[2])
+        this._marker || (this._marker = new mapboxgl.Marker());
+        this._marker.setLngLat(startCoords).addTo(map);
     }
     _clearMap() {
         const map = earthStore.map;
@@ -196,6 +218,21 @@ class TrailPlayer {
         map.removeLayer('trail-points');
         map.removeLayer('line-animation');
         map.removeSource('trail')
+        this._marker && this._marker.remove()
+        this._marker = null;
+    }
+    _updateCamera(lngLat) {
+        const map = earthStore.map;
+        const camera = map.getFreeCameraOptions();
+        const { altitude, heading, pitch } = this._cameraState;
+
+        camera.position = mapboxgl.MercatorCoordinate.fromLngLat(
+            lngLat,
+            altitude
+        );
+        camera.setPitchBearing(pitch, heading)
+        // camera.lookAtPoint(lngLat);
+        map.setFreeCameraOptions(camera);
     }
 }
 export default TrailPlayer;

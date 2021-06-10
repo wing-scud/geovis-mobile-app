@@ -17,6 +17,12 @@ export default Vue.extend({
       name: "TrailControl",
     };
   },
+  activated() {
+    this.init();
+  },
+  deactivated() {
+    this.destroy();
+  },
   mounted() {
     this.init();
   },
@@ -25,7 +31,7 @@ export default Vue.extend({
   },
   methods: {
     change() {
-      this.name = "TrailSave";
+      this.name = this.name === "TrailControl" ? "TrailSave" : "TrailControl";
     },
     init() {
       earthStore.state.mode = "map";

@@ -1,5 +1,5 @@
 <template>
-  <div class="full">
+  <div class="content">
     <van-nav-bar title="应用"> </van-nav-bar>
     <div class="module" v-for="array in pluginTree" :key="array.id">
       <div class="plugin-class-board">
@@ -77,8 +77,10 @@ export default Vue.extend({
   font-size: 12px;
   color:$lightgray-word;
 }
-.full {
-  background: $board-color;
+.content {
+  background: $navbar-background;
+  height: 100%;
+  width:100%
 }
 .plugin-class-board{
   width:99%;

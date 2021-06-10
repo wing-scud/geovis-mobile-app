@@ -16,6 +16,7 @@
     "deepcopy": "^2.1.0",
     "fs": "0.0.1-security",
     "less-loader": "^5.0.0",
+    "loadsh": "0.0.4",
     "lodash": "^4.17.21",
     "mapbox-gl": "^2.1.1",
     "mime": "^2.5.2",

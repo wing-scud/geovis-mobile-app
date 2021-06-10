@@ -11,7 +11,7 @@
             描述:<span class="item-value"> {{ trail.describe }}</span>
           </div>
           <div class="item-detail">
-            开始时间:<span class="item-value"> {{ formateDate(trail.startTime) }}</span>
+            开始时间:<span class="item-value"> {{ formateDate(trail.startTime) }} 秒</span>
           </div>
           <div class="item-detail">
             时长:<span class="item-value"> {{ trail.trailTime }}</span>

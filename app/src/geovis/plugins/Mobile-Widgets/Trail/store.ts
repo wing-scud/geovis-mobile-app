@@ -51,7 +51,8 @@ async function getLngLat() {
     const bearing = 90;
     const options = { units: 'kilometers' };
     const destination = turf.destination(point, distance, bearing, options);
-    const lngLat = turf.getCoord(destination);
+    let lngLat = turf.getCoord(destination);
+    lngLat = [Number(lngLat[0].toFixed(5)), Number(lngLat[1].toFixed(5))]
     time++;
     return lngLat;
 }
@@ -78,7 +79,7 @@ class Store {
     }
     public set mapShow(value: boolean) {
         if (value) {
-            this.showFeatures();
+            this.addGeojsonSource();
             this.setCenter()
         } else {
             this.clearMap();
@@ -271,28 +272,27 @@ class Store {
     }
     clearMap() {
         const map = earthStore.map;
-        map.removeLayer('trail-finish');
-        map.removeLayer('trail-start');
-        map.removeLayer('trail-points');
-        map.removeLayer('line-animation');
-        map.removeSource('trail')
-        this._marks.forEach((item) => {
-            //@ts-ignore
-            if (item.marker) {
+        if (this._mapShow) {
+            map.removeLayer('trail-finish');
+            map.removeLayer('trail-start');
+            map.removeLayer('trail-points');
+            map.removeLayer('line-animation');
+            map.removeSource('trail')
+            this._marks.forEach((item) => {
                 //@ts-ignore
-                marker.remove();
-            }
-        });
-        this._marks = []
+                if (item.marker) {
+                    //@ts-ignore
+                    marker.remove();
+                }
+            });
+            this._marks = []
+        }
     }
     destroy() {
         const map = earthStore.map;
         this.clearMap()
         this._mapShow = false
         this.init();
-    }
-    showFeatures() {
-        this.addGeojsonSource()
     }
     serialize() {
 

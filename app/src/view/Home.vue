@@ -4,10 +4,6 @@
       <keep-alive include="Map">
         <router-view></router-view>
       </keep-alive>
-      <!-- <keep-alive>
-        <router-view v-if="$route.meta.keepAlive"></router-view>
-      </keep-alive>
-      <router-view v-if="!$route.meta.keepAlive"></router-view> -->
     </div>
     <van-tabbar v-model="active" id="bottomTabbar" v-if="!state.fullScreen" class="bottom-tabbar" @change="handleChange" :fixed="true" route active-color="#0372f1e0" replace>
       <van-tabbar-item push :to="{ name: item.name }" v-for="item in list" :key="item['title']">

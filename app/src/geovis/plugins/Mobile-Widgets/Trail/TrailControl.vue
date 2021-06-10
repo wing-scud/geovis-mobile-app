@@ -50,6 +50,7 @@ import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 import { formateDate } from "@/util/utils";
 import store from "./store";
+import { Toast } from "vant";
 export default Vue.extend({
   name: "TrailControl",
   data() {
@@ -62,7 +63,7 @@ export default Vue.extend({
     goBack() {
       //@ts-ignore
       this.$router.backward(-1);
-      store.destroy();
+      // store.destroy();
     },
     displayMap() {
       this.mapShow = !this.mapShow;
@@ -71,6 +72,11 @@ export default Vue.extend({
       store.mapShow = this.mapShow;
     },
     changeMode(value) {
+      const state = ["unStart", "finish", "suspend", "start"];
+      if (value === state[store.mode]) {
+        Toast("请勿重复点击");
+        return;
+      }
       store.mode = value;
       if (value === "finish") {
         this.$emit("finish");

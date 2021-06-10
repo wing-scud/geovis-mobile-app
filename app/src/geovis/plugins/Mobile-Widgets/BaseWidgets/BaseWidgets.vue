@@ -206,6 +206,7 @@ export default {
   margin: 3px 0;
   padding: 0 auto;
   text-align: center;
+  z-index:1;
 }
 
 .tool-img2 {
