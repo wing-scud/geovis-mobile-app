@@ -63,6 +63,7 @@ const actions = {
   },
   add({ state, commit }, options) {
     const filePlugin = window['plugin'].file;
+    //@ts-ignore
     const token = this.state.user.user.token;
     options.type = "add";
     const storageName = generateId() + ".json"

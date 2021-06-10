@@ -91,7 +91,7 @@ export default {
       prompts: [], //用作存储后台数据的仓库，使得本组件的每个方法都能取
       suggestions: [],
       //@ts-ignore
-      inputValue:this.value,
+      inputValue: this.value,
       queryFormat: this.format,
       queryDataType: this.dataType,
       _polygon: undefined,
@@ -99,6 +99,7 @@ export default {
       _point: undefined,
       coordinateCheckd: false,
       inputErrorMessage: undefined,
+      usedSuggetions: false,
     };
   },
   destroyed() {
@@ -113,7 +114,7 @@ export default {
       immediate: false,
       handler() {
         this.inputValue = this.value;
-        this.getSuggestions()
+        this.getSuggestions();
       },
     },
   },
@@ -149,7 +150,7 @@ export default {
       this.suggestions = [];
       if (!point) {
         //如果用户什么都没有输入
-        console.log("请稍等");
+        // console.log("请稍等");
         return 0;
       }
       const lineStyle = {
@@ -157,14 +158,19 @@ export default {
         outlineColor: "#00acc1",
       };
       //相机飞到目标点并划线描点
-      // this.flyTo(point, lineStyle);
+      this.flyTo(point, lineStyle);
       this.inputValue = point.name;
+      this.usedSuggetions = true;
       this.$emit("input", this.inputValue);
       this.$emit("choosed", point);
     },
     getSuggestions() {
-      this.$emit("input", this.inputValue);
-      this.debounceFetchSuggest();
+      if (this.usedSuggetions) {
+        this.usedSuggetions = false;
+      } else {
+        this.$emit("input", this.inputValue);
+        this.debounceFetchSuggest();
+      }
     },
     fetchSuggestions: async function () {
       const queryString = this.inputValue;
@@ -225,7 +231,7 @@ export default {
     //  地名检索
     simpleQuery: async function (placeName) {
       //请求数据
-      console.log("query");
+      // console.log("query");
       const url = `${this.url}/search?q=${placeName}&format=json&namedetails=[1]&polygon_geojson=1&accept-language=zh-Hans&limit=4`;
       // const url = `${this.url.default}/search.php?q=${placeName}&format=${this.queryFormat}&${this.queryDataType}=1`;
       const json = await util.getData(url); //请求polygon_geojson格式数据
@@ -238,18 +244,18 @@ export default {
         place.location = [Number(item.lon), Number(item.lat)];
         if (item.geojson.type === "MultiPolygon") {
           place.polygonpoints = item.geojson.coordinates[0][0];
-          console.log(item.display_name + "MultiPolygon");
+          // console.log(item.display_name + "MultiPolygon");
         } else if (item.geojson.type === "LineString") {
           place.polygonpoints = item.geojson.coordinates;
-          console.log(item.display_name + "LineString");
+          // console.log(item.display_name + "LineString");
         } else if (item.geojson.type === "Polygon") {
           place.polygonpoints = item.geojson.coordinates[0];
-          console.log(item.display_name + "Polygon");
+          // console.log(item.display_name + "Polygon");
         } else if (item.geojson.type === "Point") {
           place.polygonpoints = [item.geojson.coordinates, item.geojson.coordinates];
-          console.log(item.display_name + "Point");
+          // console.log(item.display_name + "Point");
         } else {
-          console.log("其他" + item.display_name + item.geojson.type);
+          // console.log("其他" + item.display_name + item.geojson.type);
         }
         prompts.push(place);
         suggestions.push({ name: item.display_name, id: item.place_id });
@@ -265,7 +271,7 @@ export default {
       const point = this.getParam(); //获得用户输入的location和polygonpoints、name
       if (!point) {
         //如果用户什么都没有输入
-        console.log("请稍等");
+        // console.log("请稍等");
         return 0;
       }
       const lineStyle = {

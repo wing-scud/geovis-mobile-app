@@ -296,18 +296,20 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
+  z-index: 3;
 }
 .route-path {
   position: absolute;
   bottom: 0;
   left: 0;
-  z-index: 5;
+  z-index: 3;
   width: 100%;
 }
 .route-extra {
   position: absolute;
   top: 50%;
   left: 0;
+  z-index: 3;
 }
 
 .route-input {

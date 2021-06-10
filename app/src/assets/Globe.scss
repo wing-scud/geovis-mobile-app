@@ -174,3 +174,6 @@ color: white;
   .van-dialog__header{
     padding:16px 0;
   }
+  .van-popover--light .van-popover__content{
+    background-color: $navbar-background;
+  }
