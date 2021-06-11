@@ -1,6 +1,7 @@
 
 import { Toast } from 'vant';
 import { earthStore } from "@/geovis/store";
+
 class LocationPlugin {
     private _geolocation: any;
     public get geolocation(): any {
@@ -27,18 +28,43 @@ class LocationPlugin {
         const watchId = this._geolocation.watchPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
         return watchId
     }
+    // getCurrentPosition() {
+    //     return new Promise((resolve, reject) => {
+    //         const onSuccess = function (position) {
+    //             // Toast('获取位置');
+    //             resolve(position)
+    //         };
+    //         function onError(error) {
+    //             Toast(error);
+    //             reject(error)
+    //         }
+    //         this._geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
+    //     })
+    // }
     getCurrentPosition() {
-        return new Promise((resolve, reject) => {
-            const onSuccess = function (position) {
-                // Toast('获取位置');
-                resolve(position)
-            };
-            function onError(error) {
-                Toast(error);
-                reject(error)
+        const turf = window['turf']
+        const speed = 0.010;
+        let time = 0;
+        const point = turf.point([-75.343, 39.984]);
+        const getLngLat = () => {
+            const distance = speed * time;
+            const bearing = 90;
+            const options = { units: 'kilometers' };
+            const destination = turf.destination(point, distance, bearing, options);
+            let lngLat = turf.getCoord(destination);
+            lngLat = [Number(lngLat[0].toFixed(5)), Number(lngLat[1].toFixed(5))]
+            time++;
+            return lngLat;
+        }
+        const lngLat = getLngLat()
+        const position = {
+            coords: {
+                longitude: lngLat[0],
+                latitude: lngLat[1],
+                altitude: 2000,
             }
-            this._geolocation.getCurrentPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
-        })
+        }
+        return position
     }
     testWatchPosition(callback?) {
         const lnglats = [[116.395204, 39.917402], [116.395204, 39.917402],

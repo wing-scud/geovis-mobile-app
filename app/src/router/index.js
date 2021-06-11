@@ -47,6 +47,8 @@ const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LivePhenomena
 
 const TrailRecord = () => import("../geovis/plugins/Mobile-Widgets/Trail/Index.vue");
 const TrailDetail = () => import("../geovis/plugins/Mobile-Widgets/Trail/TrailDetail.vue");
+
+const StateShare = () => import("../geovis/plugins/Mobile-Widgets/StateShare/Index.vue")
 const routes = [
   {
     path: "/",
@@ -73,8 +75,9 @@ const routes = [
           { path: "bufferAnalytics", component: BufferAnalytics, name: "BufferAnalytics" },
           { path: "liveWeather", component: LiveWeather, name: "LiveWeather" },
           { path: "trailRecord", component: TrailRecord, name: "TrailRecord" },
-
-          { path: "trailDetail", component: TrailDetail, name: "TrailDetail" }
+        
+          { path: "trailDetail", component: TrailDetail, name: "TrailDetail" },
+          { path: "stateShare", component: StateShare, name: "StateShare" },
 
         ],
         meta: {

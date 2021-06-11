@@ -1,5 +1,6 @@
 // const SERVER_ROOT = "http://49.234.121.120:8092";
 const SERVER_ROOT = "http://localhost:8092";
+const SERVER_WS_ROOT = "http://localhost:8092"
 const TILESERVER_ROOT = "http://localhost:8082";
 const GEOSERVER_ROOT = "http://localhost:8088";
 const MODELSERVER_ROOT = "http://localhost:4000";
@@ -10,6 +11,7 @@ const tokyoModel = "http://localhost:8900/static/tiles/3dtiles/东京_机场/315
 
 window.sceneData = {
   SERVER_ROOT,
+  SERVER_WS_ROOT,
   TILESERVER_ROOT,
   GEOSERVER_ROOT,
   MODELSERVER_ROOT,

@@ -92,7 +92,7 @@
                 "mutex": false
             },
             {
-                "id": "SitiationShare",
+                "id": "StateShare",
                 "parent": "Map",
                 "type": "route",
                 "icon": "icon-taishigongxiang",
