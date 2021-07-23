@@ -91,22 +91,30 @@ class LocationPlugin {
             , [116.303934, 39.991758]]
         let heading = GeoVis.Math.toRadians(90);
         let index = 0;
+        let position = {
+            coords: {
+                longitude: null,
+                latitude: null,
+                altitude: null,
+                heading: null
+            }
+        };
         const interval = setInterval(() => {
             if (index > lnglats.length - 1) {
                 index = 0
             }
             heading -= Math.PI / lnglats.length;
             const lnglat = lnglats[index];
-            const position = {
-                coords: {
-                    longitude: lnglat[0],
-                    latitude: lnglat[1],
-                    altitude: 2000,
-                    heading: heading
-                }
-            }
             //@ts-ignore
             if (lnglat[0] !== position.coords.longitude && lnglat[1] !== position.coords.latitude) {
+                position = {
+                    coords: {
+                        longitude: lnglat[0],
+                        latitude: lnglat[1],
+                        altitude: 2000,
+                        heading: heading
+                    }
+                }
                 callback(position);
             }
             index++;

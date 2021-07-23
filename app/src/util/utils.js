@@ -1,4 +1,4 @@
-import uuid from "uuid"
+import uuid from "uuid/dist/index.js"
 import mime from "mime"
 function judgeInstanceof(value) {
     const result = Object.prototype.toString.call(value)

@@ -55,7 +55,7 @@ import Vue from "vue";
 import { earthStore } from "@/geovis/store";
 import { formateDate } from "@/util/utils";
 import TrailPlayer from "./TrailPlayer";
-import * as _ from "loadsh";
+import * as _ from "lodash";
 import { Toast } from "vant";
 export default Vue.extend({
   name: "TrailDetail",

@@ -1,5 +1,6 @@
 // vue.config.js
 const path = require("path");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin")
 module.exports = {
   publicPath: "./",
   outputDir: "../www/",
@@ -35,6 +36,11 @@ module.exports = {
     devtool: 'source-map',
     devServer: {
       headers: { "Access-Control-Allow-Origin": "*" }
-    }
+    },
+    plugins: [
+      new CleanWebpackPlugin({
+        cleanStaleWebpackAssets: true,
+      }),
+    ]
   }
 }
