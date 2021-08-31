@@ -89,12 +89,12 @@
                 "enabled": true,
                 "active": false,
                 "componentIcon": true,
-                "mutex": false
+                "mutex": true
             },
             {
                 "id": "StateShare",
                 "parent": "Map",
-                "type": "route",
+                "type": "component",
                 "icon": "icon-taishigongxiang",
                 "name": "态势共享",
                 "enabled": true,
@@ -111,7 +111,7 @@
                 "enabled": true,
                 "active": false,
                 "componentIcon": true,
-                "mutex": false
+                "mutex": true
             },
             {
                 "id": "FPS",
@@ -133,7 +133,7 @@
                 "enabled": true,
                 "active": false,
                 "componentIcon": true,
-                "mutex": false
+                "mutex": true
             }
         ]
     },

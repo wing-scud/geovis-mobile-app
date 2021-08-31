@@ -10,6 +10,7 @@
 </template>
 <script lang="ts">
 import { earthStore } from "@/geovis/store";
+import stateShare from "../StateShare/store";
 import Vue from "vue";
 export default Vue.extend({
   name: "TaskGroup",
@@ -18,6 +19,7 @@ export default Vue.extend({
   },
   mounted() {
     this.groups = [{ text: "小组一" }, { text: "小组二" }, { text: "小组三" }];
+    stateShare.group = this.currentGroup;
   },
   methods: {
     goBack() {
@@ -28,11 +30,11 @@ export default Vue.extend({
       this.popoverGroup = !this.popoverGroup;
       this.arrowDirection = this.popoverGroup ? "arrow-down" : "arrow";
     },
-    handleChange() {},
     chooseGroup(action) {
       this.currentGroup = action.text;
       this.popoverGroup = !this.popoverGroup;
       this.arrowDirection = this.popoverGroup ? "arrow-down" : "arrow";
+      stateShare.group = this.currentGroup;
     },
   },
 });
@@ -49,6 +51,6 @@ export default Vue.extend({
 }
 .custon-arrow-title {
   font-size: 12px;
-  margin-right:10px
+  margin-right: 10px;
 }
 </style>

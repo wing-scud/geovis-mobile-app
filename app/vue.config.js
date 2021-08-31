@@ -32,10 +32,25 @@ module.exports = {
     config.module.rule("js").set("exclude", item => item.search("geovis/common") > -1);
   },
   configureWebpack: {
-    // entry: "./src/main.js",
+    entry: "./src/main.ts",
     devtool: 'source-map',
     devServer: {
       headers: { "Access-Control-Allow-Origin": "*" }
+    },
+    optimization: {
+      splitChunks: {
+        cacheGroups: {
+          vendors: {
+            test: /[\\/]node_modules[\\/]/, // 位于node_modules中的模块做代码分割
+            priority: -10, // 根据优先级决定打包到哪个组里，例如一个 node_modules 中的模块进行代码
+            filename :"vendor.js"
+          }, // 分割，，既满足 vendors，又满足 default，那么根据优先级会打包到 vendors 组中。
+          default: { // 没有 test 表明所有的模块都能进入 default 组，但是注意它的优先级较低。
+            priority: -20, //  根据优先级决定打包到哪个组里,打包到优先级高的组里。
+            reuseExistingChunk: true // //如果一个模块已经被打包过了,那么再打包时就忽略这个上模块
+          }
+        }
+      }
     },
     plugins: [
       new CleanWebpackPlugin({

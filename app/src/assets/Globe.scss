@@ -177,3 +177,14 @@ color: white;
   .van-popover--light .van-popover__content{
     background-color: $navbar-background;
   }
+
+  //mapbox marker close button
+  .mapboxgl-popup-content >>> button {
+    font-family: 微软雅黑,sans-serif;
+    opacity: 1 ;
+    min-width: unset !important;
+    padding: unset !important;
+}
+.mapboxgl-popup-content {
+  text-align: center;
+}

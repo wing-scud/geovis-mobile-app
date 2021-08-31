@@ -39,7 +39,7 @@ export default {
       window.sceneManager = sceneManager;
       this.state = sceneManager.state;
       this.setEvent(this.state.events[0]);
-      const timelineModel = earthStore.getPuginState("Timeline");
+      const timelineModel = earthStore.getPluginState("Timeline");
       this._timelineStateBackup = Object.assign({}, timelineModel);
       timelineModel.enabled = true;
     });
@@ -48,7 +48,7 @@ export default {
     earth.clock.onTick.removeEventListener(this.handleTick);
     earthStore.togglePlugin("Timeline", false);
     this.sceneManager.destroy();
-    const timelineModel = earthStore.getPuginState("Timeline");
+    const timelineModel = earthStore.getPluginState("Timeline");
     timelineModel.enabled = this._timelineStateBackup.enabled;
   },
   methods: {

@@ -1,11 +1,10 @@
 <template>
-  <div>
-    
-  </div>
+  <div></div>
 </template>
 <script lang="ts">
+import { earthStore } from "@/geovis/store";
 import Vue from "vue";
-import StateShare from "./store";
+import store from "./store";
 export default Vue.extend({
   name: "StateShare",
   data() {
@@ -14,7 +13,8 @@ export default Vue.extend({
     };
   },
   mounted() {
-    this._share = new StateShare();
+    this._share = store;
+    store.init();
   },
   destroyed() {
     this._share.destroy();

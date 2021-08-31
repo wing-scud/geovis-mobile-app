@@ -4,6 +4,7 @@ import { earthStore } from "@/geovis/store";
 
 class LocationPlugin {
     private _geolocation: any;
+    private _watch:any;
     public get geolocation(): any {
         return this._geolocation;
     }
@@ -13,8 +14,9 @@ class LocationPlugin {
     constructor() {
         this._geolocation = navigator['geolocation'];
     }
-    clearWatchLocation(watchId) {
-        this._geolocation.clearWatch(watchId);
+    clearWatchLocation() {
+        // this._geolocation.clearWatch(this._watch);
+        clearInterval(this._watch)
     }
     watchLocation(callback?) {
         const onSuccess = function (position) {
@@ -25,7 +27,7 @@ class LocationPlugin {
         function onError(error) {
             Toast(error);
         }
-        const watchId = this._geolocation.watchPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
+        const watchId =this._watch= this._geolocation.watchPosition(onSuccess, onError, { timeout: 3000, enableHighAccuracy: true });
         return watchId
     }
     // getCurrentPosition() {
@@ -99,7 +101,7 @@ class LocationPlugin {
                 heading: null
             }
         };
-        const interval = setInterval(() => {
+        const interval =this._watch = setInterval(() => {
             if (index > lnglats.length - 1) {
                 index = 0
             }

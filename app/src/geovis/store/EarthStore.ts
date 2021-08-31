@@ -134,7 +134,7 @@ export class EarthStore {
     timelineNode && (timelineNode.style.display = "none")
   }
 
-  getPuginState = id => {
+  getPluginState = id => {
     return this.state.pluginMap[id] || {};
   }
   /**

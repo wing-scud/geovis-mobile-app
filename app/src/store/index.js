@@ -11,10 +11,10 @@ const mobileStore = new Vuex.Store({
     starPlaces: starPlaces,
     starRoutes: starRoutes,
     user: user,
-    gisInfos:gisInfos,
-    trails:trails
+    gisInfos: gisInfos,
+    trails: trails,
   }
 });
-window['mobileStore']=mobileStore
+window['mobileStore'] = mobileStore
 // 离线模式下， 如何实现存储，再同步
 export default mobileStore;

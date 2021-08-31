@@ -48,7 +48,6 @@ const LiveWeather = () => import("../geovis/plugins/Mobile-Widgets/LivePhenomena
 const TrailRecord = () => import("../geovis/plugins/Mobile-Widgets/Trail/Index.vue");
 const TrailDetail = () => import("../geovis/plugins/Mobile-Widgets/Trail/TrailDetail.vue");
 
-const StateShare = () => import("../geovis/plugins/Mobile-Widgets/StateShare/Index.vue")
 const routes = [
   {
     path: "/",
@@ -75,10 +74,7 @@ const routes = [
           { path: "bufferAnalytics", component: BufferAnalytics, name: "BufferAnalytics" },
           { path: "liveWeather", component: LiveWeather, name: "LiveWeather" },
           { path: "trailRecord", component: TrailRecord, name: "TrailRecord" },
-        
           { path: "trailDetail", component: TrailDetail, name: "TrailDetail" },
-          { path: "stateShare", component: StateShare, name: "StateShare" },
-
         ],
         meta: {
           keepAlive: true
@@ -243,10 +239,10 @@ router.beforeResolve((to, from, next) => {
   const pluginMap = earthStore.state.pluginMap;
   if (pluginMap[from.name]) {
     //如果没有触发关闭状态，主动关闭
-    if (pluginMap[from.name].active) {
-      pluginMap[from.name].active = false;
-      console.log(`主动关闭${from.name}`);
-    }
+    // if (pluginMap[from.name].active) {
+    //   pluginMap[from.name].active = false;
+    //   console.log(`主动关闭${from.name}`);
+    // }
   }
   next(nextPath === to ? undefined : nextPath);
 });

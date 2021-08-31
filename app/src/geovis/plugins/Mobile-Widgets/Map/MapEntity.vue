@@ -71,7 +71,7 @@ export default Vue.extend({
             }
           }
         });
-        // console.log("change");
+        console.log("change");
         this.pluginState = { pluginMapUnactived, pluginStateActived };
       },
       immediate: true,
@@ -107,7 +107,7 @@ export default Vue.extend({
   },
   methods: {
     handleClick(id) {
-      const pluginState = earthStore.getPuginState(id);
+      const pluginState = earthStore.getPluginState(id);
       if (pluginState.active) {
         if (pluginState.type === "route") {
           this.$router.backward(-1);

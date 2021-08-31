@@ -45,13 +45,18 @@ export default Vue.extend({
       return items.filter((item) => item.componentIcon);
     },
     handleClick(plugin) {
+      const actived = !earthStore.getPluginState(plugin.id).active;
       if (plugin.type === "route") {
-        this.$router.push({ name: plugin.id });
-      } else {
-        //plugin.type==="component"
+        if (actived) {
+          this.$router.push({ name: plugin.id });
+        } else {
+          this.$router.back();
+        }
+      }else{
         this.$router.push({ name: plugin.parent });
       }
-      earthStore.togglePlugin(plugin.id, true);
+      //@ts-ignore
+      earthStore.togglePlugin(plugin.id, actived);
     },
   },
 });
@@ -61,59 +66,57 @@ export default Vue.extend({
   width: 94%;
   // margin: 5px 0;
   // padding: 5px 3%;
-  margin:10px auto;
+  margin: 10px auto;
 }
 .plugin-title {
   width: 100%;
   font-size: 15px;
   padding: 15px 0px 0 15px;
   // margin-bottom: 8px;
-  color:$lightgray-word;
+  color: $lightgray-word;
 }
 .plugin-grid {
   width: 100%;
- }
+}
 .plugin-name {
   font-size: 12px;
-  color:$lightgray-word;
+  color: $lightgray-word;
 }
 .content {
   background: $navbar-background;
   height: 100%;
-  width:100%
+  width: 100%;
 }
-.plugin-class-board{
-  width:99%;
-  border-radius:5px;
-  background:$navbar-background;
-  box-shadow:2px 2px 2px $box-shadow-color;
-}
-
-[class*=van-hairline]:after{
-  border:0;
+.plugin-class-board {
+  width: 99%;
+  border-radius: 5px;
+  background: $navbar-background;
+  box-shadow: 2px 2px 2px $box-shadow-color;
 }
 
+[class*="van-hairline"]:after {
+  border: 0;
+}
 </style>
 <style lang="scss">
-.full{
-  .van-grid-item__content{
-  background:$navbar-background;
+.full {
+  .van-grid-item__content {
+    background: $navbar-background;
+  }
+  .icon-container {
+    background: $navbar-background !important;
+  }
+  .unactived {
+    color: $lightgray-word;
+  }
+  [class*="van-hairline"]:after {
+    border: 0;
+  }
+  .van-nav-bar__content {
+    background: $navbar-background;
+  }
+  .van-nav-bar__title {
+    color: $lightgray-word;
+  }
 }
-.icon-container{
-  background:$navbar-background!important;
-}
-.unactived{
-  color:$lightgray-word;
-}
-[class*=van-hairline]:after{
-  border:0;
-}
-.van-nav-bar__content{
-  background:$navbar-background;
-}
-.van-nav-bar__title{
-  color:$lightgray-word;
-}
-}
- 
 </style>

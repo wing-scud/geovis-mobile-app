@@ -52,13 +52,9 @@ const actions = {
     const database = window['plugin'].database;
     const token = state.user.token;
     return fetchByToken(loginOutUrl, token).then(async (result) => {
-      if (result.success) {
-        await database.userTable.removeItem('user')
-        commit("deleteUser");
-        return true
-      } else {
-        return false
-      }
+      database.userTable.removeItem('user')
+      commit("deleteUser");
+      return true
     })
   },
   /**
